@@ -1,0 +1,14 @@
+body {
+  background: #fafafa;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+  background-color: white;
+}
+
+#menu {
+  padding-top: 15px;
+}
+
+a {
+  color: #00B7FF;
+}
