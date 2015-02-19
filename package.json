@@ -15,5 +15,10 @@
     "serve-favicon": "~2.2.0",
     "mongodb": "~1.4.30",
     "request": "~2.53.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.9.2",
+    "gulp-less": "^3.0.0"
   }
 }
