@@ -1,19 +1,21 @@
 'use strict';
 
 $(document).ready(function() {
-  
-  $('#searchField').submit(function() {
-    var query = $('#search').text();
-    var encodedQuery = encodeURIComponent(query);
-    
-    var reqURL = api + encodedQuery;
-    console.log(reqURL);
-    
-    $.get(reqURL, function(data) {
-      console.log('the request worked!');
-      console.log(data);
-      $('div.container').append($('<p>').text(data));
+    $('#podcast-search').submit(function() {
+      var searchTerm = $('#podcast-search-input').val();
+      var table = $('#results-table tbody');
+
+      $.get('/api/search/?name=' + searchTerm, function(data) {
+        $('#results-table tbody > tr').remove();
+          var results = JSON.parse(data).results;
+          for (var podcast in results) {
+            var row = $('<tr>');
+            row.append($('<td>').text(results[podcast].collectionName));
+            row.append($('<td>').text(results[podcast].feedUrl));
+            row.append($('<td>').text(results[podcast].primaryGenreName));
+            $('#results-table').append(row);
+          }
+      });
     });
-    
-  });
 });
+

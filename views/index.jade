@@ -1,18 +1,19 @@
 extends layout
 
-block content   
+block content
   div.container
-    div.header
-      ul(class='nav nav-pills pull-right')
-        li.active
-          a(href='#') Home
-        li
-          a(href='#') Test
-        li
-          a(href='#') Test
-      h3.text-muted Podplay.me
-      
-    hr
-    
-    div.footer
-      p.text-muted here is some footer text.
+    div.col-md-4(id="left-col")
+      form(id="podcast-search" action="javascript:void(0)")
+        h3 Search For A Podcast
+        input(class="form-control" id="podcast-search-input" type="text")
+        input(type="submit" class="btn btn-success")
+    div.col-md-7(id="right-col")
+      h3 Results
+      table(id="results-table" class="table table-bordered")
+        thead
+          tr
+            th Name
+            th Feed URL
+            th Genre
+        tbody
+          // dynamic content
