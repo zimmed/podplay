@@ -22,7 +22,7 @@
             var genre = $('#podcast-browse-cat').val();
 
             $.get('/api/browse/?limit=10&genre=' + genre, function (data) {
-                var results = JSON.parse(data).feed.entry;
+                var results = JSON.parse(data).feed.entry, podcast, row;
                 $('#results-table tbody > tr').remove();
                 for (podcast in results) {
                     row = $('<tr>');
