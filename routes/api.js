@@ -24,7 +24,7 @@ router.get('/browse', function(req, res, next) {
     var explicit = (req.query.safe)
         ? '/explicit=false'
         : '/explicit=true';
-    var genre = (req.query.genre)
+    var genre = (req.query.genre && req.query.genre !== 0)
         ? '/genre=' + req.query.genre
         : '';
     var queryURL = api + limit + genre + explicit + '/json';
