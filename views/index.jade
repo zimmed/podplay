@@ -7,6 +7,15 @@ block content
         h3 Search For A Podcast
         input(class="form-control" id="podcast-search-input" type="text")
         input(type="submit" class="btn btn-success")
+      form(id="podcast-browse" action="javascript:void(0)")
+        h3 Browse Top 10 Podcasts
+        select(class="form-control" id="podcast-browse-cat")
+          option(value="0" selected=true) All
+          option(value="1321") Business
+          option(value="1303") Comedy
+          option(value="1304") Education
+          option(value="1307") Health
+        input(type="submit" class="btn btn-success")
     div.col-md-7(id="right-col")
       h3 Results
       table(id="results-table" class="table table-bordered")
