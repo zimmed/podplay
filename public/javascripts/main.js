@@ -5,7 +5,7 @@ $(document).ready(function() {
       var searchTerm = $('#podcast-search-input').val();
       var table = $('#results-table tbody');
 
-      $.get('/api/search/?name=' + searchTerm, function(data) {
+      $.get('/api/search/?term=' + searchTerm, function(data) {
         $('#results-table tbody > tr').remove();
           var results = JSON.parse(data).results;
           for (var podcast in results) {
