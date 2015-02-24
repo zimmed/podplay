@@ -9,6 +9,7 @@
                 var results = JSON.parse(data).results, podcast, row;
                 $('#results-table tbody > tr').remove();
                 for (podcast in results) {
+                    console.log(JSON.stringify(podcast));
                     row = $('<tr class="feed-row" data-id="' + podcast.collectionId + '">');
                     row.append($('<td>').text(results[podcast].collectionName));
                     row.append($('<td>').text(results[podcast].feedUrl));
@@ -30,6 +31,7 @@
                 var results = JSON.parse(data).feed.entry, podcast, row;
                 $('#results-table tbody > tr').remove();
                 for (podcast in results) {
+                    console.log(JSON.stringify(podcast));
                     row = $('<tr class="feed-row" data-id="' + podcast.id['im:id'] + '">');
                     row.append($('<td>').text(results[podcast]['im:name'].label));
                     row.append($('<td>').text('N/A'));
