@@ -26,3 +26,5 @@ router.get('/podcast/:id/:title?', function (req, res, next) {
         });
     });
 });
+
+module.exports = router;
