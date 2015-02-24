@@ -1,0 +1,44 @@
+extends layout
+
+
+div(id="safetitle")
+    ${id}/${safetitle}
+block content
+    div.container
+        div.col-md-7(id="left-col")
+            img(src="#{feed['itunes:image'].$.href}")
+            h3 #{feed.title}
+            p #{feed['itunes:summary']}
+            table(id="feedinfo-table" class="table table-bordered")
+                tbody
+                    tr
+                        th Author
+                        td #{feed['itunes:author']}
+                    tr
+                        th Genre
+                        td #{feed['itunes:category'][0].$.text}
+        div.col-md-7(id="right-col")
+            h3 Episodes
+            table(id="results-table" class="table table-bordered")
+                thead
+                    tr
+                        th Title
+                        th Description
+                        th Released
+                        th 
+                tbody
+                    each ep in feed.item
+                        tr
+                            td(title="${ep.title}") 
+                                if ep.title.length >= 30
+                                    ep.title.substr(1,26) + '...'
+                                else
+                                    ep.title
+                            td(title="${ep.description}")
+                                if ep.description.length >= 30
+                                    ep.description.substr(1,26) = '...'
+                                else
+                                    ep.description
+                            td ep.pubdate
+                            td a.listenlink(href="javascript:void(0)" data-audio="${ep.enclosure.$.url}" data-poster="#{feed['itunes:image'].$.href}") Listen
+script(src='javascript/podcast.js')
