@@ -2,8 +2,8 @@
     'use strict';
     
     $().ready(function () {
-        console.log('safetitling');
         var t = $('#safetitle').html();
+        console.log('safetitling: ' + t);
         window.history.replaceState({}, document.title, '/' + t);
         $('#safetitle').remove();
     });
