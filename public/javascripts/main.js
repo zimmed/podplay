@@ -9,7 +9,7 @@
                 var results = JSON.parse(data).results, podcast, row;
                 $('#results-table tbody > tr').remove();
                 for (podcast in results) {
-                    row = $('<tr>');
+                    row = $('<tr class="feed-row" data-id="' + podcast.collectionId + '">');
                     row.append($('<td>').text(results[podcast].collectionName));
                     row.append($('<td>').text(results[podcast].feedUrl));
                     row.append($('<td>').text(results[podcast].primaryGenreName));
@@ -25,13 +25,18 @@
                 var results = JSON.parse(data).feed.entry, podcast, row;
                 $('#results-table tbody > tr').remove();
                 for (podcast in results) {
-                    row = $('<tr>');
+                    row = $('<tr class="feed-row" data-id="' + podcast.id['im:id'] + '">');
                     row.append($('<td>').text(results[podcast]['im:name'].label));
                     row.append($('<td>').text('N/A'));
                     row.append($('<td>').text(results[podcast].category.attributes.label));
                     $('#results-table').append(row);
                 }
             });
+        });
+        
+        $('.feed-row').onclick(function () {
+            var id = this.data('id');
+            window.location = '/podcast/' + id;
         });
     });
 }(window, jQuery));
