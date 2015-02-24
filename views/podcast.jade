@@ -35,9 +35,13 @@ block content
                                     span #{ep.title}
                             if ep.description
                                 - var match, front = ep.description.match(/^\<(.+)\>/)
+                                - console.log(front)
                                 - if (front) match = ep.description.match('^\<' + front[1] + '\>(.+)\<\/' + front[1] + '\>')
+                                - console.log(match)
                                 - if (match) ep.description = match[1]
+                                - console.log(ep.description)
                                 - ep.description = ep.description.replace(/\<.+\>/g, '')
+                                - console.log(ep.description)
                                 td(title="#{ep.description}")
                                         
                                     if ep.description.length >= 30
