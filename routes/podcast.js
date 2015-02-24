@@ -12,7 +12,7 @@ var safeTitle = function (str) {
     return str;
 };
 
-router.get('/podcast/:id/:title?', function (req, res, next) {
+router.get('/:id/:title?', function (req, res, next) {
     console.log('/podcast');
     var id = req.param.id;
     
