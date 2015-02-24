@@ -37,7 +37,7 @@ block content
                                 td(title="#{ep.description}")
                                     if ep.description.substr(0,3) == '<p>'
                                         - var match = ep.description.match(/^\<p\>([^\<]+)\<\/p\>/i)
-                                        - ep.description = match[1]
+                                        - if (match) ep.description = match[1]
                                     if ep.description.length >= 30
                                         span #{ep.description.substr(0,26) + '...'}
                                     else
