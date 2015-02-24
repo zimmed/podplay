@@ -16,7 +16,7 @@
                     $('#results-table').append(row);
                 }
                 // Temporary system for getting to feed pages
-                $('.feed-row').onclick(function () {
+                $('.feed-row').click(function () {
                     var id = this.data('id');
                     window.location = '/podcast/' + id;
                 });
@@ -37,7 +37,7 @@
                     $('#results-table').append(row);
                 }
                 // Temporary system for getting to feed pages
-                $('.feed-row').onclick(function () {
+                $('.feed-row').click(function () {
                     var id = this.data('id');
                     window.location = '/podcast/' + id;
                 });
