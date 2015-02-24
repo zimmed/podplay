@@ -34,11 +34,12 @@ block content
                                 else
                                     span #{ep.title}
                             if ep.description
+                                - var match, front = ep.description.match(/^\<(.+)\>/)
+                                - if (front) match = ep.description.match('^\<' + front[1] + '\>(.+)\<\/' + front[1] + '\>')
+                                - if (match) ep.description = match[1]
+                                - ep.description = ep.description.replace(/\<.+\>/g, '')
                                 td(title="#{ep.description}")
-                                    if ep.description.substr(0,3) == '<p>'
-                                        - var match = ep.description.match(/^\<p\>(.+)\<\/p\>/i)
-                                        - if (match) ep.description = match[1]
-                                        - ep.description = ep.description.replace(/\<.+\>/g, '')
+                                        
                                     if ep.description.length >= 30
                                         span #{ep.description.substr(0,26) + '...'}
                                     else
