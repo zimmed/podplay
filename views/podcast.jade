@@ -16,7 +16,7 @@ block content
                         td #{feed['itunes:author']}
                     tr
                         th Genre
-                        td JSON.stringify(feed['itunes:category'])
+                        td #{JSON.stringify(feed['itunes:category'])}
         div.col-md-7(id="right-col")
             h3 Episodes
             table(id="results-table" class="table table-bordered")
@@ -31,14 +31,16 @@ block content
                         tr
                             td(title="#{ep.title}") 
                                 if ep.title.length >= 30
-                                    #{ep.title.substr(1,26) + '...'}
+                                    span #{ep.title.substr(1,26) + '...'}
                                 else
-                                    #{ep.title}
+                                    span #{ep.title}
                             td(title="#{ep.description}")
                                 if ep.description.length >= 30
-                                    #{ep.description.substr(1,26) + '...'}
+                                    span #{ep.description.substr(1,26) + '...'}
                                 else
-                                    #{ep.description}
-                            td #{ep.pubdate}
-                            td a.listenlink(href="javascript:void(0)" data-audio="#{ep.enclosure.$.url}" data-poster="#{feed['itunes:image'].$.href}") Listen
+                                    span #{ep.description}
+                            td
+                                span #{ep.pubDate}
+                            td
+                                a.listenlink(href="javascript:void(0)" data-audio="#{ep.enclosure.$.url}" data-poster="#{feed['itunes:image'].$.href}") Listen
 script(src='/javascripts/podcast.js')
