@@ -6,7 +6,8 @@ block content
         .col-md-7(id="left-col")
             img.podcast-poster(src="#{feed.imgs.i600}")
             h3 #{feed.title}
-            p #{feed['itunes:summary']}
+            if feed['itunes:summary']
+                p #{feed['itunes:summary']}
             table#feedinfo-table(class="table table-bordered")
                 tbody
                     tr
@@ -32,11 +33,14 @@ block content
                                     span #{ep.title.substr(0,26) + '...'}
                                 else
                                     span #{ep.title}
-                            td(title="#{ep.description}")
-                                if ep.description.length >= 30
-                                    span #{ep.description.substr(0,26) + '...'}
-                                else
-                                    span #{ep.description}
+                            if ep.description
+                                td(title="#{ep.description}")
+                                    if ep.description.length >= 30
+                                        span #{ep.description.substr(0,26) + '...'}
+                                    else
+                                        span #{ep.description}
+                            else
+                                td N/A
                             td
                                 span #{ep.pubDate}
                             td
