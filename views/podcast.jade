@@ -35,17 +35,12 @@ block content
                                     span #{ep.title}
                             if ep.description
                                 - var match, front = ep.description.match(/^\<([^\>]+)\>/)
-                                - console.log('front: ' + JSON.stringify(front))
                                 - if (front) match = ep.description.match('^\<' + front[1] + '\>(.+)\<\/' + front[1] + '\>')
-                                - console.log('match: ' + JSON.stringify(match))
                                 - if (match) ep.description = match[1]
-                                - console.log('d1: ' + ep.description)
                                 - ep.description = ep.description.replace(/\<.+\>/g, '')
-                                - console.log('d2: ' + ep.description)
                                 td(title="#{ep.description}")
-                                        
-                                    if ep.description.length >= 30
-                                        span #{ep.description.substr(0,26) + '...'}
+                                    if ep.description.length >= 64
+                                        span #{ep.description.substr(0,60) + '...'}
                                     else
                                         span #{ep.description}
                             else
