@@ -9,8 +9,7 @@
                 var results = JSON.parse(data).results, podcast, row;
                 $('#results-table tbody > tr').remove();
                 for (podcast in results) {
-                    console.log(JSON.stringify(podcast));
-                    row = $('<tr class="feed-row" data-id="' + podcast.collectionId + '">');
+                    row = $('<tr class="feed-row" data-id="' + results[podcast].collectionId + '">');
                     row.append($('<td>').text(results[podcast].collectionName));
                     row.append($('<td>').text(results[podcast].feedUrl));
                     row.append($('<td>').text(results[podcast].primaryGenreName));
@@ -31,8 +30,7 @@
                 var results = JSON.parse(data).feed.entry, podcast, row;
                 $('#results-table tbody > tr').remove();
                 for (podcast in results) {
-                    console.log(JSON.stringify(podcast));
-                    row = $('<tr class="feed-row" data-id="' + podcast.id['im:id'] + '">');
+                    row = $('<tr class="feed-row" data-id="' + results[podcast].id['im:id'] + '">');
                     row.append($('<td>').text(results[podcast]['im:name'].label));
                     row.append($('<td>').text('N/A'));
                     row.append($('<td>').text(results[podcast].category.attributes.label));
