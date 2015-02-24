@@ -1,8 +1,8 @@
 extends layout
 
-#safetitle #{id + '/' + safetitle}
 block content
     .container
+        #safetitle #{id + '/' + safetitle}
         .col-md-7(id="left-col")
             img.podcast-poster(src="#{feed['itunes:image'].$.href}")
             h3 #{feed.title}
