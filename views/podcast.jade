@@ -1,15 +1,15 @@
 extends layout
 
-script(src='/javascripts/podcast.js')
-div(id="safetitle")
+script(src="/javascripts/podcast.js")
+#safetitle
     ${id}/${safetitle}
 block content
-    div.container
-        div.col-md-7(id="left-col")
+    .container
+        .col-md-7(id="left-col")
             img.podcast-poster(src="#{feed['itunes:image'].$.href}")
             h3 #{feed.title}
             p #{feed['itunes:summary']}
-            table(id="feedinfo-table" class="table table-bordered")
+            table#feedinfo-table(class="table table-bordered")
                 tbody
                     tr
                         th Author
@@ -17,9 +17,9 @@ block content
                     tr
                         th Genre
                         td #{feed['itunes:category'].$.text}
-        div.col-md-7(id="right-col")
+        .col-md-7(id="right-col")
             h3 Episodes
-            table(id="results-table" class="table table-bordered")
+            table#episode-table(class="table table-bordered")
                 thead
                     tr
                         th Title

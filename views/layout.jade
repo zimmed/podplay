@@ -5,9 +5,13 @@ html
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css')
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    for s in stylesheets
+        link(rel='stylesheet', href="#{'/stylesheets/' + s + '.css'}")
     script(src='//maxcdn.bootstrap.com/bootstrap/3.3.2/js/bootstrap.min.js')
     script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
     script(src='/javascripts/main.js')
+    for s in javascripts
+        script(src="#{'/javascript/' + s + '.js'}")
   body
     block content
     
