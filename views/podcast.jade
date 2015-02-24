@@ -4,7 +4,7 @@ block content
     .container
         #safetitle #{id + '/' + safetitle}
         .col-md-7(id="left-col")
-            img.podcast-poster(src="#{feed['itunes:image'].$.href}")
+            img.podcast-poster(src="#{feed.imgs.i600}")
             h3 #{feed.title}
             p #{feed['itunes:summary']}
             table#feedinfo-table(class="table table-bordered")

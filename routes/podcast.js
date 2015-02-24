@@ -24,6 +24,10 @@ router.get('/:id/:title?', function (req, res, next) {
         request(feed, function (error, response, body) {
             parseString(body, function (err, obj) {
                 obj.rss.channel.genre = result.primaryGenreName;
+                obj.rss.channel.genre.imgs = { i600 : result.artworkUrl600,
+                                               i100 : result.artworkUrl100,
+                                               i60 : result.artworkUrl60,
+                                               i30 : result.artworkUrl30 };
                 res.render('podcast', { id: id, title: title, javascripts: ['podcast'], safetitle: safeTitle(title), feed: obj.rss.channel });
             });
         });
