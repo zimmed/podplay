@@ -1,6 +1,6 @@
 extends layout
 
-
+script(src='/javascripts/podcast.js')
 div(id="safetitle")
     ${id}/${safetitle}
 block content
@@ -43,4 +43,3 @@ block content
                                 span #{ep.pubDate}
                             td
                                 a.listenlink(href="javascript:void(0)" data-audio="#{ep.enclosure.$.url}" data-poster="#{feed['itunes:image'].$.href}") Listen
-script(src='/javascripts/podcast.js')
