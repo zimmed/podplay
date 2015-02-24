@@ -6,7 +6,7 @@ div(id="safetitle")
 block content
     div.container
         div.col-md-7(id="left-col")
-            img(src="#{feed['itunes:image'].$.href}")
+            img.podcast-poster(src="#{feed['itunes:image'].$.href}")
             h3 #{feed.title}
             p #{feed['itunes:summary']}
             table(id="feedinfo-table" class="table table-bordered")
@@ -16,7 +16,7 @@ block content
                         td #{feed['itunes:author']}
                     tr
                         th Genre
-                        td #{JSON.stringify(feed['itunes:category'])}
+                        td #{feed['itunes:category'].$.text}
         div.col-md-7(id="right-col")
             h3 Episodes
             table(id="results-table" class="table table-bordered")
@@ -31,12 +31,12 @@ block content
                         tr
                             td(title="#{ep.title}") 
                                 if ep.title.length >= 30
-                                    span #{ep.title.substr(1,26) + '...'}
+                                    span #{ep.title.substr(0,26) + '...'}
                                 else
                                     span #{ep.title}
                             td(title="#{ep.description}")
                                 if ep.description.length >= 30
-                                    span #{ep.description.substr(1,26) + '...'}
+                                    span #{ep.description.substr(0,26) + '...'}
                                 else
                                     span #{ep.description}
                             td
