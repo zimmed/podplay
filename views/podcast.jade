@@ -14,7 +14,7 @@ block content
                         td #{feed['itunes:author']}
                     tr
                         th Genre
-                        td #{feed['itunes:category'].$.text}
+                        td #{feed.genre}
         .col-md-7(id="right-col")
             h3 Episodes
             table#episode-table(class="table table-bordered")
