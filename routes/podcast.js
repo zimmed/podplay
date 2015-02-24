@@ -23,7 +23,7 @@ router.get('/:id/:title?', function (req, res, next) {
             title = result.collectionCensoredName;
         request(feed, function (error, response, body) {
             parseString(body, function (err, obj) {
-                res.render('podcast', { id: id, title: title, safetitle: safeTitle(title), feed: obj.rss.channel });
+                res.render('podcast', { id: id, title: title, javascripts: ['podcast'], safetitle: safeTitle(title), feed: obj.rss.channel });
             });
         });
     });
