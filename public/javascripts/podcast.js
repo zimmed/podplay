@@ -4,7 +4,7 @@
     $().ready(function () {
         var t = $('#safetitle').html();
         console.log('safetitling: ' + t);
-        window.history.replaceState({}, document.title, '/' + t);
+        window.history.replaceState({}, document.title, '/podcast/' + t);
         $('#safetitle').remove();
     });
 
