@@ -13,7 +13,7 @@ var safeTitle = function (str) {
 };
 
 router.get('/:id/:title?', function (req, res, next) {
-    var id = req.param.id;
+    var id = req.params.id;
     
     console.log('https://itunes.apple.com/lookup?id=' + id);
     
