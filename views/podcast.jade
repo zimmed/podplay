@@ -28,11 +28,14 @@ block content
                 tbody
                     each ep in feed.item
                         tr
-                            td(title="#{ep.title}") 
-                                if ep.title.length >= 30
-                                    span #{ep.title.substr(0,26) + '...'}
-                                else
-                                    span #{ep.title}
+                            if ep.title
+                                td(title="#{ep.title}") 
+                                    if ep.title.length >= 30
+                                        span #{ep.title.substr(0,26) + '...'}
+                                    else
+                                        span #{ep.title}
+                            else
+                                td N/A
                             if ep.description
                                 - var match, front = ep.description.match(/^\<([^\>]+)\>/)
                                 - if (front) match = ep.description.match('^\<' + front[1] + '\>(.+)\<\/' + front[1] + '\>')
@@ -46,8 +49,12 @@ block content
                             else
                                 td N/A
                             td
-                                span #{ep.pubDate}
+                                if ep.pubDate
+                                    span #{ep.pubDate}
+                                else
+                                    span N/A
                             td
-                                - if (!ep.enclosure) console.log(JSON.stringify(ep))
-                                - else console.log('OK')
-                                a.listenlink(href="javascript:void(0)" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{feed.imgs.i100}") Listen
+                                if ep.enclosure
+                                    a.listenlink(href="javascript:void(0)" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{feed.imgs.i100}") Listen
+                                else
+                                    span N/A
