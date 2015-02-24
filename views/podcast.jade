@@ -34,7 +34,7 @@ block content
                                 else
                                     span #{ep.title}
                             if ep.description
-                                - var match, front = ep.description.match(/^\<(.+)\>/)
+                                - var match, front = ep.description.match(/^\<([^\>]+)\>/)
                                 - console.log('front: ' + JSON.stringify(front))
                                 - if (front) match = ep.description.match('^\<' + front[1] + '\>(.+)\<\/' + front[1] + '\>')
                                 - console.log('match: ' + JSON.stringify(match))
