@@ -17,7 +17,7 @@
                 }
                 // Temporary system for getting to feed pages
                 $('.feed-row').click(function () {
-                    var id = this.data('id');
+                    var id = $(this).data('id');
                     window.location = '/podcast/' + id;
                 });
             });
@@ -38,7 +38,7 @@
                 }
                 // Temporary system for getting to feed pages
                 $('.feed-row').click(function () {
-                    var id = this.data('id');
+                    var id = $(this).data('id');
                     window.location = '/podcast/' + id;
                 });
             });
