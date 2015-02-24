@@ -15,6 +15,11 @@
                     row.append($('<td>').text(results[podcast].primaryGenreName));
                     $('#results-table').append(row);
                 }
+                // Temporary system for getting to feed pages
+                $('.feed-row').onclick(function () {
+                    var id = this.data('id');
+                    window.location = '/podcast/' + id;
+                });
             });
         });
 
@@ -31,12 +36,12 @@
                     row.append($('<td>').text(results[podcast].category.attributes.label));
                     $('#results-table').append(row);
                 }
+                // Temporary system for getting to feed pages
+                $('.feed-row').onclick(function () {
+                    var id = this.data('id');
+                    window.location = '/podcast/' + id;
+                });
             });
-        });
-        
-        $('.feed-row').onclick(function () {
-            var id = this.data('id');
-            window.location = '/podcast/' + id;
         });
     });
 }(window, jQuery));
