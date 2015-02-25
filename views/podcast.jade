@@ -4,8 +4,8 @@ block content
     .container
         #safetitle #{id + '/' + safetitle}
         .col-md-7(id="left-col")
-            img.podcast-poster(src="#{feed.imgs.i600}")
             h3 #{feed.title}
+            img.podcast-poster(src="#{feed.imgs.i600}")
             if feed['itunes:summary']
                 p #{feed['itunes:summary']}
             table#feedinfo-table(class="table table-bordered")
@@ -16,7 +16,6 @@ block content
                     tr
                         th Genre
                         td #{feed.genre}
-        .col-md-7(id="right-col")
             h3 Episodes
             table#episode-table(class="table table-bordered")
                 thead
@@ -55,6 +54,8 @@ block content
                                     span N/A
                             td
                                 if ep.enclosure
-                                    a.listenlink(href="javascript:void(0)" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{feed.imgs.i100}") Listen
+                                    button.listenlink(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster"#{feeds.imgs.i100}" type="button") Listen
                                 else
                                     span N/A
+        .col-md-5(id="right-col")
+
