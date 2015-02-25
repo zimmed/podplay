@@ -24,3 +24,8 @@ tr.feed-row {
 tr.feed-row:hover {
     background: rgba(0,0,64,0.2);
 }
+
+audio.podcast-player {
+    position: fixed;
+    bottom: 20px;
+}
