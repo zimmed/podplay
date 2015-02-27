@@ -3,7 +3,7 @@ extends layout
 block content
     .container
         #safetitle #{id + '/' + safetitle}
-        .col-md-7(id="left-col")
+        .col-md-3(id="left-col")
             h3 #{feed.title}
             img.podcast-poster(src="#{feed.imgs.i600}")
             if feed['itunes:summary']
@@ -16,6 +16,7 @@ block content
                     tr
                         th Genre
                         td #{feed.genre}
+        .col-md-9(id="middle-col")
             h3 Episodes
             table#episode-table(class="table table-bordered")
                 thead
@@ -54,8 +55,7 @@ block content
                                     span N/A
                             td
                                 if ep.enclosure
-                                    button.listenlink(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster"#{feeds.imgs.i100}" type="button") Listen
+                                    button.listenlink(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{feed.imgs.i100}" type="button") Listen
                                 else
                                     span N/A
-        .col-md-5(id="right-col")
 
