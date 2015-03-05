@@ -37,6 +37,7 @@ block content
                             else
                                 td N/A
                             if ep.description
+                                - ep.description = "" + ep.description;
                                 - var match, front = ep.description.match(/^\<([^\>]+)\>/)
                                 - if (front) match = ep.description.match('^\<' + front[1] + '\>(.+)\<\/' + front[1] + '\>')
                                 - if (match) ep.description = match[1]
