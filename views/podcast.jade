@@ -42,8 +42,8 @@ block content
                                 - if (match) ep.description = match[1]
                                 - ep.description = ep.description.replace(/\<.+\>/g, '')
                                 td(title="#{ep.description}")
-                                    if ep.description.length >= 96
-                                        span #{ep.description.substr(0,92) + '...'}
+                                    if ep.description.length >= 128
+                                        span #{ep.description.substr(0,124) + '...'}
                                     else
                                         span #{ep.description}
                             else
