@@ -18,16 +18,13 @@ router.get('/:id/:title?', function (req, res, next) {
     console.log('https://itunes.apple.com/lookup?id=' + id);
     
     request('https://itunes.apple.com/lookup?id=' + id, function (error, response, body) {
-        console.log(error);
-        console.log(response);
-        var result = JSON.parse(body);
-        if (result.errorMessage) {
+        if (response.statusCode == 400) {
             var error = new Error('Not Found');
             error.status = 404;
             res.render('error', { message: "Podcast not found.", error: error});
         }
         else {
-            result = result.results[0];
+            var result = JSON.parse(body).results[0],
             var feed = result.feedUrl,
                 title = result.collectionCensoredName;
             request(feed, function (error, response, body) {
