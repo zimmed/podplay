@@ -15,6 +15,9 @@ html
         for s in javascripts
             script(src="#{'/javascripts/' + s + '.js'}")
   body
+    nav.navbar.navbar-default.navbar-static-top.navbar-inverse
+        .container
+            a.navbar-brand(href="/") Podplay.me
     block content
     
     
