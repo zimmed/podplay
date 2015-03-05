@@ -25,7 +25,23 @@ tr.feed-row:hover {
     background: rgba(0,0,64,0.2);
 }
 
-audio.podcast-player {
-    position: fixed;
-    bottom: 20px;
+.playing-title {
+  height: 25px;
+  color: #e3e3e3;
+  background: #000;
 }
+
+.podcast-player {
+    position: fixed;
+    bottom: -5px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+.podcast-player audio {
+  width: 100%;
+}
+
+

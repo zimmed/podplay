@@ -58,4 +58,8 @@ block content
                                     button.listenlink(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{feed.imgs.i100}" type="button") Listen
                                 else
                                     span N/A
+        div.podcast-player
+            div.playing-title
+                h3 No File Selected
+            audio(controls="controls" src="http://xamuel.com/blank-mp3-files/point1sec.mp3")
 
