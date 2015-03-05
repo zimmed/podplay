@@ -25,7 +25,7 @@ router.get('/:id/:title?', function (req, res, next) {
         }
         else {
             var result = JSON.parse(body).results[0],
-            var feed = result.feedUrl,
+                feed = result.feedUrl,
                 title = result.collectionCensoredName;
             request(feed, function (error, response, body) {
                 parseString(body, function (err, obj) {
