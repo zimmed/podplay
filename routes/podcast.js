@@ -18,7 +18,7 @@ router.get('/:id/:title?', function (req, res, next) {
     console.log('https://itunes.apple.com/lookup?id=' + id);
     
     request('https://itunes.apple.com/lookup?id=' + id, function (error, response, body) {
-        console.log(body);
+        //console.log(body);
         var result = JSON.parse(body);
         if (result.errorMessage) {
             var error = new Error('Not Found');
