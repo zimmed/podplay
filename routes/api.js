@@ -1,5 +1,5 @@
 /**
- * routes/api.js - Defines /search and /browse routes for API requests
+ * routes/api.js - Defines /api/search and /api/browse routes for API requests
  *
  * Authors: Ian McGaunn; Dave Zimmelman
  * Modified: 09 Mar 15
@@ -19,10 +19,11 @@ router.get('/search', function (req, res, next) {
     var queryURL = api + req.query.term; 
 
     console.log('url: ' + queryURL);
-    console.log(req.body);
     
     // Send requested search data received from Apple API back to caller.
     request(queryURL, function (error, response, body) {
+        // Update cache with request
+        cache.search[req.query.term] = body;
         res.send(body);
     });
 });
@@ -44,10 +45,11 @@ router.get('/browse', function (req, res, next) {
     var queryURL = api + limit + genre + explicit + '/json';
     
     console.log('url: ' + queryURL);
-    console.log(req.body);
     
     // Send requested browse data received from Apple API back to caller.
     request(queryURL, function (error, response, body) {
+        // Update cache with request
+        cache.browse[genre] = body;
         res.send(body);
     });
 });

@@ -18,12 +18,15 @@ html
     // Bootstrap JS libraries
     script(src='//maxcdn.bootstrap.com/bootstrap/3.3.2/js/bootstrap.min.js')
     script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
-    // Podplay global JS library
-    script(src='/javascripts/main.js')
     if javascripts
         // Scripts needed for local view.
         for s in javascripts
             script(src="#{'/javascripts/' + s + '.js'}")
+    if GLOBALS
+        // Variables passed from server to client on render.
+        script.
+            for key in GLOBALS
+                var #{key} = #{GLOBALS[key]};
   body
     // Navigation header
     nav.navbar.navbar-default.navbar-static-top.navbar-inverse
