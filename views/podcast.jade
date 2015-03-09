@@ -7,6 +7,14 @@ block content
     .container
         // Left column with feed data.
         .col-md-3(id="left-col")
+            // Container for audio player.
+            div.podcast-player
+                div.playing-title
+                    span No File Selected
+                audio(controls="controls" preload="auto" src="http://xamuel.com/blank-mp3-files/point1sec.mp3")
+                script(src="/javascripts/audioplayer.js")
+                script.
+                    $( function() { $( 'audio' ).audioPlayer(); } );
             h3 #{feed.title}
             img.podcast-poster(src="#{feed.imgs.i600}")
             if feed['itunes:summary']
@@ -19,14 +27,6 @@ block content
                     tr
                         th Genre
                         td #{feed.genre}
-            // Container for audio player.
-            div.podcast-player
-                div.playing-title
-                    span No File Selected
-                audio(controls="controls" preload="auto" src="http://xamuel.com/blank-mp3-files/point1sec.mp3")
-                script(src="/javascripts/audioplayer.js")
-                script.
-                    $( function() { $( 'audio' ).audioPlayer(); } );
         // Right column with episode table
         .col-md-9(id="middle-col")
             h3 Episodes
