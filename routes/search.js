@@ -12,7 +12,6 @@ var Cache = require('../lib/badcache');
 // User goes back to search results.
 router.get('/:term?', function (req, res, next) {
     // Check that param exists and search has been cached.
-    console.log(Cache);
     if (!req.params.hasOwnProperty('term') ||
         !Cache.search.hasOwnProperty(req.params.term)) {
         // If not, reroute to landing page.
