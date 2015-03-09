@@ -11,12 +11,13 @@ block content
             img.podcast-poster(src="#{feed.imgs.i600}")
             // Container for audio player.
             div.podcast-player
-                div.playing-title
+                div.playing-title.ticker
                     span No File Selected
                 audio(controls="controls" preload="auto" src="http://xamuel.com/blank-mp3-files/point1sec.mp3")
                 script(src="/javascripts/audioplayer.js")
                 script.
                     $( function() { $( 'audio' ).audioPlayer(); } );
+                    $('.ticker').webTicker();
             if feed['itunes:summary']
                 p #{feed['itunes:summary']}
             table#feedinfo-table(class="table table-bordered")

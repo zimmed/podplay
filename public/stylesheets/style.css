@@ -29,6 +29,13 @@ nav {
 
 /** CLASS SELECTORS **/
 
+.ticker {
+    -webkit-transition: all 0s linear;
+    -moz-transition: all 0s linear;
+    -o-transition: all 0s linear;
+    transition: all 0s linear;
+}
+
 .navbar-brand {
     margin-right: 25px;
 }
