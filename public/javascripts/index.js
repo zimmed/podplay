@@ -2,7 +2,11 @@
     'use strict';
 
     function searchResults(data) {
-        var results = JSON.parse(data).results, podcast, row;
+        var results = JSON.parse(data).results, podcast, row, count;
+        count = (results.length > 0)
+            ? "" + results.length
+            : "No";
+        $('#right-col > h3').html(count + " Results");
         $('#results-table tbody > tr').remove();
         for (podcast in results) {
             row = $('<tr class="feed-row" data-id="' + results[podcast].collectionId + '">');
@@ -19,7 +23,11 @@
     }
     
     function browseResults(data) {
-        var results = JSON.parse(data).feed.entry, podcast, row;
+        var results = JSON.parse(data).feed.entry, podcast, row, count;
+        count = (results.length > 0)
+            ? "" + results.length
+            : "No";
+        $('#right-col > h3').html(count + " Results");
         $('#results-table tbody > tr').remove();
         for (podcast in results) {
             row = $('<tr class="feed-row" data-id="' + results[podcast].id.attributes['im:id'] + '">');
