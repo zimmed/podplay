@@ -1,5 +1,5 @@
 /**
- * index.js - Main library for individual podcast pages/views.
+ * podcast.js - Main library for individual podcast pages/views.
  * Authors: Ian McGaunn; Dave Zimmelman
  * Modified: 09 Mar 15
  */
