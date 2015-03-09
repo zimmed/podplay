@@ -20,7 +20,7 @@ var podcast = require('./routes/podcast');
 var app = express();
 
 // view engine setup
-    app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
@@ -36,6 +36,9 @@ app.use('/users', users);
 app.use('/test', test);
 app.use('/api', api);
 app.use('/podcast', podcast);
+
+// Makes generated HTML not look like garbage
+app.locals.pretty = true;
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
