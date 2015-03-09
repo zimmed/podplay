@@ -4,20 +4,21 @@
 
 
 
-;(function( $, window, document, undefined )
-{
-	var isTouch		  = 'ontouchstart' in window,
+( function($, window, document, undefined) {
+    
+	var isTouch		  = ('ontouchstart' in window),
 		eStart		  = isTouch ? 'touchstart'	: 'mousedown',
 		eMove		  = isTouch ? 'touchmove'	: 'mousemove',
 		eEnd		  = isTouch ? 'touchend'	: 'mouseup',
 		eCancel		  = isTouch ? 'touchcancel'	: 'mouseup',
-		secondsToTime = function( secs )
-		{
+		secondsToTime = function (secs) {
 			var hours = Math.floor( secs / 3600 ), minutes = Math.floor( secs % 3600 / 60 ), seconds = Math.ceil( secs % 3600 % 60 );
-			return ( hours == 0 ? '' : hours > 0 && hours.toString().length < 2 ? '0'+hours+':' : hours+':' ) + ( minutes.toString().length < 2 ? '0'+minutes : minutes ) + ':' + ( seconds.toString().length < 2 ? '0'+seconds : seconds );
+			return (hours == 0 ? '' : hours > 0 &&
+                    hours.toString().length < 2 ? '0'+hours+':' : hours+':') +
+                   (minutes.toString().length < 2 ? '0'+minutes : minutes) +
+                   ':' + (seconds.toString().length < 2 ? '0'+seconds : seconds);
 		},
-		canPlayType	  = function( file )
-		{
+		canPlayType	= function(file) {
 			var audioElement = document.createElement( 'audio' );
 			return !!( audioElement.canPlayType && audioElement.canPlayType( 'audio/' + file.split( '.' ).pop().toLowerCase() + ';' ).replace( /no/, '' ) );
 		};
@@ -198,4 +199,4 @@
 		});
 		return this;
 	};
-})( jQuery, window, document );
+}( jQuery, window, document ));
