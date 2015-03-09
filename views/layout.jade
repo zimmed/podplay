@@ -29,7 +29,7 @@ html
         // Variables passed from server to client on render.
         each val, key in GLOBALS
             script.
-                !{'var ' + key + ' = ' + val + ';'}
+                var !{key} = '!{val}';
   body
     // Navigation header
     nav.navbar.navbar-default.navbar-static-top.navbar-inverse
