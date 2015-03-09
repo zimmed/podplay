@@ -1,7 +1,17 @@
+/**
+ * routes/api.js - Defines /search and /browse routes for API requests
+ *
+ * Authors: Ian McGaunn; Dave Zimmelman
+ * Modified: 09 Mar 15
+ */
+
 var express = require('express');
 var request = require('request');
 var router = express.Router();
 
+/**
+ * Route for /search URL
+ */
 router.get('/search', function (req, res, next) {
     var api = 'https://itunes.apple.com/search?entity=podcast&term=';
     // Name is ambiguous, and might confuse things when we implement local searching by station/artist/etc.
@@ -10,12 +20,16 @@ router.get('/search', function (req, res, next) {
 
     console.log('url: ' + queryURL);
     console.log(req.body);
-
+    
+    // Send requested search data received from Apple API back to caller.
     request(queryURL, function (error, response, body) {
         res.send(body);
     });
 });
 
+/**
+ * Route for /browse URL
+ */
 router.get('/browse', function (req, res, next) {
     var api = 'https://itunes.apple.com/us/rss/toppodcasts';
     var limit = (req.query.limit && req.query.limit >= 0 && req.query.limit <= 200)
@@ -32,10 +46,11 @@ router.get('/browse', function (req, res, next) {
     console.log('url: ' + queryURL);
     console.log(req.body);
     
+    // Send requested browse data received from Apple API back to caller.
     request(queryURL, function (error, response, body) {
         res.send(body);
     });
 });
 
-
+// Expose routes
 module.exports = router;
