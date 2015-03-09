@@ -65,7 +65,7 @@ tr.feed-row:hover {
   background: -ms-radial-gradient( top, #444, #222 );
   background: -o-linear-gradient( top, #444, #222 );
   background: linear-gradient( top, #444, #222 );
-  width: 100%;
+  width: 250px;
 }
 
 .podcast-player audio {
