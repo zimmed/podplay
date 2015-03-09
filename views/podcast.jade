@@ -7,6 +7,8 @@ block content
     .container
         // Left column with feed data.
         .col-md-3(id="left-col")
+            h3 #{feed.title}
+            img.podcast-poster(src="#{feed.imgs.i600}")
             // Container for audio player.
             div.podcast-player
                 div.playing-title
@@ -15,8 +17,6 @@ block content
                 script(src="/javascripts/audioplayer.js")
                 script.
                     $( function() { $( 'audio' ).audioPlayer(); } );
-            h3 #{feed.title}
-            img.podcast-poster(src="#{feed.imgs.i600}")
             if feed['itunes:summary']
                 p #{feed['itunes:summary']}
             table#feedinfo-table(class="table table-bordered")
