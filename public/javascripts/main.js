@@ -10,7 +10,7 @@
                 $('#results-table tbody > tr').remove();
                 for (podcast in results) {
                     row = $('<tr class="feed-row" data-id="' + results[podcast].collectionId + '">');
-                    row.append($('<td>').text('<img src="' + results[podcast].artworkUrl60 + '">'));
+                    row.append($('<td>').html('<img src="' + results[podcast].artworkUrl60 + '">'));
                     row.append($('<td>').text(results[podcast].collectionName));
                     row.append($('<td>').text(results[podcast].primaryGenreName));
                     $('#results-table').append(row);
@@ -31,7 +31,7 @@
                 $('#results-table tbody > tr').remove();
                 for (podcast in results) {
                     row = $('<tr class="feed-row" data-id="' + results[podcast].id.attributes['im:id'] + '">');
-                    row.append($('<td>').text('<img src="' + results[podcast]['im:image'][0].label + '">'));
+                    row.append($('<td>').html('<img src="' + results[podcast]['im:image'][0].label + '">'));
                     row.append($('<td>').text(results[podcast]['im:name'].label));
                     row.append($('<td>').text(results[podcast].category.attributes.label));
                     $('#results-table').append(row);
