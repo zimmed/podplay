@@ -36,10 +36,10 @@
     }
     
     $().ready(function () {
-        if (presearch) {
+        if (typeof(presearch) !=== "undefined") {
             searchResults(presearch);
         }
-        else if (prebrowse) {
+        else if (typeof(prebrowse) !=== "undefined") {
             browseResults(prebrowse);
         }
         $('#podcast-search').submit(function () {
