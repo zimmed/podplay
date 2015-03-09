@@ -19,6 +19,14 @@ block content
                     tr
                         th Genre
                         td #{feed.genre}
+            // Container for audio player.
+            div.podcast-player
+                div.playing-title
+                    h3 No File Selected
+                audio(controls="controls" preload="auto" src="http://xamuel.com/blank-mp3-files/point1sec.mp3")
+                script(src="/javascripts/audioplayer.js")
+                script.
+                    $( function() { $( 'audio' ).audioPlayer(); } );
         // Right column with episode table
         .col-md-9(id="middle-col")
             h3 Episodes
@@ -64,12 +72,4 @@ block content
                                     button.listenlink(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{feed.imgs.i100}" type="button") Listen
                                 else
                                     span N/A
-        // Container for audio player.
-        div.podcast-player
-            div.playing-title
-                h3 No File Selected
-            audio(controls="controls" preload="auto" src="http://xamuel.com/blank-mp3-files/point1sec.mp3")
-            script(src="/javascripts/audioplayer.js")
-            script.
-                $( function() { $( 'audio' ).audioPlayer(); } );
 

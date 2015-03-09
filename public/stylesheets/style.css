@@ -45,9 +45,8 @@ tr.feed-row:hover {
 
 .playing-title {
   height: 25px;
-  top: 0;
   color: #e3e3e3;
-  background: #000;
+  font-size: 12px;
 }
 
 .podcast-player {
@@ -56,13 +55,7 @@ tr.feed-row:hover {
   background: -ms-radial-gradient( top, #444, #222 );
   background: -o-linear-gradient( top, #444, #222 );
   background: linear-gradient( top, #444, #222 );
-  position: fixed;
-  bottom: 0px;
-  margin-bottom: 0px;
-  padding-bottom: 0px;
-  left: 0px;
-  height: 50px;
-  width: 250px;
+  width: 100%;
 }
 
 .podcast-player audio {
