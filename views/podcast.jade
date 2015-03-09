@@ -1,8 +1,13 @@
+//- index.jade - Template for podcast feed pages/views. -//
+//- Authors: Ian McGaunn; Dave Zimmelman -//
+//- Modified: 09 Mar 15 -//
 extends layout
 
 block content
     .container
+        // Stores the processed title for use in browser history.
         #safetitle #{id + '/' + safetitle}
+        // Left column with feed data.
         .col-md-3(id="left-col")
             h3 #{feed.title}
             img.podcast-poster(src="#{feed.imgs.i600}")
@@ -16,6 +21,7 @@ block content
                     tr
                         th Genre
                         td #{feed.genre}
+        // Right column with episode table
         .col-md-9(id="middle-col")
             h3 Episodes
             table#episode-table(class="table table-bordered")
@@ -60,6 +66,7 @@ block content
                                     button.listenlink(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{feed.imgs.i100}" type="button") Listen
                                 else
                                     span N/A
+        // Container for audio player.
         div.podcast-player
             div.playing-title
                 h3 No File Selected

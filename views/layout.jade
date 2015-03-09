@@ -1,20 +1,31 @@
+//- index.jade - Abstract template for all page/views. -//
+// Podplay.me - Podcast browser and player.
+// Authors: Ian McGaunn; Dave Zimmelman
+// Modified: 09 Mar 15
 doctype html
 html
   head
     title= title
+    // Bootstrap style sheets
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css')
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css')
+    // Podplay global stylesheet
     link(rel='stylesheet', href='/stylesheets/style.css')
     if stylesheets
+        // Stylesheets needed for local view.
         for s in stylesheets
             link(rel='stylesheet', href="#{'/stylesheets/' + s + '.css'}")
+    // Bootstrap JS libraries
     script(src='//maxcdn.bootstrap.com/bootstrap/3.3.2/js/bootstrap.min.js')
     script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
+    // Podplay global JS library
     script(src='/javascripts/main.js')
     if javascripts
+        // Scripts needed for local view.
         for s in javascripts
             script(src="#{'/javascripts/' + s + '.js'}")
   body
+    // Navigation header
     nav.navbar.navbar-default.navbar-static-top.navbar-inverse
         .container
             a.navbar-brand(href="/") Podplay.me
