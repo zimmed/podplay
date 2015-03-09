@@ -63,7 +63,7 @@ router.get('/:id/:title?', function (req, res, next) {
                                                        i60 : result.artworkUrl60,
                                                        i30 : result.artworkUrl30 };
                         // Render client 'podcast' page/view, passing necessary data.
-                        res.render('podcast', { id: id, title: title, javascripts: ['podcast'], safetitle: safeTitle(title), feed: obj.rss.channel });
+                        res.render('podcast', { id: id, title: title, javascripts: ['podcast'], GLOBALS: {"safetitle": safeTitle(title)}, feed: obj.rss.channel });
                     });
                 });
             }

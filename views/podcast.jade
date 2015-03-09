@@ -5,8 +5,6 @@ extends layout
 
 block content
     .container
-        // Stores the processed title for use in browser history.
-        #safetitle #{id + '/' + safetitle}
         // Left column with feed data.
         .col-md-3(id="left-col")
             h3 #{feed.title}

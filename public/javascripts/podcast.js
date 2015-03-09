@@ -1,10 +1,15 @@
+/**
+ * index.js - Main library for individual podcast pages/views.
+ * Authors: Ian McGaunn; Dave Zimmelman
+ * Modified: 09 Mar 15
+ */
 (function (document, window, $) {
     'use strict';
-
+    
+    /* When document is finished loading, execute following code: */
     $().ready(function () {
-        var t = $('#safetitle').html();
-        window.history.replaceState({}, document.title, '/podcast/' + t);
-        $('#safetitle').remove();
+        // Reformat URL to reflect appropriate title.
+        window.history.replaceState({}, document.title, '/podcast/' + safetitle);
 
         // setup audio player
         // by default use the first URL in the table
