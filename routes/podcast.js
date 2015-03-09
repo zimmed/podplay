@@ -67,7 +67,7 @@ router.get('/:id/:title?', function (req, res, next) {
                         res.render('podcast', { id: id,
                                                 title: title,
                                                 stylesheets: ['audioplayer'],
-                                                javascripts: ['podcast', 'jquery.webticker'],
+                                                javascripts: ['podcast'],
                                                 GLOBALS: { "safetitle": id + '/' + t },
                                                 feed: obj.rss.channel });
                     });

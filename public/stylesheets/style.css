@@ -29,26 +29,6 @@ nav {
 
 /** CLASS SELECTORS **/
 
-#ticker {
-    -webkit-transition: all 0s linear;
-    -moz-transition: all 0s linear;
-    -o-transition: all 0s linear;
-    transition: all 0s linear;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#ticker li {
-  padding: 0;
-  padding-left: 4px;
-  height: 26px;
-  line-height: 26px;
-  color: #e3e3e3;
-  font-size: 12px;
-  margin: 0;
-}
-
 .navbar-brand {
     margin-right: 25px;
 }
@@ -69,6 +49,14 @@ tr.feed-row {
 
 tr.feed-row:hover {
   background: rgba(0,0,64,0.2);
+}
+
+.playing-title {
+  padding-left: 4px;
+  height: 26px;
+  line-height: 26px;
+  color: #e3e3e3;
+  font-size: 12px;
 }
 
 .podcast-player {
