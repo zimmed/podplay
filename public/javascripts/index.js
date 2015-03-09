@@ -37,10 +37,10 @@
     
     $().ready(function () {
         if (presearch) {
-            searchResults(data);
+            searchResults(presearch);
         }
         else if (prebrowse) {
-            browseResults(data);
+            browseResults(prebrowse);
         }
         $('#podcast-search').submit(function () {
             var searchTerm = $('#podcast-search-input').val();
@@ -62,6 +62,6 @@
         
         window.onpopstate = function(event) {
             window.location = document.location;
-        }
+        };
     });
 }(window, jQuery));
