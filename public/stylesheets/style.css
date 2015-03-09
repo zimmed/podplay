@@ -52,3 +52,8 @@ tr.feed-row:hover {
 #menu {
   padding-top: 15px;
 }
+
+#results-table tr > td:first-child {
+    width: 58px;
+    text-align: center;
+}
