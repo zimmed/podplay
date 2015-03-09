@@ -25,7 +25,7 @@ router.get('/search', function (req, res, next) {
     // Send requested search data received from Apple API back to caller.
     request(queryURL, function (error, response, body) {
         // Update cache with request
-        Cache.search[req.query.term] = JSON.stringify(JSON.parse(body));
+        Cache.search[req.query.term] = JSON.parse(body);
         res.send(body);
     });
 });
@@ -51,7 +51,7 @@ router.get('/browse', function (req, res, next) {
     // Send requested browse data received from Apple API back to caller.
     request(queryURL, function (error, response, body) {
         // Update cache with request
-        Cache.browse[req.query.genre] = JSON.stringify(JSON.parse(body));
+        Cache.browse[req.query.genre] = JSON.parse(body);
         res.send(body);
     });
 });
