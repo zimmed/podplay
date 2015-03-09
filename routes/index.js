@@ -17,7 +17,7 @@ router.get('/search/:term?', function (req, res, next) {
         res.redirect('/');
     }
     res.render('index', { title: 'Podplay.me',
-                          javascripts: ['index.js'],
+                          javascripts: ['index'],
                           GLOBALS: { presearch: cache.search[req.params.term] } });
 });
 
@@ -30,14 +30,14 @@ router.get('/browse/:cat?', function (req, res, next) {
         res.redirect('/');
     }
     res.render('index', { title: 'Podplay.me',
-                          javascripts: ['index.js'],
+                          javascripts: ['index'],
                           GLOBALS: { prebrowse: cache.browse[req.params.cat] } });
 });
 
 // GET home page.
 router.get('/', function (req, res, next) {
     // Render site index page/view for client.
-    res.render('index', { title: 'Podplay.me', javascripts: ['index.js'] });
+    res.render('index', { title: 'Podplay.me', javascripts: ['index'] });
 });
 
 // Expose route
