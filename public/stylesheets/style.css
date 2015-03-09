@@ -23,6 +23,10 @@ div {
   margin: 0;
 }
 
+nav {
+    height: 50px;
+}
+
 /** CLASS SELECTORS **/
 
 img.podcast-poster {
