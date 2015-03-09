@@ -26,7 +26,6 @@ router.get('/search', function (req, res, next) {
     request(queryURL, function (error, response, body) {
         // Update cache with request
         Cache.search[req.query.term] = JSON.stringify(JSON.parse(body));
-        console.log(Cache.search[req.query.term]);
         res.send(body);
     });
 });
