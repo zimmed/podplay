@@ -19,7 +19,7 @@ router.get('/search/:term?', function (req, res, next) {
     }
     res.render('index', { title: 'Podplay.me',
                           javascripts: ['index'],
-                          GLOBALS: { presearch: Cache.search[req.params.term] } });
+                          GLOBALS: { "presearch" : Cache.search[req.params.term] } });
 });
 
 // User goes back to browse results.
@@ -32,7 +32,7 @@ router.get('/browse/:cat?', function (req, res, next) {
     }
     res.render('index', { title: 'Podplay.me',
                           javascripts: ['index'],
-                          GLOBALS: { prebrowse: Cache.browse[req.params.cat] } });
+                          GLOBALS: { "prebrowse" : Cache.browse[req.params.cat] } });
 });
 
 // GET home page.
