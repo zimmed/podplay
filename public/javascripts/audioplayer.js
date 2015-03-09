@@ -184,13 +184,15 @@
 				{
 					$( this ).attr( 'title', params.strPlay ).find( 'a' ).html( params.strPlay );
 					thePlayer.removeClass( cssClass.playing );
-					isSupport ? theAudio.pause() : theAudio.Stop();
+					if (isSupport) theAudio.pause();
+                    else theAudio.Stop();
 				}
 				else
 				{
 					$( this ).attr( 'title', params.strPause ).find( 'a' ).html( params.strPause );
 					thePlayer.addClass( cssClass.playing );
-					isSupport ? theAudio.play() : theAudio.Play();
+					if (isSupport) theAudio.play();
+                    else theAudio.Play();
 				}
 				return false;
 			});
