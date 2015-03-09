@@ -1,11 +1,23 @@
+/**
+ * index.js - Main library for index page/view.
+ * Authors: Ian McGaunn; Dave Zimmelman
+ * Modified: 09 Mar 15
+ */
 (function (window, $) {
     'use strict';
 
+    /**
+     * Populate results table with search data.
+     * @param {Object} data - The JSON object returned from iTunes query.
+     */
     function searchResults(data) {
         var results = data.results, podcast, row, count;
+        // Update table title with result count.
         count = (results.length > 0) ? "" + results.length : "No";
         $('#right-col > h3').html(count + " Results");
+        // Remove existing results.
         $('#results-table tbody > tr').remove();
+        // Add entry for each podcast.
         for (podcast in results) {
             row = $('<tr class="feed-row" data-id="' + results[podcast].collectionId + '">');
             row.append($('<td>').html('<img src="' + results[podcast].artworkUrl60 + '">'));
@@ -20,11 +32,18 @@
         });
     }
     
+    /**
+     * Populate results table with browse data.
+     * @param {Object} data - The JSON object returned from iTunes query.
+     */
     function browseResults(data) {
         var results = data.feed.entry, podcast, row, count;
+        // Update table title with result count.
         count = (results.length > 0) ? "" + results.length : "No";
         $('#right-col > h3').html(count + " Results");
+        // Remove existing results.
         $('#results-table tbody > tr').remove();
+        // Add entry for each podcast.
         for (podcast in results) {
             row = $('<tr class="feed-row" data-id="' + results[podcast].id.attributes['im:id'] + '">');
             row.append($('<td>').html('<img src="' + results[podcast]['im:image'][0].label + '">'));
@@ -39,33 +58,44 @@
         });
     }
     
+    /* When document is finished loading, execute following code: */
     $().ready(function () {
+        // Check for search or browse data passed from server.
+        //  This is for cached data only.
         if (typeof(presearch) !== "undefined") {
             searchResults(presearch);
         }
         else if (typeof(prebrowse) !== "undefined") {
             browseResults(prebrowse);
         }
+        
+        // Search submission
         $('#podcast-search').submit(function () {
             var searchTerm = $('#podcast-search-input').val();
-
+            // Get search data from API.
             $.get('/api/search/?term=' + searchTerm, function (data) {
+                // Parse results and add to table.
                 searchResults(JSON.parse(data));
+                // Push new URL state.
                 window.history.pushState({}, document.title, '/search/' + searchTerm);
             });
         });
-
+        
+        // Browse submission
         $('#podcast-browse').submit(function () {
             var genre = $('#podcast-browse-cat').val();
-
+            // Get browse data from API.
             $.get('/api/browse/?limit=10&genre=' + genre, function (data) {
+                // Parse results and add to table.
                 browseResults(JSON.parse(data));
+                // Push new URL state.
                 window.history.pushState({}, document.title, '/browse/' + genre);
             });
         });
-        
+        /*
         window.onpopstate = function(event) {
             window.location = document.location;
         };
+        */
     });
 }(window, jQuery));
