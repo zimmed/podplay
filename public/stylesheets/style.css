@@ -5,10 +5,6 @@ body {
   background-color: white;
 }
 
-#menu {
-  padding-top: 15px;
-}
-
 a {
   color: #00B7FF;
 }
@@ -16,6 +12,11 @@ a {
 img.podcast-poster {
     width: 250px;
     height: 250px;
+}
+
+img.result-poster {
+    height: 48px;
+    width: 48px;
 }
 
 tr.feed-row {
@@ -46,4 +47,8 @@ tr.feed-row:hover {
 
 .container {
     margin-bottom: 50px;
+}
+
+#menu {
+  padding-top: 15px;
 }
