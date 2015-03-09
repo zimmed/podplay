@@ -2,7 +2,7 @@
     'use strict';
 
     function searchResults(data) {
-        var results = JSON.parse(data).results, podcast, row, count;
+        var results = data.results, podcast, row, count;
         count = (results.length > 0)
             ? "" + results.length
             : "No";
@@ -23,7 +23,7 @@
     }
     
     function browseResults(data) {
-        var results = JSON.parse(data).feed.entry, podcast, row, count;
+        var results = data.feed.entry, podcast, row, count;
         count = (results.length > 0)
             ? "" + results.length
             : "No";
@@ -54,7 +54,7 @@
             var searchTerm = $('#podcast-search-input').val();
 
             $.get('/api/search/?term=' + searchTerm, function (data) {
-                searchResults(data);
+                searchResults(JSON.parse(data));
                 window.history.pushState({}, document.title, '/search/' + searchTerm);
             });
         });
@@ -63,7 +63,7 @@
             var genre = $('#podcast-browse-cat').val();
 
             $.get('/api/browse/?limit=10&genre=' + genre, function (data) {
-                browseResults(data);
+                browseResults(JSON.parse(data));
                 window.history.pushState({}, document.title, '/browse/' + genre);
             });
         });
