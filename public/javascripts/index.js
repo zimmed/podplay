@@ -3,9 +3,7 @@
 
     function searchResults(data) {
         var results = data.results, podcast, row, count;
-        count = (results.length > 0)
-            ? "" + results.length
-            : "No";
+        count = (results.length > 0) ? "" + results.length : "No";
         $('#right-col > h3').html(count + " Results");
         $('#results-table tbody > tr').remove();
         for (podcast in results) {
@@ -24,9 +22,7 @@
     
     function browseResults(data) {
         var results = data.feed.entry, podcast, row, count;
-        count = (results.length > 0)
-            ? "" + results.length
-            : "No";
+        count = (results.length > 0) ? "" + results.length : "No";
         $('#right-col > h3').html(count + " Results");
         $('#results-table tbody > tr').remove();
         for (podcast in results) {
