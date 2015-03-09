@@ -11,7 +11,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var cache = require('lib/badcache.js');
+var cache = require('./lib/badcache.js');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
