@@ -44,7 +44,9 @@ tr.feed-row:hover {
 }
 
 .playing-title {
-  height: 25px;
+  padding-left: 4px;
+  height: 26px;
+  line-height: 26px;
   color: #e3e3e3;
   font-size: 12px;
 }
