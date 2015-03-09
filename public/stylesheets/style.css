@@ -1,3 +1,12 @@
+/**
+ * style.css - Main stylesheet for podplay.me
+ * Authors: Ian McGaunn; Dave Zimmelman
+ * Modified: 09 Mar 15
+ */
+
+
+/** ELEMENT SELECTORS **/
+
 body {
   background: #fafafa;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -8,6 +17,9 @@ body {
 a {
   color: #00B7FF;
 }
+
+
+/** CLASS SELECTORS **/
 
 img.podcast-poster {
     width: 250px;
@@ -22,6 +34,7 @@ img.result-poster {
 tr.feed-row {
     cursor: pointer;
 }
+
 tr.feed-row:hover {
     background: rgba(0,0,64,0.2);
 }
@@ -49,10 +62,14 @@ tr.feed-row:hover {
     margin-bottom: 50px;
 }
 
+
+/** ID SELECTORS **/
+
 #menu {
   padding-top: 15px;
 }
 
+/* Keep image column correct static width */
 #results-table tr > td:first-child {
     width: 58px;
     text-align: center;
