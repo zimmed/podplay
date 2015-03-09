@@ -92,10 +92,11 @@
                 window.history.pushState({}, document.title, '/browse/' + genre);
             });
         });
-        /*
+        
+        // Reload page when user goes forward or back to process cached search or browse results.
         window.onpopstate = function(event) {
             window.location = document.location;
         };
-        */
+        
     });
 }(window, jQuery));
