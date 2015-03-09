@@ -24,8 +24,8 @@ html
             script(src="#{'/javascripts/' + s + '.js'}")
     if GLOBALS
         // Variables passed from server to client on render.
-        script.
-            - for key in GLOBALS
+        for key in GLOBALS
+            script.
                 var #{key} = #{GLOBALS[key]};
   body
     // Navigation header
