@@ -29,6 +29,10 @@ nav {
 
 /** CLASS SELECTORS **/
 
+.navbar-brand {
+    margin-right: 25px;
+}
+
 img.podcast-poster {
   width: 250px;
   height: 250px;
