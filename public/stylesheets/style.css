@@ -18,25 +18,29 @@ a {
   color: #00B7FF;
 }
 
+div {
+  padding: 0;
+  margin: 0;
+}
 
 /** CLASS SELECTORS **/
 
 img.podcast-poster {
-    width: 250px;
-    height: 250px;
+  width: 250px;
+  height: 250px;
 }
 
 img.result-poster {
-    height: 48px;
-    width: 48px;
+  height: 48px;
+  width: 48px;
 }
 
 tr.feed-row {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 tr.feed-row:hover {
-    background: rgba(0,0,64,0.2);
+  background: rgba(0,0,64,0.2);
 }
 
 .playing-title {
@@ -46,17 +50,18 @@ tr.feed-row:hover {
 }
 
 .podcast-player {
-    background: -webkit-linear-gradient( top, #444, #222 );
-    background: -moz-linear-gradient( top, #444, #222 );
-    background: -ms-radial-gradient( top, #444, #222 );
-    background: -o-linear-gradient( top, #444, #222 );
-    background: linear-gradient( top, #444, #222 );
-    position: fixed;
-    bottom: 0px;
-    margin-bottom: 0px;
-    padding-bottom: 0px;
-    left: 0px;
-    width: 100%;
+  background: -webkit-linear-gradient( top, #444, #222 );
+  background: -moz-linear-gradient( top, #444, #222 );
+  background: -ms-radial-gradient( top, #444, #222 );
+  background: -o-linear-gradient( top, #444, #222 );
+  background: linear-gradient( top, #444, #222 );
+  position: fixed;
+  bottom: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  left: 0px;
+  height: 50px;
+  width: 100%;
 }
 
 .podcast-player audio {
@@ -64,7 +69,7 @@ tr.feed-row:hover {
 }
 
 .container {
-    margin-bottom: 50px;
+  margin-bottom: 50px;
 }
 
 
@@ -76,6 +81,6 @@ tr.feed-row:hover {
 
 /* Keep image column correct static width */
 #results-table tr > td:first-child {
-    width: 58px;
-    text-align: center;
+  width: 58px;
+  text-align: center;
 }
