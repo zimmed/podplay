@@ -9,7 +9,7 @@ var express = require('express');
 var request = require('request');
 var router = express.Router();
 
-var Cache = require('./lib/badcache');
+var Cache = require('../lib/badcache');
 
 /**
  * Route for /search URL
