@@ -45,6 +45,7 @@ tr.feed-row:hover {
 
 .playing-title {
   height: 25px;
+  top: 0;
   color: #e3e3e3;
   background: #000;
 }
