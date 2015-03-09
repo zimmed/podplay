@@ -47,7 +47,7 @@ tr.feed-row:hover {
 
 .podcast-player {
     position: fixed;
-    bottom: -5px;
+    bottom: 0px;
     margin-bottom: 0px;
     padding-bottom: 0px;
     left: 0px;
