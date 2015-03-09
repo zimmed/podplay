@@ -12,26 +12,26 @@ var router = express.Router();
 router.get('/search/:term?', function (req, res, next) {
     // Check that param exists and search has been cached.
     if (!req.params.hasOwnProperty('term') ||
-        !cache.search.hasOwnProperty(req.params.term)) {
+        !Cache.search.hasOwnProperty(req.params.term)) {
         // If not, reroute to landing page.
         res.redirect('/');
     }
     res.render('index', { title: 'Podplay.me',
                           javascripts: ['index'],
-                          GLOBALS: { presearch: cache.search[req.params.term] } });
+                          GLOBALS: { presearch: Cache.search[req.params.term] } });
 });
 
 // User goes back to browse results.
 router.get('/browse/:cat?', function (req, res, next) {
     // Check that param exists and browse has been cached.
     if (!req.params.hasOwnProperty('cat') ||
-        !cache.browse.hasOwnProperty(req.params.cat)) {
+        !Cache.browse.hasOwnProperty(req.params.cat)) {
         // If not, reroute to landing page.
         res.redirect('/');
     }
     res.render('index', { title: 'Podplay.me',
                           javascripts: ['index'],
-                          GLOBALS: { prebrowse: cache.browse[req.params.cat] } });
+                          GLOBALS: { prebrowse: Cache.browse[req.params.cat] } });
 });
 
 // GET home page.
