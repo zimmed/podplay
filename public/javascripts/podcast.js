@@ -25,7 +25,7 @@
             var audioURL = $(this).attr('data-audio');
             var title    = $(this).attr('data-title');
 
-            $('.playing-title h3').html(title);
+            $('.playing-title span').html(title);
             var player = $('audio');
 
             player.attr('src', audioURL);
