@@ -154,13 +154,7 @@
 		}
 		.audioplayer-bar-played
 		{
-			background: #007fd1;
-			background: -webkit-gradient( linear, left top, right top, from( #007fd1 ), to( #c600ff ) );
-			background: -webkit-linear-gradient( left, #007fd1, #c600ff );
-			background: -moz-linear-gradient( left, #007fd1, #c600ff );
-			background: -ms-radial-gradient( left, #007fd1, #c600ff );
-			background: -o-linear-gradient( left, #007fd1, #c600ff );
-			background: linear-gradient( left, #007fd1, #c600ff );
+			background: #fff;
 			z-index: 2;
 		}
 	.audioplayer-volume
@@ -281,13 +275,7 @@
 					position: absolute;
 					bottom: 0;
 					left: 0;
-					background: #007fd1;
-					background: -webkit-gradient( linear, left bottom, left top, from( #007fd1 ), to( #c600ff ) );
-					background: -webkit-linear-gradient( bottom, #007fd1, #c600ff );
-					background: -moz-linear-gradient( bottom, #007fd1, #c600ff );
-					background: -ms-radial-gradient( bottom, #007fd1, #c600ff );
-					background: -o-linear-gradient( bottom, #007fd1, #c600ff );
-					background: linear-gradient( bottom, #007fd1, #c600ff );
+					background: #fff;
 				}
 		.audioplayer-novolume .audioplayer-volume
 		{
