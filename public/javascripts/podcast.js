@@ -29,9 +29,8 @@
             var player = $('audio');
 
             player.attr('src', audioURL);
-            player[0].pause();
-            player[0].load();
-            player[0].play();
+            player.load();
+            $('.audioplayer-playpause').trigger('click');
 
         });
 
