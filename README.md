@@ -19,3 +19,8 @@ with `gulp style`
 ### Run Basic Server
 To start a node HTTP server running the podplay express application
 run `gulp serve`
+
+### Start database Server
+On OSX run `mongod --config /usr/local/etc/mongod.conf`
+
+On Linux use `service start mongod`
