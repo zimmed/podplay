@@ -12,6 +12,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 var userSchema = mongoose.Schema({
   _id: Number,
   name: String,
+  email: String,
   pwHash: String,
   subscriptions: Array
 });
