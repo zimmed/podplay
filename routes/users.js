@@ -69,7 +69,7 @@ router.post('/register', function (req, res, next) {
                     message: "Registration for " + username + " was successful.",
                     error: e
                     });
-            }
+            });
     }
 });
 
