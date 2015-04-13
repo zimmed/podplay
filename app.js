@@ -20,6 +20,8 @@ var test = require('./routes/test');
 var api = require('./routes/api');
 var podcast = require('./routes/podcast');
 
+var badcache = require('./lib/badcache');
+
 var app = express();
 
 // view engine setup
@@ -77,7 +79,8 @@ app.use(function(err, req, res, next) {
     });
 });
 
-
-
+// Update top 100 cache every 2 hours
+badcache.update_top100();
+var top100timer = setInterval(badcache.update_top100, 1000 * 60 * 60 * 2) 
 
 module.exports = app;
