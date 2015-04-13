@@ -5,6 +5,7 @@
  * Modified: 09 Mar 15
  */
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
