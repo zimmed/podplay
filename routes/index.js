@@ -41,5 +41,13 @@ router.get('/', function (req, res, next) {
     res.render('index', { title: 'Podplay.me', javascripts: ['index'] });
 });
 
+// GET register page
+router.get('/register', function (req, res, next) {
+  // Render login page.
+  res.render('register', { title: 'Podplay.me' });
+});
+
+
+
 // Expose route
 module.exports = router;
