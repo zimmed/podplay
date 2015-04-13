@@ -25,7 +25,7 @@ gulp.task('lint', function() {
 
 // run the express server
 gulp.task('serve', function() {
-  var port = '80';
+  var port = '8080';
   app.set('port', port);
 
   var server = http.createServer(app);
