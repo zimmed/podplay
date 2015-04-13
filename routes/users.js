@@ -35,8 +35,8 @@ router.post('/register', function (req, res, next) {
     // this implies a malformed request was received
 
     // throw an internal server error and render the error template.
-    var error = new Error('Internal Server Error');
-    error.status = 500;
+    var error = new Error('Bad Request');
+    error.status = 400;
     res.render('error', {
       message: "Improper registration information entered",
       error: error});
