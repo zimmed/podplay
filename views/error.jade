@@ -3,6 +3,6 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
+  h1#emsg= message
+  h2#estatus= error.status
   pre #{error.stack}
