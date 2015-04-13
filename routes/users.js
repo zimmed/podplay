@@ -6,7 +6,7 @@
  */
 
 var express = require('express');
-var user = require('../lib/user');
+var users = require('../lib/users');
 var router = express.Router();
 
 router.post('/register', function (req, res, next) {
@@ -28,7 +28,7 @@ router.post('/register', function (req, res, next) {
     }
     
     // Check that request data is valid
-    else if (!user.validUsername(req.params.name)) {
+    else if (!users.validUsername(req.params.name)) {
         // Invalid username
         // (Must be 5 to 26 chars, containing only alphanumeric symbols, or the following: . _ -)
         res.render('error', {
@@ -36,7 +36,7 @@ router.post('/register', function (req, res, next) {
             error: error
             });
     }
-    else if (!user.validEmail(req.params.email)) {
+    else if (!users.validEmail(req.params.email)) {
         // Invalid email address
         // (Must be format of some.user_name@some-name.some.domain)
         res.render('error', {
@@ -44,7 +44,7 @@ router.post('/register', function (req, res, next) {
             error: error
             });
     }
-    else if (!user.validPassword(req.params.pw)) {
+    else if (!users.validPassword(req.params.pw)) {
         // Invalid password
         // (Must be 6 to 26 chars, containing none of the following: \ ' ; <whitespace>)
         res.render('error', {
@@ -54,7 +54,7 @@ router.post('/register', function (req, res, next) {
     }
     else {
         // Data supplied is valid. 
-        user.registerUser(req.params.name, req.params.email, req.params.pw,
+        users.registerUser(req.params.name, req.params.email, req.params.pw,
             function (error, msg) {
                 // Registration unsuccessful; error and message passed back
                 if (error.err) console.log(error.err);
@@ -98,7 +98,7 @@ router.post('/login', function (req, res, next) {
             });
     }
     // Ensure post data is valid.
-    else if (!user.validUsername(req.params.name)) {
+    else if (!users.validUsername(req.params.name)) {
         // Invalid username
         // (Must be 5 to 26 chars, containing only alphanumeric symbols, or the following: . _ -)
         res.render('error', {
@@ -106,7 +106,7 @@ router.post('/login', function (req, res, next) {
             error: error
             });
     }
-    else if (!user.validPassword(req.params.pw)) {
+    else if (!users.validPassword(req.params.pw)) {
         // Invalid password
         // (Must be 6 to 26 chars, containing none of the following: \ ' ; <whitespace>)
         res.render('error', {
@@ -119,7 +119,7 @@ router.post('/login', function (req, res, next) {
         var name = req.params.name, pw = req.params.pw;
 
         // Check username and password against database.
-        user.validateUser(name, pw, function (error, msg) {
+        users.validateUser(name, pw, function (error, msg) {
                 // Login unsuccessful; error and message passed back.
                 if (error.err) console.log(error.err);
                 res.render('error', {message: msg, error: error});
@@ -174,7 +174,7 @@ router.get('/favorite/:id', function (req, res, next) {
     }
     else {
         // User logged in.
-        user.addSubscription(req.session.user, pid, function (error, message) {
+        users.addSubscription(req.session.user, pid, function (error, message) {
                 // Failure; error and message passed back.
                 if (error.err) console.log(error.err);
                 res.render('error', {message: msg, error: error});
@@ -204,7 +204,7 @@ router.get('/defavorite/:id', function (req, res, next) {
     }
     else {
         // User logged in.
-        user.delSubscription(req.session.user, pid, function (error, message) {
+        users.delSubscription(req.session.user, pid, function (error, message) {
                 // Failure; error and message passed back.
                 if (error.err) console.log(error.err);
                 res.render('error', {message: msg, error: error});
