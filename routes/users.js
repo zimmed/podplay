@@ -60,13 +60,13 @@ router.post('/register', function (req, res, next) {
                 if (error.err) console.log(error.err);
                 res.render('error', {message: msg, error: error});
             },
-            function (username) {
+            function (user) {
                 // Registration successful; username passed back
                 var e = new Error('OK');
                 e.status = 200;
-                req.session.lastUser = username;
+                req.session.lastUser = user.$applyname;
                 res.render('error', {
-                    message: "Registration for " + username + " was successful.",
+                    message: "Registration for " + user.name + " was successful.",
                     error: e
                     });
             });
@@ -159,5 +159,64 @@ router.get('/logout', function (req, res, next) {
 
 });
 
+router.get('/favorite/:id', function (req, res, next) {
+    // Add podcast ID to user's favorites.
+    
+    var pid = req.params.id, error = new Error('Unauthorized');
+    error.status = 401;
+    
+    if (!req.session.user) {
+        // No user session.
+        res.render('error', {
+            message: "Must be logged in.",
+            error: error
+            });
+    }
+    else {
+        // User logged in.
+        user.addSubscription(req.session.user, pid, function (error, message) {
+                // Failure; error and message passed back.
+                if (error.err) console.log(error.err);
+                res.render('error', {message: msg, error: error});
+            },
+            function (user) {
+                // Success; Update session user.
+                req.session.user = user;
+                var e = new Error('OK');
+                e.status = 200;
+                res.render('error', {message: "Favorited " + pid + ".", error: e});
+            });
+    }
+});
+
+router.get('/defavorite/:id', function (req, res, next) {
+    // Remove podcast ID from user's favorites.
+    
+    var pid = req.params.id, error = new Error('Unauthorized');
+    error.status = 401;
+    
+    if (!req.session.user) {
+        // No user session.
+        res.render('error', {
+            message: "Must be logged in.",
+            error: error
+            });
+    }
+    else {
+        // User logged in.
+        user.delSubscription(req.session.user, pid, function (error, message) {
+                // Failure; error and message passed back.
+                if (error.err) console.log(error.err);
+                res.render('error', {message: msg, error: error});
+            },
+            function (user) {
+                // Success; Update session user.
+                req.session.user = user;
+                var e = new Error('OK');
+                e.status = 200;
+                res.render('error', {message: "Removed " + pid + " from favorites.", error: e});
+            });
+    }
+});
 
 module.exports = router;
