@@ -18,32 +18,36 @@ var Podcasts = require('../lib/podcasts');
 router.get('/view/splash', function (req, res, next) {
     var casts;
     if (req.session.user) {
-        Cache.aggregate(req.session.user.subscriptions, function (err, msg) {
-            console.log(msg);
-            console.log(err);
-            res.render(msg);
-        }, function (data) {
-            res.render('splash', {user: req.session.user,
-                                    podcasts: data[0],
-                                    favorites: data[1],
-                                    genres: Podcasts.Genres,
-                                    getGenreId: Podcasts.getGenreId});
-        });
-        
+        res.render('splash', {user: req.session.user,
+                                genres: Podcasts.Genres});
     }
     else {
-        Cache.aggregate(false, function (err, msg) {
+        res.render('splash-guest', {genres: Podcasts.Genres});
+    }
+});
+router.get('/view/podcast/:id', function (req, res, next) {
+    
+});
+router.get('/castcat/:gid', function (req, res, next) {
+    if (req.session.user) {
+        Cache.aggregate_cat(req.params.gid,
+                            req.session.user.subscriptions,
+                            function (err, msg) {
             console.log(msg);
             console.log(err);
             res.render(msg);
         }, function (data) {
-            res.render('splash-guest', {podcasts: data[0]});
+            res.json({podcasts: data[0], favorites: data[1]});
+        });
+    } else {
+        Cache.aggregate_cat(req.params.gid, false, function (err, msg) {
+            console.log(msg);
+            console.log(err);
+            res.render(msg);
+        }, function (data) {
+            res.json({podcasts: data[0]});
         });
     }
-});
-
-router.get('/view/podcast/:id', function (req, res, next) {
-    
 });
 
 /**
