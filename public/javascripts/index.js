@@ -119,39 +119,7 @@
         };
         var searchBoxTH = null;
         var lastTickSearch = "";
-        $('#podcast-search-input').on('change keyup paste', function (e) {
-            if (e.type == "keyup" && e.which == 13) {
-                // Enter key pressed
-                submitSearch();
-            }
-            else if ($(this).val().trim() !== "" &&
-                     $(this).val().trim() !== lastTickSearch &&
-                     searchBoxTH === null) {
-                quicksearch();
-                searchBoxTH = setInterval(quicksearch, 1000);
-            }
-            else if ($(this).val().trim() === "") {
-                clearInterval(searchBoxTH);
-                searchBoxTH = null;
-                searchResults({});
-            }
-        });
-        // Search button press
-        $('#podcast-search-button').click(function () {
-            submitSearch();
-        });
         
-        // Browse submission
-        $('#podcast-browse').submit(function () {
-            var genre = $('#podcast-browse-cat').val();
-            // Get browse data from API.
-            $.get('/api/browse/?limit=10&genre=' + genre, function (data) {
-                // Parse results and add to table.
-                browseResults(JSON.parse(data));
-                // Push new URL state.
-                window.history.pushState({}, document.title, '/browse/' + genre);
-            });
-        });
         
         // Reload page when user goes forward or back to process cached search or browse results.
         window.onpopstate = function(event) {
@@ -159,7 +127,9 @@
         };
         
         $.get('/api/view/splash', function (data) {
+            
             $('#left-col').html(data);
+            
             $.get('/api/castcat/0', function (data) {
                 for (var i in data.podcasts) {
                     $('#pc-0 > .panel-body').append('<div class="castnail" data-feed="'+data.podcasts[i].feedUrl+'" data-title="'+data.podcasts[i].title+'"><img src="'+data.podcasts[i].poster100+'"></div>');
@@ -176,6 +146,40 @@
                     for (i in data.podcasts) {
                         el.append('<div class="castnail" data-feed="'+data.podcasts[i].feedUrl+'" data-title="'+data.podcasts[i].title+'"><img src="'+data.podcasts[i].poster100+'"></div>');
                     }
+                });
+            });
+            
+            $('#podcast-search-input').on('change keyup paste', function (e) {
+                if (e.type == "keyup" && e.which == 13) {
+                    // Enter key pressed
+                    submitSearch();
+                }
+                else if ($(this).val().trim() !== "" &&
+                         $(this).val().trim() !== lastTickSearch &&
+                         searchBoxTH === null) {
+                    quicksearch();
+                    searchBoxTH = setInterval(quicksearch, 1000);
+                }
+                else if ($(this).val().trim() === "") {
+                    clearInterval(searchBoxTH);
+                    searchBoxTH = null;
+                    searchResults({});
+                }
+            });
+            // Search button press
+            $('#podcast-search-button').click(function () {
+                submitSearch();
+            });
+
+            // Browse submission
+            $('#podcast-browse').submit(function () {
+                var genre = $('#podcast-browse-cat').val();
+                // Get browse data from API.
+                $.get('/api/browse/?limit=10&genre=' + genre, function (data) {
+                    // Parse results and add to table.
+                    browseResults(JSON.parse(data));
+                    // Push new URL state.
+                    window.history.pushState({}, document.title, '/browse/' + genre);
                 });
             });
         });
