@@ -5,7 +5,7 @@
 // Left column with feed data.
 .col-md-3(id="sub-left-col")
     h3 #{feed.title}
-    img.podcast-poster(src="#{feed.imgs.i600}")
+    img.podcast-poster(src="#{podcast.poster600}")
     // Container for audio player.
     div.podcast-player
         div.playing-title
@@ -22,8 +22,11 @@
                 th Author
                 td #{feed['itunes:author']}
             tr
+                th Studio
+                td #{podcast.artistName}
+            tr
                 th Genre
-                td #{feed.genre}
+                td #{podcast.genre}
 // Right column with episode table
 .col-md-6(id="sub-middle-col")
     h3 Episodes
@@ -66,7 +69,7 @@
                             span N/A
                     td
                         if ep.enclosure
-                            button.listenlink(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{feed.imgs.i100}" type="button") Listen
+                            button.listenlink(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button") Listen
                         else
                             span N/A
 

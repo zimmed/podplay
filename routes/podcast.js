@@ -28,6 +28,7 @@ router.get('/:id/:title?', function (req, res, next) {
                 // Render client 'podcast' page/view, passing necessary data.
                 res.render('podcast', {id: id,
                                        title: podcast.title,
+                                       podcast: podcast,
                                        GLOBALS: { "safetitle": id + '/' + podcast.title_uri },
                                        feed: obj.rss.channel });
             });
