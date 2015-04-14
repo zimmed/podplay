@@ -3,6 +3,8 @@
 //- Modified: 09 Mar 15 -//
 
 // Left column with feed data.
+.script
+    window.safetitle = "#{safetitle}";
 .col-md-4(id="sub-left-col")
     h3 #{feed.title}
     img.podcast-poster(src="#{podcast.poster600}")
@@ -20,9 +22,6 @@
         tbody
             tr
                 th Author
-                td #{feed['itunes:author']}
-            tr
-                th Studio
                 td #{podcast.artistName}
             tr
                 th Genre
