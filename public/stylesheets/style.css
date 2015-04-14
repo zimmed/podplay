@@ -144,12 +144,11 @@ fieldset {
     -webkit-padding-after: 0.625em;
     border: 2px groove threedface;
     padding: 30px;
-    background-color: #eff4f6;
-}
 
 #login, #register {
     z-index: 6;
-    background: rgba(0,0,0,0);
+    background-color: #eff4f6;
+    padding: 20px;
     border: none;
     display: none;
 }
