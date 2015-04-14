@@ -11,7 +11,7 @@
         if (!append) $(selector).html('');
         for (i in pcasts) {
             var classes = (fav) ? "castnail favorite" : "castnail";
-            $(selector).append('<div class="'+classes+'" data-feed="'+data.pcasts[i].feedUrl+'" data-title="'+data.pcasts[i].title+'"><img src="'+data.pcasts[i].poster100+'"></div>');
+            $(selector).append('<div class="'+classes+'" data-feed="'+pcasts[i].feedUrl+'" data-title="'+pcasts[i].title+'"><img src="'+pcasts[i].poster100+'"></div>');
         }
     }
     
