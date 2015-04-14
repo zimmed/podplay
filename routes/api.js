@@ -28,7 +28,7 @@ router.get('/view/splash', function (req, res, next) {
 router.get('/view/podcast/:id', function (req, res, next) {
     var id = req.params.id;
     // HTTP request information on podcast ID via Apple API
-    podcasts.getPodcast(id, function (error, msg) {
+    Podcasts.getPodcast(id, function (error, msg) {
         res.render('error', { message: msg, error: error});
     }, function (podcast) {
         request(podcast.feedUrl, function (error, response, body) {
