@@ -8,46 +8,10 @@ block content
     div.col-md-9(id="left-col")
       // Search form
       div.input-group
+        span.input-group-addon.glyphicon.glyphicon-search#saddon
+        input.form-control(type="text" placeholder="Search for a podcast" aria-describedby="saddon")
         div.input-group-btn
-            button(class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false") All
-                span.caret
-            ul.dropdown-menu(role="menu")
-                li
-                    a(href="#" data-genre="0" selected="true") All
-                li.divider
-                li
-                    a(href="javascript:void();" data-genre="1301") Arts
-                li
-                    a(href="javascript:void();" data-genre="1321") Business
-                li
-                    a(href="javascript:void();" data-genre="1303") Comedy
-                li
-                    a(href="javascript:void();" data-genre="1304") Education
-                li
-                    a(href="javascript:void();" data-genre="1323") Games & Hobbies
-                li
-                    a(href="javascript:void();" data-genre="1335") Government & Orgs
-                li
-                    a(href="javascript:void();" data-genre="1307") Health
-                li
-                    a(href="javascript:void();" data-genre="1305") Kids & Family
-                li
-                    a(href="javascript:void();" data-genre="1310") Music
-                li
-                    a(href="javascript:void();" data-genre="1311") News & Politics
-                li
-                    a(href="javascript:void();" data-genre="1314") Religion
-                li
-                    a(href="javascript:void();" data-genre="1315") Science
-                li
-                    a(href="javascript:void();" data-genre="1324") Society
-                li
-                    a(href="javascript:void();" data-genre="1316") Sports & Rec
-                li
-                    a(href="javascript:void();" data-genre="0") Technology
-                li
-                    a(href="javascript:void();" data-genre="0") TV & Film
-        input.form-control(type="text" aria-label="..." placeholder="Search for a podcast")
+            button(class="btn btn-default" type="button")
     // Query results container
     div.col-md-3(id="right-col")
       h3 No Results
