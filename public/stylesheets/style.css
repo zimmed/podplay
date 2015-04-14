@@ -134,25 +134,8 @@ tr.feed-row:hover {
     padding-bottom: 0px;
 }
 
-#login {
-    height: 250px;
-    width: 300px;
-    position: fixed;
-    top: 25%;
-    left: 50%;
-    margin-left: -150px;
-    z-index: 6;
-    background: #fefefe;
-    border: 1px solid #C3D4DB;
-    border-top: 1px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    -moz-box-shadow: rgba(0,0,0,0.30) 0 0 1px;
-    -webkit-box-shadow: rgba(0,0,0,0.30) 0 0 1px;
-    box-shadow: rgba(0,0,0,0.15) 0 0 1px;
-    color: #444;
-    display: block;
+fieldset {
+  display: block;
   -webkit-margin-start: 2px;
   -webkit-margin-end: 2px;
   -webkit-padding-before: 0.35em;
@@ -162,6 +145,25 @@ tr.feed-row:hover {
   border: 2px groove threedface;
   padding-top: 10px;
   padding-right: 20px;
+}
+
+#login {
+    height: 250px;
+    width: 300px;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    margin-left: -150px;
+    z-index: 6;
+    border: 1px solid #C3D4DB;
+    border-top: 1px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: rgba(0,0,0,0.30) 0 0 1px;
+    -webkit-box-shadow: rgba(0,0,0,0.30) 0 0 1px;
+    box-shadow: rgba(0,0,0,0.15) 0 0 1px;
+    color: #444;
 }
 
 #dimmer {
