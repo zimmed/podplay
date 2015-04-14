@@ -110,6 +110,7 @@ tr.feed-row:hover {
     border: none;
     margin-right: 10px;
     white-space: normal;
+    cursor: pointer;
 }
 
 .castnail > img {

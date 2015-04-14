@@ -6,11 +6,12 @@
 (function (window, $) {
     'use strict';
 
-    function insertPodcasts(pcasts, selector) {
+    function insertPodcasts(pcasts, selector, append, fav) {
         var i;
-        $(selector).html('');
+        if (!append) $(selector).html('');
         for (i in pcasts) {
-            $(selector).append('<img src="'+pcasts[i].poster100+'">');
+            var classes = (fav) ? "castnail favorite" : "castnail";
+            $(selector).append('<div class="'+classes+'" data-feed="'+data.pcasts[i].feedUrl+'" data-title="'+data.pcasts[i].title+'"><img src="'+data.pcasts[i].poster100+'"></div>');
         }
     }
     
@@ -131,21 +132,16 @@
             $('#left-col').html(data);
             
             $.get('/api/castcat/0', function (data) {
-                for (var i in data.podcasts) {
-                    $('#pc-0 > .panel-body').append('<div class="castnail" data-feed="'+data.podcasts[i].feedUrl+'" data-title="'+data.podcasts[i].title+'"><img src="'+data.podcasts[i].poster100+'"></div>');
-                }
+                insertPodcasts(data.podcasts, '#pc-0 > .panel-body', false, false);
             });
             $('#left-col .genre-panel').each(function () {
                 var i, el = $(this).find('.panel-body'), gid = $(this).data('genreid');
                 $.get('/api/castcat/' + gid, function (data) {
+                    el.html('');
                     if (data.favorites) {
-                        for (i in data.favorites) {
-                            el.append('<div class="castnail favorite" data-feed="'+data.favorites[i].feedUrl+'" data-title="'+data.favorites[i].title+'"><img src="'+data.favorites[i].poster100+'"></div>');
-                        }
+                        insertPodcasts(data.favorites, el, false, true);
                     }
-                    for (i in data.podcasts) {
-                        el.append('<div class="castnail" data-feed="'+data.podcasts[i].feedUrl+'" data-title="'+data.podcasts[i].title+'"><img src="'+data.podcasts[i].poster100+'"></div>');
-                    }
+                    insertPodcasts(data.podcasts, el, false, false);
                 });
             });
             
