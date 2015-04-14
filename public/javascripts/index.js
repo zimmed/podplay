@@ -33,14 +33,14 @@
                     submitSearch();
                 }
                 else if ($(this).val().trim() !== "" &&
-                         $(this).val().trim() !== lastTickSearch &&
-                         searchBoxTH === null) {
-                    quicksearch();
-                    searchBoxTH = setInterval(quicksearch, 250);
+                         $(this).val().trim() !== window.lastTickSearch &&
+                         window.searchBoxTH === null) {
+                    window.quicksearch();
+                    window.searchBoxTH = setInterval(window.quicksearch, 250);
                 }
                 else if ($(this).val().trim() === "") {
-                    clearInterval(searchBoxTH);
-                    searchBoxTH = null;
+                    clearInterval(window.searchBoxTH);
+                    window.searchBoxTH = null;
                     searchResults({});
                 }
             });
@@ -91,12 +91,12 @@
     /* When document is finished loading, execute following code: */
     $().ready(function () {
         
-        var searchBoxTH = null;
-        var lastTickSearch = "";
+        window.searchBoxTH = null;
+        window.lastTickSearch = "";
         // Submit search query
         var submitSearch = function () {
-            clearInterval(searchBoxTH);
-            searchBoxTH = null;
+            clearInterval(window.searchBoxTH);
+            window.searchBoxTH = null;
             var searchTerm = $('#podcast-search-input').val();
             // Get search data from API.
             $.get('/api/search/?term=' + searchTerm, function (data) {
@@ -109,13 +109,13 @@
         // Search box change
         var quicksearch = function () {
             var s = $('#podcast-search-input').val().trim();
-            if (s == lastTickSearch) {
-                clearInterval(searchBoxTH);
-                searchBoxTH = null;
+            if (s == window.lastTickSearch) {
+                clearInterval(window.searchBoxTH);
+                window.searchBoxTH = null;
                 return;
             }
             if (s != "") {
-                lastTickSearch = s;
+                window.lastTickSearch = s;
                 $.get('/api/quicksearch/?term=' + s, function (data) {
                     searchResults(data);
                 });
