@@ -81,6 +81,24 @@
     $().ready(function () {
         $.get('/api/view/splash', function (data) {
             $('#left-col').html(data);
+            $.get('/api/castcat/0', function (data) {
+                for (var i in data.podcasts) {
+                    $('#pc-0').append('<div class="castnail" data-feed="'+data.podcasts[i].feedUrl+'" data-title="'+data.podcasts[i].title+'"><img src="'+data.podcasts[i].poster100+'"></div>');
+                }
+            });
+            $('#left-col .genre-panel').each(function () {
+                var i, el = $(this).find('.panel-body'), gid = $(this).data('genreid');
+                $.get('/api/castcat/' + gid, function (data) {
+                    if (data.favorites) {
+                        for (i in data.favorites) {
+                            el.append('<div class="castnail favorite" data-feed="'+data.favorites[i].feedUrl+'" data-title="'+data.favorites[i].title+'"><img src="'+data.favorites[i].poster100+'"></div>');
+                        }
+                    }
+                    for (i in data.podcasts) {
+                        el.append('<div class="castnail" data-feed="'+data.podcasts[i].feedUrl+'" data-title="'+data.podcasts[i].title+'"><img src="'+data.podcasts[i].poster100+'"></div>');
+                    }
+                });
+            });
         });
         // Check for search or browse data passed from server.
         //  This is for cached data only.
