@@ -81,9 +81,12 @@
         };
         var searchBoxTH = null;
         $('#podcast-search-input').on('change keyup paste', function () {
-            if (searchBoxTH === null) {
+            if ($(this).val().trim() !== "" && searchBoxTH === null) {
                 quicksearch();
                 searchBoxTH = setInterval(quicksearch, 1000);
+            } else if ($(this).val().trim() === "") {
+                clearInterval(searchBoxTH);
+                searchBoxTH = null;
             }
         });
         // Search submission
