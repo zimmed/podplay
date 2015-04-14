@@ -208,7 +208,7 @@
                 $('#btn-sup').css("display", "none");
                 $('#btn-sin').off('click');
                 $('#btn-sin').click(function () {
-                    $.get('/logout', function (data) {
+                    $.get('/users/logout', function (data) {
                         load_splash_view();
                         $('#btn-sin').html('Sign In');
                         $('#btn-sin').off('click');
