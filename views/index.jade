@@ -5,14 +5,14 @@ extends layout
 
 block content
   div.container
-    div.col-md-4(id="left-col")
+    div.col-md-12(id="left-col")
       // Search form
       form(id="podcast-search" action="javascript:void(0)")
         h3 Search For A Podcast
         input(class="form-control" id="podcast-search-input" type="text")
         input(type="submit" class="btn btn-success")
     // Query results container
-    div.col-md-7(id="right-col")
+    div.col-md-3(id="right-col")
       h3 No Results
       table(id="results-table" class="table table-bordered")
         thead
