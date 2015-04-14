@@ -201,8 +201,10 @@
             $('#name').prop("disabled", true);
             $('#pw').prop("disabled", true);
             $.post('/users/login', {name: username, pw: password}).done(function (data) {
-                if ($(data).find('#estatus').html() != "200") {
-                    window.showNotification('Error: ' + $(data).find('#emsg').html());
+                var stat = $(data).find('#estatus').html();
+                var msg = $(data).find('#emsg').html();
+                if (stat != "200") {
+                    window.showNotification('Error ' + stat + ': ' + msg);
                     $('#name').prop("disabled", false);
                     $('#pw').prop("disabled", false);
                     return;
