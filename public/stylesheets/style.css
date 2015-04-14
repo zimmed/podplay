@@ -151,6 +151,7 @@ fieldset {
     padding: 20px;
     border: none;
     display: none;
+    overflow: hidden;
 }
 
 
