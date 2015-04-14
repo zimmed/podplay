@@ -69,6 +69,20 @@
         else if (typeof(prebrowse) !== "undefined") {
             browseResults(prebrowse);
         }
+        
+        // Submit search query
+        var submitSearch = function () {
+            clearInterval(searchBoxTH);
+            searchBoxTH = null;
+            var searchTerm = $('#podcast-search-input').val();
+            // Get search data from API.
+            $.get('/api/search/?term=' + searchTerm, function (data) {
+                // Parse results and add to table.
+                searchResults(data);
+                // Push new URL state.
+                window.history.pushState({}, document.title, '/search/' + searchTerm);
+            });
+        };
         // Search box change
         var quicksearch = function () {
             var s = $('#podcast-search-input').val().trim();
@@ -81,8 +95,8 @@
         var searchBoxTH = null;
         $('#podcast-search-input').on('change keyup paste', function (e) {
             if (e.type == "keyup" && e.which == 13) {
-                clearInterval(searchBoxTH);
-                searchBoxTH = null;
+                // Enter key pressed
+                submitSearch();
             }
             else if ($(this).val().trim() !== "" && searchBoxTH === null) {
                 quicksearch();
@@ -94,18 +108,9 @@
                 searchResults({});
             }
         });
-        // Search submission
-        $('#podcast-search').submit(function () {
-            clearInterval(searchBoxTH);
-            searchBoxTH = null;
-            var searchTerm = $('#podcast-search-input').val();
-            // Get search data from API.
-            $.get('/api/search/?term=' + searchTerm, function (data) {
-                // Parse results and add to table.
-                searchResults(data);
-                // Push new URL state.
-                window.history.pushState({}, document.title, '/search/' + searchTerm);
-            });
+        // Search button press
+        $('#podcast-search').click(function () {
+            submitSearch();
         });
         
         // Browse submission
