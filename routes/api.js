@@ -7,7 +7,10 @@
 
 var express = require('express');
 var request = require('request');
+var xml2js = require('xml2js');
 var router = express.Router();
+var parser = new xml2js.Parser({explicitArray: false});
+var parseString = parser.parseString;
 
 var Cache = require('../lib/badcache');
 var Podcasts = require('../lib/podcasts');
