@@ -49,9 +49,10 @@ html
         fieldset.boxBuddy
             legend Sign In
             label(for="name") Username
-            input(type="text" tabindex="1" name="name" class="required")
+            input(type="text" tabindex="1" id="name" name="name" class="required")
             label(for="password") Password
-            input(type="password" tabindex="2" name="pw" class="required")
+            input(type="password" tabindex="2" id="pw" name="pw" class="required")
+            span#notif
             button.btnLogin(tabindex="3") Sign In
     form.box.login#register
         h2 Registration is closed at this time.
