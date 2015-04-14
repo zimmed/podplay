@@ -13,6 +13,7 @@ html
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css')
     // Podplay global stylesheet
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/structure.css')
     // Audioplayer stylesheet
     link(rel='stylesheet', href='/stylesheets/audioplayer.css')
     if stylesheets
@@ -44,8 +45,8 @@ html
                 button.btn.btn-primary.navbar-btn.signinclick(type="button") Sign In
                 button.btn.btn-primary.navbar-btn(type="button") Register
     div#dimmer
-    div#login
-        fieldset
+    form.box.login
+        fieldset.boxBuddy
             label(for="name") Username
             input(type="text" name="name" class="required")
             label(for="password") Password
