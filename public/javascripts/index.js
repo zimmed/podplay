@@ -121,6 +121,7 @@
                 });
 
                 $('.castnail').click(function () {
+                    console.log('click');
                     var id = $(this).data('id');
                     load_podcast_view(id);
                 });
