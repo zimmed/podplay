@@ -13,12 +13,12 @@
     function searchResults(results) {
         var podcast, row, count;
         // Update table title with result count.
-        count = (results.length > 0) ? "" + results.length : "No";
-        $('#result-counter').html(count + " Results");
-        if (results.length == 0) {
-            $('#search-results').css('height', '0');
-        } else {
+        if (results.length > 0) {
+            $('#result-counter').html(results.length + " Results");
             $('#search-results').css('height', '200');
+        } else {
+            $('#result-counter').html("No Results");
+            $('#search-results').css('height', '0');
         }
         // Remove existing results.
         $('#results-table tbody > tr').remove();
