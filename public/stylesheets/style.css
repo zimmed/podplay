@@ -99,6 +99,7 @@ tr.feed-row:hover {
 .panel-body .podcontent {
     height: 120px;
     padding: 10px;
+    width: 100%;
     overflow: hidden;
     white-space: nowrap;
 }
