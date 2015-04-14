@@ -147,6 +147,10 @@ fieldset {
     background-color: #eff4f6;
 }
 
+.login {
+    z-index: 6;
+}
+
 #login {
     height: 250px;
     width: 350px;
