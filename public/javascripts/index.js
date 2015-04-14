@@ -60,7 +60,7 @@
             // Reformat URL to reflect appropriate title.
             if (window['preload_cast']) {
                 window.history.replaceState({}, document.title, '/podcast/' + window.safetitle);
-                delete window['preload_cast'];
+                window['preload_cast'] = false;
             } else {
                 window.history.pushState({}, document.title, '/podcast/' + window.safetitle);
             }
