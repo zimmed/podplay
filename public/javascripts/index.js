@@ -105,12 +105,14 @@
         var quicksearch = function () {
             var s = $('#podcast-search-input').val().trim();
             if (s != "") {
+                lastTickSearch = s;
                 $.get('/api/quicksearch/?term=' + s, function (data) {
                     searchResults(data);
                 });
             }
         };
         var searchBoxTH = null;
+        var lastTickSearch = "";
         $('#podcast-search-input').on('change keyup paste', function (e) {
             if (e.type == "keyup" && e.which == 13) {
                 // Enter key pressed
@@ -120,7 +122,7 @@
                 quicksearch();
                 searchBoxTH = setInterval(quicksearch, 1000);
             }
-            else if ($(this).val().trim() === "") {
+            else if ($(this).val().trim() === "" || $(this).val().trim() === lastTickSearch) {
                 clearInterval(searchBoxTH);
                 searchBoxTH = null;
                 searchResults({});
