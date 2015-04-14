@@ -87,6 +87,7 @@
             } else if ($(this).val().trim() === "") {
                 clearInterval(searchBoxTH);
                 searchBoxTH = null;
+                searchResults({});
             }
         });
         // Search submission
