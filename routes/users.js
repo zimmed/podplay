@@ -92,7 +92,7 @@ router.post('/login', function (req, res, next) {
             });*/
         res.send('Already logged in.');
     }
-    else if (!req.params.name || !req.params.pw) {
+    else if (!req.body.name || !req.body.pw) {
         // Bad or non-existant post data sent.
         /*
         res.render('error', {
@@ -102,7 +102,7 @@ router.post('/login', function (req, res, next) {
         res.send('Improper login request sent.');
     }
     // Ensure post data is valid.
-    else if (!users.validUsername(req.params.name)) {
+    else if (!users.validUsername(req.body.name)) {
         // Invalid username
         // (Must be 5 to 26 chars, containing only alphanumeric symbols, or the following: . _ -)
         /*
@@ -112,7 +112,7 @@ router.post('/login', function (req, res, next) {
             });*/
         res.send('Invalid username supplied.');
     }
-    else if (!users.validPassword(req.params.pw)) {
+    else if (!users.validPassword(req.body.pw)) {
         // Invalid password
         // (Must be 6 to 26 chars, containing none of the following: \ ' ; <whitespace>)
         /*
@@ -124,7 +124,7 @@ router.post('/login', function (req, res, next) {
     }
     else {
         // Data sent is valid.
-        var name = req.params.name, pw = req.params.pw;
+        var name = req.body.name, pw = req.body.pw;
 
         // Check username and password against database.
         users.validateUser(name, pw, function (error, msg) {
