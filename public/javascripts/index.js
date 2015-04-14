@@ -40,7 +40,7 @@
             $('#podcast-search-input').on('change keyup paste', function (e) {
                 if (e.type == "keyup" && e.which == 13) {
                     // Enter key pressed
-                    submitSearch();
+                    window.submitSearch();
                 }
                 else if ($(this).val().trim() !== "" &&
                          $(this).val().trim() !== window.lastTickSearch &&
@@ -56,7 +56,7 @@
             });
             // Search button press
             $('#podcast-search-button').click(function () {
-                submitSearch();
+                window.submitSearch();
             });
         });
     };
@@ -144,7 +144,7 @@
         window.searchBoxTH = null;
         window.lastTickSearch = "";
         // Submit search query
-        var submitSearch = function () {
+        window.submitSearch = function () {
             clearInterval(window.searchBoxTH);
             window.searchBoxTH = null;
             var searchTerm = $('#podcast-search-input').val();
