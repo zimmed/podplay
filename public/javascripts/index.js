@@ -205,6 +205,7 @@
                     window.showNotification('Error: ' + $(data).find('#emsg').html());
                     $('#name').prop("disabled", false);
                     $('#pw').prop("disabled", false);
+                    return;
                 }
                 console.log(data);
                 $('#dimmer').css("display", "none");
