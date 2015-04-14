@@ -113,10 +113,12 @@
                 $('#register').css("display", "none");
                 $('#dimmer').css("display", "block");
                 $('#login').css("display", "block");
+                $('#btn-sin').html('X');
                 window.state = 1;
             } else {
                 $('#dimmer').css("display", "none");
                 $('#login').css("display", "none");
+                $('#btn-sin').html('Sign In');
                 window.state = 0;
             }
         });
@@ -126,10 +128,12 @@
                 $('#login').css("display", "none");
                 $('#dimmer').css("display", "block");
                 $('#register').css("display", "block");
+                $('#btn-sup').html('X');
                 window.state = 2;
             } else {
                 $('#dimmer').css("display", "none");
                 $('#register').css("display", "none");
+                $('#btn-sup').html('Register');
                 window.state = 0;
             }
         });
