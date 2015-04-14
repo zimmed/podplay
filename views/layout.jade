@@ -15,8 +15,6 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     // Audioplayer stylesheet
     link(rel='stylesheet', href='/stylesheets/audioplayer.css')
-    // Login box stylesheet
-    link(rel='stylesheet', href='/stylesheets/login.css')
     if stylesheets
         // Stylesheets needed for local view.
         for s in stylesheets
@@ -24,7 +22,6 @@ html
     // jQuery 2.1.3
     script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js')
     script(src='/javascripts/jquery.easing.1.3.js')
-    script(src='/javascripts/login.js')
     // Bootstrap 3.3.2
     script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
     if javascripts
@@ -44,13 +41,12 @@ html
             a.navbar-brand(href="javascript:window.load_splash_view();") Podplay.me
             ul.nav.navbar-nav.navbar-right
               li
-                button.btn.btn-primary.navbar-btn.signinclick#link(type="button") Sign In
-                div#login
-                    form.drop(style="display:hidden;height:250px;overflow:hidden;")
-                        label(for="name") Username
-                        input(type="text" name="name" class="required")
-                        lavel(for="password") Password
-                        input(type="password" name="pw")
-                        input(type="submit" class="submit" value="Sign In")
+                button.btn.btn-primary.navbar-btn.signinclick(type="button") Sign In
                 button.btn.btn-primary.navbar-btn(type="button") Register
+        div#login
+            label(for="name") Username
+            input(type="text" name="name" class="required")
+            lavel(for="password") Password
+            input(type="password" name="pw" class="required")
+            button.submit Sign In
     block content
