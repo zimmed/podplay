@@ -42,14 +42,17 @@ html
             a.navbar-brand(href="javascript:window.load_splash_view();") Podplay.me
             ul.nav.navbar-nav.navbar-right
               li
-                button.btn.btn-primary.navbar-btn.signinclick(type="button") Sign In
-                button.btn.btn-primary.navbar-btn(type="button") Register
+                button.btn.btn-primary.navbar-btn#btn-sin(type="button") Sign In
+                button.btn.btn-primary.navbar-btn#btn-sup(type="button") Register
     div#dimmer
     form.box.login#login
         fieldset.boxBuddy
+            legend Sign In
             label(for="name") Username
-            input(type="text" name="name" class="required")
+            input(type="text" tabindex="1" name="name" class="required")
             label(for="password") Password
-            input(type="password" name="pw" class="required")
-            button.btnLogin Sign In
+            input(type="password" tabindex="2" name="pw" class="required")
+            button.btnLogin(tabindex="3") Sign In
+    form.box.login#register
+        h2 Registration is closed at this time.
     block content
