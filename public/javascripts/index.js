@@ -202,8 +202,9 @@
             $('#pw').prop("disabled", true);
             $.post('/users/login', {name: username, pw: password}).done(function (data) {
                 if ($(data).find('#estatus').html() != "200") {
-                    window.showNotification($(data).find('#emsg').html());
-                    return;
+                    window.showNotification('Error: ' + $(data).find('#emsg').html());
+                    $('#name').prop("disabled", false);
+                    $('#pw').prop("disabled", false);
                 }
                 $('#dimmer').css("display", "none");
                 $('#login').css("display", "none");
@@ -238,6 +239,8 @@
             }).fail(function (obj, text, err) {
                 console.log(text);
                 $('#login input').addClass('error');
+                $('#name').prop("disabled", false);
+                $('#pw').prop("disabled", false);
                 window.showNotification("Wrong username or password.");
             });
         });
