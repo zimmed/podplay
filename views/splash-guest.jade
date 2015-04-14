@@ -11,13 +11,13 @@ div.panel.panel-default
 div.panel.panel-default#pc-0
     div.panel-heading Top Podcasts
     div.panel-body
-        each cast in podcasts[0]['0']
+        each cast in podcasts['0']
             div.thumbnail(data-id="#{cast._id}", data-title="#{cast.title}")
                     img(src="#{cast.poster100}")
 each gen, num in Genres
     div.panel.panel-default(data-genreid="#{num}")
         div.panel-heading #{gen}
         div.panel-body
-            each cast in podcasts[0][num]
+            each cast in podcasts[num]
                 div.thumbnail(data-id="#{cast._id}", data-title="#{cast.title}")
                     img(src="#{cast.poster100}")
