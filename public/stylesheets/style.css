@@ -89,6 +89,7 @@ tr.feed-row:hover {
     margin: 0px;
     padding: 10px;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .panel-body img {
@@ -101,6 +102,7 @@ tr.feed-row:hover {
     width: 100px;
     border: none;
     margin-right: 10px;
+    white-space: normal;
 }
 
 #search-results {
