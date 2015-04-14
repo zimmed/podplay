@@ -201,7 +201,10 @@
             $('#name').prop("disabled", true);
             $('#pw').prop("disabled", true);
             $.post('/users/login', {name: username, pw: password}).done(function (data) {
-                console.log(data);
+                if ($(data).find('#estatus').html() != "200") {
+                    window.showNotification($(data).find('#emsg').html());
+                    return;
+                }
                 $('#dimmer').css("display", "none");
                 $('#login').css("display", "none");
                 $('#btn-sin').html('Sign Out');
