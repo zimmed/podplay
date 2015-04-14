@@ -149,6 +149,7 @@ fieldset {
 
 .login {
     z-index: 6;
+    background: none;
 }
 
 #login {
