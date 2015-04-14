@@ -6,6 +6,9 @@
 (function (window, $) {
     'use strict';
 
+    window.onpopstate = function (event) {
+        console.log(document.location);
+    };
     
     window.load_splash_view = function (first) {
         $.get('/api/view/splash', function (data) {
