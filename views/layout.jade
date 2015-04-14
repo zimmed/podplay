@@ -43,10 +43,11 @@ html
               li
                 button.btn.btn-primary.navbar-btn.signinclick(type="button") Sign In
                 button.btn.btn-primary.navbar-btn(type="button") Register
-        div#login
-            label(for="name") Username
-            input(type="text" name="name" class="required")
-            label(for="password") Password
-            input(type="password" name="pw" class="required")
-            button.submit Sign In
+    div#dimmer
+    div#login
+        label(for="name") Username
+        input(type="text" name="name" class="required")
+        label(for="password") Password
+        input(type="password" name="pw" class="required")
+        button.submit Sign In
     block content
