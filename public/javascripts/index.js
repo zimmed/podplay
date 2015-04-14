@@ -80,7 +80,7 @@
             }
         };
         var searchBoxTH = null;
-        $('#podcast-search-input').change(function () {
+        $('#podcast-search-input').on('change keyup paste', function () {
             if (searchBoxTH === null) {
                 quicksearch();
                 searchBoxTH = setInterval(quicksearch, 1000);
