@@ -147,27 +147,9 @@ fieldset {
     background-color: #eff4f6;
 }
 
-.login {
-    z-index: 6;
-    background: none;
-}
-
 #login {
-    height: 250px;
-    width: 350px;
-    position: fixed;
-    top: 25%;
-    left: 50%;
-    margin-left: -150px;
     z-index: 6;
-    border: none;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    -moz-box-shadow: rgba(0,0,0,0.30) 0 0 1px;
-    -webkit-box-shadow: rgba(0,0,0,0.30) 0 0 1px;
-    box-shadow: rgba(0,0,0,0.15) 0 0 1px;
-    color: #444;
+    background: rgba(0,0,0,0);
 }
 
 #dimmer {
