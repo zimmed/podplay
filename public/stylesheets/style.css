@@ -88,6 +88,7 @@ tr.feed-row:hover {
     height: 120px;
     margin: 0px;
     padding: 10px;
+    overflow: hidden;
 }
 
 .panel-body img {
@@ -99,6 +100,7 @@ tr.feed-row:hover {
     height: 100px;
     width: 100px;
     border: none;
+    margin-right: 10px;
 }
 
 #search-results {
