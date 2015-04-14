@@ -21,6 +21,7 @@ var api = require('./routes/api');
 var podcast = require('./routes/podcast');
 
 var badcache = require('./lib/badcache');
+var users = require('./lib/users');
 
 var app = express();
 
@@ -77,6 +78,14 @@ app.use(function(err, req, res, next) {
         message: err.message,
         error: {}
     });
+});
+
+users.registerUser('podplay', 'fake@fake.com', 'pcast123', function (err, o) {
+    console.log(err);
+    console.log(o);
+}, function (data) {
+    console.log(data);
+    console.log("success");
 });
 
 // Update top 100 cache every 2 hours
