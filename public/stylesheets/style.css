@@ -85,7 +85,7 @@ tr.feed-row:hover {
 }
 
 .panel-body {
-    height: 0px;
+    height: 200px;
     margin: 0px;
     padding: 0px;
 }
