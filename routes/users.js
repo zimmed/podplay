@@ -85,37 +85,41 @@ router.post('/login', function (req, res, next) {
         // User already logged in.
         error = new Error('Forbidden');
         error.status = 403;
+        /*
         res.render('error', {
             message: "Already logged in.",
             error: error
-            });
+            });*/
         res.send('Already logged in.');
     }
     else if (!req.params.name || !req.params.pw) {
         // Bad or non-existant post data sent.
+        /*
         res.render('error', {
             message: "Improper login request sent.",
             error: error
-            });
+            });*/
         res.send('Improper login request sent.');
     }
     // Ensure post data is valid.
     else if (!users.validUsername(req.params.name)) {
         // Invalid username
         // (Must be 5 to 26 chars, containing only alphanumeric symbols, or the following: . _ -)
+        /*
         res.render('error', {
             message: "Invalid username supplied.",
             error: error
-            });
+            });*/
         res.send('Invalid username supplied.');
     }
     else if (!users.validPassword(req.params.pw)) {
         // Invalid password
         // (Must be 6 to 26 chars, containing none of the following: \ ' ; <whitespace>)
+        /*
         res.render('error', {
             message: "Invalid email address supplied.",
             error: error
-            });
+            });*/
         res.send('Invalid email address supplied.');
     }
     else {
