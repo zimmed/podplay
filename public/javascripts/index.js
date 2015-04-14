@@ -206,6 +206,7 @@
                     $('#name').prop("disabled", false);
                     $('#pw').prop("disabled", false);
                 }
+                console.log(data);
                 $('#dimmer').css("display", "none");
                 $('#login').css("display", "none");
                 $('#btn-sin').html('Sign Out');
