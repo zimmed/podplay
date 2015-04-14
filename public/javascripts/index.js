@@ -30,7 +30,7 @@
             $('#search-results').css('height', '0px');
             $('#search-results').css('padding', '0px');
         }
-        insertPodcasts(results, '#search-results');
+        insertPodcasts(results, '#search-results > span.content');
         /*
         // Remove existing results.
         $('#results-table tbody > tr').remove();
