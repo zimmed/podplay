@@ -104,6 +104,11 @@
         // Search box change
         var quicksearch = function () {
             var s = $('#podcast-search-input').val().trim();
+            if (s == lastTickSearch) {
+                clearInterval(searchBoxTH);
+                searchBoxTH = null;
+                return;
+            }
             if (s != "") {
                 lastTickSearch = s;
                 $.get('/api/quicksearch/?term=' + s, function (data) {
@@ -118,11 +123,13 @@
                 // Enter key pressed
                 submitSearch();
             }
-            else if ($(this).val().trim() !== "" && searchBoxTH === null) {
+            else if ($(this).val().trim() !== "" &&
+                     $(this).val().trim() !== lastTickSearch &&
+                     searchBoxTH === null) {
                 quicksearch();
                 searchBoxTH = setInterval(quicksearch, 1000);
             }
-            else if ($(this).val().trim() === "" || $(this).val().trim() === lastTickSearch) {
+            else if ($(this).val().trim() === "") {
                 clearInterval(searchBoxTH);
                 searchBoxTH = null;
                 searchResults({});
