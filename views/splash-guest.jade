@@ -1,24 +1,23 @@
-            // Search form
-            div.input-group
-                input.form-control#podcast-search-input(type="text", placeholder="Search for a podcast")
-                div.input-group-btn
-                    button#podcast-search-button(class="btn btn-default", type="button") GO!
+// Search form
+div.input-group
+    input.form-control#podcast-search-input(type="text", placeholder="Search for a podcast")
+    div.input-group-btn
+        button#podcast-search-button(class="btn btn-default", type="button") GO!
 
-            // Query results container
-            div.panel.panel-default
-                div.panel-heading#result-counter No Results
-                div.panel-body#search-results
-            div.panel.panel-default#pc-0
-                div.panel-heading Top Podcasts
-                div.panel-body
-                    each cast in podcasts[0]['0']
-                        div.thumbnail(data-id="#{cast._id}", data-title="#{cast.title}")
-                                img(src="#{cast.poster100}")
-            each gen, num in Genres
-                div.panel.panel-default(data-genreid="#{num}")
-                    div.panel-heading #{gen}
-                    div.panel-body
-                        each cast in podcasts[0][num]
-                            div.thumbnail(data-id="#{cast._id}", data-title="#{cast.title}")
-                                img(src="#{cast.poster100}")
-                                    
+// Query results container
+div.panel.panel-default
+    div.panel-heading#result-counter No Results
+    div.panel-body#search-results
+div.panel.panel-default#pc-0
+    div.panel-heading Top Podcasts
+    div.panel-body
+        each cast in podcasts[0]['0']
+            div.thumbnail(data-id="#{cast._id}", data-title="#{cast.title}")
+                    img(src="#{cast.poster100}")
+each gen, num in Genres
+    div.panel.panel-default(data-genreid="#{num}")
+        div.panel-heading #{gen}
+        div.panel-body
+            each cast in podcasts[0][num]
+                div.thumbnail(data-id="#{cast._id}", data-title="#{cast.title}")
+                    img(src="#{cast.poster100}")
