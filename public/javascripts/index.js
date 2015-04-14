@@ -7,7 +7,12 @@
     'use strict';
 
     window.onpopstate = function (event) {
-        console.log(document.location);
+        if (document.location.pathname === '/') window.load_splash_view();
+        else {
+            var re = /^\/podcast\/(\d+)\//;
+            var r = re.exec(document.location.pathname);
+            window.load_podcast_view(r[1]);
+        }
     };
     
     window.load_splash_view = function (first) {
