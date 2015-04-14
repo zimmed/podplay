@@ -157,7 +157,7 @@
             });
         };
         // Search box change
-        var quicksearch = function () {
+        window.quicksearch = function () {
             var s = $('#podcast-search-input').val().trim();
             if (s == window.lastTickSearch) {
                 clearInterval(window.searchBoxTH);
