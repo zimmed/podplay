@@ -137,7 +137,7 @@
             }
         });
         // Search button press
-        $('#podcast-search').click(function () {
+        $('#podcast-search-button').click(function () {
             submitSearch();
         });
         
