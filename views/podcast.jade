@@ -3,7 +3,7 @@
 //- Modified: 09 Mar 15 -//
 
 // Left column with feed data.
-.col-md-3(id="sub-left-col")
+.col-md-4(id="sub-left-col")
     h3 #{feed.title}
     img.podcast-poster(src="#{podcast.poster600}")
     // Container for audio player.
@@ -28,7 +28,7 @@
                 th Genre
                 td #{podcast.genre}
 // Right column with episode table
-.col-md-6(id="sub-middle-col")
+.col-md-5(id="sub-middle-col")
     h3 Episodes
     table#episode-table(class="table table-bordered")
         thead
