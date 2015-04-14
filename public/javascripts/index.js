@@ -10,8 +10,8 @@
      * Populate results table with search data.
      * @param {Object} data - The JSON object returned from iTunes query.
      */
-    function searchResults(data) {
-        var results = data.results, podcast, row, count;
+    function searchResults(results) {
+        var podcast, row, count;
         // Update table title with result count.
         count = (results.length > 0) ? "" + results.length : "No";
         $('#right-col > h3').html(count + " Results");
@@ -19,10 +19,10 @@
         $('#results-table tbody > tr').remove();
         // Add entry for each podcast.
         for (podcast in results) {
-            row = $('<tr class="feed-row" data-id="' + results[podcast].collectionId + '">');
-            row.append($('<td>').html('<img src="' + results[podcast].artworkUrl60 + '">'));
-            row.append($('<td>').text(results[podcast].collectionName));
-            row.append($('<td>').text(results[podcast].primaryGenreName));
+            row = $('<tr class="feed-row" data-id="' + results[podcast]._id + '">');
+            row.append($('<td>').html('<img src="' + results[podcast].poster60 + '">'));
+            row.append($('<td>').text(results[podcast].title));
+            row.append($('<td>').text(results[podcast].genre));
             $('#results-table').append(row);
         }
         // Temporary system for getting to feed pages
@@ -68,9 +68,26 @@
         else if (typeof(prebrowse) !== "undefined") {
             browseResults(prebrowse);
         }
-        
+        // Search box change
+        var quicksearch = function () {
+            var s = $('#podcast-search-input').text().trim();
+            if (s != "") {
+                $.get('/api/quicksearch/?term=' + s, function (data) {
+                    searchResults(JSON.parse(data));
+                });
+            }
+        };
+        var searchBoxTH = null;
+        $('#podcast-search-input').change(function () {
+            if (!searchBoxTH) {
+                quicksearch();
+                searchBoxTH = setInterval(quicksearch, 1000);
+            }
+        });
         // Search submission
         $('#podcast-search').submit(function () {
+            clearInterval(searchBoxTH);
+            searchBoxTH = null;
             var searchTerm = $('#podcast-search-input').val();
             // Get search data from API.
             $.get('/api/search/?term=' + searchTerm, function (data) {
