@@ -143,14 +143,13 @@ fieldset {
     -webkit-padding-end: 0.75em;
     -webkit-padding-after: 0.625em;
     border: 2px groove threedface;
-    padding-top: 10px;
-    padding-right: 20px;
+    padding: 30px;
     background-color: #eff4f6;
 }
 
 #login {
     height: 250px;
-    width: 300px;
+    width: 350px;
     position: fixed;
     top: 25%;
     left: 50%;
