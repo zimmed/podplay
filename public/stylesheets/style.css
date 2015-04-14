@@ -134,13 +134,26 @@ tr.feed-row:hover {
     padding-bottom: 0px;
 }
 
+fieldset {
+  display: block;
+  -webkit-margin-start: 2px;
+  -webkit-margin-end: 2px;
+  -webkit-padding-before: 0.35em;
+  -webkit-padding-start: 0.75em;
+  -webkit-padding-end: 0.75em;
+  -webkit-padding-after: 0.625em;
+  border: 2px groove threedface;
+  padding-top: 10px;
+  padding-right: 20px;
+}
+
 #login {
     height: 250px;
     width: 300px;
     position: fixed;
     top: 25%;
     left: 50%;
-    margin-right: 150px;
+    margin-left: -150px;
     z-index: 6;
     background: #fefefe;
     border: 1px solid #C3D4DB;
