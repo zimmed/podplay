@@ -6,6 +6,14 @@
 (function (window, $) {
     'use strict';
 
+    function insertPodcasts(pcasts, selector) {
+        var i;
+        $(selector).html('');
+        for (i in pcasts) {
+            $(selector).append('<img src="'+pcasts[i].poster100+'">');
+        }
+    }
+    
     /**
      * Populate results table with search data.
      * @param {Object} data - The JSON object returned from iTunes query.
@@ -15,13 +23,15 @@
         // Update table title with result count.
         if (results.length > 0) {
             $('#result-counter').html(results.length + " Results");
-            $('#search-results').css('height', '200px');
+            $('#search-results').css('height', '120px');
             $('#search-results').css('padding', '10px');
         } else {
             $('#result-counter').html("No Results");
             $('#search-results').css('height', '0px');
             $('#search-results').css('padding', '0px');
         }
+        insertPodcasts(results, '#search-results');
+        /*
         // Remove existing results.
         $('#results-table tbody > tr').remove();
         // Add entry for each podcast.
@@ -36,8 +46,10 @@
         $('.feed-row').click(function () {
             var id = $(this).data('id');
             window.location = '/podcast/' + id;
-        });
+        });*/
     }
+    
+    
     
     /**
      * Populate results table with browse data.
