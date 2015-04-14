@@ -11,6 +11,7 @@
      * @param {Object} data - The JSON object returned from iTunes query.
      */
     function searchResults(results) {
+        console.log(results);
         var podcast, row, count;
         // Update table title with result count.
         count = (results.length > 0) ? "" + results.length : "No";
