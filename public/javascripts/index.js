@@ -7,9 +7,11 @@
     'use strict';
 
     
-    window.load_splash_view = function () {
+    window.load_splash_view = function (first) {
         $.get('/api/view/splash', function (data) {
 
+            if (!first) window.history.pushState({}, document.title, '/');
+            
             $('#left-col').html(data);
 
             $.get('/api/castcat/0', function (data) {
@@ -56,7 +58,12 @@
             $('#left-col').html(data);
 
             // Reformat URL to reflect appropriate title.
-            window.history.replaceState({}, document.title, '/podcast/' + window.safetitle);
+            if (window['preload_cast']) {
+                window.history.replaceState({}, document.title, '/podcast/' + window.safetitle);
+                delete window['preload_cast'];
+            } else {
+                window.history.pushState({}, document.title, '/podcast/' + window.safetitle);
+            }
         });
     };
     
@@ -125,7 +132,7 @@
             window.load_podcast_view(window.preload_cast);
         }
         else {
-            window.load_splash_view();
+            window.load_splash_view(true);
         }
         
     });
