@@ -106,6 +106,34 @@
     /* When document is finished loading, execute following code: */
     $().ready(function () {
         
+        window.state = 0; // Overlay window tracking
+        
+        $('#btn-sin').click(function () {
+            if (window.state != 1) {
+                $('#register').css("display", "none");
+                $('#dimmer').css("display", "block");
+                $('#login').css("display", "block");
+                window.state = 1;
+            } else {
+                $('#dimmer').css("display", "none");
+                $('#login').css("display", "none");
+                window.state = 0;
+            }
+        });
+        
+        $('#btn-sup').click(function () {
+            if (window.state != 2) {
+                $('#login').css("display", "none");
+                $('#dimmer').css("display", "block");
+                $('#register').css("display", "block");
+                window.state = 2;
+            } else {
+                $('#dimmer').css("display", "none");
+                $('#register').css("display", "none");
+                window.state = 0;
+            }
+        });
+        
         window.searchBoxTH = null;
         window.lastTickSearch = "";
         // Submit search query

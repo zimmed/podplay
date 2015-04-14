@@ -147,11 +147,13 @@ fieldset {
     background-color: #eff4f6;
 }
 
-#login {
+#login, #register {
     z-index: 6;
     background: rgba(0,0,0,0);
     border: none;
+    display: none;
 }
+
 
 #dimmer {
     position: fixed;
@@ -161,4 +163,5 @@ fieldset {
     width: 100%;
     background: rgba(0,0,0,0.6);
     z-index: 5;
+    display: none;
 }
