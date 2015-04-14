@@ -142,7 +142,16 @@ tr.feed-row:hover {
     top: 25%;
     left: 40%;
     z-index: 6;
-    background-color: #ccc;
+    background: #fefefe;
+    border: 1px solid #C3D4DB;
+    border-top: 1px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: rgba(0,0,0,0.15) 0 0 1px;
+    -webkit-box-shadow: rgba(0,0,0,0.15) 0 0 1px;
+    box-shadow: rgba(0,0,0,0.15) 0 0 1px;
+    color: #444;
 }
 
 #dimmer {
@@ -151,6 +160,6 @@ tr.feed-row:hover {
     left: 0;
     height: 100%;
     width: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
     z-index: 5;
 }
