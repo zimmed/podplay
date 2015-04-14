@@ -121,7 +121,7 @@
                 });
             }
         };
-        if (preload_cast !== undefined) {
+        if (preload_cast) {
             window.load_podcast_view(preload_cast);
         }
         else {
