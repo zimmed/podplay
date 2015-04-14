@@ -101,7 +101,7 @@ tr.feed-row:hover {
     z-index: 4;
 }
 
-.podcontent img {
+.podcontent .castnail {
     display: inline-block;
     padding: 0;
     margin: 0;
@@ -110,6 +110,14 @@ tr.feed-row:hover {
     border: none;
     margin-right: 10px;
     white-space: normal;
+}
+
+.castnail > img {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    height: 100px;
+    width: 100px;
 }
 
 #search-results {
