@@ -52,7 +52,7 @@
     };
     
     window.load_podcast_view = function (id) {
-        $.get('/podcast/'+ id, function (data) {
+        $.get('/api/view/podcast/'+ id, function (data) {
             $('#left-col').html(data);
 
             // Reformat URL to reflect appropriate title.
