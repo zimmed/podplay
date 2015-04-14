@@ -11,7 +11,7 @@
         if (!append) $(selector).html('');
         for (i in pcasts) {
             var classes = (fav) ? "castnail favorite" : "castnail";
-            $(selector).append('<div class="'+classes+'" data-id="'+pcasts[i]._id+'" data-title="'+pcasts[i].title+'"><img src="'+pcasts[i].poster100+'"></div>');
+            $(selector).append('<div class="'+classes+'" onclick="load_podcast_view(\''+pcasts[i]._id+'\');" data-title="'+pcasts[i].title+'"><img src="'+pcasts[i].poster100+'"></div>');
         }
     }
     
@@ -118,12 +118,6 @@
                 // Search button press
                 $('#podcast-search-button').click(function () {
                     submitSearch();
-                });
-
-                $('.castnail').click(function () {
-                    console.log('click');
-                    var id = $(this).data('id');
-                    load_podcast_view(id);
                 });
             });
         }
