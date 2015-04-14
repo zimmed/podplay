@@ -18,15 +18,27 @@ var Podcasts = require('../lib/podcasts');
 router.get('/view/splash', function (req, res, next) {
     var casts;
     if (req.session.user) {
-        casts = Cache.aggregate(req.session.user.subscriptions);
-        res.render('splash', {user: req.session.user,
-                              podcasts: casts,
-                              genres: Podcasts.Genres,
-                              getGenreId: Podcasts.getGenreId});
+        Cache.aggregate(req.session.user.subscriptions, function (err, msg) {
+            console.log(msg);
+            console.log(err);
+            res.render(msg);
+        }, function (data) {
+            res.render('splash', {user: req.session.user,
+                                    podcasts: data[0],
+                                    favorites: data[1],
+                                    genres: Podcasts.Genres,
+                                    getGenreId: Podcasts.getGenreId});
+        });
+        
     }
     else {
-        casts = Cache.aggregate();
-        res.render('splash-guest', {podcasts: casts});
+        Cache.aggregate(false, function (err, msg) {
+            console.log(msg);
+            console.log(err);
+            res.render(msg);
+        }, function (data) {
+            res.render('splash-guest', {podcasts: data[0]});
+        }
     }
 });
 
