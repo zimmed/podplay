@@ -134,16 +134,8 @@ tr.feed-row:hover {
     padding-bottom: 0px;
 }
 
-fieldset {
-    display: block;
-    -webkit-margin-start: 2px;
-    -webkit-margin-end: 2px;
-    -webkit-padding-before: 0.35em;
-    -webkit-padding-start: 0.75em;
-    -webkit-padding-end: 0.75em;
-    -webkit-padding-after: 0.625em;
-    border: 2px groove threedface;
-    padding: 30px;
+legend {
+    border: none;
 }
 
 #login, #register {
