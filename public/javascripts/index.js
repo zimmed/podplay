@@ -9,6 +9,7 @@
     function insertPodcasts(pcasts, selector, append, fav) {
         var i;
         if (!append) $(selector).html('');
+        console.log($(selector));
         for (i in pcasts) {
             var classes = (fav) ? "castnail favorite" : "castnail";
             $(selector).append('<div class="'+classes+'" data-feed="'+pcasts[i].feedUrl+'" data-title="'+pcasts[i].title+'"><img src="'+pcasts[i].poster100+'"></div>');
