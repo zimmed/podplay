@@ -74,7 +74,7 @@
             var s = $('#podcast-search-input').text().trim();
             if (s != "") {
                 $.get('/api/quicksearch/?term=' + s, function (data) {
-                    searchResults(JSON.parse(data));
+                    searchResults(data);
                 });
             }
         };
@@ -93,7 +93,7 @@
             // Get search data from API.
             $.get('/api/search/?term=' + searchTerm, function (data) {
                 // Parse results and add to table.
-                searchResults(JSON.parse(data));
+                searchResults(data);
                 // Push new URL state.
                 window.history.pushState({}, document.title, '/search/' + searchTerm);
             });
