@@ -45,12 +45,12 @@ html
             ul.nav.navbar-nav.navbar-right
               li
                 div#login
-                button.btn.btn-primary.navbar-btn.signinclick#link(type="button") Sign In
-                form.drop(style="display:block;height:250px;overflow:hidden;")
-                    label(for="name") Username
-                    input(type="text" name="name" class="required")
-                    lavel(for="password") Password
-                    input(type="password" name="pw")
-                    input(type="submit" class="submit" value="Sign In")
+                    button.btn.btn-primary.navbar-btn.signinclick#link(type="button") Sign In
+                    form.drop(style="display:hidden;height:250px;overflow:hidden;")
+                        label(for="name") Username
+                        input(type="text" name="name" class="required")
+                        lavel(for="password") Password
+                        input(type="password" name="pw")
+                        input(type="submit" class="submit" value="Sign In")
                 button.btn.btn-primary.navbar-btn(type="button") Register
     block content
