@@ -29,7 +29,7 @@ router.get('/:id/:title?', function (req, res, next) {
                 res.render('podcast', {id: id,
                                        title: podcast.title,
                                        podcast: podcast,
-                                       GLOBALS: { "safetitle": id + '/' + podcast.title_uri },
+                                       safetitle: id + '/' + podcast.title_uri,
                                        feed: obj.rss.channel });
             });
         });

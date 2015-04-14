@@ -56,7 +56,7 @@
             $('#left-col').html(data);
 
             // Reformat URL to reflect appropriate title.
-            window.history.replaceState({}, document.title, '/podcast/' + safetitle);
+            window.history.replaceState({}, document.title, '/podcast/' + window.safetitle);
         });
     };
     
