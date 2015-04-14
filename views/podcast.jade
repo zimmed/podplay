@@ -1,75 +1,72 @@
 //- index.jade - Template for podcast feed pages/views. -//
 //- Authors: Ian McGaunn; Dave Zimmelman -//
 //- Modified: 09 Mar 15 -//
-extends layout
 
-block content
-    .container
-        // Left column with feed data.
-        .col-md-3(id="left-col")
-            h3 #{feed.title}
-            img.podcast-poster(src="#{feed.imgs.i600}")
-            // Container for audio player.
-            div.podcast-player
-                div.playing-title
-                    span No File Selected
-                audio(controls="controls" preload="auto" src="http://xamuel.com/blank-mp3-files/point1sec.mp3")
-                script(src="/javascripts/audioplayer.js")
-                script.
-                    $( function() { $( 'audio' ).audioPlayer(); } );
-            if feed['itunes:summary']
-                p #{feed['itunes:summary']}
-            table#feedinfo-table(class="table table-bordered")
-                tbody
-                    tr
-                        th Author
-                        td #{feed['itunes:author']}
-                    tr
-                        th Genre
-                        td #{feed.genre}
-        // Right column with episode table
-        .col-md-9(id="middle-col")
-            h3 Episodes
-            table#episode-table(class="table table-bordered")
-                thead
-                    tr
-                        th Title
-                        th Description
-                        th Released
-                        th 
-                tbody
-                    each ep in feed.item
-                        tr
-                            if ep.title
-                                td(title="#{ep.title}") 
-                                    if ep.title.length >= 42
-                                        span #{ep.title.substr(0,38) + '...'}
-                                    else
-                                        span #{ep.title}
+// Left column with feed data.
+.col-md-3(id="sub-left-col")
+    h3 #{feed.title}
+    img.podcast-poster(src="#{feed.imgs.i600}")
+    // Container for audio player.
+    div.podcast-player
+        div.playing-title
+            span No File Selected
+        audio(controls="controls" preload="auto" src="http://xamuel.com/blank-mp3-files/point1sec.mp3")
+        script(src="/javascripts/audioplayer.js")
+        script.
+            $( function() { $( 'audio' ).audioPlayer(); } );
+    if feed['itunes:summary']
+        p #{feed['itunes:summary']}
+    table#feedinfo-table(class="table table-bordered")
+        tbody
+            tr
+                th Author
+                td #{feed['itunes:author']}
+            tr
+                th Genre
+                td #{feed.genre}
+// Right column with episode table
+.col-md-6(id="sub-middle-col")
+    h3 Episodes
+    table#episode-table(class="table table-bordered")
+        thead
+            tr
+                th Title
+                th Description
+                th Released
+                th 
+        tbody
+            each ep in feed.item
+                tr
+                    if ep.title
+                        td(title="#{ep.title}") 
+                            if ep.title.length >= 42
+                                span #{ep.title.substr(0,38) + '...'}
                             else
-                                td N/A
-                            if ep.description
-                                - ep.description = "" + ep.description;
-                                - var match, front = ep.description.match(/^\<([^\>]+)\>/)
-                                - if (front) match = ep.description.match('^\<' + front[1] + '\>(.+)\<\/' + front[1] + '\>')
-                                - if (match) ep.description = match[1]
-                                - ep.description = ep.description.replace(/\<.+\>/g, '')
-                                td(title="#{ep.description}")
-                                    if ep.description.length >= 118
-                                        span #{ep.description.substr(0,114) + '...'}
-                                    else
-                                        span #{ep.description}
+                                span #{ep.title}
+                    else
+                        td N/A
+                    if ep.description
+                        - ep.description = "" + ep.description;
+                        - var match, front = ep.description.match(/^\<([^\>]+)\>/)
+                        - if (front) match = ep.description.match('^\<' + front[1] + '\>(.+)\<\/' + front[1] + '\>')
+                        - if (match) ep.description = match[1]
+                        - ep.description = ep.description.replace(/\<.+\>/g, '')
+                        td(title="#{ep.description}")
+                            if ep.description.length >= 118
+                                span #{ep.description.substr(0,114) + '...'}
                             else
-                                td N/A
-                            td
-                                if ep.pubDate
-                                    - ep.pubDate = ep.pubDate.slice(0, -5);
-                                    span #{ep.pubDate}
-                                else
-                                    span N/A
-                            td
-                                if ep.enclosure
-                                    button.listenlink(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{feed.imgs.i100}" type="button") Listen
-                                else
-                                    span N/A
+                                span #{ep.description}
+                    else
+                        td N/A
+                    td
+                        if ep.pubDate
+                            - ep.pubDate = ep.pubDate.slice(0, -5);
+                            span #{ep.pubDate}
+                        else
+                            span N/A
+                    td
+                        if ep.enclosure
+                            button.listenlink(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{feed.imgs.i100}" type="button") Listen
+                        else
+                            span N/A
 

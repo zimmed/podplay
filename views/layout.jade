@@ -1,4 +1,4 @@
-//- index.jade - Abstract template for all page/views. -//
+//- layout.jade - Abstract template for all page/views. -//
 
 // Podplay.me - Podcast browser and player.
 // Authors: Ian McGaunn; Dave Zimmelman
@@ -13,6 +13,8 @@ html
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css')
     // Podplay global stylesheet
     link(rel='stylesheet', href='/stylesheets/style.css')
+    // Audioplayer stylesheet
+    link(rel='stylesheet', href='/stylesheets/audioplayer.css')
     if stylesheets
         // Stylesheets needed for local view.
         for s in stylesheets
