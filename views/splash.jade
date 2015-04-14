@@ -12,6 +12,6 @@ div.panel.panel-default#pc-0
     div.panel-heading Recommended For ${user.name}
     div.panel-body
 each gen, num in genres
-    div.panel.panel-default(data-genreid="#{num}")
+    div.panel.panel-default.genre-panel(data-genreid="#{num}")
         div.panel-heading #{gen}
         div.panel-body
