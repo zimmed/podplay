@@ -85,13 +85,14 @@ tr.feed-row:hover {
 }
 
 .panel-body {
-    height: 200px;
+    height: 100px;
     margin: 0px;
-    padding: 0px;
+    padding: 10px;
 }
 
 #search-results {
     height: 0px;
+    padding: 0px;
 }
 
 .panel-heading {

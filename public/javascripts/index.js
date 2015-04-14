@@ -15,10 +15,12 @@
         // Update table title with result count.
         if (results.length > 0) {
             $('#result-counter').html(results.length + " Results");
-            $('#search-results').css('height', '200');
+            $('#search-results').css('height', '200px');
+            $('#search-results').css('padding', '10px');
         } else {
             $('#result-counter').html("No Results");
-            $('#search-results').css('height', '0');
+            $('#search-results').css('height', '0px');
+            $('#search-results').css('padding', '0px');
         }
         // Remove existing results.
         $('#results-table tbody > tr').remove();
