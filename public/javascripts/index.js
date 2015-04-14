@@ -16,9 +16,9 @@
         count = (results.length > 0) ? "" + results.length : "No";
         $('#result-counter').html(count + " Results");
         if (results.length == 0) {
-            $('#search-results').height(0);
+            $('#search-results').css('height', '0');
         } else {
-            $('#search-results').height(200);
+            $('#search-results').css('height', '200');
         }
         // Remove existing results.
         $('#results-table tbody > tr').remove();
