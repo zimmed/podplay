@@ -135,19 +135,22 @@ tr.feed-row:hover {
 }
 
 #login {
-    height: 300px;
+    height: 250px;
     padding-top: 50px;
-    width: 250px;
-    position: absolute;
+    width: 300px;
+    position: fixed;
     top: 25%;
-    left: 50%;
+    left: 40%;
     z-index: 6;
     background-color: #ccc;
 }
 
 #dimmer {
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     height: 100%;
     width: 100%;
     background: rgba(0,0,0,0.5);
+    z-index: 5;
 }
