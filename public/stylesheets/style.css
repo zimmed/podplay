@@ -84,8 +84,14 @@ tr.feed-row:hover {
   padding-top: 15px;
 }
 
-/* Keep image column correct static width */
-#results-table tr > td:first-child {
-  width: 58px;
-  text-align: center;
+#search-results {
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+#result-counter {
+    text-transform: uppercase;
+    font-size: 10px;
+    padding-bottom: 0px;
 }
