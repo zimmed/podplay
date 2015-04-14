@@ -5,6 +5,16 @@
  */
 (function (window, $) {
     'use strict';
+    
+    window.showLoader = function () {
+        $("#dimmer").css("display", "block");
+        $("#loader").css("display", "block");
+    };
+    
+    window.hideLoader = function () {
+        $("#dimmer").css("display", "none");
+        $("#loader").css("display", "none");
+    };
 
     window.onpopstate = function (event) {
         if (document.location.pathname === '/') window.load_splash_view();
@@ -16,8 +26,9 @@
     };
     
     window.load_splash_view = function (first) {
+        window.showLoader();
         $.get('/api/view/splash', function (data) {
-
+            
             if (!first) window.history.pushState({}, document.title, '/');
             
             $('#left-col').html(data);
@@ -37,6 +48,8 @@
                 });
             });
 
+            window.hideLoader();
+            
             $('#podcast-search-input').on('change keyup paste', function (e) {
                 if (e.type == "keyup" && e.which == 13) {
                     // Enter key pressed
@@ -62,7 +75,9 @@
     };
     
     window.load_podcast_view = function (id) {
+        window.showLoader();
         $.get('/api/view/podcast/'+ id, function (data) {
+            window.hideLoader();
             $('#left-col').html(data);
 
             // Reformat URL to reflect appropriate title.
