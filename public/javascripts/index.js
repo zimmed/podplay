@@ -121,8 +121,8 @@
                 });
             }
         };
-        if (preload_cast) {
-            window.load_podcast_view(preload_cast);
+        if (window['preload_cast']) {
+            window.load_podcast_view(window.preload_cast);
         }
         else {
             window.load_splash_view();
