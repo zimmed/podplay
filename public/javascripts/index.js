@@ -83,7 +83,7 @@
             $('#left-col').html(data);
             $.get('/api/castcat/0', function (data) {
                 for (var i in data.podcasts) {
-                    $('#pc-0').append('<div class="castnail" data-feed="'+data.podcasts[i].feedUrl+'" data-title="'+data.podcasts[i].title+'"><img src="'+data.podcasts[i].poster100+'"></div>');
+                    $('#pc-0 > .panel-body').append('<div class="castnail" data-feed="'+data.podcasts[i].feedUrl+'" data-title="'+data.podcasts[i].title+'"><img src="'+data.podcasts[i].poster100+'"></div>');
                 }
             });
             $('#left-col .genre-panel').each(function () {
