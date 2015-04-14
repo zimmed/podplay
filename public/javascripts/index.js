@@ -30,7 +30,7 @@
             $('#search-results').css('height', '0px');
             $('#search-results').css('padding', '0px');
         }
-        insertPodcasts(results, '#search-results > div.podcontent');
+        insertPodcasts(results, '#search-results');
         /*
         // Remove existing results.
         $('#results-table tbody > tr').remove();
@@ -79,6 +79,9 @@
     
     /* When document is finished loading, execute following code: */
     $().ready(function () {
+        $.get('/api/view/splash', function (data) {
+            $('#left-col').html(data);
+        });
         // Check for search or browse data passed from server.
         //  This is for cached data only.
         if (typeof(presearch) !== "undefined") {

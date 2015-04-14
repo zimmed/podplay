@@ -13,6 +13,28 @@ var Cache = require('../lib/badcache');
 var Podcasts = require('../lib/podcasts');
 
 /**
+ * Routes for api/view URLs
+ */
+router.get('/view/splash', function (req, res, next) {
+    var casts;
+    if (req.session.user) {
+        casts = Cache.aggregate(req.session.user.subscriptions);
+        res.render('splash', {user: req.session.user,
+                              podcasts: casts,
+                              genres: Podcasts.Genres,
+                              getGenreId: Podcasts.getGenreId});
+    }
+    else {
+        casts = Cache.aggregate();
+        res.render('splash-guest', {podcasts: casts});
+    }
+});
+
+router.get('/view/podcast/:id', function (req, res, next) {
+    
+});
+
+/**
  * Route for api/search URL
  */
 router.get('/search', function (req, res, next) {
