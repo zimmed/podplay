@@ -18,22 +18,7 @@ var parseString = parser.parseString;
  */
 router.get('/:id/:title?', function (req, res, next) {
     var id = req.params.id;
-    // HTTP request information on podcast ID via Apple API
-    podcasts.getPodcast(id, function (error, msg) {
-        res.render('error', { message: msg, error: error});
-    }, function (podcast) {
-        request(podcast.feedUrl, function (error, response, body) {
-            // Data returned in XML format, and must be parsed.
-            parseString(body, function (err, obj) {
-                // Render client 'podcast' page/view, passing necessary data.
-                res.render('podcast', {id: id,
-                                       title: podcast.title,
-                                       podcast: podcast,
-                                       safetitle: id + '/' + podcast.title_uri,
-                                       feed: obj.rss.channel });
-            });
-        });
-    });
+    res.render('index', {title: 'Podplay.me', javascripts: ['index'], GLOBALS: {'preload_cast': id}});
 });
 
 // Expose route

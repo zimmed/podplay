@@ -121,7 +121,12 @@
                 });
             }
         };
-        window.load_splash_view();
+        if (preload_cast !== undefined) {
+            window.load_podcast_view(preload_cast);
+        }
+        else {
+            window.load_splash_view();
+        }
         
     });
 }(window, jQuery));
