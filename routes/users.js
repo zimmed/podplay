@@ -89,6 +89,7 @@ router.post('/login', function (req, res, next) {
             message: "Already logged in.",
             error: error
             });
+        res.send('Already logged in.');
     }
     else if (!req.params.name || !req.params.pw) {
         // Bad or non-existant post data sent.
@@ -96,6 +97,7 @@ router.post('/login', function (req, res, next) {
             message: "Improper login request sent.",
             error: error
             });
+        res.send('Improper login request sent.');
     }
     // Ensure post data is valid.
     else if (!users.validUsername(req.params.name)) {
@@ -105,6 +107,7 @@ router.post('/login', function (req, res, next) {
             message: "Invalid username supplied.",
             error: error
             });
+        res.send('Invalid username supplied.');
     }
     else if (!users.validPassword(req.params.pw)) {
         // Invalid password
@@ -113,6 +116,7 @@ router.post('/login', function (req, res, next) {
             message: "Invalid email address supplied.",
             error: error
             });
+        res.send('Invalid email address supplied.');
     }
     else {
         // Data sent is valid.
@@ -122,14 +126,18 @@ router.post('/login', function (req, res, next) {
         users.validateUser(name, pw, function (error, msg) {
                 // Login unsuccessful; error and message passed back.
                 if (error.err) console.log(error.err);
-                res.render('error', {message: msg, error: error});
+                //res.render('error', {message: msg, error: error});
+                res.send(message);
             },
             function (user) {
                 // Login successful; user object passed back.
+                res.send('200');
+                /*
                 var e = new Error('OK');
                 e.status = 200;
                 req.session.user = user;
                 res.render('error', {message: "Login successful.", error: e});
+                */
             });
     }
 });
