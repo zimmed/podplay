@@ -38,7 +38,7 @@ router.get('/view/splash', function (req, res, next) {
             res.render(msg);
         }, function (data) {
             res.render('splash-guest', {podcasts: data[0]});
-        }
+        });
     }
 });
 
