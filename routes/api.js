@@ -25,13 +25,11 @@ router.get('/search', function (req, res, next) {
     
     // Send requested search data received from Apple API back to caller.
     request(queryURL, function (error, response, body) {
-        // Update database and cache with request
-        var i, ids = [], results = JSON.parse(body).results;
-        for (i in results) {
-            ids.push(results[i].collectionId);
-        }
-        Podcasts.podcastForceCache(ids, function () {
-            Podcasts.getPodcasts(ids, function (err, msg) {
+        // Parse JSON results
+        var results = JSON.parse(body).results;
+        if (results) {
+            // Cache results
+            Podcasts.cacheSearchResults(results, function (err, msg) {
                 console.log(msg);
                 console.log(err);
                 res.json({"error": msg});
@@ -39,7 +37,9 @@ router.get('/search', function (req, res, next) {
                 Cache.search[req.query.term] = pcasts;
                 res.json(pcasts);
             });
-        });
+        } else {
+            res.json({});
+        }
     });
 });
 
