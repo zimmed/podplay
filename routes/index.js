@@ -6,7 +6,10 @@
  */
 
 var express = require('express');
+var xml2js = require('xml2js');
 var router = express.Router();
+var parser = new xml2js.Parser({explicitArray: false});
+var parseString = parser.parseString;
 var Cache = require('../lib/badcache');
 
 // User goes back to search results.
