@@ -11,11 +11,15 @@
      * @param {Object} data - The JSON object returned from iTunes query.
      */
     function searchResults(results) {
-        console.log(results);
         var podcast, row, count;
         // Update table title with result count.
         count = (results.length > 0) ? "" + results.length : "No";
-        $('#right-col > h3').html(count + " Results");
+        $('#result-counter').html(count + " Results");
+        if (results.length == 0) {
+            $('#search-results').hide();
+        } else {
+            $('#search-results').show();
+        }
         // Remove existing results.
         $('#results-table tbody > tr').remove();
         // Add entry for each podcast.

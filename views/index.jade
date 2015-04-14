@@ -4,21 +4,17 @@
 extends layout
 
 block content
-  div.container
-    div.col-md-9(id="left-col")
-      // Search form
-      div.input-group
-        input.form-control#podcast-search-input(type="text" placeholder="Search for a podcast")
-        div.input-group-btn
-            button#podcast-search-button(class="btn btn-default" type="button") GO!
-    // Query results container
-    div.col-md-3(id="right-col")
-      h3 No Results
-      table(id="results-table" class="table table-bordered")
-        thead
-          tr
-            th 
-            th Name
-            th Genre
-        tbody
-          // dynamic content
+    div.container
+        div.col-md-9(id="left-col")
+        // Search form
+            div.input-group
+            input.form-control#podcast-search-input(type="text" placeholder="Search for a podcast")
+            div.input-group-btn
+                button#podcast-search-button(class="btn btn-default" type="button") GO!
+
+        // Query results container
+        div.panel.panel-default
+            div.panel-heading#result-counter No Results
+            div.panel-body#search-results
+        div.col-md-3(id="right-col")
+        
