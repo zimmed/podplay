@@ -25,9 +25,21 @@ router.get('/search', function (req, res, next) {
     
     // Send requested search data received from Apple API back to caller.
     request(queryURL, function (error, response, body) {
-        // Update cache with request
-        Cache.search[req.query.term] = JSON.parse(body);
-        res.send(body);
+        // Update database and cache with request
+        var i, ids = [], results = JSON.parse(body).results;
+        for (i in results) {
+            ids.push(results[i].collectionId);
+        }
+        Podcasts.podcastForceCache(ids, function () {
+            Podcasts.getPodcasts(ids, function (err, msg) {
+                console.log(msg);
+                console.log(err);
+                res.json({"error": msg});
+            }, function (pcasts) {
+                Cache.search[req.query.term] = pcasts;
+                res.json(pcasts);
+            });
+        });
     });
 });
 
