@@ -72,6 +72,7 @@
         // Search box change
         var quicksearch = function () {
             var s = $('#podcast-search-input').text().trim();
+            console.log('qs: ' + s);
             if (s != "") {
                 $.get('/api/quicksearch/?term=' + s, function (data) {
                     searchResults(data);
