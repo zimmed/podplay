@@ -84,13 +84,17 @@ tr.feed-row:hover {
   padding-top: 15px;
 }
 
-#search-results {
+.panel-body {
     height: 0px;
     margin: 0px;
     padding: 0px;
 }
 
-#result-counter {
+#search-results {
+    height: 0px;
+}
+
+.panel-heading {
     text-transform: uppercase;
     font-size: 12px;
     padding-bottom: 0px;
