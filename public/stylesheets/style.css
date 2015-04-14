@@ -147,6 +147,19 @@ legend {
     overflow: hidden;
 }
 
+#loader {
+    z-index: 6;
+    background: url('loader128.gif');
+    display: none;
+    width: 128px;
+    height: 128px;
+    padding: 0;
+    margin-left: -64px;
+    margin-top: -64px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+}
 
 #dimmer {
     position: fixed;
