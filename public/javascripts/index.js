@@ -72,7 +72,6 @@
         // Search box change
         var quicksearch = function () {
             var s = $('#podcast-search-input').val().trim();
-            console.log('qs: ' + s);
             if (s != "") {
                 $.get('/api/quicksearch/?term=' + s, function (data) {
                     searchResults(data);
@@ -80,11 +79,16 @@
             }
         };
         var searchBoxTH = null;
-        $('#podcast-search-input').on('change keyup paste', function () {
-            if ($(this).val().trim() !== "" && searchBoxTH === null) {
+        $('#podcast-search-input').on('change keyup paste', function (e) {
+            if (e.type == "keyup" && e.which == 13) {
+                clearInterval(searchBoxTH);
+                searchBoxTH = null;
+            }
+            else if ($(this).val().trim() !== "" && searchBoxTH === null) {
                 quicksearch();
                 searchBoxTH = setInterval(quicksearch, 1000);
-            } else if ($(this).val().trim() === "") {
+            }
+            else if ($(this).val().trim() === "") {
                 clearInterval(searchBoxTH);
                 searchBoxTH = null;
                 searchResults({});
