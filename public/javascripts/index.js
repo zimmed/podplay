@@ -115,7 +115,7 @@
                 $('#login').css("display", "block");
                 $('#btn-sin').html('X');
                 $('#btn-sup').html('Register');
-                $('#btn-sin input[type=text]').focus();
+                $('#login input[type=text]').focus();
                 window.state = 1;
             } else {
                 $('#dimmer').css("display", "none");
