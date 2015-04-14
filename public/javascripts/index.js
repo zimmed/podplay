@@ -11,7 +11,7 @@
         if (!append) $(selector).html('');
         for (i in pcasts) {
             var classes = (fav) ? "castnail favorite" : "castnail";
-            $(selector).append('<div class="'+classes+'" data-feed="'+pcasts[i].feedUrl+'" data-title="'+pcasts[i].title+'"><img src="'+pcasts[i].poster100+'"></div>');
+            $(selector).append('<div class="'+classes+'" data-id="'+pcasts[i]._id+'" data-title="'+pcasts[i].title+'"><img src="'+pcasts[i].poster100+'"></div>');
         }
     }
     
@@ -32,64 +32,13 @@
             $('#search-results').css('padding', '0px');
         }
         insertPodcasts(results, '#search-results');
-        /*
-        // Remove existing results.
-        $('#results-table tbody > tr').remove();
-        // Add entry for each podcast.
-        for (podcast in results) {
-            row = $('<tr class="feed-row" data-id="' + results[podcast]._id + '">');
-            row.append($('<td>').html('<img src="' + results[podcast].poster60 + '">'));
-            row.append($('<td>').text(results[podcast].title));
-            row.append($('<td>').text(results[podcast].genre));
-            $('#results-table').append(row);
-        }
-        // Temporary system for getting to feed pages
-        $('.feed-row').click(function () {
-            var id = $(this).data('id');
-            window.location = '/podcast/' + id;
-        });*/
-    }
-    
-    
-    
-    /**
-     * Populate results table with browse data.
-     * @param {Object} data - The JSON object returned from iTunes query.
-     */
-    function browseResults(data) {
-        var results = data.feed.entry, podcast, row, count;
-        // Update table title with result count.
-        count = (results.length > 0) ? "" + results.length : "No";
-        $('#right-col > h3').html(count + " Results");
-        // Remove existing results.
-        $('#results-table tbody > tr').remove();
-        // Add entry for each podcast.
-        for (podcast in results) {
-            row = $('<tr class="feed-row" data-id="' + results[podcast].id.attributes['im:id'] + '">');
-            row.append($('<td>').html('<img src="' + results[podcast]['im:image'][0].label + '">'));
-            row.append($('<td>').text(results[podcast]['im:name'].label));
-            row.append($('<td>').text(results[podcast].category.attributes.label));
-            $('#results-table').append(row);
-        }
-        // Temporary system for getting to feed pages
-        $('.feed-row').click(function () {
-            var id = $(this).data('id');
-            window.location = '/podcast/' + id;
-        });
     }
     
     /* When document is finished loading, execute following code: */
     $().ready(function () {
         
-        // Check for search or browse data passed from server.
-        //  This is for cached data only.
-        if (typeof(presearch) !== "undefined") {
-            searchResults(presearch);
-        }
-        else if (typeof(prebrowse) !== "undefined") {
-            browseResults(prebrowse);
-        }
-        
+        var searchBoxTH = null;
+        var lastTickSearch = "";
         // Submit search query
         var submitSearch = function () {
             clearInterval(searchBoxTH);
@@ -100,7 +49,7 @@
                 // Parse results and add to table.
                 searchResults(data);
                 // Push new URL state.
-                window.history.pushState({}, document.title, '/search/' + searchTerm);
+                //window.history.pushState({}, document.title, '/search/' + searchTerm);
             });
         };
         // Search box change
@@ -118,67 +67,66 @@
                 });
             }
         };
-        var searchBoxTH = null;
-        var lastTickSearch = "";
         
         
-        // Reload page when user goes forward or back to process cached search or browse results.
-        window.onpopstate = function(event) {
-            window.location = document.location;
-        };
+        function load_podcast_view (id) {
+            $.get('/api/view/podcast/'+ id, function (data) {
+                $('#left-col').html(data);
+                
+                // Reformat URL to reflect appropriate title.
+                window.history.replaceState({}, document.title, '/podcast/' + safetitle);
+            });
+        }
         
-        $.get('/api/view/splash', function (data) {
-            
-            $('#left-col').html(data);
-            
-            $.get('/api/castcat/0', function (data) {
-                insertPodcasts(data.podcasts, '#pc-0 > .panel-body', false, false);
-            });
-            $('#left-col .genre-panel').each(function () {
-                var i, el = $(this).find('.panel-body'), gid = $(this).data('genreid');
-                $.get('/api/castcat/' + gid, function (data) {
-                    el.html('');
-                    if (data.favorites) {
-                        insertPodcasts(data.favorites, el, false, true);
-                    }
-                    insertPodcasts(data.podcasts, el, false, false);
-                });
-            });
-            
-            $('#podcast-search-input').on('change keyup paste', function (e) {
-                if (e.type == "keyup" && e.which == 13) {
-                    // Enter key pressed
-                    submitSearch();
-                }
-                else if ($(this).val().trim() !== "" &&
-                         $(this).val().trim() !== lastTickSearch &&
-                         searchBoxTH === null) {
-                    quicksearch();
-                    searchBoxTH = setInterval(quicksearch, 250);
-                }
-                else if ($(this).val().trim() === "") {
-                    clearInterval(searchBoxTH);
-                    searchBoxTH = null;
-                    searchResults({});
-                }
-            });
-            // Search button press
-            $('#podcast-search-button').click(function () {
-                submitSearch();
-            });
+        function load_splash_view() {
+            $.get('/api/view/splash', function (data) {
 
-            // Browse submission
-            $('#podcast-browse').submit(function () {
-                var genre = $('#podcast-browse-cat').val();
-                // Get browse data from API.
-                $.get('/api/browse/?limit=10&genre=' + genre, function (data) {
-                    // Parse results and add to table.
-                    browseResults(JSON.parse(data));
-                    // Push new URL state.
-                    window.history.pushState({}, document.title, '/browse/' + genre);
+                $('#left-col').html(data);
+
+                $.get('/api/castcat/0', function (data) {
+                    insertPodcasts(data.podcasts, '#pc-0 > .panel-body', false, false);
+                });
+
+                $('#left-col .genre-panel').each(function () {
+                    var i, el = $(this).find('.panel-body'), gid = $(this).data('genreid');
+                    $.get('/api/castcat/' + gid, function (data) {
+                        el.html('');
+                        if (data.favorites) {
+                            insertPodcasts(data.favorites, el, false, true);
+                        }
+                        insertPodcasts(data.podcasts, el, false, false);
+                    });
+                });
+
+                $('#podcast-search-input').on('change keyup paste', function (e) {
+                    if (e.type == "keyup" && e.which == 13) {
+                        // Enter key pressed
+                        submitSearch();
+                    }
+                    else if ($(this).val().trim() !== "" &&
+                             $(this).val().trim() !== lastTickSearch &&
+                             searchBoxTH === null) {
+                        quicksearch();
+                        searchBoxTH = setInterval(quicksearch, 250);
+                    }
+                    else if ($(this).val().trim() === "") {
+                        clearInterval(searchBoxTH);
+                        searchBoxTH = null;
+                        searchResults({});
+                    }
+                });
+                // Search button press
+                $('#podcast-search-button').click(function () {
+                    submitSearch();
+                });
+
+                $('.castnail').click(function () {
+                    var id = $(this).data('id');
+                    load_podcast_view(id);
                 });
             });
-        });
+        }
+        load_splash_view();
         
     });
 }(window, jQuery));
