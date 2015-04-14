@@ -114,6 +114,8 @@
                 $('#dimmer').css("display", "block");
                 $('#login').css("display", "block");
                 $('#btn-sin').html('X');
+                $('#btn-sup').html('Register');
+                $('#btn-sin input[type=text]').focus();
                 window.state = 1;
             } else {
                 $('#dimmer').css("display", "none");
@@ -128,6 +130,7 @@
                 $('#login').css("display", "none");
                 $('#dimmer').css("display", "block");
                 $('#register').css("display", "block");
+                $('#btn-sin').html('Sign In');
                 $('#btn-sup').html('X');
                 window.state = 2;
             } else {
