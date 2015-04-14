@@ -6,6 +6,34 @@
 (function (window, $) {
     'use strict';
     
+    window.favorite = function (id) {
+        $.get('/users/favorite/' + id, function (data) {
+            $('#fav').html('Remove');
+            $('#fav').off('click');
+            $('#fav').click(function () {
+                defavorite(id);
+            });
+        });
+    };
+    
+    window.defavorite = function (id) {
+        $.get('/users/defavorite/' + id, function (data) {
+            $('#fav').html('Remove');
+            $('#fav').off('click');
+            $('#fav').click(function () {
+                defavorite(id);
+            });
+        });
+    };
+    
+    window.showNotification = function (msg) {
+        $('#notif').html(msg);
+    };
+    
+    window.closeNotification = function (msg) {
+        $('#notif').html('');
+    };
+    
     window.showLoader = function () {
         $("#dimmer").css("display", "block");
         $("#loader").css("display", "block");
@@ -154,6 +182,61 @@
                 $('#btn-sup').html('Register');
                 window.state = 0;
             }
+        });
+        
+        $('.btnLogin').click(function() {
+            var username = $('#name').val().trim();
+            var password = $('#pw').val().trim();
+            $('#login input').removeClass('error');
+            if (!username.match(/^[a-zA-Z0-9\_\-\.]{5,26}$/)) {
+                $('#name').addClass('error');
+                window.showNotification("Invalid username.");
+                return;
+            }
+            if (!password.match(/^[^\s\'\;\\]{6,26}$/)) {
+                $('#pw').addClass('error');
+                window.showNotification("Invalid password.");
+                return;
+            }
+            $('#name').prop("disabled", true);
+            $('#pw').prop("disabled", true);
+            $.post('/users/login', {name: username, pw: password}).done(function (data) {
+                console.log(data);
+                $('#dimmer').css("display", "none");
+                $('#login').css("display", "none");
+                $('#btn-sin').html('Sign Out');
+                $('#btn-sup').css("display", "none");
+                $('#btn-sin').off('click');
+                $('#btn-sin').click(function () {
+                    $.get('/logout', function (data) {
+                        load_splash_view();
+                        $('#btn-sin').html('Sign In');
+                        $('#btn-sin').off('click');
+                        $('#btn-sup').css("display", "inline");
+                        $('#btn-sin').click(function () {
+                            if (window.state != 1) {
+                                $('#register').css("display", "none");
+                                $('#dimmer').css("display", "block");
+                                $('#login').css("display", "block");
+                                $('#btn-sin').html('X');
+                                $('#btn-sup').html('Register');
+                                $('#login input[type=text]').focus();
+                                window.state = 1;
+                            } else {
+                                $('#dimmer').css("display", "none");
+                                $('#login').css("display", "none");
+                                $('#btn-sin').html('Sign In');
+                                window.state = 0;
+                            }
+                        });
+                    });
+                });
+                window.state = 0;
+            }).fail(function (obj, text, err) {
+                console.log(text);
+                $('#login input').addClass('error');
+                window.showNotification("Wrong username or password.");
+            });
         });
         
         window.searchBoxTH = null;

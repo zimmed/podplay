@@ -113,7 +113,11 @@ tr.feed-row:hover {
     cursor: pointer;
 }
 
-.castnail .favorite
+.castnail .favorite {
+    height: 96px;
+    width: 96px;
+    border: 2px solid blue;
+}
 
 .castnail > img {
     margin: 0px;
@@ -170,4 +174,8 @@ legend {
     background: rgba(0,0,0,0.6);
     z-index: 5;
     display: none;
+}
+
+.error {
+    border: 1px solid red;
 }

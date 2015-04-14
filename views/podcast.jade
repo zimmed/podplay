@@ -20,6 +20,11 @@ script.
         p #{feed['itunes:summary']}
     table#feedinfo-table(class="table table-bordered")
         tbody
+            if user
+                tr
+                    th Favorite
+                    td
+                        button#fav(onclick="favorite(#{podcast._id});") Add
             tr
                 th Author
                 td #{podcast.artistName}
