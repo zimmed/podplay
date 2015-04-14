@@ -113,6 +113,8 @@ tr.feed-row:hover {
     cursor: pointer;
 }
 
+.castnail .favorite
+
 .castnail > img {
     margin: 0px;
     padding: 0px;
@@ -130,4 +132,12 @@ tr.feed-row:hover {
     text-transform: uppercase;
     font-size: 12px;
     padding-bottom: 0px;
+}
+
+#login {
+    height: 300px;
+    padding-top: 50px;
+    width: 250px;
+    position: absolute;
+    top: 0px;
 }
