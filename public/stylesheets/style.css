@@ -136,11 +136,11 @@ tr.feed-row:hover {
 
 #login {
     height: 250px;
-    padding-top: 50px;
     width: 300px;
     position: fixed;
     top: 25%;
-    left: 40%;
+    left: 50%;
+    margin-right: 150px;
     z-index: 6;
     background: #fefefe;
     border: 1px solid #C3D4DB;
@@ -148,8 +148,8 @@ tr.feed-row:hover {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    -moz-box-shadow: rgba(0,0,0,0.15) 0 0 1px;
-    -webkit-box-shadow: rgba(0,0,0,0.15) 0 0 1px;
+    -moz-box-shadow: rgba(0,0,0,0.30) 0 0 1px;
+    -webkit-box-shadow: rgba(0,0,0,0.30) 0 0 1px;
     box-shadow: rgba(0,0,0,0.15) 0 0 1px;
     color: #444;
 }
