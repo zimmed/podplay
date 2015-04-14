@@ -154,7 +154,7 @@
                          $(this).val().trim() !== lastTickSearch &&
                          searchBoxTH === null) {
                     quicksearch();
-                    searchBoxTH = setInterval(quicksearch, 1000);
+                    searchBoxTH = setInterval(quicksearch, 250);
                 }
                 else if ($(this).val().trim() === "") {
                     clearInterval(searchBoxTH);
