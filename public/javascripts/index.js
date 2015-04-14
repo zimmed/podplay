@@ -81,7 +81,7 @@
         };
         var searchBoxTH = null;
         $('#podcast-search-input').change(function () {
-            if (!searchBoxTH) {
+            if (searchBoxTH === null) {
                 quicksearch();
                 searchBoxTH = setInterval(quicksearch, 1000);
             }
