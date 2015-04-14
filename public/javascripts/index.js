@@ -6,6 +6,60 @@
 (function (window, $) {
     'use strict';
 
+    
+    window.load_splash_view = function () {
+        $.get('/api/view/splash', function (data) {
+
+            $('#left-col').html(data);
+
+            $.get('/api/castcat/0', function (data) {
+                insertPodcasts(data.podcasts, '#pc-0 > .panel-body', false, false);
+            });
+
+            $('#left-col .genre-panel').each(function () {
+                var i, el = $(this).find('.panel-body'), gid = $(this).data('genreid');
+                $.get('/api/castcat/' + gid, function (data) {
+                    el.html('');
+                    if (data.favorites) {
+                        insertPodcasts(data.favorites, el, false, true);
+                    }
+                    insertPodcasts(data.podcasts, el, false, false);
+                });
+            });
+
+            $('#podcast-search-input').on('change keyup paste', function (e) {
+                if (e.type == "keyup" && e.which == 13) {
+                    // Enter key pressed
+                    submitSearch();
+                }
+                else if ($(this).val().trim() !== "" &&
+                         $(this).val().trim() !== lastTickSearch &&
+                         searchBoxTH === null) {
+                    quicksearch();
+                    searchBoxTH = setInterval(quicksearch, 250);
+                }
+                else if ($(this).val().trim() === "") {
+                    clearInterval(searchBoxTH);
+                    searchBoxTH = null;
+                    searchResults({});
+                }
+            });
+            // Search button press
+            $('#podcast-search-button').click(function () {
+                submitSearch();
+            });
+        });
+    };
+    
+    window.load_podcast_view = function (id) {
+        $.get('/api/view/podcast/'+ id, function (data) {
+            $('#left-col').html(data);
+
+            // Reformat URL to reflect appropriate title.
+            window.history.replaceState({}, document.title, '/podcast/' + safetitle);
+        });
+    };
+    
     function insertPodcasts(pcasts, selector, append, fav) {
         var i;
         if (!append) $(selector).html('');
@@ -67,61 +121,7 @@
                 });
             }
         };
-        
-        
-        function load_podcast_view (id) {
-            $.get('/api/view/podcast/'+ id, function (data) {
-                $('#left-col').html(data);
-                
-                // Reformat URL to reflect appropriate title.
-                window.history.replaceState({}, document.title, '/podcast/' + safetitle);
-            });
-        }
-        
-        function load_splash_view() {
-            $.get('/api/view/splash', function (data) {
-
-                $('#left-col').html(data);
-
-                $.get('/api/castcat/0', function (data) {
-                    insertPodcasts(data.podcasts, '#pc-0 > .panel-body', false, false);
-                });
-
-                $('#left-col .genre-panel').each(function () {
-                    var i, el = $(this).find('.panel-body'), gid = $(this).data('genreid');
-                    $.get('/api/castcat/' + gid, function (data) {
-                        el.html('');
-                        if (data.favorites) {
-                            insertPodcasts(data.favorites, el, false, true);
-                        }
-                        insertPodcasts(data.podcasts, el, false, false);
-                    });
-                });
-
-                $('#podcast-search-input').on('change keyup paste', function (e) {
-                    if (e.type == "keyup" && e.which == 13) {
-                        // Enter key pressed
-                        submitSearch();
-                    }
-                    else if ($(this).val().trim() !== "" &&
-                             $(this).val().trim() !== lastTickSearch &&
-                             searchBoxTH === null) {
-                        quicksearch();
-                        searchBoxTH = setInterval(quicksearch, 250);
-                    }
-                    else if ($(this).val().trim() === "") {
-                        clearInterval(searchBoxTH);
-                        searchBoxTH = null;
-                        searchResults({});
-                    }
-                });
-                // Search button press
-                $('#podcast-search-button').click(function () {
-                    submitSearch();
-                });
-            });
-        }
-        load_splash_view();
+        window.load_splash_view();
         
     });
 }(window, jQuery));
