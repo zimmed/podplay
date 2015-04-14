@@ -10,9 +10,10 @@ var request = require('request');
 var router = express.Router();
 
 var Cache = require('../lib/badcache');
+var Podcasts = require('../lib/podcasts');
 
 /**
- * Route for /search URL
+ * Route for api/search URL
  */
 router.get('/search', function (req, res, next) {
     var api = 'https://itunes.apple.com/search?entity=podcast&term=';
@@ -31,7 +32,16 @@ router.get('/search', function (req, res, next) {
 });
 
 /**
- * Route for /browse URL
+ * Route for api/quicksearch URL
+ */
+router.get('/quicksearch', function (req, res, next) {
+    Podcasts.searchByTerm(req.query.term, function (data) {
+        res.json(data);
+    });
+});
+
+/**
+ * Route for api/browse URL
  */
 router.get('/browse', function (req, res, next) {
     var api = 'https://itunes.apple.com/us/rss/toppodcasts';
