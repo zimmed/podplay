@@ -48,11 +48,12 @@ html
     form.box.login#login(action="javascript:void(0);")
         fieldset.boxBuddy
             legend Sign In
+            span#notif
             label(for="name") Username
             input(type="text" tabindex="1" id="name" name="name" class="required")
             label(for="password") Password
             input(type="password" tabindex="2" id="pw" name="pw" class="required")
-            span#notif
+            
             button.btnLogin#btn-cancel(tabindex="4") Cancel
             button.btnLogin#btn-login(tabindex="3") Sign In
     form.box.login#register
