@@ -7,7 +7,7 @@
     'use strict';
     
     // Document ready entry point for the splash paGE
-    window.splashReady = function () {
+    window.splashReady = function (first) {
         if (!first) window.history.pushState({}, document.title, '/');
         
         // Populate top category
@@ -129,7 +129,7 @@
         $.get('/api/view/splash', function (data) {
             window.hideLoader();
             $('#left-col').html(data);
-            window.splashReady();
+            window.splashReady(first);
         });
     };
     
