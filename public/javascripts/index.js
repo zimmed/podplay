@@ -191,6 +191,7 @@
         
         $('#btn-sup').click(function () {
             if (window.state != 2) {
+                window.closeNotification();
                 $('#login').css("display", "none");
                 $('#dimmer, #register').css("display", "block");
                 $('#btn-sup').html('X');
@@ -200,7 +201,6 @@
             } else {
                 $('#dimmer, #register').css("display", "none");
                 $('#btn-sup').html('Register');
-                window.closeNotification();
                 window.state = 0;
             }
         });
