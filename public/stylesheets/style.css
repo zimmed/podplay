@@ -187,8 +187,16 @@ legend {
 
 #btn-cancel {
     float: none;
+    left: -5px;
 }
 
 #btn-login {
     right: 25px;
+}
+
+#notif {
+    margin: 5px;
+    width: 100%;
+    font-style: italic;
+    color: #FF7F00;
 }
