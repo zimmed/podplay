@@ -102,17 +102,15 @@
     };
     
     window.closeNotification = function (msg) {
-        $('.notif').html('');
+        $('.notif').html('&nbsp;');
     };
     
     window.showLoader = function () {
-        $("#dimmer").css("display", "block");
-        $("#loader").css("display", "block");
+        $("#dimmer, #loader").css("display", "block");
     };
     
     window.hideLoader = function () {
-        $("#dimmer").css("display", "none");
-        $("#loader").css("display", "none");
+        $("#dimmer, #loader").css("display", "none");
     };
 
     window.onpopstate = function (event) {
@@ -186,6 +184,7 @@
             } else {
                 $('#dimmer, #login').css("display", "none");
                 $('#btn-sin').html('Sign In');
+                window.closeNotification();
                 window.state = 0;
             }
         });
@@ -201,6 +200,7 @@
             } else {
                 $('#dimmer, #register').css("display", "none");
                 $('#btn-sup').html('Register');
+                window.closeNotification();
                 window.state = 0;
             }
         });
