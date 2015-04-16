@@ -208,7 +208,10 @@
             }
         });
         
-        $('#name, #pw').unbind('keypress keyup');
+        $('#login').submit(function (e) {
+            e.preventDefault();
+            return false;
+        });
         $('#name').keypress(function (e) {
             if (e.which == 13) {
                 if ($('#pw').val().trim() == '') $('#pw').focus();
