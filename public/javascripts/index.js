@@ -208,7 +208,9 @@
             }
         });
         
-        $('#btn-cancel').click($('#btn-sin').click);
+        $('#btn-cancel').click(function () {
+            $('#btn-sin').click();
+        });
         
         $('#btn-login').click(function() {
             var username = $('#name').val().trim();
