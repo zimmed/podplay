@@ -198,7 +198,8 @@ legend {
     right: 10px;
 }
 
-#notif {
+.notif {
+    display: block;
     padding: 5px;
     width: 100%;
     font-style: italic;

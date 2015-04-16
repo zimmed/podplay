@@ -98,11 +98,11 @@
     };
     
     window.showNotification = function (msg) {
-        $('#notif').html(msg);
+        $('.notif').html(msg);
     };
     
     window.closeNotification = function (msg) {
-        $('#notif').html('');
+        $('.notif').html('');
     };
     
     window.showLoader = function () {
