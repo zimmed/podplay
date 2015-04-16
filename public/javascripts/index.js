@@ -208,6 +208,19 @@
             }
         });
         
+        $('#name, #pw').unbind('keypress').unbund('keyup');
+        $('#name').keypress(function (e) {
+            if (e.which == 13) {
+                if ($('#pw').val().trim() == '') $('#pw').focus();
+                else $('#btn-login').click();
+            }
+        });
+        $('#pw').keypress(function (e) {
+            if (e.which == 13) {
+                $('#btn-login').click();
+            }
+        });
+        
         $('#btn-cancel').click(function () {
             $('#btn-sin').click();
         });
