@@ -208,7 +208,7 @@
             }
         });
         
-        $('#name, #pw').unbind('keypress').unbund('keyup');
+        $('#name, #pw').unbind('keypress keyup');
         $('#name').keypress(function (e) {
             if (e.which == 13) {
                 if ($('#pw').val().trim() == '') $('#pw').focus();
