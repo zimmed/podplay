@@ -185,12 +185,12 @@ legend {
     float: right;
 }
 
-#btn-cancel {
+.btn-cancel {
     float: none;
     left: -5px;
 }
 
-#btn-login {
+#btn-login, #btn-register {
     right: 10px;
 }
 

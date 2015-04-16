@@ -178,15 +178,13 @@
         $('#btn-sin').click(function () {
             if (window.state != 1) {
                 $('#register').css("display", "none");
-                $('#dimmer').css("display", "block");
-                $('#login').css("display", "block");
+                $('#dimmer, #login').css("display", "block");
                 $('#btn-sin').html('X');
                 $('#btn-sup').html('Register');
-                $('#login input[type=text]').focus();
+                $('#name').focus();
                 window.state = 1;
             } else {
-                $('#dimmer').css("display", "none");
-                $('#login').css("display", "none");
+                $('#dimmer, #login').css("display", "none");
                 $('#btn-sin').html('Sign In');
                 window.state = 0;
             }
@@ -195,43 +193,41 @@
         $('#btn-sup').click(function () {
             if (window.state != 2) {
                 $('#login').css("display", "none");
-                $('#dimmer').css("display", "block");
-                $('#register').css("display", "block");
-                $('#btn-sin').html('Sign In');
+                $('#dimmer, #register').css("display", "block");
                 $('#btn-sup').html('X');
+                $('#btn-sin').html('Sign In');
+                $('#uname').focus();
                 window.state = 2;
             } else {
-                $('#dimmer').css("display", "none");
-                $('#register').css("display", "none");
+                $('#dimmer, #register').css("display", "none");
                 $('#btn-sup').html('Register');
                 window.state = 0;
             }
         });
         
-        $('#login').submit(function (e) {
-            e.preventDefault();
-            return false;
-        });
-        $('#name').keypress(function (e) {
-            if (e.which == 13) {
-                if ($('#pw').val().trim() == '') $('#pw').focus();
-                else $('#btn-login').click();
-            }
-        });
-        $('#pw').keypress(function (e) {
-            if (e.which == 13) {
-                $('#btn-login').click();
-            }
+        $('.btn-cancel').click(function () {
+            if (window.state === 1) $('#btn-sin').click();
+            else if (window.state === 2) $('#btn-sup').click();
         });
         
-        $('#btn-cancel').click(function () {
-            $('#btn-sin').click();
+        $('#btn-logout').click(function () {
+            $.get('/users/logout', function (data) {
+                // Logout succeeded
+                // Reload page
+                load_splash_view();
+                // Hide logout button
+                $('#btn-logout').css("display", "none");
+                $('#btn-sup, #btn-sin').css("display", "inline");
+            });
         });
         
         $('#btn-login').click(function() {
             var username = $('#name').val().trim();
             var password = $('#pw').val().trim();
+            // Reset inputs
             $('#login input').removeClass('error');
+            // Quick clientside input check
+            //  TODO: More comprehensive checks for verbose feedback
             if (!username.match(/^[a-zA-Z0-9\_\-\.]{5,26}$/)) {
                 $('#name').addClass('error');
                 window.showNotification("Invalid username.");
@@ -242,51 +238,31 @@
                 window.showNotification("Invalid password.");
                 return;
             }
-            $('#name').prop("disabled", true);
-            $('#pw').prop("disabled", true);
+            // Disable form
+            $('#name, #pw, .btnLogin').prop("disabled", true);
+            
             $.post('/users/login', {name: username, pw: password}).done(function (data) {
                 if (data != "200") {
+                    // Server error
+                    // Display error message
                     window.showNotification(data);
-                    $('#name').prop("disabled", false);
-                    $('#pw').prop("disabled", false);
+                    // Enable form
+                    $('#name, #pw, #login .btnLogin').prop("disabled", false);
                     return;
                 }
+                // Login succeeded
                 console.log(data);
-                $('#dimmer').css("display", "none");
-                $('#login').css("display", "none");
-                $('#btn-sin').html('Sign Out');
-                $('#btn-sup').css("display", "none");
-                $('#btn-sin').off('click');
-                $('#btn-sin').click(function () {
-                    $.get('/users/logout', function (data) {
-                        load_splash_view();
-                        $('#btn-sin').html('Sign In');
-                        $('#btn-sin').off('click');
-                        $('#btn-sup').css("display", "inline");
-                        $('#btn-sin').click(function () {
-                            if (window.state != 1) {
-                                $('#register').css("display", "none");
-                                $('#dimmer').css("display", "block");
-                                $('#login').css("display", "block");
-                                $('#btn-sin').html('X');
-                                $('#btn-sup').html('Register');
-                                $('#login input[type=text]').focus();
-                                window.state = 1;
-                            } else {
-                                $('#dimmer').css("display", "none");
-                                $('#login').css("display", "none");
-                                $('#btn-sin').html('Sign In');
-                                window.state = 0;
-                            }
-                        });
-                    });
-                });
+                // Hide login form and sign in / register button
+                $('#dimmer, #login, #btn-sin, #btn-sup').css("display", "none");
+                // Show sign out button
+                $('#btn-logout').css("display", "inline");
+                
                 window.state = 0;
             }).fail(function (obj, text, err) {
+                // Request failed
                 console.log(text);
                 $('#login input').addClass('error');
-                $('#name').prop("disabled", false);
-                $('#pw').prop("disabled", false);
+                $('#name, #pw, #login .btnLogin').prop("disabled", false);
                 window.showNotification("Wrong username or password.");
             });
         });
