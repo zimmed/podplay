@@ -186,7 +186,7 @@ legend {
 }
 
 .btn-cancel {
-    float: none;
+    float: none !important;
     left: -5px;
 }
 
