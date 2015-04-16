@@ -6,6 +6,77 @@
 (function (window, $) {
     'use strict';
     
+    // Document ready entry point for the splash paGE
+    window.splashReady = function () {
+        if (!first) window.history.pushState({}, document.title, '/');
+        
+        // Populate top category
+        $.get('/api/castcat/0', function (data) {
+            insertPodcasts(data.podcasts, '#pc-0 > .panel-body', false, false);
+        });
+        
+        // Populate all other categories
+        $('#left-col .genre-panel').each(function () {
+            var i, el = $(this).find('.panel-body'), gid = $(this).data('genreid');
+            $.get('/api/castcat/' + gid, function (data) {
+                el.html('');
+                if (data.favorites) {
+                    insertPodcasts(data.favorites, el, false, true);
+                }
+                insertPodcasts(data.podcasts, el, false, false);
+            });
+        });
+
+        // Handle quick searching
+        $('#podcast-search-input').on('change keyup paste', function (e) {
+            if (e.type == "keyup" && e.which == 13) {
+                // Enter key pressed
+                window.submitSearch();
+            }
+            else if ($(this).val().trim() !== "" &&
+                     $(this).val().trim() !== window.lastTickSearch &&
+                     window.searchBoxTH === null) {
+                window.quicksearch();
+                window.searchBoxTH = setInterval(window.quicksearch, 250);
+            }
+            else if ($(this).val().trim() === "") {
+                clearInterval(window.searchBoxTH);
+                window.searchBoxTH = null;
+                searchResults({});
+            }
+        });
+        
+        // Handle hard search request
+        $('#podcast-search-button').click(function () {
+            window.submitSearch();
+        });
+    };
+    
+    // Document ready entry point for a podcast page
+    window.pcastReady = function () {
+        // Reformat URL to reflect appropriate title.
+        if (window['preload_cast']) {
+            window.history.replaceState({}, document.title, '/podcast/' + window.safetitle);
+            window['preload_cast'] = false;
+        } else {
+            window.history.pushState({}, document.title, '/podcast/' + window.safetitle);
+        }
+        
+        // load new URL when user clicks on new podcast link
+        $('.listenlink').click(function() {
+            var audioURL = $(this).attr('data-audio');
+            var title    = $(this).attr('data-title');
+
+            $('.playing-title span').html(title);
+            var player = $('audio');
+
+            player.attr('src', audioURL);
+            player.load();
+            $('.audioplayer-playpause').trigger('click');
+
+        });
+    };
+    
     window.favorite = function (id) {
         $.get('/users/favorite/' + id, function (data) {
             $('#fav').html('Remove');
@@ -56,49 +127,9 @@
     window.load_splash_view = function (first) {
         window.showLoader();
         $.get('/api/view/splash', function (data) {
-            
-            if (!first) window.history.pushState({}, document.title, '/');
-            
-            $('#left-col').html(data);
-
-            $.get('/api/castcat/0', function (data) {
-                insertPodcasts(data.podcasts, '#pc-0 > .panel-body', false, false);
-            });
-
-            $('#left-col .genre-panel').each(function () {
-                var i, el = $(this).find('.panel-body'), gid = $(this).data('genreid');
-                $.get('/api/castcat/' + gid, function (data) {
-                    el.html('');
-                    if (data.favorites) {
-                        insertPodcasts(data.favorites, el, false, true);
-                    }
-                    insertPodcasts(data.podcasts, el, false, false);
-                });
-            });
-
             window.hideLoader();
-            
-            $('#podcast-search-input').on('change keyup paste', function (e) {
-                if (e.type == "keyup" && e.which == 13) {
-                    // Enter key pressed
-                    window.submitSearch();
-                }
-                else if ($(this).val().trim() !== "" &&
-                         $(this).val().trim() !== window.lastTickSearch &&
-                         window.searchBoxTH === null) {
-                    window.quicksearch();
-                    window.searchBoxTH = setInterval(window.quicksearch, 250);
-                }
-                else if ($(this).val().trim() === "") {
-                    clearInterval(window.searchBoxTH);
-                    window.searchBoxTH = null;
-                    searchResults({});
-                }
-            });
-            // Search button press
-            $('#podcast-search-button').click(function () {
-                window.submitSearch();
-            });
+            $('#left-col').html(data);
+            window.splashReady();
         });
     };
     
@@ -107,14 +138,7 @@
         $.get('/api/view/podcast/'+ id, function (data) {
             window.hideLoader();
             $('#left-col').html(data);
-
-            // Reformat URL to reflect appropriate title.
-            if (window['preload_cast']) {
-                window.history.replaceState({}, document.title, '/podcast/' + window.safetitle);
-                window['preload_cast'] = false;
-            } else {
-                window.history.pushState({}, document.title, '/podcast/' + window.safetitle);
-            }
+            window.pcastReady();
         });
     };
     
