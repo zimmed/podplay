@@ -179,3 +179,12 @@ legend {
 .error {
     border: 1px solid red;
 }
+
+.btnLogin {
+    position: relative;
+    float: left;
+}
+
+#btn-login {
+    float: right;
+}
