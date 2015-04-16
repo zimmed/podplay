@@ -195,7 +195,7 @@ legend {
 }
 
 #notif {
-    margin: 5px;
+    padding: 5px;
     width: 100%;
     font-style: italic;
     color: #FF7F00;
