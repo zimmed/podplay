@@ -182,9 +182,13 @@ legend {
 
 .btnLogin {
     position: relative;
-    float: left;
+    float: right;
+}
+
+#btn-cancel {
+    float: none;
 }
 
 #btn-login {
-    float: right;
+    right: 25px;
 }
