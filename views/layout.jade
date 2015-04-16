@@ -45,10 +45,10 @@ html
                 button.btn.btn-primary.navbar-btn#btn-sin(type="button") Sign In
                 button.btn.btn-primary.navbar-btn#btn-sup(type="button") Register
     div#dimmer
-    form.box.login#login(action="javascript:void(0);")
+    form.box.login#login(action="javascript:void(0);" style="height:280px;")
         fieldset.boxBuddy
             legend Sign In
-            span#notif
+            
             label(for="name") Username
             input(type="text" tabindex="1" id="name" name="name" class="required")
             label(for="password") Password
@@ -56,6 +56,8 @@ html
             
             button.btnLogin#btn-cancel(tabindex="4") Cancel
             button.btnLogin#btn-login(tabindex="3") Sign In
+            
+            span#notif(style="display:block") &nbsp;
     form.box.login#register
         h2 Registration is closed at this time.
     div#loader
