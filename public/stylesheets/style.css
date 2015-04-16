@@ -181,7 +181,7 @@ legend {
 }
 
 .error {
-    border: 1px solid red;
+    background: rgba(255, 127, 0, 0.25) !important;
 }
 
 .btnLogin {
@@ -200,9 +200,9 @@ legend {
 
 .notif {
     display: block;
-    padding: 5px;
+    padding: 0px;
+    padding-left: 5px;
     width: 100%;
     font-style: italic;
     color: #FF7F00;
-    margin-top: 5px;
 }
