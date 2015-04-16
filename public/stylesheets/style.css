@@ -152,7 +152,7 @@ legend {
 }
 
 #register {
-    top: -300px;
+    /*margin-top: -200px;*/
 }
 
 #loader {
