@@ -208,7 +208,8 @@
             }
         });
         
-        $('.btnLogin').click(function() {
+        $('#btn-cancel').click($('btn-sin').click);
+        $('#btn-login').click(function() {
             var username = $('#name').val().trim();
             var password = $('#pw').val().trim();
             $('#login input').removeClass('error');

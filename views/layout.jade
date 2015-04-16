@@ -53,7 +53,8 @@ html
             label(for="password") Password
             input(type="password" tabindex="2" id="pw" name="pw" class="required")
             span#notif
-            button.btnLogin(tabindex="3") Sign In
+            button.btnLogin#btn-cancel(tabindex="4") Cancel
+            button.btnLogin#btn-login(tabindex="3") Sign In
     form.box.login#register
         h2 Registration is closed at this time.
     div#loader
