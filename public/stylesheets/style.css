@@ -191,7 +191,7 @@ legend {
 }
 
 #btn-login {
-    right: 25px;
+    right: 10px;
 }
 
 #notif {
@@ -199,4 +199,5 @@ legend {
     width: 100%;
     font-style: italic;
     color: #FF7F00;
+    margin-top: 5px;
 }
