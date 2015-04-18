@@ -62,7 +62,6 @@ router.get('/castcat/:gid', function (req, res, next) {
             console.log(err);
             res.render(msg);
         }, function (data) {
-            console.log(data[1]);
             res.json({podcasts: data[0], favorites: data[1]});
         });
     } else {
