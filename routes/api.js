@@ -40,7 +40,7 @@ router.get('/view/podcast/:id', function (req, res, next) {
         request(podcast.feedUrl, function (error, response, body) {
             // Data returned in XML format, and must be parsed.
             parseString(body, function (err, obj) {
-                console.log(req.session.user);
+                console.log(req.session.user.isFavorited);
                 // Render client 'podcast' page/view, passing necessary data.
                 res.render('podcast', {id: id,
                                        user: req.session.user,
