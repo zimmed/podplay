@@ -113,10 +113,8 @@ tr.feed-row:hover {
     cursor: pointer;
 }
 
-.castnail.favorite {
-    height: 96px;
-    width: 96px;
-    border: 2px solid blue;
+.castnail.favorite > img{
+    border: 4px solid blue;
 }
 
 .castnail > img {
