@@ -179,9 +179,9 @@ router.get('/favorite/:id', function (req, res, next) {
             },
             function (user) {
                 // Success; Update session user.
+                req.session.user = user;
                 console.log('add after success');
                 console.log(req.session.user.subscriptions);
-                req.session.user = user;
                 res.json({message: 'Favorited ' + pid + '.',
                           status: 200}); // HTTP/1.1 200: OK
             });
