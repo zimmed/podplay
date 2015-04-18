@@ -1,12 +1,72 @@
 /**
  * index.js - Main library for index page/view.
  * Authors: Ian McGaunn; Dave Zimmelman
- * Modified: 09 Mar 15
+ * Modified: 18 Apr 15
  */
 (function (window, $) {
     'use strict';
     
-    // Document ready entry point for the splash paGE
+    /**
+     * Add specified podcast ID to user's favorites.
+     * @param {Number} id - The podcast ID to add.
+     */
+    window.favorite = function (id) {
+        $.get('/users/favorite/' + id, function (data) {
+            $('#fav').html('Remove');
+            $('#fav').off('click');
+            $('#fav').click(function () {
+                defavorite(id);
+            });
+        });
+    };
+    
+    /**
+     * Remove specified podcast ID from user's favorites.
+     * @param {Number} id - The podcast ID to remove.
+     */
+    window.defavorite = function (id) {
+        $.get('/users/defavorite/' + id, function (data) {
+            $('#fav').html('Remove');
+            $('#fav').off('click');
+            $('#fav').click(function () {
+                defavorite(id);
+            });
+        });
+    };
+    
+    /**
+     * Display form notification to user.
+     * @param {String} msg - The message to display.
+     */
+    window.showNotification = function (msg) {
+        $('.notif').html(msg);
+    };
+    
+    /**
+     * Close form notifications.
+     */
+    window.closeNotification = function () {
+        $('.notif').html('&nbsp;');
+    };
+    
+    /**
+     * Display loader gif animation.
+     */
+    window.showLoader = function () {
+        $("#dimmer, #loader").css("display", "block");
+    };
+    
+    /** 
+     * Hide loader gif animation.
+     */
+    window.hideLoader = function () {
+        $("#dimmer, #loader").css("display", "none");
+    };
+    
+    /**
+     * Document entry point when loading podcast view.
+     * @param {Bool} first - Optional flag to designate first-time load for page.
+     */
     window.splashReady = function (first) {
         if (!first) window.history.pushState({}, document.title, '/');
         
@@ -52,7 +112,9 @@
         });
     };
     
-    // Document ready entry point for a podcast page
+    /**
+     * Document entry point when loading podcast view.
+     */
     window.pcastReady = function () {
         // Reformat URL to reflect appropriate title.
         if (window['preload_cast']) {
@@ -77,51 +139,10 @@
         });
     };
     
-    window.favorite = function (id) {
-        $.get('/users/favorite/' + id, function (data) {
-            $('#fav').html('Remove');
-            $('#fav').off('click');
-            $('#fav').click(function () {
-                defavorite(id);
-            });
-        });
-    };
-    
-    window.defavorite = function (id) {
-        $.get('/users/defavorite/' + id, function (data) {
-            $('#fav').html('Remove');
-            $('#fav').off('click');
-            $('#fav').click(function () {
-                defavorite(id);
-            });
-        });
-    };
-    
-    window.showNotification = function (msg) {
-        $('.notif').html(msg);
-    };
-    
-    window.closeNotification = function (msg) {
-        $('.notif').html('&nbsp;');
-    };
-    
-    window.showLoader = function () {
-        $("#dimmer, #loader").css("display", "block");
-    };
-    
-    window.hideLoader = function () {
-        $("#dimmer, #loader").css("display", "none");
-    };
-
-    window.onpopstate = function (event) {
-        if (document.location.pathname === '/') window.load_splash_view();
-        else {
-            var re = /^\/podcast\/(\d+)\//;
-            var r = re.exec(document.location.pathname);
-            window.load_podcast_view(r[1]);
-        }
-    };
-    
+     /**
+     * Load default splash page into view.
+     * @param {Bool} first - Optional flag that handles a first-time load for the page.
+     */
     window.load_splash_view = function (first) {
         window.showLoader();
         $.get('/api/view/splash', function (data) {
@@ -131,6 +152,10 @@
         });
     };
     
+    /**
+     * Load specified podcast view.
+     * @param {Number} id - The podcast ID to view.
+     */
     window.load_podcast_view = function (id) {
         window.showLoader();
         $.get('/api/view/podcast/'+ id, function (data) {
@@ -140,6 +165,125 @@
         });
     };
     
+    /**
+     * Checks Login form for valid input and
+     *      provides helpful feedback to the user.
+     */
+    function validLoginForm() {
+        var msg, p = '',
+            username = $('#name').val(),
+            password = $('#pw').val();
+        $('#name, #pw').removeClass('error valid');
+        if (!username.match(/^[a-zA-Z0-9\.]{5,26}$/)) {
+            msg = "Invalid username.";
+            p = '#name';
+        }
+        else {
+            $('#name').addClass('valid');
+        }
+        if (!p && !password.match(/^[^\s\'\;\\]{6,26}$/)) {
+            msg = "Invalid password.";
+            p = '#pw';
+        }
+        else if (password.match(/^[^\s\'\;\\]{6,26}$/)) {
+            $('#name').addClass('valid');
+        }
+        if (!p) {
+            // Form is valid
+            window.closeNotification();
+            $('#btn-login').prop('disabled', false);
+        }
+        else {
+            // Form is not valid
+            $('#btn-login').prop('disabled', true);
+            if ($(p).val()) {
+                window.showNotification(msg);
+                $(p).addClass('error');
+            }
+        }
+    }
+    
+    /**
+     * Checks Registration form for valid input and
+     *      provides helpful feedback to the user.
+     */
+    function validRegForm() {
+        var msg, p = '',
+            username = $('#uname').val(),
+            emailadd = $('#email').val(),
+            password = $('#pass1').val(),
+            passconf = $('#pass2').val();
+        $('#uname, #email, #pass1, #pass2').removeClass('error valid');
+        if (!username) {
+            msg = "Username is required and cannot be blank.";
+            p = '#uname';
+        }
+        else if (username.match(/[^0-9a-z\.]/i)) {
+            msg = "Username may only contain letters, numbers, and `.`s.";
+            p = '#uname';
+        }
+        else if (!username.match(/^.{5,26}$/)) {
+            msg = "Username must be between 5 and 26 characters.";
+            p = '#uname';
+        }
+        else {
+            $('#uname').addClass('valid');
+        }
+        if (!p && !emailadd) {
+            msg = "Email is required and cannot be blank.";
+            p = '#email';
+        }
+        // Regex taken from:
+        //      http://www.regular-expressions.info/email.html
+        else if (!p && !emailadd.match(/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i)) {
+            msg = "Invalid email address.";
+            p = '#email';
+        }
+        else if (emailadd.match(/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i)) {
+            $('#email').addClass('valid');
+        }
+        if (!p && !password) {
+            msg = "Password is required and cannot be blank.";
+            p = '#pass1';
+        }
+        else if (!p && password.match(/[\s\'\;\\]/)) {
+            msg = "Password cannot contain the following: `;`, ` `, `'`, or `\`";
+            p = '#pass1';
+        }
+        else if (!p && !password.match(/^.{6,26}$/)) {
+            msg = "Password must be between 6 and 26 characters.";
+            p = '#pass1';
+        }
+        else if (password.match(/^[^\s\'\;\\]{6,26}$/)) {
+            $('#pass1').addClass('valid');
+        }
+        if (!p && password !== passconf) {
+            msg = "The passwords do not match.";
+            p = '#pass2';
+        }
+        else if (password === passconf) {
+            $('#pass2').addClass('valid');
+        }
+        if (!p) {
+            // Form is valid
+            window.closeNotification();
+            $('#btn-register').prop('disabled', false);
+        }
+        else {
+            // Form is not valid
+            $('#btn-register').prop('disabled', true);
+            window.showNotification(msg);
+            $(p).addClass('error');
+        }
+    }
+    
+    /**
+     * Populate given panel selector with podcast data.
+     * @param {Array} pcasts - The podcast data.
+     * @param {String} selector - The CSS selector for the panel.
+     * @param {Bool} append - Optional flag to append new data, rather than replace.
+     * @param {Bool} fav - Optional flag to indicate podcasts should be displayed as favorites.
+     */
     function insertPodcasts(pcasts, selector, append, fav) {
         var i;
         if (!append) $(selector).html('');
@@ -150,8 +294,8 @@
     }
     
     /**
-     * Populate results table with search data.
-     * @param {Object} data - The JSON object returned from iTunes query.
+     * Populate search results panel with search data.
+     * @param {Object} data - The JSON object returned from search query.
      */
     function searchResults(results) {
         var podcast, row, count;
@@ -168,108 +312,29 @@
         insertPodcasts(results, '#search-results');
     }
     
+    // Window state handler
+    window.onpopstate = function (event) {
+        if (document.location.pathname === '/') window.load_splash_view();
+        else {
+            var re = /^\/podcast\/(\d+)\//;
+            var r = re.exec(document.location.pathname);
+            window.load_podcast_view(r[1]);
+        }
+    };
+    
     /* When document is finished loading, execute following code: */
     $().ready(function () {
         
-        window.state = 0; // Overlay window tracking
+        // State tracking for window overlays
+        //      0: No windows open
+        //      1: Login form open
+        //      2: Register form open
+        window.state = 0;
         
-        $('#btn-sin').click(function () {
-            if (window.state != 1) {
-                $('#register').css("display", "none");
-                $('#dimmer, #login').css("display", "block");
-                $('#btn-sin').html('X');
-                $('#btn-sup').html('Register');
-                $('#name').focus();
-                window.state = 1;
-            } else {
-                $('#dimmer, #login').css("display", "none");
-                $('#btn-sin').html('Sign In');
-                window.closeNotification();
-                window.state = 0;
-            }
-        });
-        
-        $('#btn-sup').click(function () {
-            if (window.state != 2) {
-                window.closeNotification();
-                $('#login').css("display", "none");
-                $('#dimmer, #register').css("display", "block");
-                $('#btn-sup').html('X');
-                $('#btn-sin').html('Sign In');
-                $('#uname').focus();
-                window.state = 2;
-            } else {
-                $('#dimmer, #register').css("display", "none");
-                $('#btn-sup').html('Register');
-                window.state = 0;
-            }
-        });
-        
-        $('.btn-cancel').click(function () {
-            if (window.state === 1) $('#btn-sin').click();
-            else if (window.state === 2) $('#btn-sup').click();
-        });
-        
-        $('#btn-logout').click(function () {
-            $.get('/users/logout', function (data) {
-                // Logout succeeded
-                // Reload page
-                load_splash_view();
-                // Hide logout button
-                $('#btn-logout').css("display", "none");
-                $('#btn-sup, #btn-sin').css("display", "inline");
-            });
-        });
-        
-        $('#btn-login').click(function() {
-            var username = $('#name').val().trim();
-            var password = $('#pw').val().trim();
-            // Reset inputs
-            $('#login input').removeClass('error');
-            // Quick clientside input check
-            //  TODO: More comprehensive checks for verbose feedback
-            if (!username.match(/^[a-zA-Z0-9\_\-\.]{5,26}$/)) {
-                $('#name').addClass('error');
-                window.showNotification("Invalid username.");
-                return;
-            }
-            if (!password.match(/^[^\s\'\;\\]{6,26}$/)) {
-                $('#pw').addClass('error');
-                window.showNotification("Invalid password.");
-                return;
-            }
-            // Disable form
-            $('#name, #pw, .btnLogin').prop("disabled", true);
-            
-            $.post('/users/login', {name: username, pw: password}).done(function (data) {
-                console.log(data);
-                if (data != "200") {
-                    // Server error
-                    // Display error message
-                    window.showNotification(data);
-                    // Enable form
-                    $('#name, #pw, #login .btnLogin').prop("disabled", false);
-                    return;
-                }
-                // Login succeeded
-                console.log(data);
-                // Hide login form and sign in / register button
-                $('#dimmer, #login, #btn-sin, #btn-sup').css("display", "none");
-                // Show sign out button
-                $('#btn-logout').css("display", "inline");
-                
-                window.state = 0;
-            }).fail(function (obj, text, err) {
-                // Request failed
-                console.log(text);
-                $('#login input').addClass('error');
-                $('#name, #pw, #login .btnLogin').prop("disabled", false);
-                window.showNotification("Wrong username or password.");
-            });
-        });
-        
+        // Global variables for quicksearch interval handling
         window.searchBoxTH = null;
         window.lastTickSearch = "";
+        
         // Submit search query
         window.submitSearch = function () {
             clearInterval(window.searchBoxTH);
@@ -298,12 +363,110 @@
                 });
             }
         };
+        
+        // Event listeners to validate form data as it's entered.
+        $('#name, #pw').on('change keyup paste', function (e) {
+            validLoginForm();
+        });
+        $('#uname, #email, #pass1, #pass2').on('change keyup paste', function (e) {
+            validRegForm();
+        });
+        
+        // Navigation "Sign In" button click handler.
+        $('#btn-sin').click(function () {
+            if (window.state != 1) { // Login form not open; Show it
+                $('#register').css("display", "none");
+                $('#dimmer, #login').css("display", "block");
+                $('#btn-sin').html('X');
+                $('#btn-sup').html('Register');
+                $('#name').focus();
+                window.state = 1;
+            } else { // Login form already open; Close it
+                $('#dimmer, #login').css("display", "none");
+                $('#btn-sin').html('Sign In');
+                window.closeNotification();
+                window.state = 0;
+            }
+        });
+        
+        // Navigation "Register" button click handler.
+        $('#btn-sup').click(function () {
+            if (window.state != 2) { // Reg form not open; Show it
+                window.closeNotification();
+                $('#login').css("display", "none");
+                $('#dimmer, #register').css("display", "block");
+                $('#btn-sup').html('X');
+                $('#btn-sin').html('Sign In');
+                $('#uname').focus();
+                window.state = 2;
+            } else { // Reg form already open; Close it
+                $('#dimmer, #register').css("display", "none");
+                $('#btn-sup').html('Register');
+                window.state = 0;
+            }
+        });
+        
+        // Navigation "Sign Out" button click handler.
+        $('#btn-logout').click(function () {
+            $.get('/users/logout', function (data) {
+                // Logout succeeded
+                // Reload page
+                load_splash_view();
+                // Hide logout button
+                $('#btn-logout').css("display", "none");
+                $('#btn-sup, #btn-sin').css("display", "inline");
+            });
+        });
+        
+        // Login/Reg form "Cancel" button click handler.
+        $('.btn-cancel').click(function () {
+            if (window.state === 1) $('#btn-sin').click();
+            else if (window.state === 2) $('#btn-sup').click();
+        });
+        
+        // Login form "Sign In" button click handler
+        $('#btn-login').click(function() {
+            var username = $('#name').val();
+            var password = $('#pw').val();
+            // Disable form
+            $('#name, #pw, .btnLogin').prop("disabled", true);
+            
+            $.post('/users/login', {name: username, pw: password}).done(function (data) {
+                if (data.status == 200) {
+                    // Login succeeded; Enable and clear form
+                    $('#name, #pw, #login .btnLogin').prop("disabled", false);
+                    $('#name, #pw').val('');
+                    // Hide login form and sign in / register btns; Show sign out btm
+                    $('#dimmer, #login, #btn-sin, #btn-sup').css("display", "none");
+                    $('#btn-logout').css("display", "inline");
+                    window.state = 0;
+                }
+                else {
+                    // Login failed; Display message and highlight problems
+                    window.showNotification(data.message);
+                    if (data.element) {
+                        $(element).addClas('error');
+                        $($(element)[0]).focus();
+                    }
+                    // Enable form
+                    $('#name, #pw, #login .btnLogin').prop("disabled", false);
+                }
+            }).fail(function (obj, text, err) {
+                // Request failed; Enable form and display message.
+                $('#name, #pw, #login .btnLogin').prop("disabled", false);
+                window.showNotification("Login request failed.");
+            });
+        });
+        
+        // Disable form submit buttons by default; Validation will enable.
+        $('#btn-login, #btn-register').prop('disabled', true);
+        
+        // Load correct view into left panel
         if (window['preload_cast']) {
             window.load_podcast_view(window.preload_cast);
         }
         else {
             window.load_splash_view(true);
         }
-        
     });
 }(window, jQuery));
