@@ -9,7 +9,7 @@ div.panel.panel-default
     div.panel-heading#result-counter No Results
     div.panel-body#search-results
 div.panel.panel-default#pc-0
-    div.panel-heading Recommended For ${user.name}
+    div.panel-heading Recommended For #{user.name}
     div.panel-body
 each gen, num in genres
     div.panel.panel-default.genre-panel(data-genreid="#{num}")
