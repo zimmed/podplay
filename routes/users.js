@@ -131,7 +131,7 @@ router.post('/login', function (req, res, next) {
                 // Login unsuccessful; error and message passed back.
                 if (error.err) console.log(error.err);
                 //res.render('error', {message: msg, error: error});
-                res.send(message);
+                res.send(msg);
             },
             function (user) {
                 // Login successful; user object passed back.
