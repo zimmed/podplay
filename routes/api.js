@@ -22,6 +22,7 @@ var Podcasts = require('../lib/podcasts');
 router.get('/view/splash', function (req, res, next) {
     var casts;
     if (req.session.user) {
+        console.log(req.session.user.isFavorited);
         res.render('splash', {
             user: req.session.user,
             genres: Podcasts.Genres});
