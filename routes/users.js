@@ -205,6 +205,11 @@ router.get('/defavorite/:id', function (req, res, next) {
             },
             function (user) {
                 // Success; Update session user.
+                // Weird fix while mongoose doc instance methods not working
+                user.isFavorited = function (id) {
+                    if (!this.subscriptions[0]) return false;
+                    return (this.subscriptions[0].indexOf(id) !== -1);
+                };
                 req.session.user = user;
                 res.json({message: 'Removed ' + pid + ' from favorites.',
                           status: 200}); // HTTP/1.1 200: OK
