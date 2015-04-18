@@ -68,7 +68,7 @@ router.get('/castcat/:gid', function (req, res, next) {
         Cache.aggregate_cat(req.params.gid, false, function (err, msg) {
             console.log(msg);
             console.log(err);
-            res.render(msg);
+            res.send(msg);
         }, function (data) {
             res.json({podcasts: data[0]});
         });
