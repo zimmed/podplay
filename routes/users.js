@@ -123,15 +123,7 @@ router.post('/login', function (req, res, next) {
             },
             function (user) {
                 // Login successful; user object passed back.
-                // Weird fix while mongoose doc instance methods not working
-                user = user.toObject();
-                user.isFaved = function (id) {
-                    if (!this.subscriptions[0]) return false;
-                    return (this.subscriptions[0].indexOf(id) !== -1);
-                };
                 req.session.user = user;
-            
-            console.log(req.session.user.isFaved);
                 res.json({message: user.name,
                           status: 200}); // HTTP/1.1 200: OK
             });
@@ -183,11 +175,6 @@ router.get('/favorite/:id', function (req, res, next) {
             },
             function (user) {
                 // Success; Update session user.
-            // Weird fix while mongoose doc instance methods not working
-                user.isFavorited = function (id) {
-                    if (!this.subscriptions[0]) return false;
-                    return (this.subscriptions[0].indexOf(id) !== -1);
-                };
                 req.session.user = user;
                 res.json({message: 'Favorited ' + pid + '.',
                           status: 200}); // HTTP/1.1 200: OK
@@ -218,11 +205,6 @@ router.get('/defavorite/:id', function (req, res, next) {
             },
             function (user) {
                 // Success; Update session user.
-                // Weird fix while mongoose doc instance methods not working
-                user.isFavorited = function (id) {
-                    if (!this.subscriptions[0]) return false;
-                    return (this.subscriptions[0].indexOf(id) !== -1);
-                };
                 req.session.user = user;
                 res.json({message: 'Removed ' + pid + ' from favorites.',
                           status: 200}); // HTTP/1.1 200: OK

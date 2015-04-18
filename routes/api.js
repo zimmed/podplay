@@ -15,6 +15,7 @@ var parseString = parser.parseString;
 var clientKey = require('../lib/clientkey').Key;
 var Cache = require('../lib/badcache');
 var Podcasts = require('../lib/podcasts');
+var isFavorited = require('../lib/users').isFavorited;
 
 /**
  * Routes for api/view URLs
@@ -22,7 +23,6 @@ var Podcasts = require('../lib/podcasts');
 router.get('/view/splash', function (req, res, next) {
     var casts;
     if (req.session.user) {
-        console.log(req.session.user.isFaved);
         res.render('splash', {
             user: req.session.user,
             genres: Podcasts.Genres});
@@ -41,10 +41,10 @@ router.get('/view/podcast/:id', function (req, res, next) {
         request(podcast.feedUrl, function (error, response, body) {
             // Data returned in XML format, and must be parsed.
             parseString(body, function (err, obj) {
-                console.log(req.session.user.isFaved);
                 // Render client 'podcast' page/view, passing necessary data.
                 res.render('podcast', {id: id,
                                        user: req.session.user,
+                                       isFavorited: isFavorited,
                                        title: podcast.title,
                                        podcast: podcast,
                                        safetitle: id + '/' + podcast.title_uri,
