@@ -12,6 +12,7 @@ var router = express.Router();
 var parser = new xml2js.Parser({explicitArray: false});
 var parseString = parser.parseString;
 
+var clientKey = require('../lib/clientkey').Key;
 var Cache = require('../lib/badcache');
 var Podcasts = require('../lib/podcasts');
 
@@ -66,6 +67,20 @@ router.get('/castcat/:gid', function (req, res, next) {
         }, function (data) {
             res.json({podcasts: data[0]});
         });
+    }
+});
+
+/**
+ * Route for api/clientkey URL
+ */
+router.post('/clientkey', function (req, res, next) {
+    if (!req.params.key) {
+        res.json({status: 400,
+                  message: "Bad Request"});
+    }
+    else {
+        res.json({status: 200,
+                  message: clientKey});
     }
 });
 
