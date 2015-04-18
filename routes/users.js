@@ -129,6 +129,8 @@ router.post('/login', function (req, res, next) {
                     return (this.subscriptions[0].indexOf(id) !== -1);
                 };
                 req.session.user = user;
+            
+            console.log(req.session.user.isFavorited);
                 res.json({message: user.name,
                           status: 200}); // HTTP/1.1 200: OK
             });
