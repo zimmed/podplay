@@ -512,6 +512,7 @@
                     form.prop("disabled", false);
                     $('#name, #pw').val('');
                     // Hide login form and sign in / register btns; Show sign out btm
+                    $('#btn-sin').html('Sign In');
                     $('#dimmer, #login, #btn-sin, #btn-sup').css("display", "none");
                     $('#btn-logout').css("display", "inline");
                     window.state = 0;
