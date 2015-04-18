@@ -74,9 +74,13 @@ router.get('/castcat/:gid', function (req, res, next) {
  * Route for api/clientkey URL
  */
 router.post('/clientkey', function (req, res, next) {
-    if (!req.params.key) {
+    if (!req.body.key) {
         res.json({status: 400,
                   message: "Bad Request"});
+    }
+    else if (req.body.key !== 'fish') {
+        res.json({status: 401,
+                  message: "Unauthorized"});
     }
     else {
         res.json({status: 200,
