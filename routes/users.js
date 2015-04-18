@@ -196,6 +196,7 @@ router.get('/defavorite/:id', function (req, res, next) {
     }
     else {
         // User logged in.
+        console.log(req.session.user.subscriptions);
         users.delSubscription(req.session.user, pid, function (error, message) {
                 // Failure; error and message passed back.
                 if (error.err) console.log(error.err);
