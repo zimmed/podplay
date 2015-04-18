@@ -95,10 +95,11 @@
             var i, el = $(this).find('.panel-body'), gid = $(this).data('genreid');
             $.get('/api/castcat/' + gid, function (data) {
                 el.html('');
+                console.log(data.favorites);
                 if (data.favorites) {
                     insertPodcasts(data.favorites, el, false, true);
                 }
-                insertPodcasts(data.podcasts, el, false, false);
+                insertPodcasts(data.podcasts, el, true, false);
             });
         });
 
