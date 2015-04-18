@@ -24,7 +24,7 @@ script.
                 tr
                     th Favorite
                     td
-                        if user.isFavorited(podcast._id)
+                        if isFavorited(user, podcast._id)
                             button#fav(onclick="defavorite(#{podcast._id});") Remove
                         else
                             button#fav(onclick="favorite(#{podcast._id});") Add
