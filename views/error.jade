@@ -6,8 +6,9 @@
 = "\n"
 doctype html
 html
+  - var title = "Podplay.me | " + error.status;
   head
-    title= #{"Podplay.me | " + error.status}
+    title= title
   body
     block content
       h1#emsg= message
