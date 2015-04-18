@@ -166,8 +166,12 @@ router.get('/favorite/:id', function (req, res, next) {
     }
     else {
         // User logged in.
+        console.log('add before');
+        console.log(req.session.user.subscriptions);
         users.addSubscription(req.session.user, pid, function (error, message) {
                 // Failure; error and message passed back.
+                console.log('add after fail: ' + message);
+                console.log(req.session.user.subscriptions);
                 if (error.err) console.log(error.err);
                 res.json({message: message,
                           error: error,
@@ -175,6 +179,8 @@ router.get('/favorite/:id', function (req, res, next) {
             },
             function (user) {
                 // Success; Update session user.
+                console.log('add after success');
+                console.log(req.session.user.subscriptions);
                 req.session.user = user;
                 res.json({message: 'Favorited ' + pid + '.',
                           status: 200}); // HTTP/1.1 200: OK
@@ -196,12 +202,12 @@ router.get('/defavorite/:id', function (req, res, next) {
     }
     else {
         // User logged in.
-        console.log('before');
+        console.log('del before');
         console.log(req.session.user.subscriptions);
         users.delSubscription(req.session.user, pid, function (error, message) {
                 // Failure; error and message passed back.
                 if (error.err) console.log(error.err);
-                console.log('after fail: (' + error.status + ') ' + message);
+                console.log('del after fail: (' + error.status + ') ' + message);
                 console.log(req.session.user.subscriptions);
                 res.json({message: message,
                           error: error,
@@ -210,7 +216,7 @@ router.get('/defavorite/:id', function (req, res, next) {
             function (user) {
                 // Success; Update session user.
                 req.session.user = user;
-                console.log('after success');
+                console.log('del after success');
                 console.log(req.session.user.subscriptions);
                 res.json({message: 'Removed ' + pid + ' from favorites.',
                           status: 200}); // HTTP/1.1 200: OK
