@@ -242,6 +242,7 @@
             $('#name, #pw, .btnLogin').prop("disabled", true);
             
             $.post('/users/login', {name: username, pw: password}).done(function (data) {
+                console.log(data);
                 if (data != "200") {
                     // Server error
                     // Display error message
