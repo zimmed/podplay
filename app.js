@@ -73,17 +73,17 @@ if (app.get('env') === 'development') {
         });
     });
 }
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
+else {
+    // production error handler
+    // no stacktraces leaked to user
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: {}
+        });
     });
-});
-
+}
 // Update top 100 cache every 2 hours
 badcache.update_top100();
 var top100timer = setInterval(badcache.update_top100, 1000 * 60 * 60 * 2) 
