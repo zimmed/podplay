@@ -21,36 +21,35 @@ router.post('/register', function (req, res, next) {
     if (!req.params.name || !req.params.email || !req.params.pw) {
         // this implies a malformed request was received
         // throw an internal server error and render the error template.
-        res.render('error', {
-            message: "Improper registration request sent.",
-            error: error
-            });
+        res.json({message: 'Improper registration request.',
+              error: error,
+              status: error.status});
     }
     
     // Check that request data is valid
     else if (!users.validUsername(req.params.name)) {
         // Invalid username
         // (Must be 5 to 26 chars, containing only alphanumeric symbols, or the following: . _ -)
-        res.render('error', {
-            message: "Invalid username supplied.",
-            error: error
-            });
+        res.json({message: 'Invalid username supplied.',
+              error: error,
+              status: error.status,
+              element: 'name'});
     }
     else if (!users.validEmail(req.params.email)) {
         // Invalid email address
         // (Must be format of some.user_name@some-name.some.domain)
-        res.render('error', {
-            message: "Invalid email address supplied.",
-            error: error
-            });
+        res.json({message: 'Invalid email address supplied.',
+              error: error,
+              status: error.status,
+              element: 'email'});
     }
     else if (!users.validPassword(req.params.pw)) {
         // Invalid password
         // (Must be 6 to 26 chars, containing none of the following: \ ' ; <whitespace>)
-        res.render('error', {
-            message: "Invalid email address supplied.",
-            error: error
-            });
+        res.json({message: 'Invalid password supplied.',
+              error: error,
+              status: error.status,
+              element: 'pass'});
     }
     else {
         // Data supplied is valid. 
@@ -58,17 +57,13 @@ router.post('/register', function (req, res, next) {
             function (error, msg) {
                 // Registration unsuccessful; error and message passed back
                 if (error.err) console.log(error.err);
-                res.render('error', {message: msg, error: error});
+                res.json({message: msg, error: error, status: error.status});
             },
             function (user) {
                 // Registration successful; username passed back
-                var e = new Error('OK');
-                e.status = 200;
                 req.session.lastUser = user.$applyname;
-                res.render('error', {
-                    message: "Registration for " + user.name + " was successful.",
-                    error: e
-                    });
+                res.json({message: 'Registration for ' + user.name + ' was successful.',
+                    status: 200}); // HTTP/1.1 200: OK
             });
     }
 });
@@ -85,42 +80,32 @@ router.post('/login', function (req, res, next) {
         // User already logged in.
         error = new Error('Forbidden');
         error.status = 403;
-        /*
-        res.render('error', {
-            message: "Already logged in.",
-            error: error
-            });*/
-        res.send('Already logged in.');
+        res.json({message: 'Already logged in.',
+                  error: error,
+                  status: error.status});
     }
     else if (!req.body.name || !req.body.pw) {
         // Bad or non-existant post data sent.
-        /*
-        res.render('error', {
-            message: "Improper login request sent.",
-            error: error
-            });*/
-        res.send('Improper login request sent.');
+        res.json({message: 'Improper login request.',
+                  error: error,
+                  status: error.status});
     }
     // Ensure post data is valid.
     else if (!users.validUsername(req.body.name)) {
         // Invalid username
         // (Must be 5 to 26 chars, containing only alphanumeric symbols, or the following: . _ -)
-        /*
-        res.render('error', {
-            message: "Invalid username supplied.",
-            error: error
-            });*/
-        res.send('Invalid username supplied.');
+        res.json({message: 'Invalid username supplied.',
+                  error: error,
+                  status: error.status,
+                  element: 'name'});
     }
     else if (!users.validPassword(req.body.pw)) {
         // Invalid password
         // (Must be 6 to 26 chars, containing none of the following: \ ' ; <whitespace>)
-        /*
-        res.render('error', {
-            message: "Invalid email address supplied.",
-            error: error
-            });*/
-        res.send('Invalid email address supplied.');
+        res.json({message: 'Invalid password supplied.',
+                  error: error,
+                  status: error.status,
+                  element: 'pass'});
     }
     else {
         // Data sent is valid.
@@ -135,13 +120,8 @@ router.post('/login', function (req, res, next) {
             },
             function (user) {
                 // Login successful; user object passed back.
-                res.send('200');
-                /*
-                var e = new Error('OK');
-                e.status = 200;
-                req.session.user = user;
-                res.render('error', {message: "Login successful.", error: e});
-                */
+                res.json({message: 'Logged in as ' + user.name + '.',
+                  status: 200}); // HTTP/1.1 200: OK
             });
     }
 });
@@ -154,21 +134,18 @@ router.get('/logout', function (req, res, next) {
     
     if (!req.session.user) {
         // No user session.
-        res.render('error', {
-            message: "Not logged in.",
-            error: error
-            });
+        res.json({message: 'Not logged in.',
+                  error: error,
+                  status: error.status});
     }
     else {
         // Set username to lastUser.
         req.session.lastUser = req.session.user.name;
         // Delete user from session.
         req.session.user = false;
-        var e = new Error('OK');
-        e.status = 200;
-        res.render('error', {message: "Logged out.", error: e});
+        res.json({message: 'Logged out.',
+                  status: 200}); // HTTP/1.1 200: OK
     }
-
 });
 
 router.get('/favorite/:id', function (req, res, next) {
@@ -179,10 +156,9 @@ router.get('/favorite/:id', function (req, res, next) {
     
     if (!req.session.user) {
         // No user session.
-        res.render('error', {
-            message: "Must be logged in.",
-            error: error
-            });
+        res.json({message: 'Must be logged in.',
+                  error: error,
+                  status: error.status});
     }
     else {
         // User logged in.
@@ -194,9 +170,8 @@ router.get('/favorite/:id', function (req, res, next) {
             function (user) {
                 // Success; Update session user.
                 req.session.user = user;
-                var e = new Error('OK');
-                e.status = 200;
-                res.render('error', {message: "Favorited " + pid + ".", error: e});
+                res.json({message: 'Favorited ' + pid + '.',
+                    status: 200}); // HTTP/1.1 200: OK
             });
     }
 });
@@ -209,10 +184,9 @@ router.get('/defavorite/:id', function (req, res, next) {
     
     if (!req.session.user) {
         // No user session.
-        res.render('error', {
-            message: "Must be logged in.",
-            error: error
-            });
+        res.json({message: 'Must be logged in.',
+                  error: error,
+                  status: error.status});
     }
     else {
         // User logged in.
@@ -224,9 +198,8 @@ router.get('/defavorite/:id', function (req, res, next) {
             function (user) {
                 // Success; Update session user.
                 req.session.user = user;
-                var e = new Error('OK');
-                e.status = 200;
-                res.render('error', {message: "Removed " + pid + " from favorites.", error: e});
+                res.json({message: 'Removed ' + pid + ' from favorites.',
+                    status: 200}); // HTTP/1.1 200: OK
             });
     }
 });
