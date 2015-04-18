@@ -35,11 +35,13 @@ router.get('/view/podcast/:id', function (req, res, next) {
     var id = req.params.id;
     // HTTP request information on podcast ID via Apple API
     Podcasts.getPodcast(id, function (error, msg) {
+        console.log("podcast view failure");
         res.render('error', { message: msg, error: error});
     }, function (podcast) {
         request(podcast.feedUrl, function (error, response, body) {
             // Data returned in XML format, and must be parsed.
             parseString(body, function (err, obj) {
+                console.log("podcast view success");
                 // Render client 'podcast' page/view, passing necessary data.
                 res.render('podcast', {id: id,
                                        user: req.session.user,
