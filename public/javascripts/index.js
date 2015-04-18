@@ -186,7 +186,7 @@
             p = '#pw';
         }
         else if (password.match(/^[^\s\'\;\\]{6,26}$/)) {
-            $('#name').addClass('valid');
+            $('#pw').addClass('valid');
         }
         if (!p) {
             // Form is valid
