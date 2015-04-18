@@ -516,6 +516,7 @@
                     $('#dimmer, #login, #btn-sin, #btn-sup').css("display", "none");
                     $('#btn-logout').css("display", "inline");
                     window.state = 0;
+                    window.load_splash_view();
                 }
                 else {
                     // Login failed; Display message and highlight problems
