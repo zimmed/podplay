@@ -201,6 +201,8 @@ router.get('/defavorite/:id', function (req, res, next) {
         users.delSubscription(req.session.user, pid, function (error, message) {
                 // Failure; error and message passed back.
                 if (error.err) console.log(error.err);
+                console.log('after fail: ' + JSON.stringify(error));
+                console.log(req.session.user.subscriptions);
                 res.json({message: message,
                           error: error,
                           status: error.status});
@@ -208,7 +210,7 @@ router.get('/defavorite/:id', function (req, res, next) {
             function (user) {
                 // Success; Update session user.
                 req.session.user = user;
-                console.log('after');
+                console.log('after success');
                 console.log(req.session.user.subscriptions);
                 res.json({message: 'Removed ' + pid + ' from favorites.',
                           status: 200}); // HTTP/1.1 200: OK
