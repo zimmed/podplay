@@ -29,7 +29,7 @@ router.post('/register', function (req, res, next) {
     // Check that request data is valid
     else if (!users.validUsername(req.params.name)) {
         // Invalid username
-        // (Must be 5 to 26 chars, containing only alphanumeric symbols, or the following: . _ -)
+        // (Must be 5 to 26 chars, containing only alphanumeric symbols or `.`s)
         res.json({message: 'Invalid username supplied.',
               error: error,
               status: error.status,
@@ -93,7 +93,7 @@ router.post('/login', function (req, res, next) {
     // Ensure post data is valid.
     else if (!users.validUsername(req.body.name)) {
         // Invalid username
-        // (Must be 5 to 26 chars, containing only alphanumeric symbols, or the following: . _ -)
+        // (Must be 5 to 26 chars, containing only alphanumeric symbols or `.`s)
         res.json({message: 'Invalid username supplied.',
                   error: error,
                   status: error.status,
