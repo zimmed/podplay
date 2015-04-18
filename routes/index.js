@@ -9,6 +9,7 @@ var express = require('express');
 var router = express.Router();
 var Cache = require('../lib/badcache');
 
+/*
 // User goes back to search results.
 router.get('/search/:term?', function (req, res, next) {
     // Check that param exists and search has been cached.
@@ -34,19 +35,21 @@ router.get('/browse/:cat?', function (req, res, next) {
                           javascripts: ['index'],
                           GLOBALS: { "prebrowse" : Cache.browse[req.params.cat] } });
 });
+*/
 
 // GET home page.
 router.get('/', function (req, res, next) {
     // Render site index page/view for client.
-    res.render('index', { title: 'Podplay.me', javascripts: ['index'] });
+    res.render('index', { session: req.session, title: 'Podplay.me', javascripts: ['index'] });
 });
 
+/*
 // GET register page
 router.get('/register', function (req, res, next) {
   // Render login page.
   res.render('register', { title: 'Podplay.me' });
 });
-
+*/
 
 
 // Expose route

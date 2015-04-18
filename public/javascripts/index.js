@@ -41,10 +41,10 @@
      */
     window.defavorite = function (id) {
         $.get('/users/defavorite/' + id, function (data) {
-            $('#fav').html('Remove');
+            $('#fav').html('Add');
             $('#fav').off('click');
             $('#fav').click(function () {
-                defavorite(id);
+                favorite(id);
             });
         });
     };
