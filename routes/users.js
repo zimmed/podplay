@@ -20,7 +20,7 @@ router.post('/register', function (req, res, next) {
     error.status = 400;
 
     // Verify that correct POST data was sent in request.
-    if (!req.params.name || !req.params.email || !req.params.pw) {
+    if (!req.body.name || !req.body.email || !req.body.pw) {
         // this implies a malformed request was received
         // throw an internal server error and render the error template.
         res.json({message: 'Improper registration request.',
@@ -29,7 +29,7 @@ router.post('/register', function (req, res, next) {
     }
     
     // Check that request data is valid
-    else if (!users.validUsername(req.params.name)) {
+    else if (!users.validUsername(req.body.name)) {
         // Invalid username
         // (Must be 5 to 26 chars, containing only alphanumeric symbols or `.`s)
         res.json({message: 'Invalid username supplied.',
@@ -37,7 +37,7 @@ router.post('/register', function (req, res, next) {
               status: error.status,
               element: '#uname'});
     }
-    else if (!users.validEmail(req.params.email)) {
+    else if (!users.validEmail(req.body.email)) {
         // Invalid email address
         // (Must be format of some.user_name@some-name.some.domain)
         res.json({message: 'Invalid email address supplied.',
@@ -45,7 +45,7 @@ router.post('/register', function (req, res, next) {
               status: error.status,
               element: '#email'});
     }
-    else if (!users.validPassword(decrypt(req.params.pw))) {
+    else if (!users.validPassword(decrypt(req.body.pw))) {
         // Invalid password
         // (Must be 6 to 26 chars, containing none of the following: \ ' ; <whitespace>)
         res.json({message: 'Invalid password supplied.',
@@ -55,7 +55,7 @@ router.post('/register', function (req, res, next) {
     }
     else {
         // Data supplied is valid. 
-        users.registerUser(req.params.name, req.params.email, decrypt(req.params.pw),
+        users.registerUser(req.body.name, req.body.email, decrypt(req.body.pw),
             function (error, msg) {
                 // Registration unsuccessful; error and message passed back
                 if (error.err) console.log(error.err);
@@ -63,7 +63,7 @@ router.post('/register', function (req, res, next) {
             },
             function (user) {
                 // Registration successful; username passed back
-                req.session.lastUser = user.$applyname;
+                req.session.lastUser = user.name;
                 res.json({message: 'Registration for ' + user.name + ' was successful.',
                           status: 200}); // HTTP/1.1 200: OK
             });
