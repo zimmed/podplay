@@ -63,7 +63,7 @@ router.post('/register', function (req, res, next) {
                 // Registration successful; username passed back
                 req.session.lastUser = user.$applyname;
                 res.json({message: 'Registration for ' + user.name + ' was successful.',
-                    status: 200}); // HTTP/1.1 200: OK
+                          status: 200}); // HTTP/1.1 200: OK
             });
     }
 });
@@ -115,13 +115,14 @@ router.post('/login', function (req, res, next) {
         users.validateUser(name, pw, function (error, msg) {
                 // Login unsuccessful; error and message passed back.
                 if (error.err) console.log(error.err);
-                //res.render('error', {message: msg, error: error});
-                res.send(msg);
+                res.json({message: msg,
+                          error: error,
+                          status: error.status});
             },
             function (user) {
                 // Login successful; user object passed back.
                 res.json({message: 'Logged in as ' + user.name + '.',
-                  status: 200}); // HTTP/1.1 200: OK
+                          status: 200}); // HTTP/1.1 200: OK
             });
     }
 });
@@ -165,13 +166,15 @@ router.get('/favorite/:id', function (req, res, next) {
         users.addSubscription(req.session.user, pid, function (error, message) {
                 // Failure; error and message passed back.
                 if (error.err) console.log(error.err);
-                res.render('error', {message: msg, error: error});
+                res.json({message: message,
+                          error: error,
+                          status: error.status});
             },
             function (user) {
                 // Success; Update session user.
                 req.session.user = user;
                 res.json({message: 'Favorited ' + pid + '.',
-                    status: 200}); // HTTP/1.1 200: OK
+                          status: 200}); // HTTP/1.1 200: OK
             });
     }
 });
@@ -193,13 +196,15 @@ router.get('/defavorite/:id', function (req, res, next) {
         users.delSubscription(req.session.user, pid, function (error, message) {
                 // Failure; error and message passed back.
                 if (error.err) console.log(error.err);
-                res.render('error', {message: msg, error: error});
+                res.json({message: message,
+                          error: error,
+                          status: error.status});
             },
             function (user) {
                 // Success; Update session user.
                 req.session.user = user;
                 res.json({message: 'Removed ' + pid + ' from favorites.',
-                    status: 200}); // HTTP/1.1 200: OK
+                          status: 200}); // HTTP/1.1 200: OK
             });
     }
 });
