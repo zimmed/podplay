@@ -215,7 +215,7 @@
             passconf = $('#pass2').val();
         $('#uname, #email, #pass1, #pass2').removeClass('error valid');
         if (!username) {
-            msg = "Username is required and cannot be blank.";
+            msg = "Please enter a username.";
             p = '#uname';
         }
         else if (username.match(/[^0-9a-z\.]/i)) {
@@ -230,7 +230,7 @@
             $('#uname').addClass('valid');
         }
         if (!p && !emailadd) {
-            msg = "Email is required and cannot be blank.";
+            msg = "Please enter your email address.";
             p = '#email';
         }
         // Regex taken from:
@@ -243,7 +243,7 @@
             $('#email').addClass('valid');
         }
         if (!p && !password) {
-            msg = "Password is required and cannot be blank.";
+            msg = "Please create a password.";
             p = '#pass1';
         }
         else if (!p && password.match(/[\s\'\;\\]/)) {
@@ -261,7 +261,7 @@
             msg = "The passwords do not match.";
             p = '#pass2';
         }
-        else if (password === passconf) {
+        else if (passconf && password === passconf) {
             $('#pass2').addClass('valid');
         }
         if (!p) {
