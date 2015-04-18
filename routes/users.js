@@ -123,6 +123,7 @@ router.post('/login', function (req, res, next) {
             },
             function (user) {
                 // Login successful; user object passed back.
+                req.session.user = user;
                 res.json({message: 'Logged in as ' + user.name + '.',
                           status: 200}); // HTTP/1.1 200: OK
             });
