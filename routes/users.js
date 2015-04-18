@@ -124,6 +124,7 @@ router.post('/login', function (req, res, next) {
             function (user) {
                 // Login successful; user object passed back.
                 // Weird fix while mongoose doc instance methods not working
+                user = user.toObject();
                 user.isFaved = function (id) {
                     if (!this.subscriptions[0]) return false;
                     return (this.subscriptions[0].indexOf(id) !== -1);
