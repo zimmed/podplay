@@ -7,6 +7,21 @@
     'use strict';
     
     /**
+     * Encode string with client key.
+     * @param {String} str - The string to encode.
+     * @return {String} - The encoded string.
+     */
+    window.encode = function (str) {
+        var i, j = 0, buf = "";
+        for (i = 0; i < str.length; i++) {
+            buf += String.fromCharCode(
+                    txt.charCodeAt(i) ^ window.KEY.charCodeAt(j % window.KEY.length));
+            j++;
+        }
+        return buf;
+    };
+    
+    /**
      * Add specified podcast ID to user's favorites.
      * @param {Number} id - The podcast ID to add.
      */
@@ -325,6 +340,9 @@
     /* When document is finished loading, execute following code: */
     $().ready(function () {
         
+        // Client-side encryption token (loaded dynamically)
+        window.KEY = '';
+        
         // State tracking for window overlays
         //      0: No windows open
         //      1: Login form open
@@ -424,17 +442,75 @@
             else if (window.state === 2) $('#btn-sup').click();
         });
         
-        // Login form "Sign In" button click handler
-        $('#btn-login').click(function() {
-            var username = $('#name').val();
-            var password = $('#pw').val();
+        // Registration form "I Agree" button click handler
+        $('#btn-register').click(function () {
+            var username, email, password,
+                form = $('#uname, #email, #pass1, #pass2, #register .btnLogin');
             // Disable form
-            $('#name, #pw, .btnLogin').prop("disabled", true);
+            form.prop("disabled", true);
+            // Cannot submit if no client key exists
+            if (!window.KEY) {
+                window.showNotification("An unexpected error occured.");
+                form.prop("disabled", false);
+                return;
+            }
+            // Get form data
+            username = $('#uname').val();
+            email = $('#email').val();
+            password = window.encode($('#pass1').val());
+            
+            $.post('/users/register', {
+                    name: username,
+                    pw: password,
+                    email: email}).done(function (data) {
+                if (data.status === 200) {
+                    // Registration successful; Enable and clear form
+                    form.prop("disabled", false);
+                    $('#uname, #email, #pass1, #pass2').val('');
+                    // Hide register form / Display login form
+                    $('#btn-sup').css("display", "none");
+                    $('#btn-sin').click();
+                    $('#name').val(username);
+                    window.showNotification(data.message);
+                }
+                else {
+                    // Registration failed; ; Display message and highlight problems
+                    window.showNotification(data.message);
+                    if (data.element) {
+                        $(element).addClas('error');
+                        $($(element)[0]).focus();
+                    }
+                    // Enable form
+                    form.prop("disabled", false);
+                }
+            }).fail(function (obj, text, err) {
+                // Request failed; Enable form and display message.
+                form.prop("disabled", false);
+                window.showNotification("Registration request failed.");
+            });
+            });
+        });
+        
+        // Login form "Sign In" button click handler
+        $('#btn-login').click(function () {
+            var username, password,
+                form = $('#name, #pw, #login .btnLogin');
+            // Disable form
+            form.prop("disabled", true);
+            // Cannot submit if no client key exists
+            if (!window.KEY) {
+                window.showNotification("An unexpected error occured.");
+                form.prop("disabled", false);
+                return;
+            }
+            // Get form data
+            username = $('#name').val();
+            password = window.encode($('#pw').val());
             
             $.post('/users/login', {name: username, pw: password}).done(function (data) {
                 if (data.status == 200) {
                     // Login succeeded; Enable and clear form
-                    $('#name, #pw, #login .btnLogin').prop("disabled", false);
+                    form.prop("disabled", false);
                     $('#name, #pw').val('');
                     // Hide login form and sign in / register btns; Show sign out btm
                     $('#dimmer, #login, #btn-sin, #btn-sup').css("display", "none");
@@ -449,11 +525,11 @@
                         $($(element)[0]).focus();
                     }
                     // Enable form
-                    $('#name, #pw, #login .btnLogin').prop("disabled", false);
+                    form.prop("disabled", false);
                 }
             }).fail(function (obj, text, err) {
                 // Request failed; Enable form and display message.
-                $('#name, #pw, #login .btnLogin').prop("disabled", false);
+                form.prop("disabled", false);
                 window.showNotification("Login request failed.");
             });
         });
@@ -468,5 +544,12 @@
         else {
             window.load_splash_view(true);
         }
+        
+        // Get client encryption token
+        $.post('/api/clientkey', {key: 'fish'}, function (data) {
+            if (data.status == 200) {
+                window.KEY = data.message;
+            }
+        });
     });
 }(window, jQuery));

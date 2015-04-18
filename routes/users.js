@@ -9,6 +9,8 @@ var express = require('express');
 var users = require('../lib/users');
 var router = express.Router();
 
+var decrypt = require('../lib/clientkey').Decrypt;
+
 router.post('/register', function (req, res, next) {
     // make sure validation for registration form
     // is done clientside, all malformed 'register'
@@ -33,7 +35,7 @@ router.post('/register', function (req, res, next) {
         res.json({message: 'Invalid username supplied.',
               error: error,
               status: error.status,
-              element: 'name'});
+              element: '#uname'});
     }
     else if (!users.validEmail(req.params.email)) {
         // Invalid email address
@@ -41,19 +43,19 @@ router.post('/register', function (req, res, next) {
         res.json({message: 'Invalid email address supplied.',
               error: error,
               status: error.status,
-              element: 'email'});
+              element: '#email'});
     }
-    else if (!users.validPassword(req.params.pw)) {
+    else if (!users.validPassword(decrypt(req.params.pw))) {
         // Invalid password
         // (Must be 6 to 26 chars, containing none of the following: \ ' ; <whitespace>)
         res.json({message: 'Invalid password supplied.',
               error: error,
               status: error.status,
-              element: 'pass'});
+              element: '#pass1'});
     }
     else {
         // Data supplied is valid. 
-        users.registerUser(req.params.name, req.params.email, req.params.pw,
+        users.registerUser(req.params.name, req.params.email, decrypt(req.params.pw),
             function (error, msg) {
                 // Registration unsuccessful; error and message passed back
                 if (error.err) console.log(error.err);
@@ -97,19 +99,19 @@ router.post('/login', function (req, res, next) {
         res.json({message: 'Invalid username supplied.',
                   error: error,
                   status: error.status,
-                  element: 'name'});
+                  element: '#name'});
     }
-    else if (!users.validPassword(req.body.pw)) {
+    else if (!users.validPassword(decrypt(req.body.pw))) {
         // Invalid password
         // (Must be 6 to 26 chars, containing none of the following: \ ' ; <whitespace>)
         res.json({message: 'Invalid password supplied.',
                   error: error,
                   status: error.status,
-                  element: 'pass'});
+                  element: '#pw'});
     }
     else {
         // Data sent is valid.
-        var name = req.body.name, pw = req.body.pw;
+        var name = req.body.name, pw = decrypt(req.body.pw);
 
         // Check username and password against database.
         users.validateUser(name, pw, function (error, msg) {
