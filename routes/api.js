@@ -22,7 +22,7 @@ var Podcasts = require('../lib/podcasts');
 router.get('/view/splash', function (req, res, next) {
     var casts;
     if (req.session.user) {
-        console.log(req.session.user.isFavorited);
+        console.log(req.session.user.isFaved);
         res.render('splash', {
             user: req.session.user,
             genres: Podcasts.Genres});
@@ -41,7 +41,7 @@ router.get('/view/podcast/:id', function (req, res, next) {
         request(podcast.feedUrl, function (error, response, body) {
             // Data returned in XML format, and must be parsed.
             parseString(body, function (err, obj) {
-                console.log(req.session.user.isFavorited);
+                console.log(req.session.user.isFaved);
                 // Render client 'podcast' page/view, passing necessary data.
                 res.render('podcast', {id: id,
                                        user: req.session.user,
@@ -55,8 +55,6 @@ router.get('/view/podcast/:id', function (req, res, next) {
 });
 router.get('/castcat/:gid', function (req, res, next) {
     if (req.session.user) {
-        
-        console.log(req.session.user.isFavorited);
         Cache.aggregate_cat(req.params.gid,
                             req.session.user.subscriptions,
                             function (err, msg) {
