@@ -15,7 +15,7 @@
         var i, j = 0, buf = "";
         for (i = 0; i < str.length; i++) {
             buf += String.fromCharCode(
-                    txt.charCodeAt(i) ^ window.KEY.charCodeAt(j % window.KEY.length));
+                    str.charCodeAt(i) ^ window.KEY.charCodeAt(j % window.KEY.length));
             j++;
         }
         return buf;
