@@ -40,7 +40,6 @@ router.get('/browse/:cat?', function (req, res, next) {
 // GET home page.
 router.get('/', function (req, res, next) {
     // Render site index page/view for client.
-    console.log(req.session);
     res.render('index', { session: req.session, title: 'Podplay.me', javascripts: ['index'] });
 });
 

@@ -40,6 +40,7 @@ router.get('/view/podcast/:id', function (req, res, next) {
             parseString(body, function (err, obj) {
                 // Render client 'podcast' page/view, passing necessary data.
                 res.render('podcast', {id: id,
+                                       session: req.session,
                                        title: podcast.title,
                                        podcast: podcast,
                                        safetitle: id + '/' + podcast.title_uri,
