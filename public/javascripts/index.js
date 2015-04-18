@@ -488,7 +488,6 @@
                 form.prop("disabled", false);
                 window.showNotification("Registration request failed.");
             });
-            });
         });
         
         // Login form "Sign In" button click handler
