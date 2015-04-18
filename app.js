@@ -21,6 +21,7 @@ var api = require('./routes/api');
 var podcast = require('./routes/podcast');
 
 var badcache = require('./lib/badcache');
+var User = require('./lib/users').User;
 
 var app = express();
 
@@ -84,8 +85,14 @@ else {
         });
     });
 }
+
 // Update top 100 cache every 2 hours
 badcache.update_top100();
 var top100timer = setInterval(badcache.update_top100, 1000 * 60 * 60 * 2) 
+
+//Debug
+User.find({}, function (err, docs) {
+    console.log(JSON.stringify(docs));
+});
 
 module.exports = app;
