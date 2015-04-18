@@ -549,6 +549,9 @@
             if (data.status == 200) {
                 window.KEY = data.message;
             }
+            else {
+                console.log(data);
+            }
         });
     });
 }(window, jQuery));
