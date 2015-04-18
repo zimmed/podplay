@@ -42,12 +42,13 @@ html
             a.navbar-brand(href="javascript:window.load_splash_view();") Podplay.me
             ul.nav.navbar-nav.navbar-right
               li
-                if session.user
-                    p #{session.user.name}
+                if user
+                    p#account(style="display:inline") #{user.name}
                     button.btn.btn-primary.navbar-btn#btn-logout(type="button") Sign Out
                     button.btn.btn-primary.navbar-btn#btn-sin(type="button" style="display:none;") Sign In
                     button.btn.btn-primary.navbar-btn#btn-sup(type="button" style="display:none;") Register
                 else
+                    p#account(style="display:none") &nbsp;
                     button.btn.btn-primary.navbar-btn#btn-logout(type="button" style="display:none;") Sign Out
                     button.btn.btn-primary.navbar-btn#btn-sin(type="button") Sign In
                     button.btn.btn-primary.navbar-btn#btn-sup(type="button") Register

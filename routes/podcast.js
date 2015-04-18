@@ -18,7 +18,7 @@ var parseString = parser.parseString;
  */
 router.get('/:id/:title?', function (req, res, next) {
     var id = req.params.id;
-    res.render('index', {session: req.session,
+    res.render('index', {user: req.session.user,
                          title: 'Podplay.me',
                          javascripts: ['index'],
                          GLOBALS: {'preload_cast': id}});
