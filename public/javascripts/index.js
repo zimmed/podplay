@@ -431,7 +431,7 @@
                 // Reload page
                 load_splash_view();
                 // Hide logout button
-                $('#btn-logout').css("display", "none");
+                $('#btn-logout, #account').css("display", "none");
                 $('#btn-sup, #btn-sin').css("display", "inline");
             });
         });
@@ -514,7 +514,7 @@
                     // Hide login form and sign in / register btns; Show sign out btm
                     $('#btn-sin').html('Sign In');
                     $('#dimmer, #login, #btn-sin, #btn-sup').css("display", "none");
-                    $('#btn-logout').css("display", "inline");
+                    $('#btn-logout, #account').css("display", "inline");
                     window.state = 0;
                     window.load_splash_view();
                 }
