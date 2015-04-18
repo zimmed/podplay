@@ -55,6 +55,7 @@ router.get('/view/podcast/:id', function (req, res, next) {
 });
 router.get('/castcat/:gid', function (req, res, next) {
     if (req.session.user) {
+        console.log(req.session.user.subscriptions);
         Cache.aggregate_cat(req.params.gid,
                             req.session.user.subscriptions,
                             function (err, msg) {
