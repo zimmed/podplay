@@ -206,3 +206,7 @@ legend {
     font-style: italic;
     color: #FF7F00;
 }
+
+.valid {
+    background: rgba(0, 64, 255, 0.25) !important;
+}
