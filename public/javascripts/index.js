@@ -151,7 +151,15 @@
             player.attr('src', audioURL);
             player.load();
             $('.audioplayer-playpause').trigger('click');
-
+        });
+        
+        $('#fav').click(function () {
+            if ($(this).html().trim() === 'Add') {
+                window.favorite($(this).data('id'));
+            }
+            else {
+                window.defavorite($(this).data('id'));
+            }
         });
     };
     
