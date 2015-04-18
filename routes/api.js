@@ -21,6 +21,7 @@ var Podcasts = require('../lib/podcasts');
  */
 router.get('/view/splash', function (req, res, next) {
     var casts;
+    console.log(req.session);
     if (req.session.user) {
         res.render('splash', {user: req.session.user,
                                 genres: Podcasts.Genres});
@@ -31,6 +32,7 @@ router.get('/view/splash', function (req, res, next) {
 });
 router.get('/view/podcast/:id', function (req, res, next) {
     var id = req.params.id;
+    console.log(req.session);
     // HTTP request information on podcast ID via Apple API
     Podcasts.getPodcast(id, function (error, msg) {
         res.render('error', { message: msg, error: error});
