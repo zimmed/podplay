@@ -18,6 +18,7 @@ var parseString = parser.parseString;
  */
 router.get('/:id/:title?', function (req, res, next) {
     var id = req.params.id;
+    console.log(req.session);
     res.render('index', {session: req.session,
                          title: 'Podplay.me',
                          javascripts: ['index'],
