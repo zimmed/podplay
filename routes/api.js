@@ -42,6 +42,7 @@ router.get('/view/podcast/:id', function (req, res, next) {
             // Data returned in XML format, and must be parsed.
             parseString(body, function (err, obj) {
                 console.log("podcast view success");
+                console.log(req.session.user);
                 // Render client 'podcast' page/view, passing necessary data.
                 res.render('podcast', {id: id,
                                        user: req.session.user,
