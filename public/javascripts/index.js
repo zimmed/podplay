@@ -515,6 +515,7 @@
                     $('#btn-sin').html('Sign In');
                     $('#dimmer, #login, #btn-sin, #btn-sup').css("display", "none");
                     $('#btn-logout, #account').css("display", "inline");
+                    $('#account').html(data.message);
                     window.state = 0;
                     window.load_splash_view();
                 }
