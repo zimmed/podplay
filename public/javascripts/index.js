@@ -330,7 +330,6 @@
         var podcast, row, count, cols, rows, height = 137, res = " Quick Result";
         if (full) {
             res = " Result";
-            $('#search-results').data('term', searchTerm);
             $('#search-results').css({
                     'overflow-x': 'hidden',
                     'overflow-y': 'scroll',
@@ -363,6 +362,7 @@
     window.presearch = function (term) {
         $.get('api/cachesearch/?term=' + term, function (data) {
             if (data) {
+                $('#search-results').data('term', term);
                 searchResults(data, true);
             }
             else {
@@ -428,6 +428,7 @@
                 if (!skip_state) {
                     window.history.pushState({}, document.title, '/search/' + searchTerm);
                 }
+                $('#search-results').data('term', searchTerm);
                 searchResults(data, true);
                 // Push new URL state.
                 //window.history.pushState({}, document.title, '/search/' + searchTerm);
