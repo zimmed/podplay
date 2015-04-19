@@ -116,6 +116,8 @@
                 window.searchBoxTH = setInterval(window.quicksearch, 250);
             }
             else if ($(this).val().trim() === "") {
+                if (document.location.pathname != "/")
+                    window.history.pushState({}, document.title, '/');
                 clearInterval(window.searchBoxTH);
                 window.searchBoxTH = null;
                 searchResults({});
