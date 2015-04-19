@@ -106,7 +106,8 @@
 
         // Handle quick searching
         $('#podcast-search-input').on('change keyup paste', function (e) {
-            if (e.type == "keyup" && e.which == 13) {
+            if (e.type == "keyup" && e.which == 13 &&
+                $(this).val().trim() !== "") {
                 // Enter key pressed
                 window.submitSearch();
             }
