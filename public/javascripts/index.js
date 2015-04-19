@@ -341,7 +341,7 @@
                 'padding': '10px',
                 'padding-bottom': '0px'});
         } else {
-            $('#result-counter').html("No" + res);
+            $('#result-counter').html("No Results");
             $('#search-results').css({
                 'height': '0px',
                 'padding': '0px'});

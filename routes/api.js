@@ -130,9 +130,11 @@ router.get('/search', function (req, res, next) {
                 console.log(msg);
                 console.log(err);
                 res.json({"error": msg});
-            }, function (pcasts) {
-                Cache.search[req.query.term] = pcasts;
-                res.json(pcasts);
+            }, function (data) {
+                Podcasts.searchByTerm(req.query.term, 0, function (pcasts) {
+                    res.json(pcasts);
+                });
+                //Cache.search[req.query.term] = pcasts;
             });
         } else {
             res.json({});
@@ -144,7 +146,7 @@ router.get('/search', function (req, res, next) {
  * Route for api/quicksearch URL
  */
 router.get('/quicksearch', function (req, res, next) {
-    Podcasts.searchByTerm(req.query.term, function (data) {
+    Podcasts.searchByTerm(req.query.term, 25, function (data) {
         res.json(data);
     });
 });

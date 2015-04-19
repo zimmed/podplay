@@ -54,6 +54,9 @@ app.use('/podcast', podcast);
 // Makes generated HTML not look like garbage
 app.locals.pretty = true;
 
+// Update interval for top100 cache (default: 2 hours)
+var UPDATE_TOP100_INTERVAL = 1000 * 60 * 60 * 2
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
@@ -86,9 +89,9 @@ else {
     });
 }
 
-// Update top 100 cache every 2 hours
+// Update top 100 cache
 badcache.update_top100();
-var top100timer = setInterval(badcache.update_top100, 1000 * 60 * 60 * 2) 
+var top100timer = setInterval(badcache.update_top100, UPDATE_TOP100_INTERVAL);
 
 //Debug
 User.find({}, function (err, docs) {
