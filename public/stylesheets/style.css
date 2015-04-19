@@ -110,6 +110,7 @@ tr.feed-row:hover {
     width: 100px;
     border: none;
     margin-right: 10px;
+    margin-bottom: 10px;
     white-space: normal;
     cursor: pointer;
 }
