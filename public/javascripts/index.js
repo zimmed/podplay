@@ -324,8 +324,9 @@
      *      are not quick-search results.
      */
     function searchResults(results, full) {
-        var podcast, row, count, cols, rows, height = 137, res = " Quick Results";
-        if (full) res = " Results"
+        var podcast, row, count, cols, rows, height = 137, res = " Quick Result";
+        if (full) res = " Result"
+        res += (results.length !== 1) ? "s" : "";
         // Update table title with result count.
         if (results.length > 0) {
             $('#result-counter').html(results.length + res);
