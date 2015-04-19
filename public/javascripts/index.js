@@ -127,7 +127,9 @@
         
         // Handle hard search request
         $('#podcast-search-button').click(function () {
-            window.submitSearch();
+            if ($('#podcast-search-input').val().trim() !== "") {
+                window.submitSearch();
+            }
         });
         
         // Focus on search bar
