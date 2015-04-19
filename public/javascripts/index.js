@@ -96,7 +96,6 @@
             el.html('<p>Loading...</p>');
             $.get('/api/castcat/' + gid, function (data) {
                 el.html('');
-                console.log(data.favorites);
                 if (data.favorites) {
                     insertPodcasts(data.favorites, el, false, true);
                 }
@@ -643,7 +642,7 @@
                 window.KEY = data.message;
             }
             else {
-                console.log(data);
+                //console.log(data);
             }
         });
     });
