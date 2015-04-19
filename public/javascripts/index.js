@@ -330,9 +330,8 @@
         if (results.length > 0) {
             $('#result-counter').html(results.length + res);
             if (full) {
-                cols = Math.floor($('#result-container').width() / 110);
+                cols = Math.floor($('#search-results').width() / 110);
                 rows = Math.ceil(results.length / cols);
-                console.log('cols: ' + cols + ' & rows: ' + rows);
                 if (rows > 4) rows = 4;
                 height = 120 + (110 * (rows - 1));
             }
