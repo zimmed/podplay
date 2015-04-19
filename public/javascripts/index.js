@@ -331,7 +331,7 @@
             $('#result-counter').html(results.length + res);
             if (full) {
                 cols = Math.floor($('#result-container').width() / 110);
-                rows = Math.floor(results.length / cols);
+                rows = Math.ceil(results.length / cols);
                 if (rows > 4) rows = 4;
                 height = 120 + (110 * (rows - 1));
             }
