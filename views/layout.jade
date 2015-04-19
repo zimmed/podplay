@@ -3,10 +3,13 @@
 // Podplay.me - Podcast browser and player.
 // Authors: Ian McGaunn; Dave Zimmelman
 // Modified: 18 Apr 15
+
+// BEGIN layout.jade
 = "\n"
 doctype html
 html
   head
+    meta(charset="utf-8")
     title= title
     // Bootstrap style sheets
     link(rel='stylesheet', href='/stylesheets/bootstrap-3.3.2-modified.css')
@@ -86,6 +89,6 @@ html
             a(href="javascript:void(0);" style="display:block;padding:5px;margin-bottom:5px;") I have read and agree to the Terms of Use.
             button.btnLogin#btn-register(tabindex="3") I Agree
             button.btnLogin.btn-cancel(tabindex="4") Cancel
-    // Dynamically generated view
+// END layout.jade
     block content
         
