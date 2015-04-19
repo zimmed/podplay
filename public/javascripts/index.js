@@ -423,12 +423,14 @@
         
         // Submit full search query
         window.submitSearch = function (skip_state) {
+            window.showLoader();
             clearInterval(window.searchBoxTH);
             window.searchBoxTH = null;
             var searchTerm = $('#podcast-search-input').val().trim();
             if (!searchTerm) return;
             // Get search data from API.
             $.get('/api/search/?term=' + searchTerm, function (data) {
+                window.hideLoader();
                 // Parse results and add to table.
                 if (!skip_state) {
                     window.history.pushState({}, document.title, '/search/' + searchTerm);
