@@ -40,16 +40,32 @@ router.get('/view/podcast/:id', function (req, res, next) {
     }, function (podcast) {
         request(podcast.feedUrl, function (error, response, body) {
             // Data returned in XML format, and must be parsed.
-            parseString(body, function (err, obj) {
-                // Render client 'podcast' page/view, passing necessary data.
-                res.render('podcast', {id: id,
-                                       user: req.session.user,
-                                       isFavorited: isFavorited,
-                                       title: podcast.title,
-                                       podcast: podcast,
-                                       safetitle: id + '/' + podcast.title_uri,
-                                       feed: obj.rss.channel });
-            });
+            if (error) {
+                console.log('Error retrieving feed:');
+                console.log('\t' + JSON.stringify(error));
+                res.render('error', {error: error});
+            }
+            else {
+                parseString(body, function (err, obj) {
+                    // Render client 'podcast' page/view, passing necessary data.
+                    if (err) {
+                        console.log('Error parsing podcast feed:');
+                        console.log('\t' + JSON.stringify(err));
+                        res.render('error', {error: err});
+                    }
+                    else {
+                        // Increase podcast popularity
+                        podcasts.modifyPodcastPoints(podcast._id, 1);
+                        res.render('podcast', {id: id,
+                                               user: req.session.user,
+                                               isFavorited: isFavorited,
+                                               title: podcast.title,
+                                               podcast: podcast,
+                                               safetitle: id + '/' + podcast.title_uri,
+                                               feed: obj.rss.channel });
+                    }
+                });
+            }
         });
     });
 });
@@ -69,7 +85,7 @@ router.get('/castcat/:gid', function (req, res, next) {
             console.log(msg);
             console.log(err);
             res.send(msg);
-        }, function (data) {
+        }, function (data) {zx
             res.json({podcasts: data[0]});
         });
     }
