@@ -338,6 +338,13 @@
                     'overflow-x': 'hidden',
                     'overflow-y': 'scroll',
                     'white-space': 'normal'});
+            if (results.length > 0) {
+                $('.genre-panel > .panel-body').css('display', 'none');
+                $('.genre-panel > .panel-heading').css('cursor', 'pointer');
+                $('.genre-panel > .panel-heading').click(function () {
+                    window.load_splash_view();
+                });
+            }
         }
         res += (results.length !== 1) ? "s" : "";
         // Update table title with result count.
