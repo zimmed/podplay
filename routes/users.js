@@ -7,6 +7,7 @@
 
 var express = require('express');
 var users = require('../lib/users');
+var podcasts = require('../lib/podcasts');
 var router = express.Router();
 
 var decrypt = require('../lib/clientkey').Decrypt;
@@ -176,6 +177,8 @@ router.get('/favorite/:id', function (req, res, next) {
             function (user) {
                 // Success; Update session user.
                 req.session.user = user;
+                // Increase podcast popularity.
+                podcasts.modifyPodcastPoints(pid, 20);
                 res.json({message: 'Favorited ' + pid + '.',
                           status: 200}); // HTTP/1.1 200: OK
             });
@@ -206,6 +209,8 @@ router.get('/defavorite/:id', function (req, res, next) {
             function (user) {
                 // Success; Update session user.
                 req.session.user = user;
+                // Decrease podcast popularity.
+                podcasts.modifyPodcastPoints(pid, 15, true);
                 res.json({message: 'Removed ' + pid + ' from favorites.',
                           status: 200}); // HTTP/1.1 200: OK
             });
