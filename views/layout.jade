@@ -38,8 +38,11 @@ html
     // Navigation header
     nav.navbar.navbar-default.navbar-static-top.navbar-inverse
         .container
-            a.navbar-brand(href="javascript:window.load_splash_view();") !{'&#9664;'}
+            // Back button
+            a.navbar-brand(href="javascript:window.history.back();") !{'&#9664;'}
+            // Brand button
             a.navbar-brand(href="javascript:window.load_splash_view();") Podplay.me
+            // User account function menu
             ul.nav.navbar-nav.navbar-right
               li
                 if user
@@ -52,7 +55,11 @@ html
                     button.btn.btn-primary.navbar-btn#btn-logout(type="button" style="display:none;") Sign Out
                     button.btn.btn-primary.navbar-btn#btn-sin(type="button") Sign In
                     button.btn.btn-primary.navbar-btn#btn-sup(type="button") Register
+    // Giant alpha-layerd div that spans across screen
     div#dimmer
+    // Loading gif that is positioned in the center of the screen
+    div#loader
+    // Login form
     form.box.login#login(action="javascript:void(0);" style="height:280px;")
         fieldset.boxBuddy
             legend Sign In
@@ -61,9 +68,9 @@ html
             input(type="text" tabindex="1" id="name" name="name" class="required")
             label(for="pw") Password
             input(type="password" tabindex="2" id="pw" name="pw" class="required")
-            
             button.btnLogin#btn-login(tabindex="3") Sign In
             button.btnLogin.btn-cancel(tabindex="4") Cancel
+    // Register form
     form.box.login#register(action="javascript:void(0);" style="height:460px;")
         fieldset.boxBuddy
             legend Register
@@ -77,8 +84,7 @@ html
             label(for="pass2") Confirm Password
             input(type="password" tabindex="2" id="pass2" name="pass2" class="required" placeholder="Re-enter your password")
             a(href="javascript:void(0);" style="display:block;padding:5px;margin-bottom:5px;") I have read and agree to the Terms of Use.
-            
             button.btnLogin#btn-register(tabindex="3") I Agree
             button.btnLogin.btn-cancel(tabindex="4") Cancel
-    div#loader
     block content
+        // Dynamically generated view
