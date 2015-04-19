@@ -363,6 +363,7 @@
     window.presearch = function (term) {
         $.get('/api/cachesearch/?term=' + term, function (data) {
             if (data) {
+                $('#podcast-search-input').val(term);
                 $('#search-results').data('term', term);
                 searchResults(data, true);
             }
