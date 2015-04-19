@@ -85,7 +85,7 @@ router.get('/castcat/:gid', function (req, res, next) {
             console.log(msg);
             console.log(err);
             res.send(msg);
-        }, function (data) {zx
+        }, function (data) {
             res.json({podcasts: data[0]});
         });
     }
