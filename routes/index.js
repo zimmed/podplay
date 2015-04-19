@@ -11,16 +11,17 @@ var Cache = require('../lib/badcache');
 
 // User goes back to search results.
 router.get('/search/:term?', function (req, res, next) {
-    // Check that param exists and search has been cached.
-    if (!req.params.hasOwnProperty('term') ||
-        !Cache.search.hasOwnProperty(req.params.term)) {
+    // Check that param exists
+    if (!req.params.hasOwnProperty('term')) {
         // If not, reroute to landing page.
         res.redirect('/');
     }
-    res.render('index', {user: req.session.user,
-                         GLOBALS: {'preload_search': req.params.term},
-                         title: 'Podplay.me',
-                         javascripts: ['index']});
+    else {
+        res.render('index', {user: req.session.user,
+                             GLOBALS: {'preload_search': req.params.term},
+                             title: 'Podplay.me',
+                             javascripts: ['index']});
+    }
 });
 
 /*
