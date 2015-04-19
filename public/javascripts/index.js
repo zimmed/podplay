@@ -166,13 +166,15 @@
      /**
      * Load default splash page into view.
      * @param {Bool} first - Optional flag that handles a first-time load for the page.
+     * @param {Function} cb - Optional callback function.
      */
-    window.load_splash_view = function (first) {
+    window.load_splash_view = function (first, cb) {
         window.showLoader();
         $.get('/api/view/splash', function (data) {
             window.hideLoader();
             $('#left-col').html(data);
             window.splashReady(first);
+            if (cb) cb();
         });
     };
     
@@ -326,7 +328,14 @@
      */
     function searchResults(results, full) {
         var podcast, row, count, cols, rows, height = 137, res = " Quick Result";
-        if (full) res = " Result";
+        if (full) {
+            res = " Result";
+            $('#search-results').data('term', searchTerm);
+            $('#search-results').css({
+                    'overflow-x': 'hidden',
+                    'overflow-y': 'scroll',
+                    'white-space': 'normal'});
+        }
         res += (results.length !== 1) ? "s" : "";
         // Update table title with result count.
         if (results.length > 0) {
@@ -350,13 +359,44 @@
         insertPodcasts(results, '#search-results');
     }
     
+    // Handle window.history state change for /search
+    window.presearch = function (term) {
+        $.get('api/cachesearch/?term=' + term, function (data) {
+            if (data) {
+                searchResults(data, true);
+            }
+            else {
+                $('#podcast-search-input').val(term);
+                window.submitSearch(true);
+            }
+        });
+    };
+    
     // Window state handler
     window.onpopstate = function (event) {
-        if (document.location.pathname === '/') window.load_splash_view();
-        else {
-            var re = /^\/podcast\/(\d+)\//;
-            var r = re.exec(document.location.pathname);
+        var r, podre = /^\/podcast\/(\d+)/,
+            searchre = /^\/search\/([^\/]+)/;
+        if (document.location.pathname.match(podre)) {
+            r = podre.exec(document.location.pathname);
             window.load_podcast_view(r[1]);
+        }
+        else if (document.location.pathname.match(searchre)) {
+            r = searchre.exec(document.location.pathname);
+            if ($('#search-results').length > 0) {
+                if ($('#search-results').data('term') != r[1]) {
+                    window.presearch(term);
+                }
+            }
+            else {
+                var p = document.location.pathname;
+                window.load_splash_view(true, function () {
+                    window.history.replaceState({}, document.title, p);
+                    window.presearch(r[1]);
+                });
+            }
+        }
+        else {
+            window.load_splash_view(true);
         }
     };
     
@@ -377,17 +417,17 @@
         window.lastTickSearch = "";
         
         // Submit full search query
-        window.submitSearch = function () {
+        window.submitSearch = function (skip_state) {
             clearInterval(window.searchBoxTH);
             window.searchBoxTH = null;
-            var searchTerm = $('#podcast-search-input').val();
+            var searchTerm = $('#podcast-search-input').val().trim();
+            if (!searchTerm) return;
             // Get search data from API.
             $.get('/api/search/?term=' + searchTerm, function (data) {
-                $('#search-results').css({
-                        'overflow-x': 'hidden',
-                        'overflow-y': 'scroll',
-                        'white-space': 'normal'});
                 // Parse results and add to table.
+                if (!skip_state) {
+                    window.history.pushState({}, document.title, '/search/' + searchTerm);
+                }
                 searchResults(data, true);
                 // Push new URL state.
                 //window.history.pushState({}, document.title, '/search/' + searchTerm);
@@ -404,6 +444,7 @@
             if (s !== "") {
                 window.lastTickSearch = s;
                 $.get('/api/quicksearch/?term=' + s, function (data) {
+                    $('#search-results').data('term', '');
                     $('#search-results').css({
                         'overflow-x': 'scroll',
                         'overflow-y': 'hidden',
@@ -574,9 +615,12 @@
         if (window.preload_cast) {
             window.load_podcast_view(window.preload_cast);
         }
-        else {
-            window.load_splash_view(true);
+        else if (window.preload_search) {
+            window.load_splash_view(true, function () {
+                window.presearch(window.preload_search);
+            });
         }
+        else window.load_splash_view(true);
         
         // Get client encryption token
         $.post('/api/clientkey', {key: 'fish'}, function (data) {
