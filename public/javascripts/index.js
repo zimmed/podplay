@@ -324,17 +324,25 @@
      *      are not quick-search results.
      */
     function searchResults(results, full) {
-        var podcast, row, count, res = " Quick Results";
+        var podcast, row, count, cols, rows, height = 140, res = " Quick Results";
         if (full) res = " Results"
         // Update table title with result count.
         if (results.length > 0) {
-            $('#result-counter').html(results.length + " Results");
-            $('#search-results').css('height', '120px');
-            $('#search-results').css('padding', '10px');
+            $('#result-counter').html(results.length + res);
+            if (full) {
+                cols = Math.floor($('#result-container').width() / 110);
+                rows = Math.floor(results.length / cols);
+                if (rows > 4) rows = 4;
+                height = 120 + (110 * (rows - 1));
+            }
+            $('#search-results').css({
+                'height': '' + height + 'px',
+                'padding': '10px'});
         } else {
-            $('#result-counter').html("No Results");
-            $('#search-results').css('height', '0px');
-            $('#search-results').css('padding', '0px');
+            $('#result-counter').html("No" + res);
+            $('#search-results').css({
+                'height': '0px',
+                'padding': '0px'});
         }
         insertPodcasts(results, '#search-results');
     }
@@ -372,8 +380,7 @@
             var searchTerm = $('#podcast-search-input').val();
             // Get search data from API.
             $.get('/api/search/?term=' + searchTerm, function (data) {
-                $('#podcast-search-input').css({
-                        'height': '450px',
+                $('#search-results').css({
                         'overflow-x': 'hidden',
                         'overflow-y': 'scroll',
                         'white-space': 'normal'});
@@ -394,8 +401,7 @@
             if (s != "") {
                 window.lastTickSearch = s;
                 $.get('/api/quicksearch/?term=' + s, function (data) {
-                    $('#podcast-search-input').css({
-                        'height': '140px',
+                    $('#search-results').css({
                         'overflow-x': 'scroll',
                         'overflow-y': 'hidden',
                         'white-space': 'nowrap'});
