@@ -333,12 +333,12 @@
                 cols = Math.floor($('#search-results').width() / 110);
                 rows = Math.ceil(results.length / cols);
                 if (rows > 4) rows = 4;
-                height = (rows === 1) ? 110 : 120;
-                height += (110 * (rows - 1));
+                height = 120 + (110 * (rows - 1));
             }
             $('#search-results').css({
                 'height': '' + height + 'px',
-                'padding': '10px'});
+                'padding': '10px',
+                'padding-bottom': '0px'});
         } else {
             $('#result-counter').html("No" + res);
             $('#search-results').css({
