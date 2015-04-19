@@ -118,7 +118,7 @@ router.get('/search', function (req, res, next) {
     // For now, it's best to use `term` to avoid confusion.
     var queryURL = api + req.query.term; 
     
-    if (!req.qeury.term) return res.json([]);
+    if (!req.query.term) return res.json([]);
 
     console.log('url: ' + queryURL);
     
@@ -165,10 +165,14 @@ router.get('/cachesearch', function (req, res, next) {
  * Route for api/quicksearch URL
  */
 router.get('/quicksearch', function (req, res, next) {
-    if (!req.qeury.term) return res.json([]);
-    Podcasts.searchByTerm(req.query.term, 25, function (data) {
-        res.json(data);
-    });
+    if (!req.query.term) {
+        res.json([]);
+    }
+    else {
+        Podcasts.searchByTerm(req.query.term, 25, function (data) {
+            res.json(data);
+        });
+    }
 });
 
 /**
