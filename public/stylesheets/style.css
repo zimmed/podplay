@@ -85,10 +85,11 @@ tr.feed-row:hover {
 }
 
 .panel-body {
-    height: 120px;
+    height: 140px;
     margin: 0px;
     padding: 10px;
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: scroll;
     white-space: nowrap;
 }
 

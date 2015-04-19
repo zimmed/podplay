@@ -320,9 +320,12 @@
     /**
      * Populate search results panel with search data.
      * @param {Object} data - The JSON object returned from search query.
+     * @param {Bool} full - Optional flag to designate to user that results
+     *      are not quick-search results.
      */
-    function searchResults(results) {
-        var podcast, row, count;
+    function searchResults(results, full) {
+        var podcast, row, count, res = " Quick Results";
+        if (full) res = " Results"
         // Update table title with result count.
         if (results.length > 0) {
             $('#result-counter').html(results.length + " Results");
@@ -362,15 +365,20 @@
         window.searchBoxTH = null;
         window.lastTickSearch = "";
         
-        // Submit search query
+        // Submit full search query
         window.submitSearch = function () {
             clearInterval(window.searchBoxTH);
             window.searchBoxTH = null;
             var searchTerm = $('#podcast-search-input').val();
             // Get search data from API.
             $.get('/api/search/?term=' + searchTerm, function (data) {
+                $('#podcast-search-input').css({
+                        'height': '450px',
+                        'overflow-x': 'hidden',
+                        'overflow-y': 'scroll',
+                        'white-space': 'normal'});
                 // Parse results and add to table.
-                searchResults(data);
+                searchResults(data, true);
                 // Push new URL state.
                 //window.history.pushState({}, document.title, '/search/' + searchTerm);
             });
@@ -386,6 +394,11 @@
             if (s != "") {
                 window.lastTickSearch = s;
                 $.get('/api/quicksearch/?term=' + s, function (data) {
+                    $('#podcast-search-input').css({
+                        'height': '140px',
+                        'overflow-x': 'scroll',
+                        'overflow-y': 'hidden',
+                        'white-space': 'nowrap'});
                     searchResults(data);
                 });
             }
