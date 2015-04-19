@@ -384,7 +384,7 @@
             r = searchre.exec(document.location.pathname);
             if ($('#search-results').length > 0) {
                 if ($('#search-results').data('term') != r[1]) {
-                    window.presearch(term);
+                    window.presearch(r[1]);
                 }
             }
             else {
