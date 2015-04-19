@@ -55,7 +55,7 @@ router.get('/view/podcast/:id', function (req, res, next) {
                     }
                     else {
                         // Increase podcast popularity
-                        podcasts.modifyPodcastPoints(podcast._id, 1);
+                        Podcasts.modifyPodcastPoints(podcast._id, 1);
                         res.render('podcast', {id: id,
                                                user: req.session.user,
                                                isFavorited: isFavorited,
