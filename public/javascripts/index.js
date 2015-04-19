@@ -333,7 +333,8 @@
                 cols = Math.floor($('#search-results').width() / 110);
                 rows = Math.ceil(results.length / cols);
                 if (rows > 4) rows = 4;
-                height = 120 + (110 * (rows - 1));
+                height = (rows === 1) ? 110 : 120;
+                height += (110 * (rows - 1));
             }
             $('#search-results').css({
                 'height': '' + height + 'px',
