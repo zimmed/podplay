@@ -198,6 +198,7 @@
             username = $('#name').val(),
             password = $('#pw').val();
         $('#name, #pw').removeClass('error valid');
+        window.closeNotification();
         if (!username.match(/^[a-zA-Z0-9\.]{5,26}$/)) {
             msg = "Invalid username.";
             p = '#name';
