@@ -1,7 +1,7 @@
 /**
  * index.js - Main library for index page/view.
  * Authors: Ian McGaunn; Dave Zimmelman
- * Modified: 18 Apr 15
+ * Modified: 19 Apr 15
  */
 (function (window, $) {
     'use strict';
@@ -133,9 +133,9 @@
      */
     window.pcastReady = function () {
         // Reformat URL to reflect appropriate title.
-        if (window['preload_cast']) {
+        if (window.preload_cast) {
             window.history.replaceState({}, document.title, '/podcast/' + window.safetitle);
-            window['preload_cast'] = false;
+            window.preload_cast = false;
         } else {
             window.history.pushState({}, document.title, '/podcast/' + window.safetitle);
         }
@@ -326,7 +326,7 @@
      */
     function searchResults(results, full) {
         var podcast, row, count, cols, rows, height = 137, res = " Quick Result";
-        if (full) res = " Result"
+        if (full) res = " Result";
         res += (results.length !== 1) ? "s" : "";
         // Update table title with result count.
         if (results.length > 0) {
@@ -401,7 +401,7 @@
                 window.searchBoxTH = null;
                 return;
             }
-            if (s != "") {
+            if (s !== "") {
                 window.lastTickSearch = s;
                 $.get('/api/quicksearch/?term=' + s, function (data) {
                     $('#search-results').css({
@@ -571,7 +571,7 @@
         $('#btn-login, #btn-register').prop('disabled', true);
         
         // Load correct view into left panel
-        if (window['preload_cast']) {
+        if (window.preload_cast) {
             window.load_podcast_view(window.preload_cast);
         }
         else {
