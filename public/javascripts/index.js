@@ -133,11 +133,10 @@
     /**
      * Document entry point when loading podcast view.
      */
-    window.pcastReady = function () {
+    window.pcastReady = function (first) {
         // Reformat URL to reflect appropriate title.
-        if (window.preload_cast) {
+        if (first) {
             window.history.replaceState({}, document.title, '/podcast/' + window.safetitle);
-            window.preload_cast = false;
         } else {
             window.history.pushState({}, document.title, '/podcast/' + window.safetitle);
         }
@@ -184,12 +183,12 @@
      * Load specified podcast view.
      * @param {Number} id - The podcast ID to view.
      */
-    window.load_podcast_view = function (id) {
+    window.load_podcast_view = function (id, first) {
         window.showLoader();
         $.get('/api/view/podcast/'+ id, function (data) {
             window.hideLoader();
             $('#left-col').html(data);
-            window.pcastReady();
+            window.pcastReady(first);
         });
     };
     
@@ -380,7 +379,7 @@
             searchre = /^\/search\/([^\/]+)/;
         if (document.location.pathname.match(podre)) {
             r = podre.exec(document.location.pathname);
-            window.load_podcast_view(r[1]);
+            window.load_podcast_view(r[1], true);
         }
         else if (document.location.pathname.match(searchre)) {
             r = searchre.exec(document.location.pathname);
@@ -616,7 +615,7 @@
         
         // Load correct view into left panel
         if (window.preload_cast) {
-            window.load_podcast_view(window.preload_cast);
+            window.load_podcast_view(window.preload_cast, true);
         }
         else if (window.preload_search) {
             window.load_splash_view(true, function () {
