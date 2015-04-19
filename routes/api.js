@@ -117,6 +117,8 @@ router.get('/search', function (req, res, next) {
     // Name is ambiguous, and might confuse things when we implement local searching by station/artist/etc.
     // For now, it's best to use `term` to avoid confusion.
     var queryURL = api + req.query.term; 
+    
+    if (!req.qeury.term) return res.json([]);
 
     console.log('url: ' + queryURL);
     
@@ -132,20 +134,38 @@ router.get('/search', function (req, res, next) {
                 res.json({"error": msg});
             }, function (data) {
                 Podcasts.searchByTerm(req.query.term, 0, function (pcasts) {
+                    if (!req.session.searchcache) req.session.searchcache = {};
+                    req.session.searchcache[req.query.term] = pcasts;
                     res.json(pcasts);
                 });
-                //Cache.search[req.query.term] = pcasts;
             });
         } else {
-            res.json({});
+            res.json([]);
         }
     });
+});
+
+/**
+ * Route for api/cachesearch URL
+ */
+router.get('/cachesearch', function (req, res, next) {
+    
+    if (!req.query.term) {
+        res.json([]);
+    }
+    else if (!req.session.searchcache || !req.session.searchcache[req.query.term]) {
+        res.json(false);
+    }
+    else {
+        res.json(req.session.searchcache[req.query.term]);
+    }
 });
 
 /**
  * Route for api/quicksearch URL
  */
 router.get('/quicksearch', function (req, res, next) {
+    if (!req.qeury.term) return res.json([]);
     Podcasts.searchByTerm(req.query.term, 25, function (data) {
         res.json(data);
     });
