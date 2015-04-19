@@ -128,6 +128,9 @@
         $('#podcast-search-button').click(function () {
             window.submitSearch();
         });
+        
+        // Focus on search bar
+        $('#podcast-search-input').focus();
     };
     
     /**
