@@ -360,7 +360,7 @@
     
     // Handle window.history state change for /search
     window.presearch = function (term) {
-        $.get('api/cachesearch/?term=' + term, function (data) {
+        $.get('/api/cachesearch/?term=' + term, function (data) {
             if (data) {
                 $('#search-results').data('term', term);
                 searchResults(data, true);
