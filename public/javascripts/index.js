@@ -91,6 +91,7 @@
         });
         
         // Populate all other categories
+        $('#left-col .genre-panel').html('<p>Loading...</p>');
         $('#left-col .genre-panel').each(function () {
             var i, el = $(this).find('.panel-body'), gid = $(this).data('genreid');
             $.get('/api/castcat/' + gid, function (data) {
