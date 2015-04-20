@@ -179,6 +179,7 @@ router.get('/browse', function (req, res, next) {
                 a = {podcasts: pcasts};
                 req.session.browsecache[gid] = a;
                 res.json(a);
+            }
         });
     }
 });
