@@ -8,6 +8,7 @@
 var express = require('express');
 var router = express.Router();
 var Cache = require('../lib/badcache');
+var Podcasts = require('../lib/podcasts');
 
 // User goes back to search results.
 router.get('/search/:term?', function (req, res, next) {
