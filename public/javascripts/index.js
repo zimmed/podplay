@@ -523,8 +523,8 @@
                                          prev: s.prev,
                                          previd: s.previd},
                                         document.title, '/');
-            if (s.prev && s.prev == "browse" && s.previd != r[1]) {
-                window.resetBrowse(s.id);
+            if (s.prev && s.prev == "browse") {
+                window.resetBrowse(s.previd);
             }
             else if (s.prev && s.prev == "search") {
                 window.resetSearch();
