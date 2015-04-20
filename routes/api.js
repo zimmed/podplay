@@ -161,6 +161,7 @@ router.get('/browse', function (req, res, next) {
             favs = user.subscriptions[gid];
         }
         Podcasts.getByCategory(genre, false, favs, function (pcasts) {
+            if (!req.session.browsecache) req.session.browsecache = {};
             if (favs) {
                 Podcasts.getPodcasts(favs, function (err, msg) {
                     console.log('Unexpected error occured: ' + err.status);
