@@ -454,7 +454,7 @@
                                       '/browse/' + genreid);
             }
             $('#podcast-search-input').val('');
-            window.quicksearch();
+            window.quicksearch(true);
             $('.genre-panel').each(function () {
                 if ($(this).data('genreid') != genreid) {
                     $(this).css('display', 'none');
@@ -584,7 +584,7 @@
      * Reset the full-search view of the splash page.
      */
     window.resetSearch = function () {
-        window.quicksearch();
+        window.quicksearch(true);
         $('.genre-panel').each(function () {
             $(this).css('display', 'block');
         });
@@ -768,9 +768,9 @@
             });
         };
         // Search box change
-        window.quicksearch = function () {
+        window.quicksearch = function (force) {
             var s = $('#podcast-search-input').val().trim();
-            if (s == window.lastTickSearch) {
+            if (!force && s == window.lastTickSearch) {
                 clearInterval(window.searchBoxTH);
                 window.searchBoxTH = null;
                 return;
