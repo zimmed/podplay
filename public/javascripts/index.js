@@ -461,11 +461,11 @@
         var p, r, podre = /^\/podcast\/(\d+)/,
             searchre = /^\/search\/([^\/]+)/,
             browsere = /^\/browse\/(\d+)/,
-            s = event.state;
+            s = window.event.state;
         // DEBUG bad navigation
         console.log('new path: ' + document.location.pathname);
         console.log('\thas event: ' + ((event) ? 'Yes' : 'No'));
-        if (event) console.log('\tstate: ' + JSON.stringify(event.state));
+        if (window.event) console.log('\tstate: ' + JSON.stringify(s));
         console.log('\n');
         if (document.location.pathname.match(podre)) {
             r = podre.exec(document.location.pathname);
