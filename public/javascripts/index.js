@@ -506,12 +506,11 @@
             }
         }
         else {
+            window.replaceState({page: 'index'}, document.title, '/');
             if (s.page && s.page == "browse" && s.id != r[1]) {
-                window.replaceState({page: 'index'}, document.title, '/');
                 window.resetBrowse(s.id);
             }
             else if (s.page && s.page == "search") {
-                window.replaceState({page: 'index'}, document.title, '/');
                 window.resetSearch();
             }
             else window.load_splash_view(true);
@@ -788,7 +787,10 @@
                 window.prebrowse(window.preload_browse);
             });
         }
-        else window.load_splash_view(true);
+        else {
+            window.replaceState({page: 'index'}, document.title, '/');
+            window.load_splash_view(true);
+        }
         
         // Get client encryption token
         $.post('/api/clientkey', {key: 'fish'}, function (data) {
