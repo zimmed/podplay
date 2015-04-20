@@ -92,7 +92,7 @@
         
         // Populate all other categories
         $('#left-col .genre-panel').each(function () {
-            
+            window.fastCat(this);
         });
 
         // Handle quick searching
