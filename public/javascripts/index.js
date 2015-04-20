@@ -558,11 +558,11 @@
                     insertPodcasts(data.podcasts, el, true, false);
                     num += data.podcasts.length;
                 }
-                el.append('<div class="castnail btn-viewgenre" ' +
-                          'onclick="window.browseGenre(\'' + gid +
-                          '\');"><span class="glyphicon glyphicon' +
-                          '-triangle-bottom" aria-hidden="true">' +
-                          '</span><p>View All</p></div>');
+                el.append('<button class="btn btn-default btn-lg ' +
+                          'btn-viewgenre" onclick="window.browse' +
+                          'Genre(\'' + gid + '\');"><span class="' +
+                          'glyphicon glyphicon-triangle-bottom" ' +
+                          'aria-hidden="true"></span>View All</button>');
                 window.shrink_panel(el, num);
             });
     };
