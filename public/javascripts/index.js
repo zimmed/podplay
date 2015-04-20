@@ -980,9 +980,10 @@
         
         // Load correct view into left panel
         if (window.preload_cast) {
-            window.PageStack.replace({page: 'podcast', id: window.preload_cast},
+            window.load_podcast_view(window.preload_cast, true, function () {
+                window.PageStack.replace({page: 'podcast', id: window.preload_cast},
                                      '/podcast/' + window.safetitle);
-            window.load_podcast_view(window.preload_cast, true);
+            });
         }
         else if (window.preload_search) {
             var ps = window.preload_search.replace(/(\s+|\%20)/g, '+');
