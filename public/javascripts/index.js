@@ -454,7 +454,7 @@
         $('.genre-panel').each(function () {
             $(this).css('display', 'block');
         });
-    });
+    };
     
     // Window state handler
     window.onpopstate = function (event) {
