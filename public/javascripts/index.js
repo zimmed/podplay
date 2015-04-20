@@ -215,10 +215,12 @@
     window.load_splash_view = function (dontpush, cb) {
         window.showLoader();
         $.get('/api/view/splash', function (data) {
-            if (!dontpush) window.PageStack.push({page: 'index'}, '/');
             window.hideLoader();
             $('#left-col').html(data);
             window.splashReady();
+            if (!dontpush) {
+                window.PageStack.push({page: 'index'}, '/');
+            }
             if (cb) cb();
         });
     };
@@ -230,14 +232,14 @@
     window.load_podcast_view = function (id, dontpush, cb) {
         window.showLoader();
         $.get('/api/view/podcast/'+ id, function (data) {
+            window.hideLoader();
+            $('#left-col').html(data);
+            window.pcastReady();
             if (!dontpush) {
                 // Reformat URL to reflect appropriate title.
                 window.PageStack.push({page: 'podcast', id: id},
                                       '/podcast/' + window.safetitle);
             }
-            window.hideLoader();
-            $('#left-col').html(data);
-            window.pcastReady();
             if (cb) cb();
         });
     };
