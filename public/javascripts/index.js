@@ -610,7 +610,6 @@
         // Get current page state
         state = window.PageStack.getState();
         // Determine view change based page to which the user navigated.
-        console.log(prev_state.page + ' -> ' + state.page);
         if (state.page === 'podcast') { // PODCAST FEED
             // Load podcast view
             window.load_podcast_view(state.id, true);
@@ -637,7 +636,6 @@
             }
         }
         else if (state.page === 'browse') { // BROWSE
-            console.log('BROWSE DETECTED');
             if (prev_state.page !== 'podcast') {
                 // Previous page was splash; don't reload the page.
                 if (prev_state.page === 'browse' && prev_state.id != state.id) {
