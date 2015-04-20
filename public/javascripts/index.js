@@ -59,6 +59,14 @@
             this._stack[this._cur] = {state: state, path: path};
             window.history.replaceState(state, document.title, path);
         },
+        /**
+         * Update the window history with current position.
+         */
+        update : function () {
+            window.history.replaceState(this.getState(),
+                                        document.title,
+                                        this.getPath());
+        },
         /** 
          * Get the state object of the current page.
          * @param {Number} offset_index - Optional positive or negative
@@ -99,6 +107,7 @@
             else if (this.getState().page !== 'index') {
                 var s = [{state: {page: 'index'}, path: '/'}]
                 this._stack = s.concat(this._stack);
+                this.update();
                 window.load_splash_view(true);
             }
             else {
