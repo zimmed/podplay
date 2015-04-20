@@ -558,7 +558,8 @@
                     insertPodcasts(data.podcasts, el, true, false);
                     num += data.podcasts.length;
                 }
-                el.append('<button class="btn btn-default btn-lg ' +
+                el.append('<button type="button" class="btn btn-' +
+                          'default btn-lg ' +
                           'btn-viewgenre" onclick="window.browse' +
                           'Genre(\'' + gid + '\');"><span class="' +
                           'glyphicon glyphicon-triangle-bottom" ' +
