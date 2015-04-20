@@ -6,9 +6,17 @@
 (function (window, $) {
     'use strict';
     
+    /**
+     * Custom stack structure for recording / controlling navigation history.
+     */
     window.PageStack = {
-        _cur : 0,
-        _stack : [],
+        _cur : 0, // Current stack pointer
+        _stack : [], // Stack
+        /** 
+         * Push new state into the navigation history.
+         * @param {Object} state - State data to associate with page.
+         * @param {String} path - The localized path to display.
+         */
         push : function (state, path) {
             if (this._stack.length === 0) {
                 this._cur = 0;
@@ -20,22 +28,43 @@
             this._stack[this._cur] = {state: state, path: path};
             window.history.pushState(state, document.title, path);
         },
+        /** 
+         * Move back in the page stack.
+         * @return {Object} - The state object of the previous page.
+         *                  - False if cannot move backward.
+         */
         back : function () {
             var prev_data = this.getState();
             if (this._cur === 0) return false;
             this._cur--;
             return prev_data;
         },
+        /** 
+         * Move forward in the page stack.
+         * @return {Object} - The state object of the previous page.
+         *                  - False if cannot move forward.
+         */
         forward : function () {
             var prev_data = this.getState();
             if (this._cur + 1 >= this._stack.length) return false;
             this._cur++;
             return prev_data;
         },
+        /** 
+         * Replace current state in the navigation history.
+         * @param {Object} state - State data to associate with page.
+         * @param {String} path - The localized path to display.
+         */
         replace : function (state, path) {
             this._stack[this._cur] = {state: state, path: path};
             window.history.replaceState(state, document.title, path);
         },
+        /** 
+         * Get the state object of the current page.
+         * @param {Number} offset_index - Optional positive or negative
+         *      offset from the current stack pointer to check.
+         * @return {Object} - The state object.
+         */
         getState : function (offset_index) {
             var i = (offset_index)
                 ? this._cur + offset_index
@@ -45,6 +74,12 @@
             }
             return false;
         },
+        /** 
+         * Get the localized path of the current page.
+         * @param {Number} offset_index - Optional positive or negative
+         *      offset from the current stack pointer to check.
+         * @return {String} - The path.
+         */
         getPath : function (offset_index) {
             var i = (offset_index)
                 ? this._cur + offset_index
@@ -130,9 +165,8 @@
     
     /**
      * Document entry point when loading podcast view.
-     * @param {Bool} first - Optional flag to designate first-time load for page.
      */
-    window.splashReady = function (first) {
+    window.splashReady = function () {
 
         // Populate top category
         $.get('/api/castcat/0', function (data) {
@@ -183,7 +217,7 @@
     /**
      * Document entry point when loading podcast view.
      */
-    window.pcastReady = function (first) {
+    window.pcastReady = function () {
         // load new URL when user clicks on new podcast link
         $('.listenlink').click(function() {
             var audioURL = $(this).attr('data-audio');
@@ -209,7 +243,8 @@
     
      /**
      * Load default splash page into view.
-     * @param {Bool} first - Optional flag that handles a first-time load for the page.
+     * @param {Bool} dontpush - Optional flag that handles a first-time
+     *      load for the page.
      * @param {Function} cb - Optional callback function.
      */
     window.load_splash_view = function (dontpush, cb) {
@@ -228,6 +263,9 @@
     /**
      * Load specified podcast view.
      * @param {Number} id - The podcast ID to view.
+     * @param {Bool} dontpush - Optional flag that handles a first-time
+     *      load for the page.
+     * @param {Function} cb - Optional callback function.
      */
     window.load_podcast_view = function (id, dontpush, cb) {
         window.showLoader();
@@ -252,20 +290,27 @@
         var msg, p = '',
             username = $('#name').val(),
             password = $('#pw').val();
+        // Reset valid/invalid inputs
         $('#name, #pw').removeClass('error valid');
+        // Close existing notification
         window.closeNotification();
+        // Verify username
         if (!username.match(/^[a-zA-Z0-9\.]{5,26}$/)) {
+            // Username is not valid
             msg = "Invalid username.";
             p = '#name';
         }
         else {
+            // Username is valid
             $('#name').addClass('valid');
         }
         if (!p && !password.match(/^[^\s\'\;\\]{6,26}$/)) {
+            // Username is valid and password is not valid
             msg = "Invalid password.";
             p = '#pw';
         }
         else if (password.match(/^[^\s\'\;\\]{6,26}$/)) {
+            // Password is valid
             $('#pw').addClass('valid');
         }
         if (!p) {
@@ -293,55 +338,70 @@
             emailadd = $('#email').val(),
             password = $('#pass1').val(),
             passconf = $('#pass2').val();
+        // Reset valid/invalid inputs
         $('#uname, #email, #pass1, #pass2').removeClass('error valid');
+        // Verify Username
         if (!username) {
+            // Username is empty
             msg = "Please enter a username.";
             p = '#uname';
         }
         else if (username.match(/[^0-9a-z\.]/i)) {
+            // Username contains illegal chars
             msg = "Username may only contain letters, numbers, and `.`s.";
             p = '#uname';
         }
         else if (!username.match(/^.{5,26}$/)) {
+            // Username is not correct length
             msg = "Username must be between 5 and 26 characters.";
             p = '#uname';
         }
         else {
+            // Username is valid
             $('#uname').addClass('valid');
         }
         if (!p && !emailadd) {
+            // Form is valid so far AND email is empty
             msg = "Please enter your email address.";
             p = '#email';
         }
         // Regex taken from:
         //      http://www.regular-expressions.info/email.html
         else if (!p && !emailadd.match(/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i)) {
+            // Form is valid so far AND email is invalid
             msg = "Invalid email address.";
             p = '#email';
         }
         else if (emailadd.match(/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i)) {
+            // Email is valid
             $('#email').addClass('valid');
         }
         if (!p && !password) {
+            // Form is valid so far AND pass is empty
             msg = "Please create a password.";
             p = '#pass1';
         }
         else if (!p && password.match(/[\s\'\;\\]/)) {
+            // Form is valid so far AND pass contains bad chars
             msg = "Password cannot contain the following: `;`, ` `, `'`, or `\`";
             p = '#pass1';
         }
         else if (!p && !password.match(/^.{6,26}$/)) {
+            // Form is valid so far AND pass is incorrect length
             msg = "Password must be between 6 and 26 characters.";
             p = '#pass1';
         }
         else if (password.match(/^[^\s\'\;\\]{6,26}$/)) {
+            // Pass is valid
             $('#pass1').addClass('valid');
         }
         if (!p && password !== passconf) {
+            // Form is valid so far AND confirm-pass does not match
             msg = "The passwords do not match.";
             p = '#pass2';
         }
         else if (passconf && password === passconf) {
+            // Passwords match
             $('#pass2').addClass('valid');
         }
         if (!p) {
@@ -358,7 +418,9 @@
     }
     
     /**
-     * 
+     * Retrieve podcasts by genre.
+     * @param {Number} genreid - The genre ID to browse.
+     * @param {Bool} dontpush - Optional flag skips page-pushing when truthy.
      */
     window.browseGenre = function (genreid, dontpush) {
         $.get('/api/browse/?cat=' + genreid, function (data) {
@@ -366,6 +428,13 @@
         });
     };
     
+    /**
+     * Appropriately manage and display browse results.
+     * @param {Number} genreid - The genre ID to browse.
+     * @param {Array} pcasts - List of podcast objects.
+     * @param {Array} favs - List of user-favorited podcast objects.
+     * @param {Bool} dontpush - Optional flag skips page-pushing when truthy.
+     */
     function browseResults (genreid, pcasts, favs, dontpush) {
         var num = 0, app = false,
             selector = $('.genre-panel[data-genreid="' + genreid + '"] > .panel-body');
@@ -439,7 +508,10 @@
         insertPodcasts(results, '#search-results');
     }
     
-    // Handle window.history state change for /search
+    /**
+     * Handle window.history state change for /search
+     * @param {String} term - The search term.
+     */
     window.presearch = function (term) {
         $.get('/api/cachesearch/?term=' + term, function (data) {
             if (data) {
@@ -454,6 +526,10 @@
         });
     };
     
+    /**
+     * Handle window.history state change for /browse
+     * @param {String} genreid - The genre ID.
+     */
     window.prebrowse = function (genreid) {
         $.get('/api/cachebrowse/?cat=' + genreid, function (data) {
             if (data) {
@@ -465,6 +541,10 @@
         });
     };
     
+    /**
+     * Retrieve and populate podcast category with ~25 related podcasts.
+     * @param {Object} panel - The DOM Element or CSS selector for the genre panel.
+     */
     window.fastCat = function (panel) {
         var num = 1, i, el = $(panel).find('.panel-body'), gid = $(panel).data('genreid');
             el.html('<p>Loading...</p>');
@@ -485,6 +565,10 @@
             });
     };
     
+    /** 
+     * Reset the full-browse view of the splash page.
+     * @param {Number} genreid - The genre ID.
+     */
     window.resetBrowse = function (genreid) {
         $('.genre-panel').each(function () {
             if ($(this).data('genreid') == genreid) {
@@ -496,6 +580,9 @@
         });
     };
     
+    /** 
+     * Reset the full-search view of the splash page.
+     */
     window.resetSearch = function () {
         window.quicksearch();
         $('.genre-panel').each(function () {
@@ -588,6 +675,11 @@
         }
     };
     
+    /**
+     * Expand podcast search/genre container for full-view.
+     * @param {Object} selector - DOM element or CSS selector of panel.
+     * @param {Number} count - Number of elements the panel contains.
+     */
     window.expand_panel = function (selector, count) {
         var rows, cols, height;
         $(selector).css({
@@ -611,6 +703,11 @@
         }
     };
     
+    /**
+     * Shrink podcast search/genre container for single-row view.
+     * @param {Object} selector - DOM element or CSS selector of panel.
+     * @param {Number} count - Number of elements the panel contains.
+     */
     window.shrink_panel = function (selector, count) {
 
         $(selector).css({
@@ -629,6 +726,7 @@
                         'padding': '0px'});
         }
     };
+    
     
     /* When document is finished loading, execute following code: */
     $().ready(function () {
