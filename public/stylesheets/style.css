@@ -115,6 +115,11 @@ tr.feed-row:hover {
     cursor: pointer;
 }
 
+.btn-viewgenre:hover {
+    background-color: #222;
+    color: aaa;
+}
+
 .castnail.favorite > img{
     border: 4px solid blue;
 }

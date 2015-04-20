@@ -559,8 +559,10 @@
                     num += data.podcasts.length;
                 }
                 el.append('<div class="castnail btn-viewgenre" ' +
-                                'onclick="window.browseGenre(\'' + gid +
-                                '\');">View All</div>');
+                          'onclick="window.browseGenre(\'' + gid +
+                          '\');"><span class="glyphicon glyphicon' +
+                          '-triangle-bottom" aria-hidden="true">' +
+                          '</span><span>View All</span></div>');
                 window.shrink_panel(el, num);
             });
     };
