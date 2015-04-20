@@ -162,6 +162,7 @@ legend {
     display: none;
     overflow: hidden;
     top: 50px;
+    margin-top: 0px;
 }
 
 #loader {
