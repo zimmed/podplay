@@ -6,6 +6,56 @@
 (function (window, $) {
     'use strict';
     
+    window.PageStack = {
+        _cur : 0,
+        _stack : [],
+        push : function (state, path) {
+            if (this._stack.length === 0) {
+                this._cur = 0;
+            }
+            else {
+                this._cur++;
+                this._stack = this._stack.slice(0, this._cur);
+            }
+            this._stack[this._cur] = {state: state, path: path};
+            window.history.pushState(state, document.title, path);
+        },
+        back : function () {
+            var prev_data = this.getState();
+            if (this._cur === 0) return false;
+            this._cur--;
+            return prev_data;
+        },
+        forward : function () {
+            var prev_data = this.getState();
+            if (this._cur + 1 >= this._stack.length) return false;
+            this._cur++;
+            return prev_data;
+        },
+        replace : function (state, path) {
+            this._stack[this._cur] = {state: state, path: path};
+            window.history.replaceState(state, document.title, path);
+        },
+        getState : function (offset_index) {
+            var i = (offset_index)
+                ? this._cur + offset_index
+                : this._cur;
+            if (i >= 0 && i < this._stack.length) {
+                return this._stack[i].state;
+            }
+            return false;
+        },
+        getPath : function (offset_index) {
+            var i = (offset_index)
+                ? this._cur + offset_index
+                : this._cur;
+            if (i >= 0 && i < this._stack.length) {
+                return this._stack[i].path;
+            }
+            return false;
+        }
+    };
+    
     /**
      * Encode string with client key.
      * @param {String} str - The string to encode.
@@ -83,11 +133,7 @@
      * @param {Bool} first - Optional flag to designate first-time load for page.
      */
     window.splashReady = function (first) {
-        if (!first) window.history.pushState({page: 'index',
-                                             prev: window.history.state.page,
-                                             previd: window.history.state.id},
-                                             document.title, '/');
-        
+
         // Populate top category
         $.get('/api/castcat/0', function (data) {
             insertPodcasts(data.podcasts, '#pc-0 > .panel-body', false, false);
@@ -113,11 +159,8 @@
             }
             else if ($(this).val().trim() === "") { // Search input empty
                 // If url is not already `/`, push it, and redisplay genres.
-                if (document.location.pathname.substr(0, 7) === "/search") {
-                    window.history.pushState({page: 'index',
-                                             prev: window.history.state.page,
-                                             previd: window.history.state.id},
-                                             document.title, '/');
+                if (window.PageStack.getState().page === 'search') {
+                    window.PageStack.push({page: 'index'}, '/');
                     $('.genre-panel').css('display', 'block');
                 }
                 clearInterval(window.searchBoxTH);
@@ -141,15 +184,6 @@
      * Document entry point when loading podcast view.
      */
     window.pcastReady = function (first) {
-        // Reformat URL to reflect appropriate title.
-        if (!first) {
-            window.history.pushState({page: 'podcast',
-                                     prev: window.history.state.page,
-                                     previd: window.history.state.id},
-                                     document.title,
-                                     '/podcast/' + window.safetitle);
-        }
-        
         // load new URL when user clicks on new podcast link
         $('.listenlink').click(function() {
             var audioURL = $(this).attr('data-audio');
@@ -178,12 +212,13 @@
      * @param {Bool} first - Optional flag that handles a first-time load for the page.
      * @param {Function} cb - Optional callback function.
      */
-    window.load_splash_view = function (first, cb) {
+    window.load_splash_view = function (dontpush, cb) {
         window.showLoader();
         $.get('/api/view/splash', function (data) {
+            if (!dontpush) window.PageStack.push({page: 'index'}, '/');
             window.hideLoader();
             $('#left-col').html(data);
-            window.splashReady(first);
+            window.splashReady();
             if (cb) cb();
         });
     };
@@ -192,12 +227,17 @@
      * Load specified podcast view.
      * @param {Number} id - The podcast ID to view.
      */
-    window.load_podcast_view = function (id, first, cb) {
+    window.load_podcast_view = function (id, dontpush, cb) {
         window.showLoader();
         $.get('/api/view/podcast/'+ id, function (data) {
+            if (!dontpush) {
+                // Reformat URL to reflect appropriate title.
+                window.PageStack.push({page: 'podcast', id: id},
+                                      '/podcast/' + window.safetitle);
+            }
             window.hideLoader();
             $('#left-col').html(data);
-            window.pcastReady(first);
+            window.pcastReady();
             if (cb) cb();
         });
     };
@@ -318,13 +358,13 @@
     /**
      * 
      */
-    window.browseGenre = function (genreid, pass) {
+    window.browseGenre = function (genreid, dontpush) {
         $.get('/api/browse/?cat=' + genreid, function (data) {
-            browseResults(genreid, data.podcasts, data.favorites, pass);
+            browseResults(genreid, data.podcasts, data.favorites, dontpush);
         });
     };
     
-    function browseResults (genreid, pcasts, favs, pass) {
+    function browseResults (genreid, pcasts, favs, dontpush) {
         var num = 0, app = false,
             selector = $('.genre-panel[data-genreid="' + genreid + '"] > .panel-body');
         if (favs) {
@@ -338,12 +378,10 @@
         }
         window.expand_panel(selector, num);
         if (num > 0) {
-            if (!pass) window.history.pushState({page: 'browse',
-                                                 id: genreid,
-                                                 prev: window.history.state.page,
-                                                 previd: window.history.state.id},
-                                                document.title,
-                                                '/browse/' + genreid);
+            if (!dontpush) {
+                window.PageStack.push({page: 'browse', id: genreid},
+                                      '/browse/' + genreid);
+            }
             $('#podcast-search-input').val('');
             window.quicksearch();
             $('.genre-panel').each(function () {
@@ -463,71 +501,88 @@
         });
     };
     
-    // Window state handler
-    window.onpopstate = function (event) {
-        var p, r, podre = /^\/podcast\/(\d+)/,
-            searchre = /^\/search\/([^\/]+)/,
-            browsere = /^\/browse\/(\d+)/,
-            s = event.state;
-        
-        if (document.location.pathname.match(podre)) {
-            r = podre.exec(document.location.pathname);
-            window.load_podcast_view(r[1], true);
+    /**
+     * Browser OnPopState Event Handler
+     */
+    window.onpopstate = function () {
+        var p, state, path = document.location.pathname,
+            prev_state = (window.PageStack.getPath(-1) === path)
+                            ? window.PageStack.back()
+                            : ((window.PageStack.getPath(1) === path)
+                               ? window.PageStack.forward()
+                               : false);
+        if (!prev_state) {
+            // prev_state contains the state object for the popped page.
+            //  If prev_state is falsy, the current page was not found
+            //  on the page stack.
+            console.log('ERROR: Popped state outside of stack!');
+            return;
         }
-        else if (document.location.pathname.match(searchre)) {
-            r = searchre.exec(document.location.pathname);
-            if (s.prev && s.prev != 'podcast') {
-                console.log('Page known and not podcast: ');
-                console.log('\t' + JSON.stringify(window.history.state));
-                
-                if (s.prev && s.prev == "browse") window.resetBrowse(s.previd);
-                if ($('#search-results').data('term') != r[1]) {
-                    window.presearch(r[1]);
+        // Get current page state
+        state = window.PageStack.getState();
+        // Determine view change based page to which the user navigated.
+        if (state.page === 'podcast') { // PODCAST FEED
+            // Load podcast view
+            window.load_podcast_view(state.id, true);
+        }
+        else if (state.page === 'search') { // SEARCH
+            if (prev_state.page !== 'podcast') {
+                // Previous page was splash; don't reload the page.
+                if (prev_state.page === 'browse') {
+                    // Reset browse view if last page was browse.
+                    window.resetBrowse(prev_state.id);
+                }
+                if ($('#search-results').data('term') != state.id) {
+                    // If the search results don't already hold results for
+                    //  the request term, execute the search.
+                    window.presearch(state.id);
                 }
             }
             else {
-                console.log('Page is podcast or unknown: ');
-                console.log('\t' + JSON.stringify(window.history.state));
+                // Previous page was not splash; reload.
                 window.load_splash_view(true, function () {
-                    window.presearch(r[1]);
+                    // Execute search when splash page has been loaded.
+                    window.presearch(state.id);
                 });
             }
         }
-        else if (document.location.pathname.match(browsere)) {
-            r = browsere.exec(document.location.pathname);
-            if (s.prev && s.prev != 'podcast') {
-                if (s.prev && s.prev == "browse" && s.previd != r[1]) {
-                    window.resetBrowse(s.previd);
+        else if (state.page === 'podcast') { // BROWSE
+            if (prev_state.page !== 'podcast') {
+                // Previous page was splash; don't reload the page.
+                if (prev_state.page === 'browse' && prev_state.id != state.id) {
+                    // Previous browse view already shown; reset.
+                    window.resetBrowse(prev_state.id);
                 }
-                else if (s.page && s.page == "search") {
+                else if (state.page === 'search') {
+                    // Previous view was full search results; reset.
                     window.resetSearch();
                 }
-                window.prebrowse(r[1]);
+                // Execute browse view
+                window.prebrowse(state.id);
             }
             else {
-                p = document.location.pathname;
+                // Previous page was not splash; reload.
                 window.load_splash_view(true, function () {
-                    window.history.replaceState({page: 'browse',
-                                                 id: r[1],
-                                                 prev: s.prev,
-                                                 previd: s.previd},
-                                                document.title, p);
-                    window.prebrowse(r[1]);
+                    // Execute browse view once the splash page is loaded.
+                    window.prebrowse(state.id);
                 });
             }
         }
-        else {
-            window.history.replaceState({page: 'index',
-                                         prev: s.prev,
-                                         previd: s.previd},
-                                        document.title, '/');
-            if (s.prev && s.prev == "browse") {
-                window.resetBrowse(s.previd);
+        else { // INDEX or unrecognized
+            // Replace state with default route
+            window.PageStack.replace({page: 'index'}, '/');
+            if (prev_state.page === 'browse') {
+                // Previous view was splash/browse; reset.
+                window.resetBrowse(prev_state.id);
             }
-            else if (s.prev && s.prev == "search") {
+            else if (prev_state.page === 'search') {
+                // Previous view was splash/search; reset.
                 window.resetSearch();
             }
-            else window.load_splash_view(true);
+            else {
+                // Previous view was not a splash view. Reload.
+                window.load_splash_view(true);
+            }
         }
     };
     
@@ -602,12 +657,8 @@
                 // Parse results and add to table.
                 if (!skip_state) {
                     sp = searchTerm.replace(/(\s+|\%20)/g, '+');
-                    window.history.pushState({page: 'search',
-                                              id: sp,
-                                              prev: window.history.state.page,
-                                              previd: window.history.state.id},
-                                             document.title,
-                                             '/search/' + sp);
+                    window.PageStack.push({page: 'search', id: sp},
+                                          '/search/' + sp);
                 }
                 $('#search-results').data('term', searchTerm);
                 searchResults(data, true);
@@ -627,11 +678,8 @@
                 window.lastTickSearch = s;
                 $.get('/api/quicksearch/?term=' + s, function (data) {
                     $('#search-results').data('term', '');
-                    if (window.history.state.page != 'index') {
-                        window.history.pushState({page: 'index',
-                                                  prev: window.history.state.page,
-                                                  previd: window.history.state.id},
-                                                 document.title, '/');
+                    if (window.PageStack.getState().page !== 'index') {
+                        window.PageStack.push({page: 'index'}, '/');
                         $('.genre-panel').css('display', 'block');
                     }
                     searchResults(data);
@@ -800,33 +848,27 @@
         
         // Load correct view into left panel
         if (window.preload_cast) {
-            window.history.replaceState({page: 'podcast',
-                                         id: window.preload_cast},
-                                         document.title,
-                                         '/podcast/' + window.safetitle);
+            window.PageStack.replace({page: 'podcast', id: window.preload_cast},
+                                     '/podcast/' + window.safetitle);
             window.load_podcast_view(window.preload_cast, true);
         }
         else if (window.preload_search) {
             var ps = window.preload_search.replace(/(\s+|\%20)/g, '+');
-            window.history.replaceState({page: 'search',
-                                         id: ps},
-                                         document.title,
-                                         '/search/' + ps);
+            window.PageStack.replace({page: 'search', id: ps},
+                                     '/search/' + ps);
             window.load_splash_view(true, function () {
                 window.presearch(window.preload_search.replace(/\+/g, ' '));
             });
         }
         else if (window.preload_browse) {
-            window.history.replaceState({page: 'browse',
-                                         id: window.preload_browse},
-                                         document.title,
-                                         '/browse/' + window.preload_browse);
+            window.PageStack.replace({page: 'browse', id: window.preload_browse},
+                                     '/browse/' + window.preload_browse);
             window.load_splash_view(true, function () {
                 window.prebrowse(window.preload_browse);
             });
         }
         else {
-            window.history.replaceState({page: 'index'}, document.title, '/');
+            window.PageStack.replace({page: 'index'}, '/');
             window.load_splash_view(true);
         }
         
