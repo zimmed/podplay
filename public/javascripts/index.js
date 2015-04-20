@@ -489,14 +489,13 @@
                 }
             }
             else {
-                p = document.location.pathname;
                 window.load_splash_view(true, function () {
                     window.presearch(r[1]);
                 });
             }
         }
         else if (document.location.pathname.match(browsere)) {
-            r = browsere.exec(documentlocation.pathname);
+            r = browsere.exec(document.location.pathname);
             if (s.prev && s.prev != 'podcast') {
                 if (s.prev && s.prev == "browse" && s.previd != r[1]) {
                     window.resetBrowse(s.previd);
