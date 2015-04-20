@@ -119,7 +119,8 @@ tr.feed-row:hover {
     width: 100px !important;
     height: 100px !important;
     margin: 0 !important;
-    margin-left: 10px !important;
+    margin-right: 10px !important;
+    left: 0px !important;
 }
 
 .btn-viewgenre > span {
