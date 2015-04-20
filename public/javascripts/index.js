@@ -604,7 +604,7 @@
             // prev_state contains the state object for the popped page.
             //  If prev_state is falsy, the current page was not found
             //  on the page stack.
-            console.log('ERROR: Popped state outside of stack!');
+            window.location.replace('/'); 
             return;
         }
         // Get current page state
