@@ -431,10 +431,10 @@
                     insertPodcasts(data.podcasts, el, true, false);
                     num += data.podcasts.length;
                 }
-                $(panel).find('.panel-body').append('<div class="castnail btn-viewgenre" ' +
+                el.append('<div class="castnail btn-viewgenre" ' +
                                 'onclick="window.browseGenre(\'' + gid +
                                 '\');">View All</div>');
-                window.shrink_panel(panel, num);
+                window.shrink_panel(el, num);
             });
     };
     
