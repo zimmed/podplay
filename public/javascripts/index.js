@@ -453,7 +453,7 @@
     };
     
     window.resetSearch = function () {
-        window.quicsearch();
+        window.quicksearch();
         $('.genre-panel').each(function () {
             $(this).css('display', 'block');
         });
