@@ -83,7 +83,7 @@
      * @param {Bool} first - Optional flag to designate first-time load for page.
      */
     window.splashReady = function (first) {
-        if (!first) window.history.pushState({}, document.title, '/');
+        if (!first) window.history.pushState({page: 'index'}, document.title, '/');
         
         // Populate top category
         $.get('/api/castcat/0', function (data) {
@@ -92,15 +92,7 @@
         
         // Populate all other categories
         $('#left-col .genre-panel').each(function () {
-            var i, el = $(this).find('.panel-body'), gid = $(this).data('genreid');
-            el.html('<p>Loading...</p>');
-            $.get('/api/castcat/' + gid, function (data) {
-                el.html('');
-                if (data.favorites) {
-                    insertPodcasts(data.favorites, el, false, true);
-                }
-                insertPodcasts(data.podcasts, el, true, false);
-            });
+            
         });
 
         // Handle quick searching
@@ -116,9 +108,12 @@
                 window.quicksearch();
                 window.searchBoxTH = setInterval(window.quicksearch, 250);
             }
-            else if ($(this).val().trim() === "") {
-                if (document.location.pathname != "/")
-                    window.history.pushState({}, document.title, '/');
+            else if ($(this).val().trim() === "") { // Search input empty
+                // If url is not already `/`, push it, and redisplay genres.
+                if (document.location.pathname.substr(0, 7) === "/search") {
+                    window.history.pushState({page: 'index'}, document.title, '/');
+                    $('.genre-panel').css('display', 'block');
+                }
                 clearInterval(window.searchBoxTH);
                 window.searchBoxTH = null;
                 searchResults({});
@@ -142,9 +137,13 @@
     window.pcastReady = function (first) {
         // Reformat URL to reflect appropriate title.
         if (first) {
-            window.history.replaceState({}, document.title, '/podcast/' + window.safetitle);
+            window.history.replaceState({page: 'podcast'},
+                                        document.title,
+                                        '/podcast/' + window.safetitle);
         } else {
-            window.history.pushState({}, document.title, '/podcast/' + window.safetitle);
+            window.history.pushState({page: 'podcast'},
+                                     document.title,
+                                     '/podcast/' + window.safetitle);
         }
         
         // load new URL when user clicks on new podcast link
@@ -312,6 +311,44 @@
     }
     
     /**
+     * 
+     */
+    window.browseGenre = function (genreid, pass) {
+        $.get('/api/browse/?cat=' + genreid, function (data) {
+            browseResults(genreid, data.podcasts, data.favorites, pass);
+        });
+    };
+    
+    function browseResults (genreid, pcasts, favs, pass) {
+        var num = 0, app = false,
+            selector = $('.genre-panel[data-genreid="' + genreid + '"] > .panel-body');
+        if (favs) {
+            num += favs.length;
+            insertPodcasts(favs, selector, false, true);
+            app = true;
+        }
+        if (pcasts) {
+            num += pcasts.length;
+            insertPodcasts(pcasts, selector, app);
+        }
+        window.expand_panel(selector, num);
+        if (num > 0) {
+            if (!pass) window.history.pushState({page: 'browse',
+                                                 id: genreid},
+                                                document.title,
+                                                '/browse/' + genreid);
+            $('#podcast-search-input').val('');
+            window.quicksearch();
+            $('.genre-panel').each(function () {
+                if ($(this).data('genreid') != genreid) {
+                    $(this).css('display', 'none');
+                }
+            });
+        }
+    }
+     
+    
+    /**
      * Populate given panel selector with podcast data.
      * @param {Array} pcasts - The podcast data.
      * @param {String} selector - The CSS selector for the panel.
@@ -337,33 +374,20 @@
         var podcast, row, count, cols, rows, height = 137, res = " Quick Result";
         if (full) {
             res = " Result";
-            $('#search-results').css({
-                    'overflow-x': 'hidden',
-                    'overflow-y': 'scroll',
-                    'white-space': 'normal'});
             if (results.length > 0) {
                 $('.genre-panel').css('display', 'none');
             }
+        } 
+        else if (document.location.pathname !== '/') {
+            window.history.pushState({page: 'index'}, document.title, '/');
+            $('.genre-panel').css('display', 'block');
         }
         res += (results.length !== 1) ? "s" : "";
         // Update table title with result count.
         if (results.length > 0) {
             $('#result-counter').html(results.length + res);
-            if (full) {
-                cols = Math.floor($('#search-results').width() / 110);
-                rows = Math.ceil(results.length / cols);
-                if (rows > 4) rows = 4;
-                height = 120 + (110 * (rows - 1));
-            }
-            $('#search-results').css({
-                'height': '' + height + 'px',
-                'padding': '10px',
-                'padding-bottom': '0px'});
         } else {
             $('#result-counter').html("No Results");
-            $('#search-results').css({
-                'height': '0px',
-                'padding': '0px'});
         }
         insertPodcasts(results, '#search-results');
     }
@@ -383,31 +407,151 @@
         });
     };
     
+    window.prebrowse = function (genreid) {
+        $.get('/api/cachebrowse/?cat=' + genreid, function (data) {
+            if (data) {
+                browseResults(genreid, data.podcasts, data.favorites, true);
+            }
+            else {
+                window.browseGenre(genreid, true);
+            }
+        });
+    };
+    
+    window.fastCat = function (panel) {
+        var num = 1, i, el = $(panel).find('.panel-body'), gid = $(panel).data('genreid');
+            el.html('<p>Loading...</p>');
+            $.get('/api/castcat/' + gid, function (data) {
+                el.html('');
+                if (data.favorites) {
+                    insertPodcasts(data.favorites, el, false, true);
+                    num += data.favorites.length;
+                }
+                if (data.podcasts) {
+                    insertPodcasts(data.podcasts, el, true, false);
+                    num += data.podcasts.length;
+                }
+                $(panel).find('.panel-body').append('<div class="castnail btn-viewgenre" ' +
+                                'onclick="window.browseGenre(\'' + gid +
+                                '\');">View All</div>');
+                window.shrink_panel(panel, num);
+            });
+    };
+    
+    window.resetBrowse = function (genreid) {
+        $('.genre-panel').each(function () {
+            if ($(this).data('genreid') == genreid) {
+                window.fastCat(this);
+            }
+            else {
+                $(this).css('display', 'block');
+            }
+        });
+    };
+    
+    window.resetSearch = function () {
+        window.quicsearch();
+        $('.genre-panel').each(function () {
+            $(this).css('display', 'block');
+        });
+    });
+    
     // Window state handler
     window.onpopstate = function (event) {
-        var r, podre = /^\/podcast\/(\d+)/,
-            searchre = /^\/search\/([^\/]+)/;
+        var p, r, podre = /^\/podcast\/(\d+)/,
+            searchre = /^\/search\/([^\/]+)/,
+            browsere = /^\/browse\/(\d+)/,
+            s = event.state;
         if (document.location.pathname.match(podre)) {
             r = podre.exec(document.location.pathname);
             window.load_podcast_view(r[1], true);
         }
         else if (document.location.pathname.match(searchre)) {
             r = searchre.exec(document.location.pathname);
-            if ($('#search-results').length > 0) {
+            if (s.page && s.page != 'podcast') {
+                if (s.page && s.page == "browse") window.resetBrowse(s.id);
                 if ($('#search-results').data('term') != r[1]) {
                     window.presearch(r[1]);
                 }
             }
             else {
-                var p = document.location.pathname;
+                p = document.location.pathname;
                 window.load_splash_view(true, function () {
-                    window.history.replaceState({}, document.title, p);
+                    window.history.replaceState({page: 'search'},
+                                                document.title, p);
                     window.presearch(r[1]);
                 });
             }
         }
+        else if (document.location.pathname.match(browsere)) {
+            r = browsere.exec(documentlocation.pathname);
+            if (s.page && s.page != 'podcast') {
+                if (s.page && s.page == "browse" && s.id != r[1]) window.resetBrowse(s.id);
+                else if (s.page && s.page == "search") window.resetSearch();
+                window.prebrowse(r[1]);
+            }
+            else {
+                p = document.location.pathname;
+                window.load_splash_view(true, function () {
+                    window.history.replaceState({page: 'browse',
+                                                 id: r[1]},
+                                                document.title, p);
+                    window.prebrowse(r[1]);
+                });
+            }
+        }
         else {
-            window.load_splash_view(true);
+            if (s.page && s.page == "browse" && s.id != r[1]) {
+                window.replaceState({page: 'index'}, document.title, '/');
+                window.resetBrowse(s.id);
+            }
+            else if (s.page && s.page == "search") {
+                window.replaceState({page: 'index'}, document.title, '/');
+                window.resetSearch();
+            }
+            else window.load_splash_view(true);
+        }
+    };
+    
+    window.expand_panel = function (selector, count) {
+        var rows, cols, height;
+        $(selector).css({
+                    'overflow-x': 'hidden',
+                    'overflow-y': 'scroll',
+                    'white-space': 'normal'});
+        if (count > 0) {
+            cols = Math.floor($(selector).width() / 110);
+            rows = Math.ceil(count / cols);
+            if (rows > 4) rows = 4;
+            height = 120 + (110 * (rows - 1));
+            $(selector).css({
+                    'height': '' + height + 'px',
+                    'padding': '10px',
+                    'padding-bottom': '0px'});
+        }
+        else {
+            $(selector).css({
+                        'height': '0px',
+                        'padding': '0px'});
+        }
+    };
+    
+    window.shrink_panel = function (selector, count) {
+
+        $(selector).css({
+                    'overflow-x': 'scroll',
+                    'overflow-y': 'hidden',
+                    'white-space': 'nowrap'});
+        if (count > 0) {
+            $(selector).css({
+                    'height': '137px',
+                    'padding': '10px',
+                    'padding-bottom': '0px'});
+        }
+        else {
+            $(selector).css({
+                        'height': '0px',
+                        'padding': '0px'});
         }
     };
     
@@ -439,9 +583,12 @@
                 window.hideLoader();
                 // Parse results and add to table.
                 if (!skip_state) {
-                    window.history.pushState({}, document.title, '/search/' + searchTerm);
+                    window.history.pushState({page: 'search'},
+                                             document.title,
+                                             '/search/' + searchTerm);
                 }
                 $('#search-results').data('term', searchTerm);
+                window.expand_panel('#search-results', data.length);
                 searchResults(data, true);
                 // Push new URL state.
                 //window.history.pushState({}, document.title, '/search/' + searchTerm);
@@ -459,10 +606,7 @@
                 window.lastTickSearch = s;
                 $.get('/api/quicksearch/?term=' + s, function (data) {
                     $('#search-results').data('term', '');
-                    $('#search-results').css({
-                        'overflow-x': 'scroll',
-                        'overflow-y': 'hidden',
-                        'white-space': 'nowrap'});
+                    window.shrink_panel('#search-results', data.length);
                     searchResults(data);
                 });
             }
@@ -632,6 +776,11 @@
         else if (window.preload_search) {
             window.load_splash_view(true, function () {
                 window.presearch(window.preload_search);
+            });
+        }
+        else if (window.preload_browse) {
+            window.load_splash_view(true, function () {
+                window.prebrowse(window.preload_browse);
             });
         }
         else window.load_splash_view(true);
