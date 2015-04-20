@@ -226,3 +226,7 @@ legend {
 #account {
     color: #aaa;
 }
+
+#sub-left-col {
+    min-width: 275px !important;
+}
