@@ -635,7 +635,7 @@
                 });
             }
         }
-        else if (state.page === 'podcast') { // BROWSE
+        else if (state.page === 'browse') { // BROWSE
             if (prev_state.page !== 'podcast') {
                 // Previous page was splash; don't reload the page.
                 if (prev_state.page === 'browse' && prev_state.id != state.id) {
