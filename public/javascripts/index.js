@@ -12,6 +12,13 @@
     window.PageStack = {
         _cur : 0, // Current stack pointer
         _stack : [], // Stack
+        /**
+         * Handle the soft-back button visibility.
+         */
+        _checkBack : function () {
+            var val = (this._cur === 0) ? 'hidden' : 'visible';
+            $('#soft-back-btn').css('visibility', val);
+        },
         /** 
          * Push new state into the navigation history.
          * @param {Object} state - State data to associate with page.
@@ -27,6 +34,7 @@
             }
             this._stack[this._cur] = {state: state, path: path};
             window.history.pushState(state, document.title, path);
+            this._checkBack();
         },
         /** 
          * Move back in the page stack.
@@ -37,6 +45,7 @@
             var prev_data = this.getState();
             if (this._cur === 0) return false;
             this._cur--;
+            this._checkBack();
             return prev_data;
         },
         /** 
@@ -48,6 +57,7 @@
             var prev_data = this.getState();
             if (this._cur + 1 >= this._stack.length) return false;
             this._cur++;
+            this._checkBack();
             return prev_data;
         },
         /** 
@@ -58,11 +68,13 @@
         replace : function (state, path) {
             this._stack[this._cur] = {state: state, path: path};
             window.history.replaceState(state, document.title, path);
+            this._checkBack();
         },
         /**
          * Update the window history with current position.
          */
         update : function () {
+            this._checkBack();
             window.history.replaceState(this.getState(),
                                         document.title,
                                         this.getPath());
