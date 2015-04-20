@@ -16,7 +16,8 @@
          * Handle the soft-back button visibility.
          */
         _checkBack : function () {
-            var val = (this._cur === 0) ? 'hidden' : 'visible';
+            var val = (this._cur === 0 &&
+                       this.getState().page === 'index') ? 'hidden' : 'visible';
             $('#soft-back-btn').css('visibility', val);
         },
         /** 
