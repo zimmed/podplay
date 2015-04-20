@@ -470,12 +470,6 @@
             browsere = /^\/browse\/(\d+)/,
             s = event.state;
         
-        // DEBUG bad navigation
-        console.log('new path: ' + document.location.pathname);
-        console.log('\thas event: ' + ((event) ? 'Yes' : 'No'));
-        if (event) console.log('\tstate: ' + JSON.stringify(s));
-        console.log('\n');
-        
         if (document.location.pathname.match(podre)) {
             r = podre.exec(document.location.pathname);
             window.load_podcast_view(r[1], true);
@@ -483,12 +477,17 @@
         else if (document.location.pathname.match(searchre)) {
             r = searchre.exec(document.location.pathname);
             if (s.prev && s.prev != 'podcast') {
+                console.log('Page known and not podcast: ');
+                console.log('\t' + JSON.stringify(window.history.state));
+                
                 if (s.prev && s.prev == "browse") window.resetBrowse(s.previd);
                 if ($('#search-results').data('term') != r[1]) {
                     window.presearch(r[1]);
                 }
             }
             else {
+                console.log('Page is podcast or unknown: ');
+                console.log('\t' + JSON.stringify(window.history.state));
                 window.load_splash_view(true, function () {
                     window.presearch(r[1]);
                 });
