@@ -779,13 +779,16 @@
                 $.get('/api/quicksearch/?term=' + s, function (data) {
                     $('#search-results').data('term', '');
                     if (window.PageStack.getState().page !== 'index') {
+                        if (window.PageStack.getState().page === 'browse') {
+                            window.resetBrowse(window.PageStack.getState().id);
+                        }
                         window.PageStack.push({page: 'index'}, '/');
                         $('.genre-panel').css('display', 'block');
                     }
                     searchResults(data);
                 });
             } else {
-                window.shrink_panel('#search-results', 0);
+                searchResults({});
             }
         };
         
