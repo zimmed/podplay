@@ -83,7 +83,10 @@
      * @param {Bool} first - Optional flag to designate first-time load for page.
      */
     window.splashReady = function (first) {
-        if (!first) window.history.pushState({page: 'index'}, document.title, '/');
+        if (!first) window.history.pushState({page: 'index',
+                                             prev: window.history.state.page,
+                                             previd: window.history.state.id},
+                                             document.title, '/');
         
         // Populate top category
         $.get('/api/castcat/0', function (data) {
@@ -111,7 +114,10 @@
             else if ($(this).val().trim() === "") { // Search input empty
                 // If url is not already `/`, push it, and redisplay genres.
                 if (document.location.pathname.substr(0, 7) === "/search") {
-                    window.history.pushState({page: 'index'}, document.title, '/');
+                    window.history.pushState({page: 'index',
+                                             prev: window.history.state.page,
+                                             previd: window.history.state.id},
+                                             document.title, '/');
                     $('.genre-panel').css('display', 'block');
                 }
                 clearInterval(window.searchBoxTH);
@@ -136,12 +142,10 @@
      */
     window.pcastReady = function (first) {
         // Reformat URL to reflect appropriate title.
-        if (first) {
-            window.history.replaceState({page: 'podcast'},
-                                        document.title,
-                                        '/podcast/' + window.safetitle);
-        } else {
-            window.history.pushState({page: 'podcast'},
+        if (!first) {
+            window.history.pushState({page: 'podcast',
+                                     prev: window.history.state.page,
+                                     previd: window.history.state.id},
                                      document.title,
                                      '/podcast/' + window.safetitle);
         }
@@ -188,12 +192,13 @@
      * Load specified podcast view.
      * @param {Number} id - The podcast ID to view.
      */
-    window.load_podcast_view = function (id, first) {
+    window.load_podcast_view = function (id, first, cb) {
         window.showLoader();
         $.get('/api/view/podcast/'+ id, function (data) {
             window.hideLoader();
             $('#left-col').html(data);
             window.pcastReady(first);
+            if (cb) cb();
         });
     };
     
@@ -334,7 +339,9 @@
         window.expand_panel(selector, num);
         if (num > 0) {
             if (!pass) window.history.pushState({page: 'browse',
-                                                 id: genreid},
+                                                 id: genreid,
+                                                 prev: window.history.state.page,
+                                                 previd: window.history.state.id},
                                                 document.title,
                                                 '/browse/' + genreid);
             $('#podcast-search-input').val('');
@@ -378,10 +385,6 @@
                 $('.genre-panel').css('display', 'none');
             }
         } 
-        else if (document.location.pathname !== '/') {
-            window.history.pushState({page: 'index'}, document.title, '/');
-            $('.genre-panel').css('display', 'block');
-        }
         res += (results.length !== 1) ? "s" : "";
         // Update table title with result count.
         if (results.length > 0) {
@@ -461,20 +464,22 @@
         var p, r, podre = /^\/podcast\/(\d+)/,
             searchre = /^\/search\/([^\/]+)/,
             browsere = /^\/browse\/(\d+)/,
-            s = window.event.state;
+            s = event.state;
+        
         // DEBUG bad navigation
         console.log('new path: ' + document.location.pathname);
         console.log('\thas event: ' + ((event) ? 'Yes' : 'No'));
-        if (window.event) console.log('\tstate: ' + JSON.stringify(s));
+        if (event) console.log('\tstate: ' + JSON.stringify(s));
         console.log('\n');
+        
         if (document.location.pathname.match(podre)) {
             r = podre.exec(document.location.pathname);
             window.load_podcast_view(r[1], true);
         }
         else if (document.location.pathname.match(searchre)) {
             r = searchre.exec(document.location.pathname);
-            if (s.page && s.page != 'podcast') {
-                if (s.page && s.page == "browse") window.resetBrowse(s.id);
+            if (s.prev && s.prev != 'podcast') {
+                if (s.prev && s.prev == "browse") window.resetBrowse(s.previd);
                 if ($('#search-results').data('term') != r[1]) {
                     window.presearch(r[1]);
                 }
@@ -482,35 +487,42 @@
             else {
                 p = document.location.pathname;
                 window.load_splash_view(true, function () {
-                    window.history.replaceState({page: 'search'},
-                                                document.title, p);
                     window.presearch(r[1]);
                 });
             }
         }
         else if (document.location.pathname.match(browsere)) {
             r = browsere.exec(documentlocation.pathname);
-            if (s.page && s.page != 'podcast') {
-                if (s.page && s.page == "browse" && s.id != r[1]) window.resetBrowse(s.id);
-                else if (s.page && s.page == "search") window.resetSearch();
+            if (s.prev && s.prev != 'podcast') {
+                if (s.prev && s.prev == "browse" && s.previd != r[1]) {
+                    window.resetBrowse(s.previd);
+                }
+                else if (s.page && s.page == "search") {
+                    window.resetSearch();
+                }
                 window.prebrowse(r[1]);
             }
             else {
                 p = document.location.pathname;
                 window.load_splash_view(true, function () {
                     window.history.replaceState({page: 'browse',
-                                                 id: r[1]},
+                                                 id: r[1],
+                                                 prev: s.prev,
+                                                 previd: s.previd},
                                                 document.title, p);
                     window.prebrowse(r[1]);
                 });
             }
         }
         else {
-            window.history.replaceState({page: 'index'}, document.title, '/');
-            if (s.page && s.page == "browse" && s.id != r[1]) {
+            window.history.replaceState({page: 'index',
+                                         prev: s.prev,
+                                         previd: s.previd},
+                                        document.title, '/');
+            if (s.prev && s.prev == "browse" && s.previd != r[1]) {
                 window.resetBrowse(s.id);
             }
-            else if (s.page && s.page == "search") {
+            else if (s.prev && s.prev == "search") {
                 window.resetSearch();
             }
             else window.load_splash_view(true);
@@ -580,16 +592,20 @@
             window.showLoader();
             clearInterval(window.searchBoxTH);
             window.searchBoxTH = null;
-            var searchTerm = $('#podcast-search-input').val().trim();
+            var sp, searchTerm = $('#podcast-search-input').val().trim();
             if (!searchTerm) return;
             // Get search data from API.
             $.get('/api/search/?term=' + searchTerm, function (data) {
                 window.hideLoader();
                 // Parse results and add to table.
                 if (!skip_state) {
-                    window.history.pushState({page: 'search'},
+                    sp = searchTerm.replace(/(\s+|\%20)/g, '+');
+                    window.history.pushState({page: 'search',
+                                              id: sp,
+                                              prev: window.history.state.page,
+                                              previd: window.history.state.id},
                                              document.title,
-                                             '/search/' + searchTerm);
+                                             '/search/' + sp);
                 }
                 $('#search-results').data('term', searchTerm);
                 window.expand_panel('#search-results', data.length);
@@ -611,6 +627,13 @@
                 $.get('/api/quicksearch/?term=' + s, function (data) {
                     $('#search-results').data('term', '');
                     window.shrink_panel('#search-results', data.length);
+                    if (window.history.state.page != 'index') {
+                        window.history.pushState({page: 'index',
+                                                  prev: window.history.state.page,
+                                                  previd: window.history.state.id},
+                                                 document.title, '/');
+                        $('.genre-panel').css('display', 'block');
+                    }
                     searchResults(data);
                 });
             }
@@ -775,14 +798,27 @@
         
         // Load correct view into left panel
         if (window.preload_cast) {
+            window.history.replaceState({page: 'podcast',
+                                         id: window.preload_cast},
+                                         document.title,
+                                         '/podcast/' + window.safetitle);
             window.load_podcast_view(window.preload_cast, true);
         }
         else if (window.preload_search) {
+            var ps = window.preload_search.replace(/(\s+|\%20)/g, '+');
+            window.history.replaceState({page: 'search',
+                                         id: ps},
+                                         document.title,
+                                         '/search/' + ps);
             window.load_splash_view(true, function () {
-                window.presearch(window.preload_search);
+                window.presearch(window.preload_search.replace(/\+/g, ' '));
             });
         }
         else if (window.preload_browse) {
+            window.history.replaceState({page: 'browse',
+                                         id: window.preload_browse},
+                                         document.title,
+                                         '/browse/' + window.preload_browse);
             window.load_splash_view(true, function () {
                 window.prebrowse(window.preload_browse);
             });
