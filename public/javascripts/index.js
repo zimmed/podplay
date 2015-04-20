@@ -384,7 +384,11 @@
             if (results.length > 0) {
                 $('.genre-panel').css('display', 'none');
             }
-        } 
+            window.expand_panel('#search-results', results.length);
+        }
+        else {
+            window.shrink_panel('#search-results', results.length);
+        }
         res += (results.length !== 1) ? "s" : "";
         // Update table title with result count.
         if (results.length > 0) {
@@ -608,7 +612,6 @@
                                              '/search/' + sp);
                 }
                 $('#search-results').data('term', searchTerm);
-                window.expand_panel('#search-results', data.length);
                 searchResults(data, true);
                 // Push new URL state.
                 //window.history.pushState({}, document.title, '/search/' + searchTerm);
@@ -626,7 +629,6 @@
                 window.lastTickSearch = s;
                 $.get('/api/quicksearch/?term=' + s, function (data) {
                     $('#search-results').data('term', '');
-                    window.shrink_panel('#search-results', data.length);
                     if (window.history.state.page != 'index') {
                         window.history.pushState({page: 'index',
                                                   prev: window.history.state.page,
@@ -636,6 +638,8 @@
                     }
                     searchResults(data);
                 });
+            } else {
+                window.shrink_panel('#search-results', 0);
             }
         };
         
