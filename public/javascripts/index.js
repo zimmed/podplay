@@ -506,7 +506,7 @@
             }
         }
         else {
-            window.replaceState({page: 'index'}, document.title, '/');
+            window.history.replaceState({page: 'index'}, document.title, '/');
             if (s.page && s.page == "browse" && s.id != r[1]) {
                 window.resetBrowse(s.id);
             }
@@ -788,7 +788,7 @@
             });
         }
         else {
-            window.replaceState({page: 'index'}, document.title, '/');
+            window.history.replaceState({page: 'index'}, document.title, '/');
             window.load_splash_view(true);
         }
         
