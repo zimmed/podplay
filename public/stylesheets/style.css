@@ -161,10 +161,7 @@ legend {
     border: none;
     display: none;
     overflow: hidden;
-}
-
-#register {
-    margin-top: -300px;
+    top: 50px;
 }
 
 #loader {
