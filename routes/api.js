@@ -211,7 +211,7 @@ router.get('/cachebrowse', function (req, res, next) {
         res.json(false);
     }
     else {
-        res.json(req.session.brwosecache[req.query.cat]);
+        res.json(req.session.browsecache[req.query.cat]);
     }
 });
 
