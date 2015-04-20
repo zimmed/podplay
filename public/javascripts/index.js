@@ -88,6 +88,22 @@
                 return this._stack[i].path;
             }
             return false;
+        },
+        /**
+         * Move back as far as the stack will go.
+         */
+        moveBack : function () {
+            if (this._cur > 0) {
+                window.history.back();
+            }
+            else if (this.getState().page !== 'index') {
+                var s = [{state: {page: 'index'}, path: '/'}]
+                this._stack = s.concat(this._stack);
+                window.load_splash_view(true);
+            }
+            else {
+                // Do nothing
+            }
         }
     };
     
