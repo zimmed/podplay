@@ -24,20 +24,20 @@ router.get('/search/:term?', function (req, res, next) {
     }
 });
 
-/*
 // User goes back to browse results.
 router.get('/browse/:cat?', function (req, res, next) {
-    // Check that param exists and browse has been cached.
-    if (!req.params.hasOwnProperty('cat') ||
-        !Cache.browse.hasOwnProperty(req.params.cat)) {
+    // Check that param exists
+    if (!req.params.hasOwnProperty('cat') || 
+        Number(req.params.cat) != req.params.cat ||
+        !Podcasts.Genres[req.params.cat]) {
         // If not, reroute to landing page.
         res.redirect('/');
     }
-    res.render('index', { title: 'Podplay.me',
-                          javascripts: ['index'],
-                          GLOBALS: { "prebrowse" : Cache.browse[req.params.cat] } });
+    res.render('index', {user: req.session.user,
+                         title: 'Podplay.me',
+                         GLOBALS: {'preload_browse': req.params.cat},
+                         javascripts: ['index']});
 });
-*/
 
 // GET home page.
 router.get('/', function (req, res, next) {

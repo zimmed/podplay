@@ -76,7 +76,7 @@ router.get('/castcat/:gid', function (req, res, next) {
                             function (err, msg) {
             console.log(msg);
             console.log(err);
-            res.send(msg);
+            res.json({error: err, message: msg});
         }, function (data) {
             res.json({podcasts: data[0], favorites: data[1]});
         });
@@ -84,7 +84,7 @@ router.get('/castcat/:gid', function (req, res, next) {
         Cache.aggregate_cat(req.params.gid, false, function (err, msg) {
             console.log(msg);
             console.log(err);
-            res.send(msg);
+            res.json({error: err, message: msg});
         }, function (data) {
             res.json({podcasts: data[0]});
         });
@@ -131,7 +131,7 @@ router.get('/search', function (req, res, next) {
             Podcasts.cacheSearchResults(results, function (err, msg) {
                 console.log(msg);
                 console.log(err);
-                res.json({"error": msg});
+                res.json({error: err, message: msg});
             }, function (data) {
                 Podcasts.searchByTerm(req.query.term, 0, function (pcasts) {
                     if (!req.session.searchcache) req.session.searchcache = {};
@@ -146,10 +146,47 @@ router.get('/search', function (req, res, next) {
 });
 
 /**
+ * Route for api/browse URL
+ */
+router.get('/browse', function (req, res, next) {
+    var a, favs = false, user = req.session.user, genre, gid = req.query.cat;
+    if (!gid || !Podcasts.Genres[gid]) {
+        res.json({});
+    }
+    else {
+        genre = Podcasts.Genres[gid];
+        if (user && user.subscriptions &&
+                user.subscriptions[gid] &&
+                user.subscriptions[gid].length > 0) { 
+            favs = user.subscriptions[gid];
+        }
+        Podcasts.getByCategory(genre, false, favs, function (pcasts) {
+            if (favs) {
+                Podcasts.getPodcasts(favs, function (err, msg) {
+                    console.log('Unexpected error occured: ' + err.status);
+                    console.log('\t' + msg);
+                    a = {podcasts: pcasts,
+                             error: err, message: msg};
+                    req.session.browsecache[gid] = a;
+                    res.json(a);
+                }, function (f_pcasts) {
+                    a = {podcasts: pcasts, favorites: f_pcasts};
+                    req.session.browsecache[gid] = a;
+                    res.json(a);
+                });
+            }
+            else {
+                a = {podcasts: pcasts};
+                req.session.browsecache[gid] = a;
+                res.json(a);
+        });
+    }
+});
+
+/**
  * Route for api/cachesearch URL
  */
 router.get('/cachesearch', function (req, res, next) {
-    
     if (!req.query.term) {
         res.json([]);
     }
@@ -158,6 +195,21 @@ router.get('/cachesearch', function (req, res, next) {
     }
     else {
         res.json(req.session.searchcache[req.query.term]);
+    }
+});
+
+/**
+ * Route for api/cachebrowse URL
+ */
+router.get('/cachebrowse', function (req, res, next) {
+    if (!req.query.cat) {
+        res.json({});
+    }
+    else if (!req.session.browsecache || !req.session.browsecache[req.query.cat]) {
+        res.json(false);
+    }
+    else {
+        res.json(req.session.brwosecache[req.query.cat]);
     }
 });
 
@@ -173,32 +225,6 @@ router.get('/quicksearch', function (req, res, next) {
             res.json(data);
         });
     }
-});
-
-/**
- * Route for api/browse URL
- */
-router.get('/browse', function (req, res, next) {
-    var api = 'https://itunes.apple.com/us/rss/toppodcasts';
-    var limit = (req.query.limit && req.query.limit >= 0 && req.query.limit <= 200)
-        ? '/limit=' + req.query.limit
-        : '/limit=50';
-    var explicit = (req.query.safe)
-        ? '/explicit=false'
-        : '/explicit=true';
-    var genre = (req.query.genre && req.query.genre !== 0)
-        ? '/genre=' + req.query.genre
-        : '';
-    var queryURL = api + limit + genre + explicit + '/json';
-    
-    console.log('url: ' + queryURL);
-    
-    // Send requested browse data received from Apple API back to caller.
-    request(queryURL, function (error, response, body) {
-        // Update cache with request
-        Cache.browse[req.query.genre] = JSON.parse(body);
-        res.send(body);
-    });
 });
 
 // Expose routes
