@@ -118,8 +118,12 @@ tr.feed-row:hover {
 .btn-viewgenre {
     width: 100px !important;
     height: 100px !important;
-    margin: 0;
-    margin-left: 10px;
+    margin: 0 !important;
+    margin-left: 10px !important;
+}
+
+.btn-viewgenre > span {
+    display: block !important;
 }
 
 .castnail.favorite > img{
