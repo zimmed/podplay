@@ -666,6 +666,7 @@
             }
             else if (prev_state.page === 'search') {
                 // Previous view was splash/search; reset.
+                console.log('search -> index');
                 window.resetSearch();
             }
             else {
