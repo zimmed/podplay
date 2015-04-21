@@ -94,7 +94,7 @@
                 this._stack = this._stack.slice(0, this._cur);
             }
             this._stack[this._cur] = {state: state, path: path};
-            window.history.pushState(state, document.title, path);
+            window.history.pushState({}, document.title, path);
             this._checkBack();
         },
         /** 
@@ -128,7 +128,7 @@
          */
         replace : function (state, path) {
             this._stack[this._cur] = {state: state, path: path};
-            window.history.replaceState(state, document.title, path);
+            window.history.replaceState({}, document.title, path);
             this._checkBack();
         },
         /**
@@ -136,7 +136,7 @@
          */
         update : function () {
             this._checkBack();
-            window.history.replaceState(this.getState(),
+            window.history.replaceState({},
                                         document.title,
                                         this.getPath());
         },
@@ -364,6 +364,8 @@
     };
     
     window.load_podcast_helper = function (id, div) {
+        console.log(div);
+        console.log($(div));
         var parent = $(div).parent().parent();
         window.load_podcast_view(id, parent);
     };
