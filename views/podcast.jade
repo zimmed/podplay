@@ -7,6 +7,10 @@ script.
     window.safetitle = "#{safetitle}";
 .feed-row-top
     h4 #{feed.title}
+    if feed['itunes:summary']
+        span#it-summary #{feed['itunes:summary']}
+    else
+        span#it-summary No description.
 .feed-col-left
     img.podcast-poster(src="#{podcast.poster600}")
     // Container for audio player.
@@ -76,8 +80,3 @@ script.
                                 span.glyphicon.glyphicon-play(aira-hidden="true")
                         else
                             span.glyphicon.glyphicon-alert(aria-hidden="true" title="No audio data.")
-.feed-row-bottom.sleek-gray
-    if feed['itunes:summary']
-        span#it-summary #{feed['itunes:summary']}
-    else
-        span#it-summary N/A

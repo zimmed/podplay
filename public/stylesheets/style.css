@@ -58,6 +58,12 @@ nav {
     display: block;
     width: 100%;
     text-align: center;
+    height: 40px;
+    line-height: 40px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .feed-col-left, .feed-col-right {
@@ -65,15 +71,15 @@ nav {
     padding: 0px;
     position: relative;
     float: left;
-    max-height: 320px;
+    max-height: 340px;
     overflow: hidden;
 }
 
-.feed-row-bottom, .feed-row-top {
+.feed-row-top {
     margin: 0;
     padding: 5px;
     color: #d0d0d0;
-    height: 40px;
+    height: 60px;
     overflow: hidden;
     width: 100%;
 }
@@ -120,7 +126,13 @@ nav {
 
 #it-summary {
     margin: 0px;
-    padding: 10px;
+    padding: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    font-size: 11px;
+    height: 20px;
+    line-height: 20px;
 }
 
 img.podcast-poster {
