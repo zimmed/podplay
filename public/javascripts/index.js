@@ -30,21 +30,21 @@
         },
         open : function (parent) {
             if (this.isOpen()) return this;
+            window.FeedView._show_loader();
+            window.FeedView._isopen = true;
             $(parent).append(this._view);
             this._view.animate({
                 height: '400px'
             }, 500, function () {
-                window.FeedView._show_loader();
-                window.FeedView._isopen = true;
             });
             return this;
         },
         close : function () {
             if (!this.isOpen()) return this;
+            window.FeedView._isopen = false;
             this._view.animate({
                 height: '0px'
             }, 500, function () {
-                window.FeedView._isopen = false;
                 window.FeedView.empty();
                 window.FeedView._view.remove();
             });
@@ -385,7 +385,7 @@
             if (window.FeedView.parent().is($(parent))) {
                 // FeedView already open in requested parent container.
                 console.log('\tShowing loader.');
-                window._show_loader(); // Just replace contents with loader.
+                window.FeedView._show_loader(); // Just replace contents with loader.
             }
             else {
                 // FeedView open somewhere else.
