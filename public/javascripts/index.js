@@ -47,10 +47,9 @@
                 }
                 return this;
             }
-            this.focus();
             this._show_loader();
-            this._isopen = true;
             $(parent).append(this._view);
+            this.focus();
             this._view.animate({
                 height: '400px'
             }, 500, function () {
@@ -59,6 +58,7 @@
                     f();
                     f = window.FeedView._open_queue.pop();
                 }
+                window.FeedView._isopen = true;
             });
             return this;
         },
