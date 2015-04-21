@@ -33,10 +33,12 @@ script.
                     td(colspan="2") Sign in to subscribe.
             tr
                 th Author
-                td #{podcast.artistName}
+                td
+                    div.wrap(style="height:24px") #{podcast.artistName}
             tr
                 th Genre
-                td #{podcast.genre}
+                td 
+                    div.wrap(style="height:24px") #{podcast.genre}
 // Right column with episode table
 //-
     - var formatDate = function (dateString) {
