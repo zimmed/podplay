@@ -150,7 +150,7 @@ span.eptitle {
     height: 34px;
     overflow: hidden;
     white-space: nowrap;
-    max-width: 250px;
+    max-width: 400px;
 }
 
 #it-summary {
@@ -374,9 +374,15 @@ legend {
     .feed-col-right {
         max-width: 523px;
     }
+    span.eptitle {
+        max-width: 350px;
+    }
 }
 @media only screen and (max-width: 991px) {
     .feed-col-right {
         max-width: 538px;
+    }
+    span.eptitle {
+        max-width: 365px;
     }
 }
