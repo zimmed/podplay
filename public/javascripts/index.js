@@ -364,7 +364,8 @@
     };
     
     window.load_podcast_helper = function (id, div) {
-        console.log($(div));
+        var parent = div.parent().parent();
+        window.load_podcast_view(id, div);
     };
     
     /**
