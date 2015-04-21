@@ -42,6 +42,11 @@ nav {
     background-color: #333;
 }
 
+#feedview .table {
+    width: 100%;
+    margin: 0;
+}
+
 #feed-view h4 {
     color: white;
     display: block;
@@ -55,7 +60,7 @@ nav {
     display: inline-block;
 }
 
-.feed-row-bottom {
+.feed-row-bottom, .feed-row-bottom {
     margin: 0;
     padding: 5px;
     color: #d0d0d0;
@@ -64,7 +69,7 @@ nav {
 }
 
 .feed-col-left {
-    width: 300px;
+    width: 250px;
 }
 
 .sleek-gray {
@@ -85,8 +90,8 @@ nav {
 }
 
 img.podcast-poster {
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     position: relative;
     float: left;
 }
