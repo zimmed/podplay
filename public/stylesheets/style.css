@@ -65,6 +65,7 @@ nav {
     padding: 0px;
     position: relative;
     float: left;
+    max-height: 300px;
 }
 
 .feed-row-bottom, .feed-row-bottom {
@@ -73,6 +74,7 @@ nav {
     color: #d0d0d0;
     height: 40px;
     overflow: hidden;
+    width: 100%;
 }
 
 .feed-col-left {
