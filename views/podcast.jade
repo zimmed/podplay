@@ -5,20 +5,19 @@
 // Left column with feed data.
 script.
     window.safetitle = "#{safetitle}";
-.col-md-4(id="sub-left-col")
+.feed-col-left
     h3 #{feed.title}
     img.podcast-poster(src="#{podcast.poster600}")
     // Container for audio player.
-    div.podcast-player
-        div.playing-title
-            span No File Selected
-        audio(controls="controls" preload="auto" src="http://xamuel.com/blank-mp3-files/point1sec.mp3")
-        script(src="/javascripts/audioplayer.js")
-        script.
-            $( function() { $( 'audio' ).audioPlayer(); } );
-    if feed['itunes:summary']
-        p #{feed['itunes:summary']}
-    table#feedinfo-table(class="table table-bordered")
+    //-
+        div.podcast-player
+            div.playing-title
+                span No File Selected
+            audio(controls="controls" preload="auto" src="http://xamuel.com/blank-mp3-files/point1sec.mp3")
+            script(src="/javascripts/audioplayer.js")
+            script.
+                $( function() { $( 'audio' ).audioPlayer(); } ); 
+    table#feedinfo-table(class="table sleek-gray")
         tbody
             if user
                 tr
@@ -34,15 +33,23 @@ script.
             tr
                 th Genre
                 td #{podcast.genre}
+            if feed['itunes:summary']
+                tr.sleek-gray
+                    td#it-summary(colspan="2") #{feed['itunes:summary']}
 // Right column with episode table
-.col-md-5(id="sub-middle-col")
+- var formatDate = function (dateString) {
+-   var d = dateString.substr(5, 2);
+-   var m = dateString.substr(8, 3);
+-   var y = dateString.substr(14, 2);
+-   return d + ' ' + m + ' ' + y;
+- }
+.feed-col-right
     h3 Episodes
     table#episode-table(class="table table-bordered")
         thead
             tr
                 th Title
-                th Description
-                th Released
+                th Date
                 th 
         tbody
             each ep in feed.item
@@ -55,28 +62,17 @@ script.
                                 span #{ep.title}
                     else
                         td N/A
-                    if ep.description
-                        - ep.description = "" + ep.description;
-                        - var match, front = ep.description.match(/^\<([^\>]+)\>/)
-                        - if (front) match = ep.description.match('^\<' + front[1] + '\>(.+)\<\/' + front[1] + '\>')
-                        - if (match) ep.description = match[1]
-                        - ep.description = ep.description.replace(/\<.+\>/g, '')
-                        td(title="#{ep.description}")
-                            if ep.description.length >= 118
-                                span #{ep.description.substr(0,114) + '...'}
-                            else
-                                span #{ep.description}
-                    else
-                        td N/A
                     td
                         if ep.pubDate
-                            - ep.pubDate = ep.pubDate.slice(0, -5);
-                            span #{ep.pubDate}
+                            span #{formateDate(ep.pubDate)}
                         else
                             span N/A
                     td
                         if ep.enclosure
-                            button.listenlink(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button") Listen
+                            button.listenlink.add(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
+                                span.glyphicon.glyphicon-plus-sign(aira-hidden="true")
+                            button.listenlink.play(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
+                                span.glyphicon.glyphicon-play(aira-hidden="true")
                         else
-                            span N/A
+                            span.glyphicon.glyphicon-alert(aria-hidden="true" title="No audio data.")
 

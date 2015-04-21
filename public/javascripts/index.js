@@ -7,6 +7,66 @@
     'use strict';
     
     /**
+     * Feed view container
+     */
+    window.FeedView = {
+        _view : $('<div id="#feed-view"></div>'),
+        _isopen : false,
+        _show_loader : function () {
+            // TODO: Nicer loader
+            this.html('Loading...');
+        },
+        html : function (html) {
+            if (html) {
+                this._view.html(html);
+            }
+            return this;
+        },
+        empty : function () {
+            return this.html('');
+        },
+        isEmpty : function () {
+            return (this._view.html() === '');
+        },
+        open : function (parent) {
+            if (this.isOpen()) return this;
+            $(parent).append(this._view);
+            this._view.animate({
+                height: '400px'
+            }, 500, function () {
+                this._show_loader();
+                this._isopen = true;
+            });
+            return this;
+        },
+        close : function () {
+            if (!this.isOpen()) return this;
+            this._view.animate({
+                height: '0px'
+            }, 500, function () {
+                this._isopen = false;
+                this.empty();
+                this._view.remove();
+            });
+        },
+        isOpen : function () {
+            return this._isopen;
+        },
+        focus : function () {
+            if (this.isOpen()) {
+                this._view[0].scrollIntoView();
+            }
+            return this;
+        },
+        parent : function () {
+            if (this.isOpen()) {
+                return this._view.parent();
+            }
+            return false;
+        },
+    };
+    
+    /**
      * Custom stack structure for recording / controlling navigation history.
      */
     window.PageStack = {
@@ -177,14 +237,18 @@
      * @param {String} msg - The message to display.
      */
     window.showNotification = function (msg) {
-        $('.notif').html(msg);
+        $('.notif').animate({'opacity': 1}, 250, function () {
+            $('.notif').html(msg);
+        });
     };
     
     /**
      * Close form notifications.
      */
     window.closeNotification = function () {
-        $('.notif').html('&nbsp;');
+        $('.notif').animate({'opacity': 0}, 250, function () {
+            $('.notif').html('&nbsp;');
+        });
     };
     
     /**
@@ -302,13 +366,47 @@
     /**
      * Load specified podcast view.
      * @param {Number} id - The podcast ID to view.
+     * @param {Mixed} parent - The jQuery/DOM Object or CSS selector for
+     *      the parent to which the FeedView will be attached.
      * @param {Bool} dontpush - Optional flag that handles a first-time
      *      load for the page.
      * @param {Function} cb - Optional callback function.
      */
-    window.load_podcast_view = function (id, dontpush, cb) {
+    window.load_podcast_view = function (id, parent, dontpush, cb) {
+        /** NEW INLINE FEED VIEW **/
+        if (window.FeedView.isOpen()) {
+            // FeedView already open
+            if (window.FeedVeiw.parent().is($(parent))) {
+                // FeedView already open in requested parent container.
+                window._show_loader(); // Just replace contents with loader.
+            }
+            else {
+                // FeedView open somewhere else.
+                // First close view, wait for close, then continue.
+                window.FeedView.close(); 
+                while (window.FeedView.isOpen()) {
+                    // Scary loop - but gauranteed to terminate in ~250ms.
+                }
+            }
+        }
+        window.FeedView.open(parent); // Will not execute if already open
+        $.get('/api/view/podcast/' + id, function (data) {
+            // Retrieved podcast view from server API
+            window.FeedView.html(data); // Insert view data
+            window.pcastReady(); // Load extra scripts
+            if (!dontpush) {
+                // Push page data
+                window.PageStack.push({page: 'podcast',
+                                       id: id, parent: parent},
+                                      '/podcast/' + window.safetitle);
+            }
+            if (cb) cb(); // Callback, if requested
+            window.FeedView.focus(); // Scroll to FeedView
+        });
+        /** OLD FEED VIEW **\
         window.showLoader();
         $.get('/api/view/podcast/'+ id, function (data) {
+            var feed;
             window.hideLoader();
             $('#left-col').html(data);
             window.pcastReady();
@@ -320,6 +418,7 @@
             if (cb) cb();
             $('body')[0].scrollIntoView(); // Scroll to top
         });
+        */
     };
     
     /**
@@ -655,55 +754,56 @@
         state = window.PageStack.getState();
         // Determine view change based page to which the user navigated.
         if (state.page === 'podcast') { // PODCAST FEED
+            // Previous page was search
+            if (prev_state.page === 'search') {
+                window.resetSearch();
+            }
+            // Previous page was splash
+            if (prev_state.page === 'browse') {
+                // Reset browse view if last page was browse.
+                window.resetBrowse(prev_state.id);
+            }
             // Load podcast view
-            window.load_podcast_view(state.id, true);
+            window.load_podcast_view(state.id, state.parent, true);
         }
         else if (state.page === 'search') { // SEARCH
-            if (prev_state.page !== 'podcast') {
-                // Previous page was splash; don't reload the page.
-                if (prev_state.page === 'browse') {
-                    // Reset browse view if last page was browse.
-                    window.resetBrowse(prev_state.id);
-                }
-                if ($('#search-results').data('term') != state.id) {
-                    // If the search results don't already hold results for
-                    //  the request term, execute the search.
-                    window.presearch(state.id);
-                }
+            if (prev_state.page === 'podcast') {
+                // Close feed view if last page was podcast
+                window.FeedView.close();
             }
-            else {
-                // Previous page was not splash; reload.
-                window.load_splash_view(true, function () {
-                    // Execute search when splash page has been loaded.
-                    window.presearch(state.id);
-                });
+            if (prev_state.page === 'browse') {
+                // Reset browse view if last page was browse.
+                window.resetBrowse(prev_state.id);
+            }
+            if ($('#search-results').data('term') != state.id) {
+                // If the search results don't already hold results for
+                //  the request term, execute the search.
+                window.presearch(state.id);
             }
         }
         else if (state.page === 'browse') { // BROWSE
-            if (prev_state.page !== 'podcast') {
-                // Previous page was splash; don't reload the page.
-                if (prev_state.page === 'browse' && prev_state.id != state.id) {
-                    // Previous browse view already shown; reset.
-                    window.resetBrowse(prev_state.id);
-                }
-                else if (prev_state.page === 'search') {
-                    // Previous view was full search results; reset.
-                    window.resetSearch();
-                }
-                // Execute browse view
-                window.prebrowse(state.id);
+            if (prev_state.page === 'podcast') {
+                // Close feed view if last page was podcast
+                window.FeedView.close();
             }
-            else {
-                // Previous page was not splash; reload.
-                window.load_splash_view(true, function () {
-                    // Execute browse view once the splash page is loaded.
-                    window.prebrowse(state.id);
-                });
+            else if (prev_state.page === 'search') {
+                // Previous view was full search results; reset.
+                window.resetSearch();
             }
+            if (prev_state.page === 'browse' && prev_state.id != state.id) {
+                // Previous browse view already shown; reset.
+                window.resetBrowse(prev_state.id);
+            }
+            // Execute browse view
+            window.prebrowse(state.id);
         }
         else { // INDEX or unrecognized
             // Replace state with default route
             window.PageStack.replace({page: 'index'}, '/');
+            if (prev_state.page === 'podcast') {
+                // Close feed view if last page was podcast
+                window.FeedView.close();
+            }
             if (prev_state.page === 'browse') {
                 // Previous view was splash/browse; reset.
                 window.resetBrowse(prev_state.id);
@@ -736,15 +836,12 @@
             rows = Math.ceil(count / cols);
             if (rows > 4) rows = 4;
             height = 120 + (110 * (rows - 1));
-            $(selector).css({
-                    'height': '' + height + 'px',
-                    'padding': '10px',
-                    'padding-bottom': '0px'});
+            $(selector).css({'padding': '10px', 'padding-bottom': '0px'});
+            $(selector).animate({'height': '' + height + 'px'}, 250);
         }
         else {
-            $(selector).css({
-                        'height': '0px',
-                        'padding': '0px'});
+            $(selector).css({'padding': '0px'});
+            $(selector).animate({'height': '0px'}, 250);
         }
     };
     
@@ -760,15 +857,12 @@
                     'overflow-y': 'hidden',
                     'white-space': 'nowrap'});
         if (count > 0) {
-            $(selector).css({
-                    'height': '137px',
-                    'padding': '10px',
-                    'padding-bottom': '0px'});
+            $(selector).css({'padding': '10px', 'padding-bottom': '0px'});
+            $(selector).animate({'height': '137px'}, 250);
         }
         else {
-            $(selector).css({
-                        'height': '0px',
-                        'padding': '0px'});
+            $(selector).css({'padding': '0px'});
+            $(selector).animate({'height': '0px'}, 250);
         }
     };
     
@@ -996,7 +1090,7 @@
         
         // Load correct view into left panel
         if (window.preload_cast) {
-            window.load_podcast_view(window.preload_cast, true, function () {
+            window.load_podcast_view(window.preload_cast, '#pc-0', true, function () {
                 window.PageStack.replace({page: 'podcast', id: window.preload_cast},
                                      '/podcast/' + window.safetitle);
             });
