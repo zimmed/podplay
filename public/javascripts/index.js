@@ -30,8 +30,8 @@
         },
         open : function (parent) {
             if (this.isOpen()) return this;
-            window.FeedView._show_loader();
-            window.FeedView._isopen = true;
+            this._show_loader();
+            this._isopen = true;
             $(parent).append(this._view);
             this._view.animate({
                 height: '400px'
@@ -41,7 +41,7 @@
         },
         close : function () {
             if (!this.isOpen()) return this;
-            window.FeedView._isopen = false;
+            this._isopen = false;
             this._view.animate({
                 height: '0px'
             }, 500, function () {
