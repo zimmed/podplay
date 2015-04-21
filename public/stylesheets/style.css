@@ -53,10 +53,6 @@ nav {
     margin: 0;
 }
 
-span.nobreak {
-    white-space: nowrap;
-}
-
 #feed-view h4 {
     color: white;
     display: block;
@@ -113,14 +109,14 @@ span.nobreak {
     background: linear-gradient( top, #444, #222 );
 }
 
-td.wrap {
+.wrap {
     white-space: normal;
     overflow: hidden;
     max-height: 34px;
     min-width: 100px;
 }
 
-td.nowrap {
+.nowrap {
     white-space: nowrap;
 }
 
@@ -370,19 +366,5 @@ legend {
     }
     .feed-col-left {
         width: 150px;
-    }
-    .feed-col-right {
-        max-width: 523px;
-    }
-    .eptitle {
-        width: 350px;
-    }
-}
-@media only screen and (max-width: 991px) {
-    .feed-col-right {
-        max-width: 538px;
-    }
-    .eptitle {
-        width: 365px;
     }
 }
