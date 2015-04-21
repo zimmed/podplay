@@ -44,6 +44,23 @@ nav {
 
 #feed-view h4 {
     color: white;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.feed-col-left, .feed-col-right {
+    margin: 0px;
+    padding: 5px 0px 0px 5px;
+    display: inline-block;
+}
+
+.feed-row-bottom {
+    margin: 0;
+    padding: 5px;
+    color: #d0d0d0;
+    height: 40px;
+    overflow: hidden;
 }
 
 .feed-col-left {
@@ -58,7 +75,7 @@ nav {
     background: linear-gradient( top, #444, #222 );
 }
 
-#episode-table td {
+#episode-table td, #feedinfo-table {
     color: #d0d0d0;
 }
 
@@ -68,8 +85,10 @@ nav {
 }
 
 img.podcast-poster {
-  width: 200px;
-  height: 200px;
+    width: 300px;
+    height: 300px;
+    position: relative;
+    float: left;
 }
 
 img.result-poster {
