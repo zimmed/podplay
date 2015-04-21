@@ -71,6 +71,7 @@ nav {
     padding: 0px;
     max-height: 364px;
     overflow: hidden;
+    display: inline-block;
 }
 
 .feed-row-top {
@@ -106,6 +107,14 @@ nav {
     background: linear-gradient( top, #444, #222 );
 }
 
+#episode-table {
+    border: none;
+}
+
+#episode-table > tr:nth-child(even) {
+    background: rgba(255,255,255,0.15);
+}
+
 #episode-table, #feedinfo-table {
     color: #d0d0d0; 
 }
@@ -117,6 +126,7 @@ nav {
     height: 34px;
     line-height: 34px;
     overflow: hidden;
+    border: none;
 }
 
 #episode-table th {
@@ -135,6 +145,7 @@ nav {
     text-align: center;
     font-size: 12px;
     width: 100%;
+    color: #d0d0d0;
 }
 
 img.podcast-poster {
