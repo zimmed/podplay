@@ -66,10 +66,15 @@ nav {
     padding-right: 10px;
 }
 
+span.cell {
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+}
+
 .feed-col-left, .feed-col-right {
     margin: 0px;
     padding: 0px;
-    display: table-cell;
     max-height: 364px;
     overflow: hidden;
 }
