@@ -408,7 +408,7 @@
             var prev_state = window.PageStack.getState();
             window.PageStack.push({page: 'podcast',
                                        id: id, parent: parent},
-                                      '/podcast/' + window.safetitle);
+                                      '/podcast/' + id;
             if (prev_state.page === 'search') {
                 window.resetSearch();
             }
@@ -421,6 +421,9 @@
             // Retrieved podcast view from server API
             window.FeedView.html(data); // Insert view data
             window.pcastReady(); // Load extra scripts
+            window.PageStack.replace({page: 'podcast', id: id,
+                                      parent: parent},
+                                     '/podcast/' + window.safetitle);
             if (cb) cb(); // Callback, if requested
         });
         /** OLD FEED VIEW **\
@@ -1110,10 +1113,7 @@
         
         // Load correct view into left panel
         if (window.preload_cast) {
-            window.load_podcast_view(window.preload_cast, '#pc-0', true, function () {
-                window.PageStack.replace({page: 'podcast', id: window.preload_cast},
-                                     '/podcast/' + window.safetitle);
-            });
+            window.load_podcast_view(window.preload_cast, '#pc-0', true);
         }
         else if (window.preload_search) {
             var ps = window.preload_search.replace(/(\s+|\%20)/g, '+');
