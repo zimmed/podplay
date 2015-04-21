@@ -33,9 +33,23 @@ nav {
     margin-right: 25px;
 }
 
+.sleek-gray {
+    background: -webkit-linear-gradient( top, #444, #222 );
+    background: -moz-linear-gradient( top, #444, #222 );
+    background: -ms-radial-gradient( top, #444, #222 );
+    background: -o-linear-gradient( top, #444, #222 );
+    background: linear-gradient( top, #444, #222 );
+}
+
+#it-summary {
+    margin: 0px;
+    padding: 10px;
+    color: white;
+}
+
 img.podcast-poster {
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
 }
 
 img.result-poster {
@@ -215,6 +229,7 @@ legend {
     width: 100%;
     font-style: italic;
     color: #FF7F00;
+    opacity: 0;
 }
 
 .valid {
@@ -227,4 +242,11 @@ legend {
 
 #sub-left-col {
     min-width: 275px !important;
+}
+
+#feed-view {
+    width: 100%;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
 }
