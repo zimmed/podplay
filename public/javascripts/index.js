@@ -49,7 +49,6 @@
             }
             this._show_loader();
             $(parent).append(this._view);
-            this.focus();
             this._view.animate({
                 height: '400px'
             }, 500, function () {
@@ -59,6 +58,7 @@
                     f = window.FeedView._open_queue.pop();
                 }
                 window.FeedView._isopen = true;
+                this.focus();
             });
             return this;
         },
@@ -416,7 +416,6 @@
                                       '/podcast/' + window.safetitle);
             }
             if (cb) cb(); // Callback, if requested
-            window.FeedView.focus(); // Scroll to FeedView
         });
         /** OLD FEED VIEW **\
         window.showLoader();
