@@ -53,6 +53,10 @@ nav {
     margin: 0;
 }
 
+span.nobreak {
+    white-space: nowrap;
+}
+
 #feed-view h4 {
     color: white;
     display: block;
@@ -71,7 +75,9 @@ nav {
     padding: 0px;
     max-height: 364px;
     overflow: hidden;
-    display: inline-block;
+    display: block;
+    position: relative;
+    float: left;
 }
 
 .feed-row-top {
