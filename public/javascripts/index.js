@@ -1141,6 +1141,10 @@
         
         // Load correct view into left panel
         if (window.preload_cast) {
+            window.PageStack.replace({page: 'podcast',
+                                      id: window.preload_cast,
+                                      parent: '#pc-0'},
+                                     '/podcast/' + window.preload_cast);
             window.load_splash_view(true, function () {
                 window.load_podcast_view(window.preload_cast, '#pc-0', true);
             });
