@@ -90,7 +90,7 @@ span.nobreak {
 }
 
 .feed-col-right {
-    max-width: 570px;
+    max-width: 573px;
     overflow-y: scroll;
 }
 
@@ -115,6 +115,7 @@ span.nobreak {
 
 #episode-table {
     border: none;
+    table-layout: fixed;
 }
 
 #episode-table tr:nth-child(even) {
@@ -133,6 +134,7 @@ span.nobreak {
     line-height: 34px;
     overflow: hidden;
     border: none;
+    white-space: nowrap;
 }
 
 #episode-table th {
@@ -154,9 +156,8 @@ span.eptitle {
 #it-summary {
     margin: 0px;
     padding: 0px;
-    margin-left: 10px;
-    margin-right: 10px;
-    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
     font-size: 12px;
     width: 100%;
     color: #d0d0d0;
@@ -360,4 +361,17 @@ legend {
 
 #sub-left-col {
     min-width: 275px !important;
+}
+
+@media only screen and (max-width: 1200px) {
+    img.podcast-poster {
+        width: 150px;
+        height: 150px;
+    }
+    .feed-col-left {
+        width: 150px;
+    }
+    .feed-col-right {
+        max-width: 523px;
+    }
 }
