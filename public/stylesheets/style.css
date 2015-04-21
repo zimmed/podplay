@@ -115,7 +115,6 @@ span.nobreak {
 
 #episode-table {
     border: none;
-    table-layout: fixed;
 }
 
 #episode-table tr:nth-child(even) {
@@ -134,7 +133,6 @@ span.nobreak {
     line-height: 34px;
     overflow: hidden;
     border: none;
-    white-space: nowrap;
 }
 
 #episode-table th {
@@ -151,6 +149,8 @@ span.eptitle {
     line-height: 34px;
     height: 34px;
     overflow: hidden;
+    white-space: nowrap;
+    max-width: 250px;
 }
 
 #it-summary {
@@ -363,7 +363,7 @@ legend {
     min-width: 275px !important;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1199px) {
     img.podcast-poster {
         width: 150px;
         height: 150px;
@@ -373,5 +373,10 @@ legend {
     }
     .feed-col-right {
         max-width: 523px;
+    }
+}
+@media only screen and (max-width: 991px) {
+    .feed-col-right {
+        max-width: 538px;
     }
 }
