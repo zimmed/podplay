@@ -117,7 +117,7 @@ span.nobreak {
     border: none;
 }
 
-#episode-table > tr:nth-child(even) {
+#episode-table tr:nth-child(even) {
     background: rgba(255,255,255,0.15);
 }
 
@@ -133,6 +133,7 @@ span.nobreak {
     line-height: 34px;
     overflow: hidden;
     border: none;
+    white-space: nowrap;
 }
 
 #episode-table th {
