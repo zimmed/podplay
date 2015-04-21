@@ -295,6 +295,7 @@
                 window.PageStack.push({page: 'index'}, '/');
             }
             if (cb) cb();
+            $('body')[0].scrollIntoView(); // Scroll to top
         });
     };
     
@@ -317,6 +318,7 @@
                                       '/podcast/' + window.safetitle);
             }
             if (cb) cb();
+            $('body')[0].scrollIntoView(); // Scroll to top
         });
     };
     
@@ -486,6 +488,7 @@
             insertPodcasts(pcasts, selector, app);
         }
         window.expand_panel(selector, num);
+        $(selector)[0].scrollIntoView();
         if (num > 0) {
             if (!dontpush) {
                 window.PageStack.push({page: 'browse', id: genreid},
