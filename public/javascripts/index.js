@@ -381,14 +381,17 @@
         /** NEW INLINE FEED VIEW **/
         if (window.FeedView.isOpen()) {
             // FeedView already open
+            console.log('FeedView isOpen');
             if (window.FeedView.parent().is($(parent))) {
                 // FeedView already open in requested parent container.
+                console.log('\tShowing loader.');
                 window._show_loader(); // Just replace contents with loader.
             }
             else {
                 // FeedView open somewhere else.
                 // First close view, wait for close, then continue.
                 window.FeedView.close(); 
+                console.log('\tlooping');
                 while (window.FeedView.isOpen()) {
                     // Scary loop - but gauranteed to terminate in ~250ms.
                 }
