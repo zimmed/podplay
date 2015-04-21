@@ -147,12 +147,13 @@ span.nobreak {
 #it-summary {
     margin: 0px;
     padding: 0px;
-    padding-left: 10px;
-    padding-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
     text-align: center;
     font-size: 12px;
     width: 100%;
     color: #d0d0d0;
+    white-space: normal;
 }
 
 img.podcast-poster {
