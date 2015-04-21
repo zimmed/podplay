@@ -66,12 +66,6 @@ nav {
     padding-right: 10px;
 }
 
-span.cell {
-    display: table-cell;
-    margin: 0;
-    padding: 0;
-}
-
 .feed-col-left, .feed-col-right {
     margin: 0px;
     padding: 0px;
@@ -86,10 +80,6 @@ span.cell {
     height: 36px;
     overflow: hidden;
     width: 100%;
-}
-
-.feed-row-bottom {
-    display: table;
 }
 
 .feed-col-right {
