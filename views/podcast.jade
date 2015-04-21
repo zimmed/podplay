@@ -53,7 +53,7 @@ script.
             each ep in feed.item
                 tr
                     if ep.title
-                        td(title="#{ep.title}") 
+                        td(title="#{ep.title}" style="width:100%") 
                             if ep.title.length >= 42
                                 span #{ep.title.substr(0,38) + '...'}
                             else
