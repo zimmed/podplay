@@ -10,7 +10,7 @@
      * Feed view container
      */
     window.FeedView = {
-        _view : $('<div id="#feed-view"></div>'),
+        _view : $('<div id="feed-view"></div>'),
         _isopen : false,
         _show_loader : function () {
             // TODO: Nicer loader
