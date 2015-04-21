@@ -775,6 +775,7 @@
         }
         // Get current page state
         state = window.PageStack.getState();
+        console.log(prev_state.path + ' -> ' + state.path);
         // Determine view change based page to which the user navigated.
         if (state.page === 'podcast') { // PODCAST FEED
             // Previous page was search
