@@ -363,6 +363,10 @@
         });
     };
     
+    window.load_podcast_helper = function (id) {
+        console.log(this);
+    };
+    
     /**
      * Load specified podcast view.
      * @param {Number} id - The podcast ID to view.
@@ -616,7 +620,7 @@
         if (!append) $(selector).html('');
         for (i in pcasts) {
             var classes = (fav) ? "castnail favorite" : "castnail";
-            $(selector).append('<div class="'+classes+'" onclick="load_podcast_view(\''+pcasts[i]._id+'\');" data-title="'+pcasts[i].title+'"><img src="'+pcasts[i].poster100+'"></div>');
+            $(selector).append('<div class="'+classes+'" onclick="load_podcast_helper(\''+pcasts[i]._id+'\');" data-title="'+pcasts[i].title+'"><img src="'+pcasts[i].poster100+'"></div>');
         }
     }
     
