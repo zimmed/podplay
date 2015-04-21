@@ -56,7 +56,7 @@ nav {
 
 #feed-view h4 {
     color: white;
-    display: block;
+    display: table-cell;
     width: 100%;
     text-align: center;
     height: 36px;
@@ -82,6 +82,10 @@ nav {
     height: 36px;
     overflow: hidden;
     width: 100%;
+}
+
+.feed-row-bottom, .feed-row-top {
+    display: table-row;
 }
 
 .feed-col-right {
