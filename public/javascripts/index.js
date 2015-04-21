@@ -49,6 +49,7 @@
             }
             this._show_loader();
             $(parent).append(this._view);
+            this.focus();
             this._view.animate({
                 height: '400px'
             }, 500, function () {
@@ -58,7 +59,6 @@
                     f();
                     f = window.FeedView._open_queue.pop();
                 }
-                window.FeedView.focus();
             });
             return this;
         },
@@ -78,7 +78,7 @@
             return this._isopen;
         },
         focus : function () {
-            if (this.isOpen()) {
+            if !this._view.parent()) {
                 this._view.parent()[0].scrollIntoView();
             }
             return this;
@@ -775,7 +775,7 @@
         }
         // Get current page state
         state = window.PageStack.getState();
-        console.log(prev_state.path + ' -> ' + state.path);
+        console.log(prev_state.page + ' -> ' + state.page);
         // Determine view change based page to which the user navigated.
         if (state.page === 'podcast') { // PODCAST FEED
             // Previous page was search
