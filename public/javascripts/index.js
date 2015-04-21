@@ -408,7 +408,7 @@
             var prev_state = window.PageStack.getState();
             window.PageStack.push({page: 'podcast',
                                        id: id, parent: parent},
-                                      '/podcast/' + id;
+                                      '/podcast/' + id);
             if (prev_state.page === 'search') {
                 window.resetSearch();
             }
