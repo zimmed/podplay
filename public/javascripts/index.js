@@ -852,7 +852,7 @@
                 // Close feed view if last page was podcast
                 window.FeedView.close();
             }
-            if (prev_state.page === 'browse') {
+            else if (prev_state.page === 'browse') {
                 // Previous view was splash/browse; reset.
                 window.resetBrowse(prev_state.id);
             }
