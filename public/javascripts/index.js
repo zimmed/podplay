@@ -365,6 +365,7 @@
     
     window.load_podcast_helper = function (id, div) {
         var parent = $(div).parent().parent();
+        console.log(parent);
         window.load_podcast_view(id, div);
     };
     
