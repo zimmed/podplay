@@ -60,7 +60,8 @@ script.
                 th 
         tbody
             each ep in feed.item
-                if ep.enclosure and ep.enclosure.$ and ep.enclosure.$.url
+                - var hasAudio = (ep.enclosure && ep.enclosure.$ && ep.enclosure.$.url);
+                if hasAudio
                     tr
                         td(title="#{ep.title}")
                             if ep.title
