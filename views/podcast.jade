@@ -64,21 +64,19 @@ script.
                                 span #{ep.title}
                     else
                         td N/A
-                    td
+                    td(style="white-space: nowrap;")
                         if ep.pubDate
                             - var d = ep.pubDate.substr(5, 2);
                             - var m = ep.pubDate.substr(8, 3);
                             - var y = ep.pubDate.substr(14, 2);
-                            span.cell #{d + ' ' + m + ' ' + y}
+                            span #{d + ' ' + m + ' ' + y}
                         else
-                            span.cell N/A
-                    td
+                            span N/A
+                    td(style="white-space: nowrap;")
                         if ep.enclosure
-                            span.cell
-                                button.listenlink.add(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
-                                    span.glyphicon.glyphicon-plus-sign(aira-hidden="true")
-                                button.listenlink.play(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
-                                    span.glyphicon.glyphicon-play(aira-hidden="true")
+                            button.listenlink.add(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
+                                span.glyphicon.glyphicon-plus-sign(aira-hidden="true")
+                            button.listenlink.play(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
+                                span.glyphicon.glyphicon-play(aira-hidden="true")
                         else
-                            span.cell
-                                span.glyphicon.glyphicon-alert(aria-hidden="true" title="No audio data.")
+                            span.glyphicon.glyphicon-alert(aria-hidden="true" title="No audio data.")
