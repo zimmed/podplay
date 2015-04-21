@@ -45,6 +45,7 @@
                 }
                 else {
                     this._show_loader();
+                    this.focus();
                 }
                 return this;
             }
@@ -945,6 +946,9 @@
                     if (window.PageStack.getState().page !== 'index') {
                         if (window.PageStack.getState().page === 'browse') {
                             window.resetBrowse(window.PageStack.getState().id);
+                        }
+                        if (window.PageStack.getState().page === 'podcast') {
+                            window.FeedView.close();
                         }
                         window.PageStack.push({page: 'index'}, '/');
                         $('.genre-panel').css('display', 'block');
