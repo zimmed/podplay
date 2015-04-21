@@ -5,8 +5,9 @@
 // Left column with feed data.
 script.
     window.safetitle = "#{safetitle}";
-.feed-col-left
+.feed-row-top
     h4 #{feed.title}
+.feed-col-left
     img.podcast-poster(src="#{podcast.poster600}")
     // Container for audio player.
     //-
@@ -42,7 +43,6 @@ script.
     -   return d + ' ' + m + ' ' + y;
     - }
 .feed-col-right
-    h4 Episodes
     table#episode-table(class="table table-bordered")
         thead
             tr
