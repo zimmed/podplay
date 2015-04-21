@@ -20,14 +20,17 @@ script.
                 $( function() { $( 'audio' ).audioPlayer(); } ); 
     table#feedinfo-table(class="table sleek-gray")
         tbody
-            if user
-                tr
+            
+            tr
+                if user
                     th Favorite
                     td
                         if isFavorited(user, podcast._id)
                             button#fav(data-id="#{podcast._id}") Remove
                         else
                             button#fav(data-id="#{podcast._id}") Add
+                else
+                    td(colspan="2") Sign in to subscribe.
             tr
                 th Author
                 td #{podcast.artistName}

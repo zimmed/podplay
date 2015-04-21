@@ -54,9 +54,10 @@
             this._view.animate({
                 height: '400px'
             }, 500, function () {
-                var f;
-                while (typeof(f = this._open_queue.pop()) !== 'undefined') {
+                var f = window.FeedView._open_queue.pop();
+                while (typeof(f) !== 'undefined') {
                     f();
+                    f = window.FeedView._open_queue.pop();
                 }
             });
             return this;
