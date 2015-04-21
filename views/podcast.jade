@@ -58,11 +58,11 @@ span.nobreak
                 each ep in feed.item
                     tr
                         if ep.title
-                            td#eptitle(title="#{ep.title}" style="width:400px;")
+                            td.wrap(title="#{ep.title}")
                                 span #{ep.title}
                         else
                             td N/A
-                        td
+                        td.nowrap
                             if ep.pubDate
                                 - var d = ep.pubDate.substr(5, 2);
                                 - var m = ep.pubDate.substr(8, 3);
@@ -70,7 +70,7 @@ span.nobreak
                                 span #{d + ' ' + m + ' ' + y}
                             else
                                 span N/A
-                        td
+                        td.nowrap
                             if ep.enclosure
                                 button.listenlink.add(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
                                     span.glyphicon.glyphicon-plus-sign(aira-hidden="true")
