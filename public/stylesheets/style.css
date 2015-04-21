@@ -133,7 +133,6 @@ span.nobreak {
     line-height: 34px;
     overflow: hidden;
     border: none;
-    white-space: nowrap;
 }
 
 #episode-table th {
@@ -142,6 +141,14 @@ span.nobreak {
 
 #episode-table td .glyphicon {
     top: -2px !important;
+}
+
+span.eptitle {
+    margin: 0;
+    padding: 0;
+    line-height: 34px;
+    height: 34px;
+    overflow: hidden;
 }
 
 #it-summary {
