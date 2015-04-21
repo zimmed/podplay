@@ -78,7 +78,7 @@
             return this._isopen;
         },
         focus : function () {
-            if (!this._view.parent()) {
+            if (this._view.parent()) {
                 this._view.parent()[0].scrollIntoView();
             }
             return this;
