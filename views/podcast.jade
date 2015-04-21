@@ -64,19 +64,21 @@ script.
                                 span #{ep.title}
                     else
                         td N/A
-                    td(style="width:100px")
+                    td
                         if ep.pubDate
                             - var d = ep.pubDate.substr(5, 2);
                             - var m = ep.pubDate.substr(8, 3);
                             - var y = ep.pubDate.substr(14, 2);
-                            span #{d + ' ' + m + ' ' + y}
+                            span.cell #{d + ' ' + m + ' ' + y}
                         else
-                            span N/A
-                    td(style="width:100px")
+                            span.cell N/A
+                    td
                         if ep.enclosure
-                            button.listenlink.add(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
-                                span.glyphicon.glyphicon-plus-sign(aira-hidden="true")
-                            button.listenlink.play(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
-                                span.glyphicon.glyphicon-play(aira-hidden="true")
+                            span.cell
+                                button.listenlink.add(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
+                                    span.glyphicon.glyphicon-plus-sign(aira-hidden="true")
+                                button.listenlink.play(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
+                                    span.glyphicon.glyphicon-play(aira-hidden="true")
                         else
-                            span.glyphicon.glyphicon-alert(aria-hidden="true" title="No audio data.")
+                            span.cell
+                                span.glyphicon.glyphicon-alert(aria-hidden="true" title="No audio data.")
