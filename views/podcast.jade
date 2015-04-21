@@ -7,76 +7,73 @@ script.
     window.safetitle = "#{safetitle}";
 .feed-row-top
     h4 #{feed.title}
-.feed-row-bottom
-    span.cell
-        .feed-col-left
-            img.podcast-poster(src="#{podcast.poster600}")
-            // Container for audio player.
-            //-
-                div.podcast-player
-                    div.playing-title
-                        span No File Selected
-                    audio(controls="controls" preload="auto" src="http://xamuel.com/blank-mp3-files/point1sec.mp3")
-                    script(src="/javascripts/audioplayer.js")
-                    script.
-                        $( function() { $( 'audio' ).audioPlayer(); } ); 
-            table#feedinfo-table(class="table sleek-gray")
-                tbody
-                    if user
-                        tr
-                            th Favorite
-                            td
-                                if isFavorited(user, podcast._id)
-                                    button#fav(data-id="#{podcast._id}") Remove
-                                else
-                                    button#fav(data-id="#{podcast._id}") Add
-                    tr
-                        th Author
-                        td #{podcast.artistName}
-                    tr
-                        th Genre
-                        td #{podcast.genre}
-        // Right column with episode table
-        //-
-            - var formatDate = function (dateString) {
-            -   var d = dateString.substr(5, 2);
-            -   var m = dateString.substr(8, 3);
-            -   var y = dateString.substr(14, 2);
-            -   return d + ' ' + m + ' ' + y;
-            - }
-    span.cell
-        .feed-col-right
-            if feed['itunes:summary']
-                span#it-summary #{feed['itunes:summary']}
-            else
-                span#it-summary No description.
-            table#episode-table(class="table")
-                thead
-                    tr
-                        th Title
-                        th Date
-                        th 
-                tbody
-                    each ep in feed.item
-                        tr
-                            if ep.title
-                                td(title="#{ep.title}" style="width:100%") 
-                                    span #{ep.title}
-                            else
-                                td N/A
-                            td(style="white-space: nowrap;")
-                                if ep.pubDate
-                                    - var d = ep.pubDate.substr(5, 2);
-                                    - var m = ep.pubDate.substr(8, 3);
-                                    - var y = ep.pubDate.substr(14, 2);
-                                    span #{d + ' ' + m + ' ' + y}
-                                else
-                                    span N/A
-                            td(style="white-space: nowrap;")
-                                if ep.enclosure
-                                    button.listenlink.add(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
-                                        span.glyphicon.glyphicon-plus-sign(aira-hidden="true")
-                                    button.listenlink.play(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
-                                        span.glyphicon.glyphicon-play(aira-hidden="true")
-                                else
-                                    span.glyphicon.glyphicon-alert(aria-hidden="true" title="No audio data.")
+.feed-col-left
+    img.podcast-poster(src="#{podcast.poster600}")
+    // Container for audio player.
+    //-
+        div.podcast-player
+            div.playing-title
+                span No File Selected
+            audio(controls="controls" preload="auto" src="http://xamuel.com/blank-mp3-files/point1sec.mp3")
+            script(src="/javascripts/audioplayer.js")
+            script.
+                $( function() { $( 'audio' ).audioPlayer(); } ); 
+    table#feedinfo-table(class="table sleek-gray")
+        tbody
+            if user
+                tr
+                    th Favorite
+                    td
+                        if isFavorited(user, podcast._id)
+                            button#fav(data-id="#{podcast._id}") Remove
+                        else
+                            button#fav(data-id="#{podcast._id}") Add
+            tr
+                th Author
+                td #{podcast.artistName}
+            tr
+                th Genre
+                td #{podcast.genre}
+// Right column with episode table
+//-
+    - var formatDate = function (dateString) {
+    -   var d = dateString.substr(5, 2);
+    -   var m = dateString.substr(8, 3);
+    -   var y = dateString.substr(14, 2);
+    -   return d + ' ' + m + ' ' + y;
+    - }
+.feed-col-right
+    if feed['itunes:summary']
+        span#it-summary #{feed['itunes:summary']}
+    else
+        span#it-summary No description.
+    table#episode-table(class="table")
+        thead
+            tr
+                th Title
+                th Date
+                th 
+        tbody
+            each ep in feed.item
+                tr
+                    if ep.title
+                        td(title="#{ep.title}" style="width:100%") 
+                            span #{ep.title}
+                    else
+                        td N/A
+                    td(style="white-space: nowrap;")
+                        if ep.pubDate
+                            - var d = ep.pubDate.substr(5, 2);
+                            - var m = ep.pubDate.substr(8, 3);
+                            - var y = ep.pubDate.substr(14, 2);
+                            span #{d + ' ' + m + ' ' + y}
+                        else
+                            span N/A
+                    td(style="white-space: nowrap;")
+                        if ep.enclosure
+                            button.listenlink.add(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
+                                span.glyphicon.glyphicon-plus-sign(aira-hidden="true")
+                            button.listenlink.play(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
+                                span.glyphicon.glyphicon-play(aira-hidden="true")
+                        else
+                            span.glyphicon.glyphicon-alert(aria-hidden="true" title="No audio data.")
