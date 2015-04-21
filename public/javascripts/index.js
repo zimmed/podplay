@@ -15,22 +15,18 @@
         _open_queue : [],
         _show_loader : function () {
             // TODO: Nicer loader
-            console.log('\t\tShowing loader');
             this._view.html('<div class="loader">Loading...</div>');
         },
         onOpen : function (func) {
-            console.log('\t\tFV.onOpen');
             this._open_queue.unshift(func);
         },
         html : function (html) {
-            console.log('\tSafe insert HTML');
             if (!this.isOpen()) {
                 this.onOpen(function () {
                     window.FeedView.html(html);
                 });
             }
             else if (html) {
-                console.log('\t\tPutting HTML');
                 this._view.html(html);
             }
             return this;
@@ -42,9 +38,7 @@
             return (this._view.html() === '');
         },
         open : function (parent) {
-            console.log('\tOpening...');
             if (this.isOpen()) {
-                console.log('\tIs already open; return');
                 if (!$(parent).is(this._view.parent())) {
                     this.close(parent);
                 }
@@ -53,28 +47,22 @@
                 }
                 return this;
             }
-            console.log('\tNot already open; open');
             this._show_loader();
             $(parent).append(this._view);
-            console.log('\tBegin animation:');
             this._view.animate({
                 height: '400px'
             }, 500, function () {
-                console.log('\t\tAnimation complete. Execute onOpen queue.');
+                window.FeedView._isopen = true;
                 var f = window.FeedView._open_queue.pop();
                 while (typeof(f) !== 'undefined') {
-                    console.log('\t\tf()');
                     f();
                     f = window.FeedView._open_queue.pop();
                 }
-                console.log('\t\tFocus');
-                window.FeedView._isopen = true;
                 this.focus();
             });
             return this;
         },
         close : function (open) {
-            console.log('\tClosing for some reason...');
             if (!this.isOpen()) return this;
             this._isopen = false;
             this._view.animate({
@@ -416,10 +404,8 @@
      */
     window.load_podcast_view = function (id, parent, dontpush, cb) {
         /** NEW INLINE FEED VIEW **/
-        console.log('Loading podcast view: ' + id);
         window.FeedView.open(parent); // Will not execute if already open
         $.get('/api/view/podcast/' + id, function (data) {
-            console.log('\tData received. Putting it into view.');
             // Retrieved podcast view from server API
             window.FeedView.html(data); // Insert view data
             window.pcastReady(); // Load extra scripts
