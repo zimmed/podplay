@@ -86,7 +86,7 @@ nav {
 }
 
 .feed-col-right {
-    max-width: 573px;
+    width: 573px;
     overflow-y: scroll;
 }
 
@@ -367,5 +367,20 @@ legend {
     }
     .feed-col-left {
         width: 150px;
+    }
+    .feed-col-right {
+        width: 523px;
+    }
+}
+@media only screen and (max-width: 991px) {
+    img.podcast-poster {
+        width: 150px;
+        height: 150px;
+    }
+    .feed-col-left {
+        width: 150px;
+    }
+    .feed-col-right {
+        width: 588px;
     }
 }
