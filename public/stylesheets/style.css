@@ -33,6 +33,23 @@ nav {
     margin-right: 25px;
 }
 
+#feed-view {
+    width: 100%;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    background-color: #333;
+}
+
+#feed-view h4 {
+    color: white;
+}
+
+.feed-col-left {
+    width: 300px;
+}
+
 .sleek-gray {
     background: -webkit-linear-gradient( top, #444, #222 );
     background: -moz-linear-gradient( top, #444, #222 );
@@ -41,10 +58,13 @@ nav {
     background: linear-gradient( top, #444, #222 );
 }
 
+#episode-table td {
+    color: #d0d0d0;
+}
+
 #it-summary {
     margin: 0px;
     padding: 10px;
-    color: white;
 }
 
 img.podcast-poster {
@@ -242,11 +262,4 @@ legend {
 
 #sub-left-col {
     min-width: 275px !important;
-}
-
-#feed-view {
-    width: 100%;
-    height: 0px;
-    margin: 0px;
-    padding: 0px;
 }
