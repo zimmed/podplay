@@ -71,7 +71,7 @@ nav {
     padding: 0px;
     position: relative;
     float: left;
-    max-height: 340px;
+    max-height: 364px;
     overflow: hidden;
 }
 
@@ -79,7 +79,7 @@ nav {
     margin: 0;
     padding: 0;
     color: #d0d0d0;
-    height: 60px;
+    height: 36px;
     overflow: hidden;
     width: 100%;
 }
