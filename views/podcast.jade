@@ -37,12 +37,13 @@ script.
                 tr.sleek-gray
                     td#it-summary(colspan="2") #{feed['itunes:summary']}
 // Right column with episode table
-- var formatDate = function (dateString) {
--   var d = dateString.substr(5, 2);
--   var m = dateString.substr(8, 3);
--   var y = dateString.substr(14, 2);
--   return d + ' ' + m + ' ' + y;
-- }
+//-
+    - var formatDate = function (dateString) {
+    -   var d = dateString.substr(5, 2);
+    -   var m = dateString.substr(8, 3);
+    -   var y = dateString.substr(14, 2);
+    -   return d + ' ' + m + ' ' + y;
+    - }
 .feed-col-right
     h3 Episodes
     table#episode-table(class="table table-bordered")
@@ -64,7 +65,7 @@ script.
                         td N/A
                     td
                         if ep.pubDate
-                            span #{formateDate(ep.pubDate)}
+                            span #{ep.pubDate}
                         else
                             span N/A
                     td
