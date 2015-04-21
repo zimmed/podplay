@@ -15,7 +15,7 @@
         _open_queue : [],
         _show_loader : function () {
             // TODO: Nicer loader
-            this.html('<div class="loader">Loading...</div>');
+            this._view.html('<div class="loader">Loading...</div>');
         },
         onOpen : function (func) {
             this._open_queue.unshift(func);
@@ -55,7 +55,7 @@
                 height: '400px'
             }, 500, function () {
                 var f;
-                while (typof(f = this._open_queue.pop()) !== 'undefined') {
+                while (typeof(f = this._open_queue.pop()) !== 'undefined') {
                     f();
                 }
             });
