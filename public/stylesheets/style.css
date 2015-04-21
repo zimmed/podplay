@@ -154,10 +154,8 @@ nav {
 #it-summary {
     margin: 0px;
     padding: 0px;
-    padding-left: 10px;
-    padding-right: 10px;
     font-size: 12px;
-    width: 100%;
+    width: 90%;
     color: #d0d0d0;
     white-space: normal;
 }

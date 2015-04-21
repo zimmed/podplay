@@ -12,10 +12,15 @@
     window.FeedView = {
         _view : $('<div id="feed-view"></div>'),
         _isopen : false,
+        _loading : false,
         _open_queue : [],
         _show_loader : function () {
             // TODO: Nicer loader
             this._view.html('<div class="loader">Loading...</div>');
+            this._loading = true;
+        },
+        isLoading : function () {
+            return this._loading;
         },
         onOpen : function (func) {
             this._open_queue.unshift(func);
@@ -28,11 +33,13 @@
             }
             else if (html) {
                 this._view.html(html);
+                this._loading = false;
                 window.pcastReady();
             }
             return this;
         },
         empty : function () {
+            this._loading = false;
             return this._view.html('');
         },
         isEmpty : function () {
@@ -396,7 +403,13 @@
     
     window.load_podcast_helper = function (id, div) {
         var parent = $(div).parent().parent();
-        window.load_podcast_view(id, parent);
+        if (window.PageStack.getState().page === 'podcast' &&
+            window.PageStack.getState().id == id) {
+            window.FeedView.close();
+        }
+        else if (!window.FeedView.isLoading()) {
+            window.load_podcast_view(id, parent);
+        }
     };
     
     /**
