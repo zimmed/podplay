@@ -58,7 +58,7 @@
                     f();
                     f = window.FeedView._open_queue.pop();
                 }
-                this.focus();
+                window.FeedView.focus();
             });
             return this;
         },
@@ -404,18 +404,23 @@
      */
     window.load_podcast_view = function (id, parent, dontpush, cb) {
         /** NEW INLINE FEED VIEW **/
+        if (!dontpush) {
+            var prev_state = window.PageStack.getState();
+            window.PageStack.push({page: 'podcast',
+                                       id: id, parent: parent},
+                                      '/podcast/' + window.safetitle);
+            if (prev_state.page === 'search') {
+                window.resetSearch();
+            }
+            else if (prev_state.page === 'browse') {
+                window.resetBrowse(prev_state.id);
+            }
+        }
         window.FeedView.open(parent); // Will not execute if already open
         $.get('/api/view/podcast/' + id, function (data) {
             // Retrieved podcast view from server API
             window.FeedView.html(data); // Insert view data
             window.pcastReady(); // Load extra scripts
-            if (!dontpush) {
-                // Push page data
-                
-                window.PageStack.push({page: 'podcast',
-                                       id: id, parent: parent},
-                                      '/podcast/' + window.safetitle);
-            }
             if (cb) cb(); // Callback, if requested
         });
         /** OLD FEED VIEW **\
