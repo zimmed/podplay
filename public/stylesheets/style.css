@@ -65,11 +65,11 @@ nav {
     padding: 0px;
     position: relative;
     float: left;
-    max-height: 300px;
+    max-height: 320px;
     overflow: hidden;
 }
 
-.feed-row-bottom, .feed-row-bottom {
+.feed-row-bottom, .feed-row-top {
     margin: 0;
     padding: 5px;
     color: #d0d0d0;
