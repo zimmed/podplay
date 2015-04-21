@@ -33,9 +33,6 @@ script.
             tr
                 th Genre
                 td #{podcast.genre}
-            if feed['itunes:summary']
-                tr.sleek-gray
-                    td#it-summary(colspan="2") #{feed['itunes:summary']}
 // Right column with episode table
 //-
     - var formatDate = function (dateString) {
@@ -79,4 +76,8 @@ script.
                                 span.glyphicon.glyphicon-play(aira-hidden="true")
                         else
                             span.glyphicon.glyphicon-alert(aria-hidden="true" title="No audio data.")
-
+.feed-row-bottom.sleek-gray
+    if feed['itunes:summary']
+        span#it-summary #{feed['itunes:summary']}
+    else
+        span#it-summary N/A
