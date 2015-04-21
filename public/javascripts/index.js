@@ -15,7 +15,7 @@
         _open_queue : [],
         _show_loader : function () {
             // TODO: Nicer loader
-            this.html('Loading...');
+            this.html('<div class="loader">Loading...</div>');
         },
         onOpen : function (func) {
             this._open_queue.unshift(func);
@@ -701,7 +701,7 @@
      */
     window.fastCat = function (panel) {
         var num = 1, i, el = $(panel).find('.panel-body'), gid = $(panel).data('genreid');
-            el.html('<p>Loading...</p>');
+            el.html('<div class="loader">Loading...</div>');
             $.get('/api/castcat/' + gid, function (data) {
                 el.html('');
                 if (data.favorites) {
