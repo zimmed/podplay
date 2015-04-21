@@ -405,7 +405,7 @@
         var parent = $(div).parent().parent();
         if (window.PageStack.getState().page === 'podcast' &&
             window.PageStack.getState().id == id) {
-            window.FeedView.close();
+            window.PageStack.moveBack();
         }
         else if (!window.FeedView.isLoading()) {
             window.load_podcast_view(id, parent);
@@ -600,8 +600,17 @@
      * @param {Bool} dontpush - Optional flag skips page-pushing when truthy.
      */
     window.browseGenre = function (genreid, dontpush) {
+        if (!dontpush) {
+            if (window.PageStack.getState().page === 'podcast') {
+                window.FeedView.close();
+            }
+                window.PageStack.push({page: 'browse', id: genreid},
+                                      '/browse/' + genreid);
+        }
+        $('.genre-panel[data-genreid="' + genreid + '"] > .panel-body')
+            .html('<div class="loader">Loading...</div>');
         $.get('/api/browse/?cat=' + genreid, function (data) {
-            browseResults(genreid, data.podcasts, data.favorites, dontpush);
+            browseResults(genreid, data.podcasts, data.favorites);
         });
     };
     
@@ -612,7 +621,7 @@
      * @param {Array} favs - List of user-favorited podcast objects.
      * @param {Bool} dontpush - Optional flag skips page-pushing when truthy.
      */
-    function browseResults (genreid, pcasts, favs, dontpush) {
+    function browseResults (genreid, pcasts, favs) {
         var num = 0, app = false,
             selector = $('.genre-panel[data-genreid="' + genreid + '"] > .panel-body');
         if (favs) {
@@ -627,10 +636,7 @@
         window.expand_panel(selector, num);
         $(selector)[0].scrollIntoView();
         if (num > 0) {
-            if (!dontpush) {
-                window.PageStack.push({page: 'browse', id: genreid},
-                                      '/browse/' + genreid);
-            }
+            
             $('#podcast-search-input').val('');
             window.quicksearch(true);
             $('.genre-panel').each(function () {
