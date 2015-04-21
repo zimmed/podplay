@@ -20,14 +20,15 @@
         onOpen : function (func) {
             this._open_queue.unshift(func);
         },
-        html : function (html) {
+        load : function (html) {
             if (!this.isOpen()) {
                 this.onOpen(function () {
-                    window.FeedView.html(html);
+                    window.FeedView.load(html);
                 });
             }
             else if (html) {
                 this._view.html(html);
+                window.pcastReady();
             }
             return this;
         },
@@ -345,6 +346,9 @@
      * Document entry point when loading podcast view.
      */
     window.pcastReady = function () {
+        window.PageStack.replace({page: 'podcast', id: id,
+                                  parent: parent},
+                                 '/podcast/' + window.safetitle);
         // load new URL when user clicks on new podcast link
         $('.listenlink').click(function() {
             var audioURL = $(this).attr('data-audio');
@@ -419,11 +423,7 @@
         window.FeedView.open(parent); // Will not execute if already open
         $.get('/api/view/podcast/' + id, function (data) {
             // Retrieved podcast view from server API
-            window.FeedView.html(data); // Insert view data
-            window.pcastReady(); // Load extra scripts
-            window.PageStack.replace({page: 'podcast', id: id,
-                                      parent: parent},
-                                     '/podcast/' + window.safetitle);
+            window.FeedView.load(data); // Insert view data
             if (cb) cb(); // Callback, if requested
         });
         /** OLD FEED VIEW **\
@@ -775,7 +775,7 @@
         }
         // Get current page state
         state = window.PageStack.getState();
-        console.log(prev_state.page + ' -> ' + state.page);
+        console.log(prev_state.page + ':' + state.id + ' -> ' + state.page + ':' + state.id);
         // Determine view change based page to which the user navigated.
         if (state.page === 'podcast') { // PODCAST FEED
             // Previous page was search
