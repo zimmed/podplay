@@ -1132,7 +1132,9 @@
         
         // Load correct view into left panel
         if (window.preload_cast) {
-            window.load_podcast_view(window.preload_cast, '#pc-0', true);
+            window.load_splash_view(true, function () {
+                window.load_podcast_view(window.preload_cast, '#pc-0', true);
+            });
         }
         else if (window.preload_search) {
             var ps = window.preload_search.replace(/(\s+|\%20)/g, '+');
