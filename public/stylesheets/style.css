@@ -66,6 +66,7 @@ nav {
     position: relative;
     float: left;
     max-height: 300px;
+    overflow: none;
 }
 
 .feed-row-bottom, .feed-row-bottom {
@@ -77,8 +78,17 @@ nav {
     width: 100%;
 }
 
+.feed-col-right {
+    max-width: 570px;
+}
+
 .feed-col-left {
     width: 250px;
+}
+
+.listenlink {
+    width: 30px;
+    height: 30px;
 }
 
 .sleek-gray {
@@ -89,8 +99,16 @@ nav {
     background: linear-gradient( top, #444, #222 );
 }
 
-#episode-table td, #feedinfo-table {
-    color: #d0d0d0;
+#episode-table, #feedinfo-table {
+    color: #d0d0d0; 
+}
+
+#episode-table td {
+    padding: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 40px;
+    line-height: 40px;
 }
 
 #it-summary {
@@ -194,7 +212,7 @@ tr.feed-row:hover {
     display: block !important;
 }
 
-.castnail.favorite > img{
+.castnail.favorite > img {
     border: 4px solid blue;
 }
 
