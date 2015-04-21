@@ -346,8 +346,9 @@
      * Document entry point when loading podcast view.
      */
     window.pcastReady = function () {
-        window.PageStack.replace({page: 'podcast', id: id,
-                                  parent: parent},
+        window.PageStack.replace({page: 'podcast',
+                                  id: window.PageStack.getState().id,
+                                  parent: window.PageStack.getState().parent},
                                  '/podcast/' + window.safetitle);
         // load new URL when user clicks on new podcast link
         $('.listenlink').click(function() {
