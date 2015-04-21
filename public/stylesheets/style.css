@@ -114,6 +114,10 @@ nav {
     line-height: 34px;
 }
 
+#episode-table td .glyphicon {
+    top: -2px !important;
+}
+
 #it-summary {
     margin: 0px;
     padding: 10px;
