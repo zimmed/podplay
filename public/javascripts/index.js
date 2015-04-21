@@ -364,8 +364,6 @@
     };
     
     window.load_podcast_helper = function (id, div) {
-        console.log(div);
-        console.log($(div));
         var parent = $(div).parent().parent();
         window.load_podcast_view(id, parent);
     };
@@ -383,7 +381,7 @@
         /** NEW INLINE FEED VIEW **/
         if (window.FeedView.isOpen()) {
             // FeedView already open
-            if (window.FeedVeiw.parent().is($(parent))) {
+            if (window.FeedView.parent().is($(parent))) {
                 // FeedView already open in requested parent container.
                 window._show_loader(); // Just replace contents with loader.
             }
