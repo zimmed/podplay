@@ -12,49 +12,73 @@
     window.FeedView = {
         _view : $('<div id="feed-view"></div>'),
         _isopen : false,
+        _open_queue : [],
         _show_loader : function () {
             // TODO: Nicer loader
             this.html('Loading...');
         },
+        onOpen : function (func) {
+            this._open_queue.unshift(func);
+        },
         html : function (html) {
-            if (html) {
+            if (!this.isOpen()) {
+                this.onOpen(function () {
+                    window.FeedView.html(html);
+                });
+            }
+            else if (html) {
                 this._view.html(html);
             }
             return this;
         },
         empty : function () {
-            return this.html('');
+            return this._view.html('');
         },
         isEmpty : function () {
             return (this._view.html() === '');
         },
         open : function (parent) {
-            if (this.isOpen()) return this;
+            if (this.isOpen()) {
+                if (!$(parent).is(this._view.parent())) {
+                    this.close(parent);
+                }
+                else {
+                    this._show_loader();
+                }
+                return this;
+            }
+            this.focus();
             this._show_loader();
             this._isopen = true;
             $(parent).append(this._view);
             this._view.animate({
                 height: '400px'
             }, 500, function () {
+                var f;
+                while (typof(f = this._open_queue.pop()) !== 'undefined') {
+                    f();
+                }
             });
             return this;
         },
-        close : function () {
+        close : function (open) {
             if (!this.isOpen()) return this;
             this._isopen = false;
             this._view.animate({
                 height: '0px'
             }, 500, function () {
-                window.FeedView.empty();
+                window.FeedView._view.empty();
                 window.FeedView._view.remove();
+                if (open) window.FeedView.open(open);
             });
+            return this;
         },
         isOpen : function () {
             return this._isopen;
         },
         focus : function () {
             if (this.isOpen()) {
-                this._view[0].scrollIntoView();
+                this._view.parent()[0].scrollIntoView();
             }
             return this;
         },
@@ -379,24 +403,6 @@
      */
     window.load_podcast_view = function (id, parent, dontpush, cb) {
         /** NEW INLINE FEED VIEW **/
-        if (window.FeedView.isOpen()) {
-            // FeedView already open
-            console.log('FeedView isOpen');
-            if (window.FeedView.parent().is($(parent))) {
-                // FeedView already open in requested parent container.
-                console.log('\tShowing loader.');
-                window.FeedView._show_loader(); // Just replace contents with loader.
-            }
-            else {
-                // FeedView open somewhere else.
-                // First close view, wait for close, then continue.
-                window.FeedView.close(); 
-                console.log('\tlooping');
-                while (window.FeedView.isOpen()) {
-                    // Scary loop - but gauranteed to terminate in ~250ms.
-                }
-            }
-        }
         window.FeedView.open(parent); // Will not execute if already open
         $.get('/api/view/podcast/' + id, function (data) {
             // Retrieved podcast view from server API
