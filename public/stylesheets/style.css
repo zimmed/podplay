@@ -133,6 +133,7 @@ span.nobreak {
     line-height: 34px;
     overflow: hidden;
     border: none;
+    white-space: nowrap;
 }
 
 #episode-table th {
@@ -143,14 +144,8 @@ span.nobreak {
     top: -2px !important;
 }
 
-span.eptitle {
-    margin: 0;
-    padding: 0;
-    line-height: 34px;
-    height: 34px;
-    overflow: hidden;
-    white-space: nowrap;
-    max-width: 400px;
+.eptitle {
+    width: 400px;
 }
 
 #it-summary {
@@ -374,15 +369,15 @@ legend {
     .feed-col-right {
         max-width: 523px;
     }
-    span.eptitle {
-        max-width: 350px;
+    .eptitle {
+        width: 350px;
     }
 }
 @media only screen and (max-width: 991px) {
     .feed-col-right {
         max-width: 538px;
     }
-    span.eptitle {
-        max-width: 365px;
+    .eptitle {
+        width: 365px;
     }
 }
