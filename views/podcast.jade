@@ -57,9 +57,9 @@ span.nobreak
             tbody
                 each ep in feed.item
                     tr
-                        if ep.title
+                        if ep.title(style="width:400px;")
                             td#eptitle(title="#{ep.title}") 
-                                span.eptitle #{ep.title}
+                                span #{ep.title}
                         else
                             td N/A
                         td

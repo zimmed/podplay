@@ -115,6 +115,7 @@ span.nobreak {
 
 #episode-table {
     border: none;
+    table-layout: fixed;
 }
 
 #episode-table tr:nth-child(even) {
