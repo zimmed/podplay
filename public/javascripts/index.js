@@ -34,8 +34,8 @@
             this._view.animate({
                 height: '400px'
             }, 500, function () {
-                this._show_loader();
-                this._isopen = true;
+                window.FeedView._show_loader();
+                window.FeedView._isopen = true;
             });
             return this;
         },
@@ -44,9 +44,9 @@
             this._view.animate({
                 height: '0px'
             }, 500, function () {
-                this._isopen = false;
-                this.empty();
-                this._view.remove();
+                window.FeedView._isopen = false;
+                window.FeedView.empty();
+                window.FeedView._view.remove();
             });
         },
         isOpen : function () {
