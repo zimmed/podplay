@@ -72,7 +72,10 @@
             return this;
         },
         close : function (open) {
-            if (!this.isOpen()) return this;
+            if (!this.isOpen()) {
+                this._loading = false;
+                return this;
+            }
             this._isopen = false;
             this._view.animate({
                 height: '0px'
