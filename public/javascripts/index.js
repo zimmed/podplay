@@ -363,8 +363,8 @@
         });
     };
     
-    window.load_podcast_helper = function (id) {
-        console.log(this);
+    window.load_podcast_helper = function (id, div) {
+        console.log($(div));
     };
     
     /**
@@ -620,7 +620,7 @@
         if (!append) $(selector).html('');
         for (i in pcasts) {
             var classes = (fav) ? "castnail favorite" : "castnail";
-            $(selector).append('<div class="'+classes+'" onclick="load_podcast_helper(\''+pcasts[i]._id+'\');" data-title="'+pcasts[i].title+'"><img src="'+pcasts[i].poster100+'"></div>');
+            $(selector).append('<div class="'+classes+'" onclick="load_podcast_helper(\''+pcasts[i]._id+'\', this);" data-title="'+pcasts[i].title+'"><img src="'+pcasts[i].poster100+'"></div>');
         }
     }
     
