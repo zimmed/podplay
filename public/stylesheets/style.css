@@ -34,6 +34,7 @@ nav {
 }
 
 #feed-view {
+    min-width: 688px;
     width: 100%;
     height: 0px;
     margin: 0px;
