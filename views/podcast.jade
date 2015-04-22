@@ -9,6 +9,17 @@ script.
     h4 #{feed.title}
 .feed-col-left
     img.podcast-poster(src="#{podcast.poster600}")
+    if user
+        if isFavorited(user, podcast._id)
+            button.btn.btn-primary.btn-outline.btn-lg#fav(data-id="#{podcast._id}" data-toggle="tooltip" data-placement="right" title="Remove Subscription")
+                span.glyphicon.glyphicon-star(aria-hidden="true")
+        else
+            button.btn.btn-primary.btn-outline.btn-lg#fav(data-id="#{podcast._id}" data-toggle="tooltip" data-placement="right" title="Susbcribe")
+                span.glyphicon.glyphicon-star-empty(aria-hidden="true")
+    else
+        button.btn.btn-primary.btn-outline.btn-lg#fav-fake(data-toggle="tooltip" data-placement="right" title="Sign in to subscribe.")
+            span.glyphicon.glyphicon-star-empty(aria-hidden="true")
+                
     // Container for audio player.
     //-
         div.podcast-player
@@ -20,26 +31,14 @@ script.
                 $( function() { $( 'audio' ).audioPlayer(); } ); 
     table#feedinfo-table(class="table sleek-gray")
         tbody
-            
-            tr
-                if user
-                    th Favorite
-                    td
-                        button.btn.btn-default.listenlink#fav(data-id="#{podcast._id}")
-                            if isFavorited(user, podcast._id)
-                                span.glyphicon.glyphicon-star(aria-hidden="true")
-                            else
-                                span.glyphicon.glyphicon-star-empty(aria-hidden="true")
-                else
-                    td(colspan="2") Sign in to subscribe.
             tr
                 th Author
                 td
-                    div.wrap(style="height:24px") #{podcast.artistName}
+                    div.wrap(style="height:54px;line-height:27px;") #{podcast.artistName}
             tr
                 th Genre
                 td 
-                    div.wrap(style="height:24px") #{podcast.genre}
+                    div.wrap(style="height:54px;line-height:27px;") #{podcast.genre}
 // Right column with episode table
 //-
     - var formatDate = function (dateString) {
@@ -70,9 +69,9 @@ script.
                     tr
                         td(title="#{ep.title}")
                             if ep.title
-                                div.wrap #{ep.title}
+                                div.wrap(style="height:34px;") #{ep.title}
                             else
-                                div.wrap N/A
+                                div.wrap(style="height:34px;") N/A
                         td
                             if ep.pubDate
                                 - var d = ep.pubDate.substr(5, 2);

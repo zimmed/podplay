@@ -246,13 +246,16 @@
      * @param {Number} id - The podcast ID to add.
      */
     window.favorite = function (id) {
+        $('#fav').prop('disabled', true);
         $.get('/users/favorite/' + id, function (data) {
             $('#fav').html('<span class="glyphicon glyphicon-star" ' +
                            'aria-hidden="true"></span>');
+            $('#fav').attr('title', "Remove Subscription");
             $('#fav').off('click');
             $('#fav').click(function () {
                 defavorite(id);
             });
+            $('#fav').prop('disabled', false);
         });
     };
     
@@ -261,13 +264,16 @@
      * @param {Number} id - The podcast ID to remove.
      */
     window.defavorite = function (id) {
+        $('#fav').prop('disabled', true);
         $.get('/users/defavorite/' + id, function (data) {
             $('#fav').html('<span class="glyphicon glyphicon-star-empty"' +
                            'aria-hidden="true"></span>');
+            $('#fav').attr('title', "Subscribe");
             $('#fav').off('click');
             $('#fav').click(function () {
                 favorite(id);
             });
+            $('#fav').prop('disabled', false);
         });
     };
     
