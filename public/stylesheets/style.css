@@ -145,19 +145,40 @@ nav {
 
 .btn .glyphicon {
     top: -2px !important;
+    position: relative;
 }
 
 .btn-fav {
     background: transparent;
     position: absolute;
     z-index: 2;
-    top: 0;
-    left: 0;
+    top: 0.25em;
+    left: 0.25em;
+    transition-duration: 0.25s;
+    border-width: 2px;
+    border-color: white;
+    width: 2em;
+    height: 2em;
+    padding: 0 !important;
+    padding-top: 0.5em !important;
+    opacity: 0.75;
+}
+
+.btn-fav:hover, btn-fav:focus {
+    background-color: #285e8e;
+    border-color: white;
+    opacity: 0.9;
+}
+
+#btn-fav[title="Remove Subscription"]:hover, 
+#btn-fav[title="Remove Subscription"]:focus {
+    background-color: #ac2925;
 }
 
 .btn-fav .glyphicon {
-    width: 40px;
-    height: 4px;
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
 }
 
 #it-summary {
