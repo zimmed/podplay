@@ -247,7 +247,8 @@
      */
     window.favorite = function (id) {
         $.get('/users/favorite/' + id, function (data) {
-            $('#fav').html('Remove');
+            $('#fav').html('<span class="glyphicon glyphicon-star" ' +
+                           'aria-hidden="true"></span>');
             $('#fav').off('click');
             $('#fav').click(function () {
                 defavorite(id);
@@ -261,7 +262,8 @@
      */
     window.defavorite = function (id) {
         $.get('/users/defavorite/' + id, function (data) {
-            $('#fav').html('Add');
+            $('#fav').html('<span class="glyphicon glyphicon-star-empty"' +
+                           'aria-hidden="true"></span>');
             $('#fav').off('click');
             $('#fav').click(function () {
                 favorite(id);
