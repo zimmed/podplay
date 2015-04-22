@@ -116,7 +116,7 @@ nav {
     min-width: 100px;
 }
 
-#feed-info-table .wrap {
+#feedinfo-table .wrap {
     font-size: 16px;
     height: 44px;
     line-height: 22px;
@@ -415,7 +415,7 @@ legend {
     .feed-col-right {
         width: 523px;
     }
-    #feed-info-table .wrap {
+    #feedinfo-table .wrap {
         font-size: 12px;
         height: 60px;
         line-height: 20px;
