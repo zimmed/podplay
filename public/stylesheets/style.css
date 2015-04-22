@@ -164,6 +164,8 @@ nav {
     padding-top: 0.35em !important;
     padding-left: 0.1em !important;
     opacity: 0.75;
+    box-shadow: 2px 2px 2px #3c3c3c;
+    text-shadow: 1px 1px #3c3c3c;
 }
 
 .btn-fav:hover, .btn-fav:focus {
@@ -184,10 +186,11 @@ nav {
 }
 
 #it-summary {
+    display: block;
     margin: 0px;
-    padding: 0px;
+    padding: 10px;
     font-size: 12px;
-    width: 90%;
+    width: 100%;
     color: #d0d0d0;
     white-space: normal;
 }
@@ -405,6 +408,11 @@ legend {
     }
     .feed-col-right {
         width: 523px;
+    }
+    #feed-info-table .wrap {
+        font-size: 12px;
+        height: 60px;
+        line-height: 20px;
     }
 }
 @media only screen and (max-width: 991px) {
