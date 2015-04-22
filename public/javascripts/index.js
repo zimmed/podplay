@@ -403,6 +403,8 @@
                 window.defavorite($(this).data('id'));
             }
         });
+        
+        $('[data-toggle="tooltip"]').tooltip()
     };
     
      /**
