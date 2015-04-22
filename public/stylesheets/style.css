@@ -116,6 +116,12 @@ nav {
     min-width: 100px;
 }
 
+#feed-info-table .wrap {
+    font-size: 16px;
+    height: 44px;
+    line-height: 22px;
+}
+
 .nowrap {
     white-space: nowrap;
 }
