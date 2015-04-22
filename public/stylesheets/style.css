@@ -151,16 +151,18 @@ nav {
 .btn-fav {
     background: transparent;
     position: absolute;
+    font-size: 24px;
     z-index: 2;
     top: 0.25em;
     left: 0.25em;
     transition-duration: 0.25s;
     border-width: 2px;
     border-color: white;
-    width: 2em;
-    height: 2em;
+    width: 1.75em;
+    height: 1.75em;
     padding: 0 !important;
-    padding-top: 0.5em !important;
+    padding-top: 0.35em !important;
+    padding-left: 0.1em !important;
     opacity: 0.75;
 }
 
@@ -176,7 +178,6 @@ nav {
 }
 
 .btn-fav .glyphicon {
-    font-size: 24px;
     padding: 0;
     margin: 0;
 }
