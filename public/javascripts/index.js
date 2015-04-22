@@ -280,6 +280,7 @@
             });
         }
         else if ($('.notif').html() !== msg) {
+            console.log($('.notif').html() + ' -> ' + msg);
             $('.notif').animate({'opacity': 1}, 250, function () {
                 $('.notif').html(msg);
             });
