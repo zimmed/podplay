@@ -25,11 +25,10 @@ script.
                 if user
                     th Favorite
                     td
-                        if isFavorited(user, podcast._id)
-                            button#fav(data-id="#{podcast._id}")
+                        button.btn.btn-default.listenlink#fav(data-id="#{podcast._id}")
+                            if isFavorited(user, podcast._id)
                                 span.glyphicon.glyphicon-star(aria-hidden="true")
-                        else
-                            button#fav(data-id="#{podcast._id}")
+                            else
                                 span.glyphicon.glyphicon-star-empty(aria-hidden="true")
                 else
                     td(colspan="2") Sign in to subscribe.
