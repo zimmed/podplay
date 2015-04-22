@@ -274,16 +274,17 @@
      * @param {String} msg - The message to display.
      */
     window.showNotification = function (msg) {
-        if ($('.notif').css('opacity') == 1) {
-            window.closeNotification(function () {
-                window.showNotification(msg);
-            });
-        }
-        else if ($('.notif').html() !== msg) {
-            console.log($('.notif').html() + ' -> ' + msg);
-            $('.notif').animate({'opacity': 1}, 250, function () {
-                $('.notif').html(msg);
-            });
+        if ($('.notif').html() !== msg) {
+            if ($('.notif').css('opacity') == 1) {
+                window.closeNotification(function () {
+                    window.showNotification(msg);
+                });
+            }
+            else {
+                $('.notif').animate({'opacity': 1}, 250, function () {
+                    $('.notif').html(msg);
+                });
+            }
         }
     };
     
