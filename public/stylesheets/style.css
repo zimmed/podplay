@@ -324,6 +324,10 @@ legend {
     float: right;
 }
 
+.btnLogin[disabled] {
+    color: #999;
+}
+
 .btn-cancel {
     float: none !important;
     left: -5px;
