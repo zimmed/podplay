@@ -274,18 +274,29 @@
      * @param {String} msg - The message to display.
      */
     window.showNotification = function (msg) {
-        $('.notif').animate({'opacity': 1}, 250, function () {
-            $('.notif').html(msg);
-        });
+        if ($('.notif').css('opacity') == 1) {
+            window.closeNotification(function () {
+                window.showNotification(msg);
+            });
+        }
+        else if ($('.notif').html() !== msg) {
+            $('.notif').animate({'opacity': 1}, 250, function () {
+                $('.notif').html(msg);
+            });
+        }
     };
     
     /**
      * Close form notifications.
+     * @param {Function} cb - Optional callback function.
      */
-    window.closeNotification = function () {
-        $('.notif').animate({'opacity': 0}, 250, function () {
-            $('.notif').html('&nbsp;');
-        });
+    window.closeNotification = function (cb) {
+        if ($('.notif').css('opacity') != 0) {
+            $('.notif').animate({'opacity': 0}, 250, function () {
+                $('.notif').html('&nbsp;');
+                if (cb) cb();
+            });
+        }
     };
     
     /**
@@ -465,6 +476,10 @@
     /**
      * Checks Login form for valid input and
      *      provides helpful feedback to the user.
+     * Note: Login form provides generic feedback, because
+     *  it is assumed users who use it will have already
+     *  registered, through the reg form, and thus do not
+     *  need specific details on what a valid input is.
      */
     function validLoginForm() {
         var msg, p = '',
@@ -472,8 +487,6 @@
             password = $('#pw').val();
         // Reset valid/invalid inputs
         $('#name, #pw').removeClass('error valid');
-        // Close existing notification
-        window.closeNotification();
         // Verify username
         if (!username.match(/^[a-zA-Z0-9\.]{5,26}$/)) {
             // Username is not valid
@@ -502,8 +515,12 @@
             // Form is not valid
             $('#btn-login').prop('disabled', true);
             if ($(p).val()) {
+                // For login form, don't show error if field is empty.
                 window.showNotification(msg);
                 $(p).addClass('error');
+            }
+            else {
+                window.closeNotification();
             }
         }
     }
