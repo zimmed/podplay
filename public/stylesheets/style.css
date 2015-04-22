@@ -166,10 +166,11 @@ nav {
     opacity: 0.75;
 }
 
-.btn-fav:hover, btn-fav:focus {
+.btn-fav:hover, .btn-fav:focus {
     background-color: #285e8e;
     border-color: white;
     opacity: 0.9;
+    outline: none;
 }
 
 #btn-fav[title="Remove Subscription"]:hover, 
