@@ -296,6 +296,7 @@
          * @param {Function} cb - Optional generic callback function.
          */
         _fireLoad : function (page, state, prev, cb) {
+            console.log('Load: ' + page);
             var events = [], e;
             if (this._on_loads[page]) {
                 for (var i in this._on_loads[page]) {
@@ -324,6 +325,7 @@
          * @param {Function} cb - Optional generic callback function.
          */
         _fireUnload : function (page, state, prev, cb) {
+            console.log('Unload: ' + page);
             var events = [], e;
             if (this._on_unloads[page]) {
                 for (var i in this._on_unloads[page]) {
