@@ -8,6 +8,31 @@
     
     
     /**
+     * * * * * * * * * * 
+     * JQUERY EXTENSIONS
+     * * * * * * * * * *
+     */
+    
+    /**
+     * Generate a unique selector for any element or
+     *  group of elements.
+     */
+    var uniqueId = 1000;
+    $.fn.getUnique = function () {
+        var i, a = [], key = 'jQ-parent-id', id;
+        for (i = 0; i < $(this).length; i++) {
+            id = $($(this)[i]).data('jQ-parent-id');
+            if (!id) {
+                id = uniqueId++;
+                $($(this)[i]).data('jQ-parent-id', id);
+            }
+            a.push('[data-jQ-parent-id="' + id + '"]');
+        }
+        return a.join(', ');
+    };
+    
+    
+    /**
      * * * * * * * * * * * * * * * * * * * * *
      * WINDOW-EXPOSED GLOBAL VARS & FUNCTIONS
      * * * * * * * * * * * * * * * * * * * * *
@@ -134,7 +159,7 @@
         }
         else if (!window.FeedView.isLoading()) {
             window.PageStack.load(Pages.PODCAST,
-                                  {id: id, parent: parent},
+                                  {id: id, parent: $(parent).getUnique();},
                                   '/podcast/' + id);
         }
     };
