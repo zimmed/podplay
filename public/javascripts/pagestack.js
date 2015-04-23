@@ -424,7 +424,7 @@
                         : false);
         if (!prev) {
             console.log('Popped to state not found in PageStack.');
-            window.location.replace(document.location.pathname);
+            //window.location.replace(document.location.pathname);
         }
     };
     
