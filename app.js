@@ -16,7 +16,6 @@ var index = require('./routes/index');
 var browse = require('./routes/browse');
 var search = require('./routes/search');
 var users = require('./routes/users');
-var test = require('./routes/test');
 var api = require('./routes/api');
 var podcast = require('./routes/podcast');
 
@@ -47,7 +46,6 @@ app.use('/', index);
 app.use('/browse', browse);
 app.use('/search', search);
 app.use('/users', users);
-app.use('/test', test);
 app.use('/api', api);
 app.use('/podcast', podcast);
 

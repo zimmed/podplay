@@ -2,7 +2,7 @@
  * routes/api.js - Defines /api/search and /api/browse routes for API requests
  *
  * Authors: Ian McGaunn; Dave Zimmelman
- * Modified: 09 Mar 15
+ * Modified: 22 Apr 15
  */
 
 var express = require('express');
@@ -20,6 +20,7 @@ var isFavorited = require('../lib/users').isFavorited;
 /**
  * Routes for api/view URLs
  */
+// Get default splash page
 router.get('/view/splash', function (req, res, next) {
     var casts;
     if (req.session.user) {
@@ -32,11 +33,13 @@ router.get('/view/splash', function (req, res, next) {
             genres: Podcasts.Genres});
     }
 });
+// Get podcast view
 router.get('/view/podcast/:id', function (req, res, next) {
     var id = req.params.id;
     // HTTP request information on podcast ID via Apple API
     Podcasts.getPodcast(id, function (error, msg) {
-        res.render('error', { message: msg, error: error});
+        console.log('Bad pocast view request: ' + id);
+        res.redirect('/404');
     }, function (podcast) {
         request(podcast.feedUrl, function (error, response, body) {
             // Data returned in XML format, and must be parsed.
@@ -69,6 +72,11 @@ router.get('/view/podcast/:id', function (req, res, next) {
         });
     });
 });
+
+/**
+ * Data requests
+ */
+// Get quick results for a genre
 router.get('/castcat/:gid', function (req, res, next) {
     if (req.session.user) {
         Cache.aggregate_cat(req.params.gid,
@@ -91,27 +99,7 @@ router.get('/castcat/:gid', function (req, res, next) {
     }
 });
 
-/**
- * Route for api/clientkey URL
- */
-router.post('/clientkey', function (req, res, next) {
-    if (!req.body.key) {
-        res.json({status: 400,
-                  message: "Bad Request"});
-    }
-    else if (req.body.key !== 'fish') {
-        res.json({status: 401,
-                  message: "Unauthorized"});
-    }
-    else {
-        res.json({status: 200,
-                  message: clientKey});
-    }
-});
-
-/**
- * Route for api/search URL
- */
+// Get all results for a give search term
 router.get('/search', function (req, res, next) {
     var api = 'https://itunes.apple.com/search?entity=podcast&term=';
     // Name is ambiguous, and might confuse things when we implement local searching by station/artist/etc.
@@ -145,9 +133,7 @@ router.get('/search', function (req, res, next) {
     });
 });
 
-/**
- * Route for api/browse URL
- */
+// Get all results for a given genre
 router.get('/browse', function (req, res, next) {
     var a, favs = false, user = req.session.user, genre, gid = req.query.cat;
     if (!gid || !Podcasts.Genres[gid]) {
@@ -185,9 +171,7 @@ router.get('/browse', function (req, res, next) {
     }
 });
 
-/**
- * Route for api/cachesearch URL
- */
+// Get cached search data
 router.get('/cachesearch', function (req, res, next) {
     if (!req.query.term) {
         res.json([]);
@@ -200,9 +184,7 @@ router.get('/cachesearch', function (req, res, next) {
     }
 });
 
-/**
- * Route for api/cachebrowse URL
- */
+// Get cached browse data
 router.get('/cachebrowse', function (req, res, next) {
     if (!req.query.cat) {
         res.json({});
@@ -215,9 +197,7 @@ router.get('/cachebrowse', function (req, res, next) {
     }
 });
 
-/**
- * Route for api/quicksearch URL
- */
+// Get quicksearch results
 router.get('/quicksearch', function (req, res, next) {
     if (!req.query.term) {
         res.json([]);
@@ -226,6 +206,24 @@ router.get('/quicksearch', function (req, res, next) {
         Podcasts.searchByTerm(req.query.term, 25, function (data) {
             res.json(data);
         });
+    }
+});
+
+/**
+ * Route for api/clientkey URL
+ */
+router.post('/clientkey', function (req, res, next) {
+    if (!req.body.key) {
+        res.json({status: 400,
+                  message: "Bad Request"});
+    }
+    else if (req.body.key !== 'fish') {
+        res.json({status: 401,
+                  message: "Unauthorized"});
+    }
+    else {
+        res.json({status: 200,
+                  message: clientKey});
     }
 });
 
