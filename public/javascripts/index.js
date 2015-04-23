@@ -406,8 +406,8 @@
             }
             el.append('<button type="button" class="btn btn-' +
                       'default btn-lg ' +
-                      'btn-viewgenre" onclick="window.browse' +
-                      'Genre(\'' + gid + '\');"><span class="' +
+                      'btn-viewgenre" onclick="browseCat' +
+                      '(\'' + gid + '\');"><span class="' +
                       'glyphicon glyphicon-triangle-bottom" ' +
                       'aria-hidden="true"></span>View All</button>');
             shrink_panel(el, num);
