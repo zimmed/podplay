@@ -1,8 +1,11 @@
 /**
- * pagestack.js - Customized PageView stack data-structure
- *      for url/view tracking.
+ * pagestack.js - A modular Page/View stack structure
+ *      for client-side url/view tracking.
  * Authors: Dave Zimmelman
+ * Created for use in Podplay.me, a project by Ian McGaunn and Dave Zimmelman.
  * Modified: 22 Apr 15
+ *
+ * @expose {PageStack} window.PageStack
  */
 
 (function (document, window) {

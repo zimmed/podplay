@@ -3,6 +3,8 @@
  *      to display podcast feeds to the user.
  * Authors: Ian McGaunn; Dave Zimmelman
  * Modified: 22 Apr 15
+ *
+ * @expose {FeedView} window.FeedView
  */
 
 (function (window, $) {
