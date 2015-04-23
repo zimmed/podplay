@@ -70,6 +70,7 @@
             $('#fav').html('<span class="glyphicon glyphicon-star" ' +
                            'aria-hidden="true"></span>');
             $('#fav').attr('title', "Remove Subscription");
+            $('#fav').tooltip();
             $('#fav').off('click');
             $('#fav').click(function () {
                 defavorite(id);
@@ -88,6 +89,7 @@
             $('#fav').html('<span class="glyphicon glyphicon-star-empty"' +
                            'aria-hidden="true"></span>');
             $('#fav').attr('title', "Subscribe");
+            $('#fav').tooltip();
             $('#fav').off('click');
             $('#fav').click(function () {
                 favorite(id);
@@ -698,11 +700,9 @@
         $('#fav').click(function () {
             if ($(this).html().trim() === 'Add') {
                 window.favorite($(this).data('id'));
-                $('[data-toggle="tooltip"]').tooltip();
             }
             else {
                 window.defavorite($(this).data('id'));
-                $('[data-toggle="tooltip"]').tooltip();
             }
         });
 
