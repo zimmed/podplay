@@ -159,7 +159,7 @@
         }
         else if (!window.FeedView.isLoading()) {
             window.PageStack.load(Pages.PODCAST,
-                                  {id: id, parent: $(parent).getUnique();},
+                                  {id: id, parent: $(parent).getUnique()},
                                   '/podcast/' + id);
         }
     };
