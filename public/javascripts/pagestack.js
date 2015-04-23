@@ -422,6 +422,10 @@
                     : ((PageStack._pages_eq(state, PageStack.getState(1)))
                         ? PageStack._handle_forward()
                         : false);
+        
+        console.log('COMPARE ' + JSON.stringify(state) + ' to:');
+        console.log('\tback: ' + JSON.stringify(PageStack.getState(-1)));
+        console.log('\tforw: ' + JSON.stringify(PageStack.getState(1)));
         if (!prev) {
             console.log('Popped to state not found in PageStack.');
             //window.location.replace(document.location.pathname);
