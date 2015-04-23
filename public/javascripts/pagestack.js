@@ -5,7 +5,7 @@
  * Modified: 22 Apr 15
  */
 
-(function (window) {
+(function (document, window) {
     'use strict';
     
     /**
@@ -149,7 +149,7 @@
                                         page: n_page,
                                         data: n_data},
                                       path: n_path};
-            window.history.replaceState({}, document.title, n_path);
+            window.history.replaceState(this._stack[this._cur], document.title, n_path);
             this._checkBack();
         },
         /**
@@ -360,7 +360,7 @@
             this._cur++; // Increment current stack pointer.
             this._stack = this._stack.slice(0, this._cur); // Trim stack to _cur
             this._stack[this._cur] = {state: state, path: path}; // Set new state
-            window.history.pushState({}, document.title, path); // Push path to window
+            window.history.pushState(this._stack[this._cur], document.title, path); // Push path to window
             this._checkBack(); // Check back-button for visibility
             this._fireUnload(prev_state.page, state, prev_state,
                              function () {
@@ -416,7 +416,7 @@
      * Handle popstate events.
      */
     window.onpopstate = function () {
-        var state = PageStack.getState(),
+        var state = window.history.state,
             prev = (PageStack._pages_eq(state, PageStack.getState(-1)))
                     ? PageStack._handle_back()
                     : ((PageStack._pages_eq(state, PageStack.getState(1)))
@@ -437,4 +437,4 @@
      */
     window.PageStack = PageStack;
     
-}(window));
+}(document, window));
