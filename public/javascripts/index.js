@@ -752,7 +752,7 @@
             var sp, v = $('#podcast-search-input').val().trim();
             $('#podcast-search-input').val(v);
             if (v !== '') {
-                sp = searchTerm.replace(/\%20/g, ' ').replace(/\s+/g, ' ');
+                sp = v.replace(/\%20/g, ' ').replace(/\s+/g, ' ');
                 clearInterval(window.searchBoxTH);
                 window.searchBoxTH = null;
                 window.PageStack.load(Pages.SEARCH,
