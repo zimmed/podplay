@@ -98,7 +98,7 @@
             if (options && options.index) {
                 this._index = options.index;
             }
-            this.replace(this._index, {page: this._index}, '/');
+            this.replace(this._index, false, '/');
             this._fireLoad(this._index, this.getState(), false, onReady);
         },
         /**
@@ -149,7 +149,7 @@
                                         page: n_page,
                                         data: n_data},
                                       path: n_path};
-            window.history.replaceState(this._stack[this._cur], document.title, n_path);
+            window.history.replaceState(this.getState(), document.title, n_path);
             this._checkBack();
         },
         /**
@@ -360,7 +360,7 @@
             this._cur++; // Increment current stack pointer.
             this._stack = this._stack.slice(0, this._cur); // Trim stack to _cur
             this._stack[this._cur] = {state: state, path: path}; // Set new state
-            window.history.pushState(this._stack[this._cur], document.title, path); // Push path to window
+            window.history.pushState(this.getState(), document.title, path); // Push path to window
             this._checkBack(); // Check back-button for visibility
             this._fireUnload(prev_state.page, state, prev_state,
                              function () {
