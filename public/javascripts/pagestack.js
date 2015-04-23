@@ -276,21 +276,17 @@
             $('#soft-back-btn').css('visibility', val);
         },
         /**
-         * Wait for async events to complete, then execute callback.
+         * Check if all events have finished.
          * @param {Array} events - List of PageEvents.
-         * @param {Function} cb - Optional generic callback function.
+         * @return {Bool} - True if finished, else false.
          */
-        _waitForEvents : function (events, cb) {
-            var i = true;
-            while (i) {
-                i = false;
-                for (var e in events) {
-                    if (events[e].incomplete) {
-                        i = true;
-                    }
+        _eventsFinished : function (events) {
+            for (var e in events) {
+                if (events[e].incomplete) {
+                    return false
                 }
             }
-            cb();
+            return true;
         },
         /**
          * Execute load listeners for given page.
@@ -308,7 +304,17 @@
                     this._on_loads[page][i](e);
                 }
             }
-            if (cb) this._waitForEvents(events, cb);
+            if (cb) {
+                var h = setInterval(function () {
+                    if (PageStack._eventsFinished(events)) {
+                        clearInterval(h);
+                        cb();
+                    }
+                    else {
+                        console.log(events);
+                    }
+                }, 500);
+            }
         },
         /**
          * Execute unload listeners for given page.
@@ -326,7 +332,17 @@
                     this._on_unloads[page][i](e);
                 }
             }
-            if (cb) this._waitForEvents(events, cb);
+            if (cb) {
+                var h = setInterval(function () {
+                    if (PageStack._eventsFinished(events)) {
+                        clearInterval(h);
+                        cb();
+                    }
+                    else {
+                        console.log(events);
+                    }
+                }, 500);
+            }
         },
         /** 
          * Push new state into the navigation history.
