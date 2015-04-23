@@ -705,7 +705,7 @@
                 // Enter key pressed
                 $('#podcast-search-button').click();
             }
-            else if (v) !== '' && v !== window.lastTickSearch &&
+            else if ((v) !== '' && v !== window.lastTickSearch &&
                      window.searchBoxTH === null) {
                 quicksearch();
                 window.searchBoxTH = setInterval(quicksearch, 250);
