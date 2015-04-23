@@ -31,6 +31,16 @@
         return a.join(', ');
     };
     
+    /**
+     * Updates bootstrap tooltip title.
+     */
+    $.fn.newTip = function (title) {
+        $(this).each(function () {
+            $(this).attr('data-original-title', title)
+                .tooltip('show');
+        });
+    };
+    
     
     /**
      * * * * * * * * * * * * * * * * * * * * *
@@ -69,8 +79,7 @@
         $.get('/users/favorite/' + id, function (data) {
             $('#fav').html('<span class="glyphicon glyphicon-star" ' +
                            'aria-hidden="true"></span>');
-            $('#fav').attr('title', "Remove Subscription");
-            $('#fav').tooltip();
+            $('#fav').newTip("Remove Subscription");
             $('#fav').off('click');
             $('#fav').click(function () {
                 defavorite(id);
@@ -88,8 +97,7 @@
         $.get('/users/defavorite/' + id, function (data) {
             $('#fav').html('<span class="glyphicon glyphicon-star-empty"' +
                            'aria-hidden="true"></span>');
-            $('#fav').attr('title', "Subscribe");
-            $('#fav').tooltip();
+            $('#fav').newTip("Subscribe");
             $('#fav').off('click');
             $('#fav').click(function () {
                 favorite(id);

@@ -283,7 +283,7 @@
         _eventsFinished : function (events) {
             for (var e in events) {
                 if (events[e].incomplete) {
-                    return false
+                    return false;
                 }
             }
             return true;
