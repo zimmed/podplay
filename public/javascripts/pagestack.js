@@ -143,7 +143,7 @@
          */
         replace : function (page, data, path) {
             var n_page = (page) ? page : this.getPage(),
-                n_data = (data) ? state : this.getData(),
+                n_data = (data) ? data : this.getData(),
                 n_path = (path) ? path : this.getPath();
             this._stack[this._cur] = {state: {
                                         page: n_page,
