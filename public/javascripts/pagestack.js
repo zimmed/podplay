@@ -46,7 +46,7 @@
      * @property {String} prev_page - The identifier for the previous page.
      */
     var LoadPageEvent = function (state, prev) {
-        var e = new window.PageStack.PageEvent('load', state);
+        var e = new PageEvent('load', state);
         if (prev) {
             e.prev_page = prev.page;
             e.prev_data = prev.data;
@@ -59,7 +59,7 @@
      * @property {String} next_page - The identifier for the next page.
      */
     var UnloadPageEvent = function (state, prev) {
-        var e = new window.PageStack.PageEvent('unload', prev);
+        var e = new PageEvent('unload', prev);
         e.next_page = state.page;
         e.next_data = state.data;
         return e;
