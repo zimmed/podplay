@@ -420,7 +420,7 @@
                     : ((PageStack._pages_eq(state, PageStack.getState(1)))
                         ? PageStack._handle_forward()
                         : false);
-        if (!prev_state) {
+        if (!prev) {
             console.log('Popped to state not found in PageStack.');
             window.location.replace(document.location.pathname);
         }
