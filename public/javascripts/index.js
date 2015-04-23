@@ -125,7 +125,8 @@
      * @param {Mixed} div - The element that fired the click event.
      */
     window.loadPodcast = function (id, div) {
-        var parent = $(div).parent().parent(), id = Number(id);
+        var parent = $(div).parent().parent();
+        id = Number(id);
         if (window.PageStack.getPage() === Pages.PODCAST &&
             window.PageStack.getData().id === id) {
             // If podcast already open, go back instead.
@@ -198,7 +199,7 @@
         $.get('/api/browse/?cat=' + genreid, function (data) {
             browseResults(genreid, data.podcasts, data.favorites, cb);
         });
-    };
+    }
     
     /**
      * Appropriately manage and display browse results.
@@ -577,7 +578,7 @@
                 if (cb) cb();
             });
         }
-    };
+    }
     
     /**
      * Fade in the overlaying dimmer.
@@ -589,7 +590,7 @@
                 if (cb) cb();
             });
         }
-    };
+    }
     
     /**
      * Close the login form.
@@ -672,16 +673,16 @@
         $('#fav').click(function () {
             if ($(this).html().trim() === 'Add') {
                 window.favorite($(this).data('id'));
-                $('[data-toggle="tooltip"]').tooltip()
+                $('[data-toggle="tooltip"]').tooltip();
             }
             else {
                 window.defavorite($(this).data('id'));
-                $('[data-toggle="tooltip"]').tooltip()
+                $('[data-toggle="tooltip"]').tooltip();
             }
         });
 
         // Enable tootlip
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
     }
     
     /**
@@ -738,7 +739,7 @@
         
         // Focus on search bar
         $('#podcast-search-input').focus();
-    };
+    }
     
     /**
      * Handle user logged out.
