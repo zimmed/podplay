@@ -127,8 +127,8 @@
             this._stack = this._stack.slice(0, this._cur);
             this.replace(state.page, state.data, path);
             this._fireLoad(this._index, {page: this._index}, false, function () {
-                if (state.page !== this._index) {
-                    this._fireLoad(state.page, state, {page: this._index});
+                if (state.page !==  PageStack._index) {
+                    this._fireLoad(state.page, state, {page: PageStack._index});
                 }
             });
         },
