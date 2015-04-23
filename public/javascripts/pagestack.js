@@ -123,7 +123,7 @@
          */
         update : function (offset) {
             var state = this.getState(offset), path = this.getPath(offset);
-            if (offset) this._cur + offset;
+            if (offset) this._cur += offset;
             this._stack = this._stack.slice(0, this._cur);
             this.replace(state.page, state.data, path);
             this._fireLoad(this._index, {page: this._index}, false, function () {
@@ -303,7 +303,7 @@
             var events = [], e;
             if (this._on_loads[page]) {
                 for (var i in this._on_loads[page]) {
-                    e = new this.LoadPageEvent(state, prev);
+                    e = new LoadPageEvent(state, prev);
                     events.push(e);
                     this._on_loads[page](e);
                 }
@@ -321,7 +321,7 @@
             var events = [], e;
             if (this._on_unloads[page]) {
                 for (var i in this._on_unloads[page]) {
-                    e = new this.UnloadPageEvent(state, prev);
+                    e = new UnloadPageEvent(state, prev);
                     events.push(e);
                     this._on_unloads[page](e);
                 }
