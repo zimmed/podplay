@@ -37,6 +37,8 @@
             }
             // Not already open
             this._show_loader();
+            console.log(parent);
+            console.log($(parent));
             $(parent).append(this._view);
             this.focus();
             // Animate the opening of the FeedView
