@@ -98,7 +98,7 @@
             if (options && options.index) {
                 this._index = options.index;
             }
-            this.replace({page: this._index}, '/');
+            this.replace(this._index, {page: this._index}, '/');
             this._fireLoad(this._index, this.getState(), false, onReady);
         },
         /**
