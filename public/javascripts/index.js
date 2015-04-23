@@ -814,6 +814,7 @@
     window.PageStack.onLoad(Pages.REGISTER, function (e) {
         if (!window.user) {
             showRegisterForm(function () { e.complete(); });
+        }
         else {
             window.PageStack.back();
         }
