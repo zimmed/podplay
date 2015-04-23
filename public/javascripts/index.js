@@ -79,12 +79,12 @@
         $.get('/users/favorite/' + id, function (data) {
             $('#fav').html('<span class="glyphicon glyphicon-star" ' +
                            'aria-hidden="true"></span>');
-            $('#fav').newTip("Remove Subscription");
             $('#fav').off('click');
             $('#fav').click(function () {
                 defavorite(id);
             });
             $('#fav').prop('disabled', false);
+            $('#fav').newTip("Remove Subscription");
         });
     };
     
@@ -97,12 +97,12 @@
         $.get('/users/defavorite/' + id, function (data) {
             $('#fav').html('<span class="glyphicon glyphicon-star-empty"' +
                            'aria-hidden="true"></span>');
-            $('#fav').newTip("Subscribe");
             $('#fav').off('click');
             $('#fav').click(function () {
                 favorite(id);
             });
             $('#fav').prop('disabled', false);
+            $('#fav').newTip("Subscribe");
         });
     };
     
