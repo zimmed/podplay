@@ -128,7 +128,7 @@
             this.replace(state.page, state.data, path);
             this._fireLoad(this._index, {page: this._index}, false, function () {
                 if (state.page !==  PageStack._index) {
-                    this._fireLoad(state.page, state, {page: PageStack._index});
+                    PageStack._fireLoad(state.page, state, {page: PageStack._index});
                 }
             });
         },
@@ -416,16 +416,18 @@
      * Handle popstate events.
      */
     window.onpopstate = function () {
-        var state = window.history.state,
-            prev = (PageStack._pages_eq(state, PageStack.getState(-1)))
+        var state = window.history.state;
+        console.log('---|' + PageStack.getPage() + ' -> ' + window.history.state.page + '|---');
+        console.log('COMPARE ' + JSON.stringify(state) + ' to:');
+        console.log('\tback: ' + JSON.stringify(PageStack.getState(-1)));
+        console.log('\tforw: ' + JSON.stringify(PageStack.getState(1)));
+        var prev = (PageStack._pages_eq(state, PageStack.getState(-1)))
                     ? PageStack._handle_back()
                     : ((PageStack._pages_eq(state, PageStack.getState(1)))
                         ? PageStack._handle_forward()
                         : false);
+        console.log(
         
-        console.log('COMPARE ' + JSON.stringify(state) + ' to:');
-        console.log('\tback: ' + JSON.stringify(PageStack.getState(-1)));
-        console.log('\tforw: ' + JSON.stringify(PageStack.getState(1)));
         if (!prev) {
             console.log('Popped to state not found in PageStack.');
             //window.location.replace(document.location.pathname);
