@@ -305,7 +305,7 @@
                 for (var i in this._on_loads[page]) {
                     e = new LoadPageEvent(state, prev);
                     events.push(e);
-                    this._on_loads[page](e);
+                    this._on_loads[page][i](e);
                 }
             }
             if (cb) this._waitForEvents(events, cb);
@@ -323,7 +323,7 @@
                 for (var i in this._on_unloads[page]) {
                     e = new UnloadPageEvent(state, prev);
                     events.push(e);
-                    this._on_unloads[page](e);
+                    this._on_unloads[page][i](e);
                 }
             }
             if (cb) this._waitForEvents(events, cb);
