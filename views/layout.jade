@@ -23,16 +23,20 @@ html
         // Stylesheets needed for local view.
         for s in stylesheets
             link(rel='stylesheet', href="#{'/stylesheets/' + s + '.css'}")
-    // jQuery 2.1.3
+    // jQuery 2.1.3 + Easing extension v1.3
     script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js')
-    // jQuery Easing extension v1.3
     script(src='/javascripts/jquery.easing.1.3.js')
     // Bootstrap 3.3.2
     script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
-    // Podplay custom libs
+    // AudioJS audio player manager.
+    //  Author: Anthony Kolber
+    //  Site: http://kolber.github.io/audiojs/
+    //  Note: This will eventually be replaced by a streamlined podplay audio
+    //      and video player - but will work for now.
+    script(src='/audiojs/audio.min.js')
+    // Podplay custom libs + main script
     script(src='/javascripts/pagestack.js')
     script(src='/javascripts/feedview.js')
-    // Podplay index script
     script(src='/javascripts/index.js')
     if javascripts
         // Scripts needed for local view.
