@@ -160,12 +160,12 @@
      * @param {Mixed} div - The element that fired the click event.
      */
     window.loadPodcast = function (id, div) {
-        var parent = $(div).parent().parent();
+        var parent = $(div).parent().parent(); // Containing panel
         id = Number(id);
         if (window.PageStack.getPage() === Pages.PODCAST &&
             window.PageStack.getData().id === id) {
-            // If podcast already open, go back instead.
-            window.PageStack.back();
+            // If podcast already open, push new index state (close it).
+            window.PageStack.load(Pages.INDEX, false, '/index');
         }
         else if (!window.FeedView.isLoading()) {
             window.PageStack.load(Pages.PODCAST,
