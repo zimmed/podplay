@@ -436,6 +436,11 @@ legend {
 
 /** Extra audiojs style rules **/
 
+.player-list ol {
+    margin: none;
+    padding: none;
+    list-style-position: inside;
+}
 .player-list ol li {
     height: 50px;
     overflow: hidden;
@@ -454,6 +459,7 @@ legend {
 .t-poster img {
     width: 50px;
     height: 50px;
+    border-radius: 5px;
 }
 .t-title {
     white-space: normal;
@@ -462,14 +468,6 @@ legend {
     overflow: hidden;
     margin-left: 5px;
 }
-.t-dur {
-    white-space: nowrap;
-    text-align: center;
-    position: relative;
-    width: 50px;
-    top: -15px;
-    text-shadow: 0px 0px 5px #000;
-    color: #eee;
 }
 .volume {
     border-right: 1px solid #000;
