@@ -448,6 +448,8 @@ legend {
 .player-list ol li > div {
     padding: 0;
     margin: 0;
+    position: relatve;
+    float: left;
 }
 .t-poster img {
     width: 50px;
@@ -458,13 +460,14 @@ legend {
     height: 50px;
     line-height: 50px;
     overflow: hidden;
+    margin-left: 5px;
 }
 .t-dur {
     white-space: nowrap;
     text-align: center;
     position: relative;
     width: 50px;
-    top: 40px;
+    top: -15px;
     text-shadow: 1px 1px #222;
 }
 .volume {
