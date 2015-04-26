@@ -437,8 +437,8 @@ legend {
 /** Extra audiojs style rules **/
 
 .player-list ol {
-    margin: none;
-    padding: none;
+    margin: none !important;
+    padding: none !important;
     list-style-position: inside;
 }
 .player-list ol li {
