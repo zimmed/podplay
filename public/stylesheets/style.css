@@ -256,10 +256,12 @@ tr.feed-row:hover {
 }
 
 .panel {
-    background: rgba(0, 0, 0, 0.3) !important;
+    background-image: none !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
 }
-panel-heading {
-    background: rgba(16, 42, 63, 0.7) !important;
+.panel-heading {
+    background-image: none !important;
+    background-color: rgba(16, 42, 63, 0.7) !important;
 }
 
 .panel-body {
