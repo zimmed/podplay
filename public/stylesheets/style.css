@@ -436,7 +436,37 @@ legend {
 
 /** Extra audiojs style rules **/
 
+.player-list ol li {
+    height: 50px;
+    overflow: hidden;
+    width: 100%;
+    color: #ccc;
+    cursor: pointer;
+}
 
+.player-list ol li > div {
+    display: table-cell;
+    padding: 0;
+    margin: 0;
+}
+.t-poster img {
+    width: 50px;
+    height: 50px;
+}
+.t-title {
+    white-space: normal;
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+}
+.t-dur {
+    white-space: nowrap;
+    text-align: center;
+    position: relative;
+    width: 50px;
+    top: 40px;
+    text-shadow: 1px 1px #222;
+}
 .volume {
     border-right: 1px solid #000;
     border-left: 1px solid #000;
@@ -457,7 +487,7 @@ legend {
 }
 .time .slider {
     height: 25px;
-    width: 76px;
+    width: 41px;
     margin-right: 1px;
     display: none;
     cursor: pointer;
