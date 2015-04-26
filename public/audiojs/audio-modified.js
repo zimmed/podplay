@@ -164,7 +164,7 @@
     // If an array is passed then it calls back to `createAll()`.  
     // Otherwise, it creates a single instance and returns it.  
     create: function(element, options) {
-      var options = options || {}
+      if (!options) options = {};
       if (element.length) {
         return this.createAll(options, element);
       } else {
@@ -177,7 +177,7 @@
     // If `elements` is `null`, then automatically find any `<audio>` tags on the page and create `audiojs` instances for them.
     createAll: function(options, elements) {
       var audioElements = elements || document.getElementsByTagName('audio'),
-          instances = []
+          instances = [];
           options = options || {};
       for (var i = 0, ii = audioElements.length; i < ii; i++) {
         instances.push(this.newInstance(audioElements[i], options));
@@ -188,16 +188,15 @@
     // ### Creating and returning a new instance
     // This goes through all the steps required to build out a usable `audiojs` instance.
     newInstance: function(element, options) {
-      var element = element,
-          s = this.helpers.clone(this.settings),
+      var s = this.helpers.clone(this.settings),
           id = 'audiojs'+this.instanceCount,
           wrapperId = 'audiojs_wrapper'+this.instanceCount,
           instanceCount = this.instanceCount++;
 
       // Check for `autoplay`, `loop` and `preload` attributes and write them into the settings.
-      if (element.getAttribute('autoplay') != null) s.autoplay = true;
-      if (element.getAttribute('loop') != null) s.loop = true;
-      if (element.getAttribute('preload') == 'none') s.preload = false;
+      if (element.getAttribute('autoplay') !== null) s.autoplay = true;
+      if (element.getAttribute('loop') !== null) s.loop = true;
+      if (element.getAttribute('preload') === 'none') s.preload = false;
       // Merge the default settings with the user-defined `options`.
       if (options) this.helpers.merge(s, options);
 
@@ -260,7 +259,9 @@
           leftPos = function(elem) {
             var curleft = 0;
             if (elem.offsetParent) {
-              do { curleft += elem.offsetLeft; } while (elem = elem.offsetParent);
+              do {
+                  curleft += elem.offsetLeft;
+              } while (elem = elem.offsetParent);
             }
             return curleft;
           };
@@ -299,27 +300,27 @@
 
     // Flash requires a slightly different API to the `<audio>` element, so this method is used to overwrite the standard event handlers.
     attachFlashEvents: function(element, audio) {
-      audio['swfReady'] = false;
-      audio['load'] = function(mp3) {
+      audio.swfReady = false;
+      audio.load = function(mp3) {
         // If the swf isn't ready yet then just set `audio.mp3`. `init()` will load it in once the swf is ready.
         audio.mp3 = mp3;
         if (audio.swfReady) audio.element.load(mp3);
       }
-      audio['loadProgress'] = function(percent, duration) {
+      audio.loadProgress = function(percent, duration) {
         audio.loadedPercent = percent;
         audio.duration = duration;
         audio.settings.loadStarted.apply(audio);
         audio.settings.loadProgress.apply(audio, [percent]);
       }
-      audio['skipTo'] = function(percent) {
+      audio.skipTo = function(percent) {
         if (percent > audio.loadedPercent) return;
         audio.updatePlayhead.call(audio, [percent])
         audio.element.skipTo(percent);
       }
-      audio['updatePlayhead'] = function(percent) {
+      audio.updatePlayhead = function(percent) {
         audio.settings.updatePlayhead.apply(audio, [percent]);
       }
-      audio['play'] = function() {
+      audio.play = function() {
         // If the audio hasn't started preloading, then start it now.  
         // Then set `preload` to `true`, so that any tracks loaded in subsequently are loaded straight away.
         if (!audio.settings.preload) {
@@ -332,16 +333,16 @@
         audio.element.pplay();
         audio.settings.play.apply(audio);
       }
-      audio['pause'] = function() {
+      audio.pause = function() {
         audio.playing = false;
         // Use `ppause()` for consistency with `pplay()`, even though it isn't really required.
         audio.element.ppause();
         audio.settings.pause.apply(audio);
       }
-      audio['setVolume'] = function(v) {
+      audio.setVolume = function(v) {
         audio.element.setVolume(v);
       }
-      audio['loadStarted'] = function() {
+      audio.loadStarted = function() {
         // Load the mp3 specified by the audio element into the swf.
         audio.swfReady = true;
         if (audio.settings.preload) audio.element.init(audio.mp3);
@@ -377,7 +378,7 @@
       },
       // **Clone a javascript object (recursively)**
       clone: function(obj){
-        if (obj == null || typeof(obj) !== 'object') return obj;
+        if (obj === null || typeof(obj) !== 'object') return obj;
         var temp = new obj.constructor();
         for (var key in obj) temp[key] = arguments.callee(obj[key]);
         return temp;
