@@ -29,6 +29,10 @@ nav {
     margin-right: 25px;
 }
 
+#right-col {
+    background: rgba(0,0,0,0.3);
+}
+
 #feed-view {
     min-width: 673px;
     width: 100%;
@@ -439,7 +443,7 @@ legend {
 .player-list ol {
     margin: 0 !important;
     padding: 0 !important;
-    list-style-position: inside;
+    list-style-position: outside;
 }
 .player-list ol li {
     height: 50px;
@@ -453,7 +457,7 @@ legend {
 .player-list ol li > div {
     padding: 0;
     margin: 0;
-    position: relatve;
+    position: relative;
     float: left;
 }
 .t-poster img {
@@ -466,7 +470,7 @@ legend {
     height: 50px;
     line-height: 50px;
     overflow: hidden;
-    margin-left: 5px;
+    padding-left 5px !important;
 }
 }
 .volume {
