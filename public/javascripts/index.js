@@ -1068,57 +1068,6 @@
             }
         });
         
-        // Setup audio player
-        $(function() { 
-            // Setup the player to autoplay the next track
-            var a = audiojs.createAll({
-                trackEnded: function() {
-                    var next = $('#playlist li.playing').next();
-                    if (!next.length) next = $('#playlist li').first();
-                    next.addClass('playing').siblings().removeClass('playing');
-                    audio.load($('#playlist a', next).attr('data-src'));
-                    audio.play();
-                }
-            });
-            
-            window.Audio = a[0];
-
-            // Load in the first track
-            var audio = a[0];
-            first = $('#playlist a').attr('data-src');
-            $('#playlist li').first().addClass('playing');
-            audio.load(first);
-
-            // Load in a track on click
-            $('#playlist li').click(function(e) {
-            e.preventDefault();
-            $(this).addClass('playing').siblings().removeClass('playing');
-            audio.load($('a', this).attr('data-src'));
-            audio.play();
-            });
-            
-            // Keyboard shortcuts
-            $(document).keydown(function(e) {
-                var unicode = e.charCode ? e.charCode : e.keyCode;
-                // right arrow
-                if (unicode == 39) {
-                    var next = $('#playlist li.playing').next();
-                    if (!next.length) next = $('#playlist li').first();
-                    next.click();
-                }
-                // back arrow
-                else if (unicode == 37) {
-                    var prev = $('#playlist li.playing').prev();
-                    if (!prev.length) prev = $('#playlist li').last();
-                    prev.click();
-                }
-                // spacebar
-                else if (unicode == 32) {
-                    audio.playPause();
-                }
-            });
-        });
-        
         $("#right-col").addPlayer(window.preload_player_options);
         
         /**
