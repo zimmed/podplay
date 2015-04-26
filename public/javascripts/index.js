@@ -34,10 +34,16 @@
     /**
      * Updates bootstrap tooltip title.
      */
-    $.fn.newTip = function (title) {
+    $.fn.newTip = function (show, title, placement) {
         $(this).each(function () {
+            if ($(this).attr('data-toggle') !== 'tooltip') {
+                $(this).attr('data-toggle', 'tooltip');
+            }
+            if (placement) {
+                $(this).attr('data-placement', placement);
+            }
             $(this).attr('data-original-title', title)
-                .tooltip('show');
+                .tooltip(show);
         });
     };
     
@@ -84,7 +90,7 @@
                 defavorite(id);
             });
             $('#fav').prop('disabled', false);
-            $('#fav').newTip("Remove Subscription");
+            $('#fav').newTip(true, "Remove Subscription");
         });
     };
     
@@ -102,7 +108,7 @@
                 favorite(id);
             });
             $('#fav').prop('disabled', false);
-            $('#fav').newTip("Subscribe");
+            $('#fav').newTip(true, "Subscribe");
         });
     };
     
@@ -704,6 +710,11 @@
         // Show the nicely-formatted podcast title in the URL.
         window.PageStack.replace(false, false, '/podcast/' + window.safetitle);
 
+        // Tooltips
+        $('#fav, #fav-fake').each(function () {
+            $(this).newTip(false, $(this).attr('title'), 'right');
+        });
+        
         // Podcast 'subscribe' button handler
         $('#fav').click(function () {
             if ($(this).html().trim() === 'Add') {
@@ -713,9 +724,22 @@
                 window.defavorite($(this).data('id'));
             }
         });
-
-        // Enable tootlip
-        $('[data-toggle="tooltip"]').tooltip();
+        
+        // Play/add buttons
+        $('.listenlink').click(function (e) {
+            var src = $(this).data('audio'),
+                dur = $(this).data('dur'),
+                title = $(this).data('title'),
+                poster = $(this).data('poster'),
+                pid = $(this).data('pid');
+            if ($(this).hasClass('add')) {
+                window.player.add(src, title, dur, poster, pid);
+            }
+            else {
+                window.player.addAndPlay(src, title, dur, poster, pid);
+            }
+                
+        });
     }
     
     /**
@@ -1068,7 +1092,8 @@
             }
         });
         
-        $("#right-col").addPlayer(window.preload_player_options);
+        // Create and expose the audioplayer.
+        window.player = $("#right-col").addPlayer(window.preload_player_options);
         
         /**
          * Handle page view with first-time load.

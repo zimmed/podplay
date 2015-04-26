@@ -13,13 +13,13 @@ script.
     // "Add subscription" button
     if user
         if isFavorited(user, podcast._id)
-            button.btn.btn-primary.btn-fav#fav(data-id="#{podcast._id}" data-toggle="tooltip" data-placement="right" title="Remove Subscription")
+            button.btn.btn-primary.btn-fav#fav(data-id="#{podcast._id}" title="Remove Subscription")
                 span.glyphicon.glyphicon-star(aria-hidden="true")
         else
-            button.btn.btn-primary.btn-fav#fav(data-id="#{podcast._id}" data-toggle="tooltip" data-placement="right" title="Susbcribe")
+            button.btn.btn-primary.btn-fav#fav(data-id="#{podcast._id}" title="Susbcribe")
                 span.glyphicon.glyphicon-star-empty(aria-hidden="true")
     else
-        button.btn.btn-primary.btn-fav#fav-fake(data-toggle="tooltip" data-placement="right" title="Sign in to subscribe.")
+        button.btn.btn-primary.btn-fav#fav-fake(title="Sign in to subscribe.")
             span.glyphicon.glyphicon-star-empty(aria-hidden="true")
     // Table with podcast feed information
     table#feedinfo-table(class="table sleek-gray")
