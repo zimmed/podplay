@@ -28,7 +28,7 @@
         var el = $('<li><div class="t-poster">' +
                    '<img src="' + track.poster + '"></div><div class="' +
                    't-title">' + track.title + '</div><div class="t-dur">' +
-                   track.dur + '</div></li>');
+                   track.duration + '</div></li>');
         return el;       
     };
     
