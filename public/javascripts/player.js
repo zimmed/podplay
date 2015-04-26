@@ -290,6 +290,7 @@
             },
 
         };
+        return AP;
     };
 
     var PlayList = function (list) {
