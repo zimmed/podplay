@@ -728,7 +728,7 @@
         // Play/add buttons
         $('.listenlink').click(function (e) {
             var src = $(this).data('audio'),
-                dur = $(this).data('dur').splice(0, 1),
+                dur = $(this).data('dur').slice(1),
                 title = $(this).data('title'),
                 poster = $(this).data('poster'),
                 pid = $(this).data('pid');
