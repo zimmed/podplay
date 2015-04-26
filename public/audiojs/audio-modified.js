@@ -305,21 +305,21 @@
         // If the swf isn't ready yet then just set `audio.mp3`. `init()` will load it in once the swf is ready.
         audio.mp3 = mp3;
         if (audio.swfReady) audio.element.load(mp3);
-      }
+      };
       audio.loadProgress = function(percent, duration) {
         audio.loadedPercent = percent;
         audio.duration = duration;
         audio.settings.loadStarted.apply(audio);
         audio.settings.loadProgress.apply(audio, [percent]);
-      }
+      };
       audio.skipTo = function(percent) {
         if (percent > audio.loadedPercent) return;
-        audio.updatePlayhead.call(audio, [percent])
+        audio.updatePlayhead.call(audio, [percent]);
         audio.element.skipTo(percent);
-      }
+      };
       audio.updatePlayhead = function(percent) {
         audio.settings.updatePlayhead.apply(audio, [percent]);
-      }
+      };
       audio.play = function() {
         // If the audio hasn't started preloading, then start it now.  
         // Then set `preload` to `true`, so that any tracks loaded in subsequently are loaded straight away.
@@ -332,22 +332,22 @@
         // <http://dev.nuclearrooster.com/2008/07/27/externalinterfaceaddcallback-can-cause-ie-js-errors-with-certain-keyworkds/>
         audio.element.pplay();
         audio.settings.play.apply(audio);
-      }
+      };
       audio.pause = function() {
         audio.playing = false;
         // Use `ppause()` for consistency with `pplay()`, even though it isn't really required.
         audio.element.ppause();
         audio.settings.pause.apply(audio);
-      }
+      };
       audio.setVolume = function(v) {
         audio.element.setVolume(v);
-      }
+      };
       audio.loadStarted = function() {
         // Load the mp3 specified by the audio element into the swf.
         audio.swfReady = true;
         if (audio.settings.preload) audio.element.init(audio.mp3);
         if (audio.settings.autoplay) audio.play.apply(audio);
-      }
+      };
     },
 
     // ### Injecting an swf from a string
@@ -356,7 +356,7 @@
       var flashSource = this.flashSource.replace(/\$1/g, id);
       flashSource = flashSource.replace(/\$2/g, audio.settings.swfLocation);
       // `(+new Date)` ensures the swf is not pulled out of cache. The fixes an issue with Firefox running multiple players on the same page.
-      flashSource = flashSource.replace(/\$3/g, (+new Date + Math.random()));
+      flashSource = flashSource.replace(/\$3/g, (+new Date() + Math.random()));
       // Inject the player markup using a more verbose `innerHTML` insertion technique that works with IE.
       var html = audio.wrapper.innerHTML,
           div = document.createElement('div');
@@ -370,7 +370,7 @@
       // **Merge two objects, with `obj2` overwriting `obj1`**  
       // The merge is shallow, but that's all that is required for our purposes.
       merge: function(obj1, obj2) {
-        for (attr in obj2) {
+        for (var attr in obj2) {
           if (obj1.hasOwnProperty(attr) || obj2.hasOwnProperty(attr)) {
             obj1[attr] = obj2[attr];
           }
@@ -399,9 +399,9 @@
 
         // If an `audiojs` `<style>` tag already exists, then append to it rather than creating a whole new `<style>`.
         var prepend = '',
-            styles = document.getElementsByTagName('style'),
+            styles = document.getElementsByTagName('style');
             //css = string.replace(/\$1/g, audio.settings.imageLocation);
-
+        /* so much garbage:
         for (var i = 0, ii = styles.length; i < ii; i++) {
           var title = styles[i].getAttribute('title');
           if (title && ~title.indexOf('audiojs')) {
@@ -426,6 +426,7 @@
 
         if (firstchild) head.insertBefore(style, firstchild);
         else head.appendChild(styleElement);
+          (-zimmed)*/
       },
       // **Handle all the IE6+7 requirements for cloning `<audio>` nodes**  
       // Create a html5-safe document fragment by injecting an `<audio>` element into the document fragment.
@@ -479,7 +480,6 @@
 
         var readyTimer,
             loadTimer,
-            audio = audio,
             ios = (/(ipod|iphone|ipad)/i).test(navigator.userAgent);
 
         // Use timers here rather than the official `progress` event, as Chrome has issues calling `progress` when loading mp3 files from cache.
@@ -545,11 +545,11 @@
           doc[add](pre + 'readystatechange', init, false);
           win[add](pre + 'load', init, false);
         }
-      }
+      };
       })()
 
     }
-  }
+  };
 
   // ## The audiojs class
   // We create one of these per `<audio>` and then push them into `audiojs['instances']`.
@@ -568,7 +568,7 @@
     this.loadedPercent = 0;
     this.duration = 1;
     this.playing = false;
-  }
+  };
 
   container[audiojsInstance].prototype = {
     // API access events:
@@ -605,7 +605,7 @@
       this.settings.loadStarted.apply(this);
     },
     loadProgress: function() {
-      if (this.element.buffered != null && this.element.buffered.length) {
+      if (this.element.buffered !== null && this.element.buffered.length) {
         // Ensure `loadStarted()` is only called once.
         if (!this.loadStartedCalled) {
           this.loadStartedCalled = this.loadStarted();
@@ -623,7 +623,7 @@
     play: function() {
       var ios = (/(ipod|iphone|ipad)/i).test(navigator.userAgent);
       // On iOS this interaction will trigger loading the mp3, so run `init()`.
-      if (ios && this.element.readyState == 0) this.init.apply(this);
+      if (ios && this.element.readyState === 0) this.init.apply(this);
       // If the audio hasn't started preloading, then start it now.  
       // Then set `preload` to `true`, so that any tracks loaded in subsequently are loaded straight away.
       if (!this.settings.preload) {
@@ -648,7 +648,7 @@
       if (!this.settings.loop) this.pause.apply(this);
       this.settings.trackEnded.apply(this);
     }
-  }
+  };
 
   // **getElementsByClassName**  
   // Having to rely on `getElementsByTagName` is pretty inflexible internally, so a modified version of Dustin Diaz's `getElementsByClassName` has been included.
