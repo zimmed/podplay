@@ -41,13 +41,7 @@ nav {
     margin: 0px;
     padding: 0px;
     overflow: hidden;
-    background-image: -webkit-linear-gradient(top,#3c3c3c 0,#222 100%);
-    background-image: -o-linear-gradient(top,#3c3c3c 0,#222 100%);
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#3c3c3c),to(#222));
-    background-image: linear-gradient(to bottom,#3c3c3c 0,#222 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-    background-repeat: repeat-x;
+    background: rgba(0,0,0,0.3);
 }
 
 #feedview .table {
@@ -114,7 +108,6 @@ nav {
 .wrap {
     white-space: normal;
     overflow: hidden;
-    min-width: 100px;
 }
 
 #feedinfo-table .wrap, #feedinfo-table th {
@@ -255,11 +248,13 @@ tr.feed-row:hover {
   padding-top: 15px;
 }
 
-.panel {
+.panel#pc-0, .panel.genre-panel {
     background-image: none !important;
     background-color: rgba(0, 0, 0, 0.3) !important;
+    border: none !important;
 }
-.panel-heading {
+.panel#pc-0 .panel-heading,
+.panel.genre-panel .panel-heading {
     background-image: none !important;
     background-color: rgba(16, 42, 63, 0.7) !important;
 }
