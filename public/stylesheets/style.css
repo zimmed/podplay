@@ -33,6 +33,7 @@ nav {
 #right-col {
     background: rgba(0,0,0,0.3);
     padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 #feed-view {
@@ -249,15 +250,15 @@ tr.feed-row:hover {
   padding-top: 15px;
 }
 
-.panel#pc-0, .panel.genre-panel {
+.panel {
     background-image: none !important;
     background-color: rgba(0, 0, 0, 0.3) !important;
     border: none !important;
 }
-.panel#pc-0 .panel-heading,
-.panel.genre-panel .panel-heading {
+.panel-heading {
     background-image: none !important;
-    background-color: rgba(16, 42, 63, 0.7) !important;
+    background-color: #204d74 !important;
+    color: #ccc !importantl;
 }
 
 .panel-body {
@@ -450,6 +451,10 @@ legend {
 
 ::-webkit-scrollbar {
     width: 12px;
+}
+
+::-webkit-scrollbar:vertical {
+    width: 10px;
 }
  
 ::-webkit-scrollbar-track {
