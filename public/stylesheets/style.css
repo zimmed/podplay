@@ -469,6 +469,7 @@ legend {
     width: 50px;
     top: -15px;
     text-shadow: 0px 0px 5px #000;
+    color: #eee;
 }
 .volume {
     border-right: 1px solid #000;
