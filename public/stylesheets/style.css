@@ -9,8 +9,8 @@ body {
     background: #fafafa;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
-    background-color: #000;
-    background-image: url('bright-squares.png');
+    background-color: #000 !important;
+    background-image: url('bright-squares.png') !important;
 }
 
 a {
