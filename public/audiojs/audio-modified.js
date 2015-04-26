@@ -23,12 +23,13 @@
     // `$1` The name of the flash movie  
     // `$2` The path to the swf  
     // `$3` Cache invalidation  
-    flashSource: '\
-      <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" id="$1" width="1" height="1" name="$1" style="position: absolute; left: -1px;"> \
-        <param name="movie" value="$2?playerInstance='+audiojs+'.instances[\'$1\']&datetime=$3"> \
-        <param name="allowscriptaccess" value="always"> \
-        <embed name="$1" src="$2?playerInstance='+audiojs+'.instances[\'$1\']&datetime=$3" width="1" height="1" allowscriptaccess="always"> \
-      </object>',
+    flashSource: '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" ' +
+        'id="$1" width="1" height="1" name="$1" style="position: absolute; ' +
+        'left: -1px;"><param name="movie" value="$2?playerInstance=' + audiojs +
+        '.instances[\'$1\']&datetime=$3"><param name="allowscriptaccess"' +
+        'value="always"><embed name="$1" src="$2?playerInstance=' + audiojs +
+        '.instances[\'$1\']&datetime=$3" width="1" height="1" allowscriptaccess' + 
+        '="always"></object>',
 
     // ### The main settings object
     // Where all the default settings are stored. Each of these variables and methods can be overwritten by the user-provided `options` object.
@@ -36,8 +37,8 @@
       autoplay: false,
       loop: false,
       preload: true,
-      imageLocation: path + 'player-graphics.gif',
-      swfLocation: path + 'audiojs.swf',
+      imageLocation: '',
+      swfLocation: '/audiojs/audiojs.swf',
       useFlash: (function() {
         var a = document.createElement('audio');
         return !(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
@@ -58,33 +59,32 @@
       })(),
       // The default markup and classes for creating the player:
       createPlayer: {
-        markup: '\
-          <div class="play-pause unselectable"> \
-            <p class="play"></p> \
-            <p class="pause"></p> \
-            <p class="loading"></p> \
-            <p class="error"></p> \
-          </div> \
-          <div class="skip unselectable" title="Skip back 15 seconds."> \
-            <span class="glyphicon glyphicon-repeat flip-glyph" aria-hidden="true"></span> \
-          </div> \
-          <div class="scrubber"> \
-            <div class="progress"></div> \
-            <div class="loaded"></div> \
-          </div> \
-          <div class="skip unselectable" title="Skip ahead 30 seconds."> \
-            <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> \
-          </div> \
-          <div class="time unselectable"> \
-            <span><em class="played">000:00</em></span> \
-            <div class="slider"></div> \
-          </div> \
-          <div class="volume unselectable" selectable="no"> \
-            <span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span> \
-            <span class="glyphicon glyphicon-volume-down" aria-hidden="true"></span> \
-            <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span> \
-          </div> \
-          <div class="error-message"></div>',
+        markup: '<div class="play-pause unselectable">' +
+          '    <p class="play"></p>' +
+          '    <p class="pause"></p>' +
+          '    <p class="loading"></p>' +
+          '    <p class="error"></p>' +
+          '</div>' +
+          '<div class="skip unselectable" title="Skip back 15 seconds.">' +
+          '    <span class="glyphicon glyphicon-repeat flip-glyph" aria-hidden="true"></span>' +
+          '</div>' +
+          '<div class="scrubber">' +
+          '    <div class="progress"></div>' +
+          '    <div class="loaded"></div>' +
+          '</div>' +
+          '<div class="skip unselectable" title="Skip ahead 30 seconds.">' +
+          '    <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>' +
+          '</div>' +
+          '<div class="time unselectable">' +
+          '    <span><em class="played">000:00</em></span>' +
+          '    <div class="slider"></div>' +
+          '</div>' +
+          '<div class="volume unselectable" selectable="no">' +
+          '    <span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span>' +
+          '    <span class="glyphicon glyphicon-volume-down" aria-hidden="true"></span>' +
+          '    <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>' +
+          '</div> ' +
+          '<div class="error-message"></div>',
         playPauseClass: 'play-pause',
         scrubberClass: 'scrubber',
         progressClass: 'progress',
@@ -98,45 +98,7 @@
         errorClass: 'error'
       },
       // The css used by the default player. This is is dynamically injected into a `<style>` tag in the top of the head.
-      css: '\
-        .audiojs audio { position: relative; } \
-        .audiojs { width: 100%; height: 36px; background: #c0c0c0; overflow: hidden; font-family: monospace; font-size: 12px; \
-          background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444), color-stop(0.5, #555), color-stop(0.51, #444), color-stop(1, #444)); \
-          background-image: -moz-linear-gradient(center top, #444 0%, #555 50%, #444 51%, #444 100%); \
-          -webkit-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); -moz-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); \
-          -o-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); } \
-        .audiojs .play-pause { width: 38px; height: 40px; padding: 4px 6px; margin: 0px; float: left; overflow: hidden; border-right: 1px solid #000; } \
-        .audiojs p { display: none; width: 25px; height: 40px; margin: 0px; cursor: pointer; } \
-        .audiojs .play { display: block; } \
-        .audiojs .scrubber { position: relative; float: left; width: 100px; background: #5a5a5a; height: 14px; margin: 10px; border-top: 1px solid #3f3f3f; border-left: 0px; border-bottom: 0px; overflow: hidden; } \
-        .audiojs .progress { position: absolute; top: 0px; left: 0px; height: 14px; width: 0px; background: #ccc; z-index: 1; \
-          background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ccc), color-stop(0.5, #ddd), color-stop(0.51, #ccc), color-stop(1, #ccc)); \
-          background-image: -moz-linear-gradient(center top, #ccc 0%, #ddd 50%, #ccc 51%, #ccc 100%); } \
-        .audiojs .loaded { position: absolute; top: 0px; left: 0px; height: 14px; width: 0px; background: #000; \
-          background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #222), color-stop(0.5, #333), color-stop(0.51, #222), color-stop(1, #222)); \
-          background-image: -moz-linear-gradient(center top, #222 0%, #333 50%, #222 51%, #222 100%); } \
-        .audiojs .time { float: left; height: 36px; line-height: 36px; margin: 0px 0px 0px 6px; padding: 0px 6px 0px 12px; border-left: 1px solid #000; color: #ddd; text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5); } \
-        .audiojs .time em { padding: 0px 2px 0px 0px; color: #f9f9f9; font-style: normal; } \
-        .audiojs .time strong { padding: 0px 0px 0px 2px; font-weight: normal; } \
-        .audiojs .error-message { float: left; display: none; margin: 0px 10px; height: 36px; width: 400px; overflow: hidden; line-height: 36px; white-space: nowrap; color: #fff; \
-          text-overflow: ellipsis; -o-text-overflow: ellipsis; -icab-text-overflow: ellipsis; -khtml-text-overflow: ellipsis; -moz-text-overflow: ellipsis; -webkit-text-overflow: ellipsis; } \
-        .audiojs .error-message a { color: #eee; text-decoration: none; padding-bottom: 1px; border-bottom: 1px solid #999; white-space: wrap; } \
-        \
-        .audiojs .play { background: url("$1") -2px -1px no-repeat; } \
-        .audiojs .loading { background: url("$1") -2px -31px no-repeat; } \
-        .audiojs .error { background: url("$1") -2px -61px no-repeat; } \
-        .audiojs .pause { background: url("$1") -2px -91px no-repeat; } \
-        \
-        .playing .play, .playing .loading, .playing .error { display: none; } \
-        .playing .pause { display: block; } \
-        \
-        .loading .play, .loading .pause, .loading .error { display: none; } \
-        .loading .loading { display: block; } \
-        \
-        .error .time, .error .play, .error .pause, .error .scrubber, .error .loading { display: none; } \
-        .error .error { display: block; } \
-        .error .play-pause p { cursor: auto; } \
-        .error .error-message { display: block; }',
+      css: '',
       // The default event callbacks:
       trackEnded: function(e) {},
       flashError: function() {
@@ -247,7 +209,7 @@
       var audio = new container[audiojsInstance](element, s);
 
       // If css has been passed in, dynamically inject it into the `<head>`.
-      if (s.css) this.helpers.injectCss(audio, s.css);
+      //if (s.css) this.helpers.injectCss(audio, s.css);
 
       // If `<audio>` or mp3 playback isn't supported, insert the swf & attach the required events for it.
       if (s.useFlash && s.hasFlash) {
@@ -437,7 +399,7 @@
         // If an `audiojs` `<style>` tag already exists, then append to it rather than creating a whole new `<style>`.
         var prepend = '',
             styles = document.getElementsByTagName('style'),
-            css = string.replace(/\$1/g, audio.settings.imageLocation);
+            //css = string.replace(/\$1/g, audio.settings.imageLocation);
 
         for (var i = 0, ii = styles.length; i < ii; i++) {
           var title = styles[i].getAttribute('title');
