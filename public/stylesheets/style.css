@@ -442,6 +442,7 @@ legend {
     width: 100%;
     color: #ccc;
     cursor: pointer;
+    opacity: 0;
 }
 
 .player-list ol li > div {
