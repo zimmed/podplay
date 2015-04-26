@@ -300,7 +300,7 @@
             _cur: 0,
 
             add: function (src, title, dur, poster_src, pod_id) {
-                var track, played, index;
+                var track, played, index, el;
                 if (typeof(src) === 'object') {
                     track = src;
                     autoload = title;
@@ -320,7 +320,7 @@
             },
 
             insert: function (src, title, dur, poster_src, pod_id) {
-                var track, played;
+                var track, played, el;
                 if (typeof(src) === 'object') {
                     track = src;
                     autoload = title;
