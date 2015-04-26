@@ -83,12 +83,12 @@ nav {
 }
 
 .feed-col-right {
-    width: 573px;
+    width: 528px;
     overflow-y: scroll;
 }
 
 .feed-col-left {
-    width: 250px;
+    width: 200px;
 }
 
 .listenlink {
@@ -198,8 +198,8 @@ nav {
 }
 
 img.podcast-poster {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     position: relative;
     float: left;
 }
