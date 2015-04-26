@@ -374,7 +374,7 @@
             },
             
             hasTrack: function (track_or_src) {
-                var src = track_or_src, fitler;
+                var src = track_or_src, filter;
                 if (typeof(src) !== 'string') {
                     src = src.src;
                 }
