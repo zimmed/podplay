@@ -21,8 +21,8 @@
             podcast: Number(pod_id),
             last_pos: (last_pos) ? last_pos : 0,
             played: (played) ? played : false
-        }
-    }
+        };
+    };
 
     var TrackElement = function (track) {
         var el = $('<li><div class="t-poster">' +
@@ -30,7 +30,7 @@
                    't-title">' + track.title + '</div><div class="t-dur">' +
                    track.dur + '</div></li>');
         return el;       
-    }
+    };
     
     var PlayMode = {
         continue: 0x01,
@@ -289,7 +289,7 @@
                 }
             },
 
-        }
+        };
     };
 
     var PlayList = function (list) {
@@ -314,7 +314,7 @@
                 this._list.push(track);
                 this._appendElement(el);
                 index = this.count() - 1;
-                if (track.played) this._markPlayed(index)
+                if (track.played) this._markPlayed(index);
                 return index;
             },
 
