@@ -25,9 +25,10 @@
     };
 
     var TrackElement = function (track) {
-        var el = $('<li><div class="t-poster">' +
+        var el = $('<li><div class="pl-btn-del"><span aria-hidden="true"' +
+                   ' class="glyphicon glyphicon-remove-sign"></span></div>' +
+                   '<div class="t-poster">' +
                    '  <img src="' + track.poster + '">' +
-                   '  <div class="t-dur">' + track.duration + '</div>' +
                    '</div><div class="t-title">' + track.title +
                    '</div></li>');
         return el;       
