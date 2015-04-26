@@ -30,6 +30,10 @@ nav {
     margin-right: 25px;
 }
 
+#right-col, #left-col {
+    float: right;
+}
+
 #right-col {
     background: rgba(0,0,0,0.3);
     padding-top: 30px;
