@@ -1,14 +1,16 @@
 //- index.jade - Template for podcast feed pages/views. -//
 //- Authors: Ian McGaunn; Dave Zimmelman -//
-//- Modified: 09 Mar 15 -//
+//- Modified: 25 Apr 15 -//
 
-// Left column with feed data.
 script.
     window.safetitle = "#{safetitle}";
+// Podcast title
 .feed-row-top
     h4 #{feed.title}
+// Left column with podcast poster and information
 .feed-col-left
     img.podcast-poster(src="#{podcast.poster600}")
+    // "Add subscription" button
     if user
         if isFavorited(user, podcast._id)
             button.btn.btn-primary.btn-fav#fav(data-id="#{podcast._id}" data-toggle="tooltip" data-placement="right" title="Remove Subscription")
@@ -19,16 +21,7 @@ script.
     else
         button.btn.btn-primary.btn-fav#fav-fake(data-toggle="tooltip" data-placement="right" title="Sign in to subscribe.")
             span.glyphicon.glyphicon-star-empty(aria-hidden="true")
-                
-    // Container for audio player.
-    //-
-        div.podcast-player
-            div.playing-title
-                span No File Selected
-            audio(controls="controls" preload="auto" src="http://xamuel.com/blank-mp3-files/point1sec.mp3")
-            script(src="/javascripts/audioplayer.js")
-            script.
-                $( function() { $( 'audio' ).audioPlayer(); } ); 
+    // Table with podcast feed information
     table#feedinfo-table(class="table sleek-gray")
         tbody
             tr
@@ -41,19 +34,14 @@ script.
                     div.wrap Genre
                 td 
                     div.wrap #{podcast.genre}
-// Right column with episode table
-//-
-    - var formatDate = function (dateString) {
-    -   var d = dateString.substr(5, 2);
-    -   var m = dateString.substr(8, 3);
-    -   var y = dateString.substr(14, 2);
-    -   return d + ' ' + m + ' ' + y;
-    - }
+// Right column with episode list
 .feed-col-right
+    // Feed summary
     if feed['itunes:summary']
         span#it-summary #{feed['itunes:summary']}
     else
         span#it-summary No description.
+    // Episode listings
     table#episode-table(class="table")
         colgroup
             col
@@ -85,9 +73,9 @@ script.
                         td
                             div.nowrap
                                 if ep.enclosure
-                                    button.listenlink.add(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
+                                    button.listenlink.add(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-dur="#{ep['itunes:duration']}" data-pid="#{podcast._id}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
                                         span.glyphicon.glyphicon-plus-sign(aira-hidden="true")
-                                    button.listenlink.play(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
+                                    button.listenlink.play(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-dur="#{ep['itunes:duration']}" data-pid="#{podcast._id}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
                                         span.glyphicon.glyphicon-play(aira-hidden="true")
                                 else
                                     span.glyphicon.glyphicon-alert(aria-hidden="true" title="No audio data.")
