@@ -32,6 +32,7 @@ nav {
 
 #right-col {
     background: rgba(0,0,0,0.3);
+    padding-top: 30px;
 }
 
 #feed-view {
@@ -471,6 +472,8 @@ legend {
     margin: 0 !important;
     padding: 0 !important;
     list-style-position: outside;
+    max-height: 400px;
+    overflow-y: scroll;
 }
 .player-list ol li {
     height: 50px;
