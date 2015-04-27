@@ -70,9 +70,7 @@
                 this.header.loadError(this.playlist.getTrack());
             },
             load: function (index) {
-                console.log('Load: ' + index);
                 var track = this.playlist.load(index);
-                console.log(track);
                 this.audio.load(track);
                 this.header.load(track);
             },
@@ -382,6 +380,7 @@
                 item = this.getTrack();
                 element = $(this._dom.find('li')[index]);
                 item.played = false;
+                $(element).parent().find('.loaded').removeClass('loaded');
                 $(element).removeClass('played');
                 $(element).addClass('loaded');
                 return item;
