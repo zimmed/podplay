@@ -265,7 +265,7 @@
             },
             
             skipTo: function (position) {
-                var percent; a = this._dom.find('audio')[0];
+                var percent, a = this._dom.find('audio')[0];
                 position = (position < 0) ? 0 :
                         (position > a.duration) ? a.duration : position;
                 percent = position / a.duration;
