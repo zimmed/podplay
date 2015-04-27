@@ -104,11 +104,9 @@
       flashError: function() {
         var html = 'Missing <a href="http://get.adobe.com/flashplayer/">flash player</a> plugin.';
         //if (this.mp3) html += ' <a href="'+this.mp3+'">Download audio file</a>.';
-        console.log('Error!');
         this.onError(new Error(html));
       },
       loadError: function(e) {
-        console.log('Error!');
         this.onError(new Error('Error loading: "'+this.mp3+'"'));
       },
       init: function() {
@@ -587,7 +585,6 @@
       container[audiojs].events.trackLoadProgress(this);
     },
     loadError: function() {
-        console.log('error');
       this.settings.loadError.apply(this);
     },
     init: function() {
