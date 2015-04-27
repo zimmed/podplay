@@ -547,7 +547,7 @@
   // We create one of these per `<audio>` and then push them into `audiojs['instances']`.
   container[audiojsInstance] = function(element, settings) {
     // Each audio instance returns an object which contains an API back into the `<audio>` element.
-    this.onError = function (e) { console.log(e); },
+    this.onError = function (e) { console.log(e); };
     this.element = element;
     this.wrapper = element.parentNode;
     this.source = element.getElementsByTagName('source')[0] || element;
