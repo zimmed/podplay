@@ -53,8 +53,10 @@
                 this._dom.find('.player-list ol').click(function (e) {
                     var li = ($(e.target).is('li')) ? $(e.target) :
                             $(e.target).closest('li'),
-                        index = li.index();
-                    if ($(e.target).hasClass('pl-btn-del')) {
+                        index = li.index(),
+                        div = ($(e.target).is('div'))? $(e.target) :
+                            $(e.target).closest('div');
+                    if (div.hasClass('pl-btn-del')) {
                         P.delete(index);
                     }
                     else {

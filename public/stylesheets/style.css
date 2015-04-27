@@ -32,8 +32,7 @@ nav {
 
 #right-col {
     background: rgba(0,0,0,0.3);
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding: 20px;
 }
 
 #feed-view {
@@ -415,34 +414,6 @@ legend {
     min-width: 275px !important;
 }
 
-@media only screen and (max-width: 1199px) {
-    img.podcast-poster {
-        width: 150px;
-        height: 150px;
-    }
-    .feed-col-left {
-        width: 150px;
-    }
-    .feed-col-right {
-        width: 523px;
-    }
-    #feedinfo-table .wrap, #feedinfo-table th {
-        font-size: 12px;
-        height: 60px;
-        line-height: 20px;
-    }
-}
-@media only screen and (max-width: 991px) {
-    .feed-col-right {
-        width: 538px;
-    }
-}
-@media only screen and (max-width: 766px) {
-    .feed-col-right {
-        width: 523px;
-    }
-}
-
 
 
 
@@ -473,12 +444,33 @@ legend {
 /** Extra audiojs style rules **/
 
 
+
+.player-container {
+    width: 100%;
+}
+.player-header {
+    width: 100%;
+    height: 178px;
+    background: #404040;
+    -webkit-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); -moz-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+    -o-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+    position: relative;
+    float: left;
+}
+.player-list {
+    width: 100%;
+    max-height: 400px;
+    overflow-y: scroll;
+    position: relative;
+    float: left;
+}
+.player-header {
+    
+}
 .player-list ol {
     margin: 0 !important;
     padding: 0 !important;
-    list-style-position: outside;
-    max-height: 400px;
-    overflow-y: scroll;
+    list-style: none;
 }
 .player-list ol li {
     height: 50px;
@@ -504,6 +496,7 @@ legend {
     white-space: normal;
     height: 50px;
     line-height: 50px;
+    max-width: 230px;
     overflow: hidden;
     padding-left 5px !important;
 }
@@ -576,16 +569,55 @@ legend {
     -ms-user-select: none;
     user-select: none;
 }
-.player-header {
-    width: 100%;
-    height: 100px;
-    background: #404040;
-    -webkit-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); -moz-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
-    -o-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+
+
+
+
+
+/** Media Queries **/
+
+
+@media only screen and (max-width: 1199px) {
+    img.podcast-poster {
+        width: 150px;
+        height: 150px;
+    }
+    .feed-col-left {
+        width: 150px;
+    }
+    .feed-col-right {
+        width: 447px;
+    }
+    #feedinfo-table .wrap, #feedinfo-table th {
+        font-size: 12px;
+        height: 60px;
+        line-height: 20px;
+    }
+    #right-col {
+        min-width: 380px;
+    }
 }
-.player-container {
-    width: 311px;
-    margin: 0 auto;
+@media only screen and (max-width: 991px) {
+    .feed-col-right {
+        width: 538px;
+    }
+    .player-header, .player-list {
+        width: 40%;
+        max-height: 178px;
+    }
+    .t-poster img {
+        height: 30px;
+        width: 30px;
+    }
+    .player-list li, .player-list li > div {
+        height: 30px;
+        line-height: 30px;
+    }
+}
+@media only screen and (max-width: 766px) {
+    .feed-col-right {
+        width: 523px;
+    }
 }
 
 
