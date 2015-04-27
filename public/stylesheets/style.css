@@ -464,8 +464,9 @@ legend {
     position: relative;
     float: left;
 }
-.player-header {
-    
+.player-audio {
+    position: relative;
+    top: 150px;
 }
 .player-list ol {
     margin: 0 !important;
