@@ -100,13 +100,13 @@
       // The default event callbacks:
       trackEnded: function(e) {},
       flashError: function() {
-        var player = this.settings.createPlayer,
-            html = 'Missing <a href="http://get.adobe.com/flashplayer/">flash player</a> plugin.';
+        var html = 'Missing <a href="http://get.adobe.com/flashplayer/">flash player</a> plugin.';
         //if (this.mp3) html += ' <a href="'+this.mp3+'">Download audio file</a>.';
+        console.log('Error!');
         this.onError(new Error(html));
       },
       loadError: function(e) {
-        var player = this.settings.createPlayer;
+        console.log('Error!');
         this.onError(new Error('Error loading: "'+this.mp3+'"'));
       },
       init: function() {
