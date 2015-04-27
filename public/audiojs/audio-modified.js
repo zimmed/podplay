@@ -106,7 +106,7 @@
         throw new Error(html);
       },
       loadError: function(e) {
-        var player = this.settings.createPlayer,
+        var player = this.settings.createPlayer;
         throw new Error('Error loading: "'+this.mp3+'"');
       },
       init: function() {
