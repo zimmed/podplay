@@ -612,7 +612,7 @@ legend {
 
 /** Media Queries **/
 
-@media only screen and (max-width: 1199px) {
+@media only screen and (max-width: 1199px) and (min-width: 992px) {
     img.podcast-poster {
         width: 150px;
         height: 150px;
