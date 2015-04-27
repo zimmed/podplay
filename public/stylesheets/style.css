@@ -450,7 +450,7 @@ legend {
 }
 .player-header {
     width: 100%;
-    height: 178px;
+    height: 186px;
     background: #404040;
     -webkit-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); -moz-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
     -o-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
@@ -602,7 +602,7 @@ legend {
     }
     .player-header, .player-list {
         width: 40%;
-        max-height: 178px;
+        max-height: 186px;
     }
     .t-poster img {
         height: 30px;
