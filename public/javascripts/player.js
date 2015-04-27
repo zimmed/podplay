@@ -339,7 +339,7 @@
                     autoload = title;
                 }
                 else {
-                    track = new Track(src, title, dir, poster_src, pod_id);
+                    track = new Track(src, title, dur, poster_src, pod_id);
                 }
                 if (this.hasTrack(track)) {
                     throw new Error('Track already in playlist.');
