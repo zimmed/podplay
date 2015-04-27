@@ -63,6 +63,7 @@
           '    <p class="play"></p>' +
           '    <p class="pause"></p>' +
           '    <p class="loading"></p>' +
+          '    <p class="error"></p>' +
           '</div>' +
           '<div class="skip unselectable" title="Skip back 15 seconds.">' +
           '    <span class="glyphicon glyphicon-repeat flip-glyph" aria-hidden="true"></span>' +
@@ -82,7 +83,8 @@
           '    <span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span>' +
           '    <span class="glyphicon glyphicon-volume-down" aria-hidden="true"></span>' +
           '    <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>' +
-          '</div>',
+          '</div>' +
+          '<div class="error-message"></div>',
         playPauseClass: 'play-pause',
         scrubberClass: 'scrubber',
         progressClass: 'progress',
