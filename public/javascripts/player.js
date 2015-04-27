@@ -64,15 +64,14 @@
                     }
                 });
             },
+            error: function (e) {
+                console.log(e);
+                this.header.loadError(this.playlist.getTrack());
+            },
             load: function (index) {
                 var track = this.playlist.load(index);
-                try {
-                    this.audio.load(track);
-                    this.header.load(track);
-                } catch (e) {
-                    console.log(e);
-                    this.header.loadError(track);
-                }
+                this.audio.load(track);
+                this.header.load(track);
             },
             unload: function () {
             },
@@ -203,6 +202,9 @@
                         player.trackFinished();
                     }
                 });
+                this._audio.onError = function (e) {
+                    player.error(e);
+                };
                 this._dom.find('.skip.flip-glyph').click(function () {
                     player.skipBack(15);
                 });
