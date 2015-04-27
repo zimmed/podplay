@@ -356,7 +356,7 @@
                 this._list.unshift(track);
                 this._insertElement(el);
                 if (track.played) this._markPlayed(0);
-                this._cur++;
+                if (this.count() !== 1) this._cur++;
                 return 0;
             },
 
@@ -387,7 +387,7 @@
             },
 
             getTrack: function (index) {
-                index = (index) ? index : this._cur;
+                index = (Number(index) === index) ? index : this._cur;
                 if (this.count() === 0 || !this._list[index]) {
                     return false;
                 }
