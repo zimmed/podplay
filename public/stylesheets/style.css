@@ -31,7 +31,7 @@ nav:after {
     position: absolute;
     top: 0;
     left: 0;
-    opacity: 0.9;
+    opacity: 0.75;
     z-index: -1;
     background-image: -webkit-linear-gradient(top,#ccc 95%,#245580 0);
     background-image: -o-linear-gradient(top,#ccc 95%,#245580 0);
@@ -634,7 +634,7 @@ legend {
         max-height: 186px;
     }
     #right-col, left-col {
-        width: 100%;
+        width: 940px !important;
     }
     #right-col {
         height: 226px;
