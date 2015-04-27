@@ -82,11 +82,12 @@
             },
             delete: function (index) {
                 var c = this.playlist._cur;
-                this.playlist.delete(index);
                 if (c === index) {
                     this.stop();
-                    this.trackFinished();
+                    if (this.playlist.count() > 1) this.nextTrack(true);
+                    else this.unload();
                 }
+                this.playlist.delete(index);
             },
             addAndPlay: function (src, title, dur, poster_src, pod_id) {
                 var i = this.playlist.insert(
@@ -120,11 +121,11 @@
             reset: function () {
                 this.audio.reset();
             },
-            nextTrack: function () {
+            nextTrack: function (noplay) {
                 var t = this.playlist.next();
                 if (t === -1) t = 0;
                 this.load(t);
-                this.play();
+                if (!noplay) this.play();
             },
             prevTrack: function () {
                 var t = this.playlist.prev();
