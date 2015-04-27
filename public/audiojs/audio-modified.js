@@ -576,6 +576,7 @@
       this.updatePlayhead();
     },
     load: function(mp3) {
+        console.log('Loading: ' + mp3);
       this.loadStartedCalled = false;
       this.source.setAttribute('src', mp3);
       // The now outdated `load()` method is required for Safari 4
@@ -584,6 +585,7 @@
       container[audiojs].events.trackLoadProgress(this);
     },
     loadError: function() {
+        console.log('error');
       this.settings.loadError.apply(this);
     },
     init: function() {
