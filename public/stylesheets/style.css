@@ -640,6 +640,11 @@ legend {
     
     #right-col {
         height: 226px;
+        position: absolute;
+        top: 70px;
+    }
+    #left-col {
+        top: 246px;
     }
 }
 @media only screen and (max-width: 991px) {
@@ -664,7 +669,11 @@ legend {
         margin: 0 auto;
     }
     #right-col {
-        height: 326px;
+        max-height: 326px;
+        width: 100%;
+    }
+    #left-col {
+        top: 346px;
     }
 }
 
