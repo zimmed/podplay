@@ -103,11 +103,11 @@
         var player = this.settings.createPlayer,
             html = 'Missing <a href="http://get.adobe.com/flashplayer/">flash player</a> plugin.';
         //if (this.mp3) html += ' <a href="'+this.mp3+'">Download audio file</a>.';
-        throw new Error(html);
+        this.onError(new Error(html));
       },
       loadError: function(e) {
         var player = this.settings.createPlayer;
-        throw new Error('Error loading: "'+this.mp3+'"');
+        this.onError(new Error('Error loading: "'+this.mp3+'"'));
       },
       init: function() {
         var player = this.settings.createPlayer;
@@ -547,6 +547,7 @@
   // We create one of these per `<audio>` and then push them into `audiojs['instances']`.
   container[audiojsInstance] = function(element, settings) {
     // Each audio instance returns an object which contains an API back into the `<audio>` element.
+    this.onError = function (e) { console.log(e); },
     this.element = element;
     this.wrapper = element.parentNode;
     this.source = element.getElementsByTagName('source')[0] || element;
