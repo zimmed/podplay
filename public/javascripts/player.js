@@ -61,6 +61,7 @@
                     }
                     else {
                         P.load(index);
+                        P.play();
                     }
                 });
             },
@@ -266,10 +267,10 @@
             },
             
             skipTo: function (position) {
+                var percent; a = this._dom.find('audio')[0];
                 position = (position < 0) ? 0 :
                         (position > a.duration) ? a.duration : position;
-                var a = this._dom.find('audio')[0],
-                    precent = position / a.duration;
+                percent = position / a.duration;
                 this._audio.skipTo(percent);
             },
             
