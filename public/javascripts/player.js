@@ -353,7 +353,7 @@
                     throw new Error('Track already in playlist.');
                 }
                 el = new TrackElement(track);
-                this._list.shift(track);
+                this._list.unshift(track);
                 this._insertElement(el);
                 if (track.played) this._markPlayed(0);
                 this._cur++;
