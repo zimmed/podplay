@@ -40,13 +40,14 @@ nav:before {
     background-repeat: repeat-x;
 }
 nav {
+    height: 50px;
     background: transparent;
     z-index: 1;
 }
 
 .navbar-brand {
     margin-right: 25px;
-    color: #777
+    color: #777;
 }
 
 #right-col {
