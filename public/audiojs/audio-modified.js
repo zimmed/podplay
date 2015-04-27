@@ -63,7 +63,6 @@
           '    <p class="play"></p>' +
           '    <p class="pause"></p>' +
           '    <p class="loading"></p>' +
-          '    <p class="error"></p>' +
           '</div>' +
           '<div class="skip unselectable" title="Skip back 15 seconds.">' +
           '    <span class="glyphicon glyphicon-repeat flip-glyph" aria-hidden="true"></span>' +
@@ -83,8 +82,7 @@
           '    <span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span>' +
           '    <span class="glyphicon glyphicon-volume-down" aria-hidden="true"></span>' +
           '    <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>' +
-          '</div> ' +
-          '<div class="error-message"></div>',
+          '</div>',
         playPauseClass: 'play-pause',
         scrubberClass: 'scrubber',
         progressClass: 'progress',
@@ -103,19 +101,13 @@
       trackEnded: function(e) {},
       flashError: function() {
         var player = this.settings.createPlayer,
-            errorMessage = getByClass(player.errorMessageClass, this.wrapper),
             html = 'Missing <a href="http://get.adobe.com/flashplayer/">flash player</a> plugin.';
-        if (this.mp3) html += ' <a href="'+this.mp3+'">Download audio file</a>.';
-        container[audiojs].helpers.removeClass(this.wrapper, player.loadingClass);
-        container[audiojs].helpers.addClass(this.wrapper, player.errorClass);
-        errorMessage.innerHTML = html;
+        //if (this.mp3) html += ' <a href="'+this.mp3+'">Download audio file</a>.';
+        throw new Error(html);
       },
       loadError: function(e) {
         var player = this.settings.createPlayer,
-            errorMessage = getByClass(player.errorMessageClass, this.wrapper);
-        container[audiojs].helpers.removeClass(this.wrapper, player.loadingClass);
-        container[audiojs].helpers.addClass(this.wrapper, player.errorClass);
-        errorMessage.innerHTML = 'Error loading: "'+this.mp3+'"';
+        throw new Error('Error loading: "'+this.mp3+'"');
       },
       init: function() {
         var player = this.settings.createPlayer;

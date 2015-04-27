@@ -66,8 +66,13 @@
             },
             load: function (index) {
                 var track = this.playlist.load(index);
-                this.audio.load(track);
-                this.header.load(track);
+                try {
+                    this.audio.load(track);
+                    this.header.load(track);
+                } catch (e) {
+                    console.log(e);
+                    this.header.loadError(track);
+                }
             },
             unload: function () {
             },
@@ -170,6 +175,10 @@
                 if (!track) this._unload();
                 else {
                 }
+            },
+            
+            loadError: function (track) {
+                
             },
 
             _unload: function () {
