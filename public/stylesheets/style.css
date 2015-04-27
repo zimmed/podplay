@@ -286,7 +286,7 @@ tr.feed-row:hover {
 }
 
 .panel-body {
-    height: 137px;
+    height: 125px;
     margin: 0px;
     padding: 10px;
     overflow-y: hidden;
@@ -446,11 +446,8 @@ legend {
 
 
 ::-webkit-scrollbar {
-    width: 12px;
-}
-
-::-webkit-scrollbar:vertical {
-    width: 10px;
+    width: 6px;
+    height: 6px;
 }
  
 ::-webkit-scrollbar-track {
