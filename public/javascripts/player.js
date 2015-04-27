@@ -71,6 +71,7 @@
             load: function (index) {
                 console.log('Load: ' + index);
                 var track = this.playlist.load(index);
+                console.log(track);
                 this.audio.load(track);
                 this.header.load(track);
             },
