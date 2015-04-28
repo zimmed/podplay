@@ -58,7 +58,8 @@ html
             // Back button
             a.navbar-brand#soft-back-btn(href="javascript:PageStack.back();") !{'&#9664;'}
             // Brand button
-            a.navbar-brand(href="javascript:load_splash_view();") Podplay.me
+            a.navbar-brand(href="javascript:PageStack.push('index', false, '/');")
+                span.glyphicon.glyphicon-play.flip-glyph &nbsp;
             // User account function menu
             ul.nav.navbar-nav.navbar-right
               li
