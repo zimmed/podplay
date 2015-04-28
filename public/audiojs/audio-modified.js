@@ -66,7 +66,7 @@
           '    <span title="Pause" class="glyphicon ' +
                     'glyphicon-pause" aria-hidden="true">' +
           '    </span>' +
-          '    <span title="Loading..." class="glyphicon' +
+          '    <span title="Loading..." class="glyphicon ' +
                     'glyphicon-cd" aria-hidden="true">' +
           '    </span>' +
           '    <span title="Error" class="glyphicon ' +
