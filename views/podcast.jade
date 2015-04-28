@@ -80,9 +80,9 @@ script.
                         td
                             div.nowrap
                                 if ep.enclosure
-                                    button.listenlink.add(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-dur="#{ep['itunes:duration']}" data-pid="#{podcast._id}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
+                                    button.listenlink.add(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-dur="#{ep['itunes:duration']}" data-pid="#{podcast._id}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" data-ptitle="#{feed.title}" type="button")
                                         span.glyphicon.glyphicon-plus-sign(aira-hidden="true")
-                                    button.listenlink.play(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-dur="#{ep['itunes:duration']}" data-pid="#{podcast._id}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" type="button")
+                                    button.listenlink.play(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-dur="#{ep['itunes:duration']}" data-pid="#{podcast._id}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" data-ptitle="#{feed.title}" type="button")
                                         span.glyphicon.glyphicon-play(aira-hidden="true")
                                 else
                                     span.glyphicon.glyphicon-alert(aria-hidden="true" title="No audio data.")
