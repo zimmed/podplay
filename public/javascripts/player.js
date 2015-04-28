@@ -221,6 +221,7 @@
                     this._insertTitle(track.title);
                     this._insertImage(track.poster, track.podcast);
                     this._insertInfo(track.p_title, track.duration);
+                    console.log(track);
                 }
             },
             
@@ -297,8 +298,6 @@
                     player.error(e);
                 };
                 this._dom.find('.play-pause').click(function () {
-                    console.log('playpause: \n\t');
-                    console.log($(this));
                     if ($(this).hasClass('p-play')) {
                         player.pause();
                     }
