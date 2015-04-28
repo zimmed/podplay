@@ -581,7 +581,7 @@ legend {
 }
 .skip.ahead:before {
     content: '30';
-    left: 49px;
+    left: 215px;
 }
 .flip-glyph {
     -moz-transform: scaleX(-1);
