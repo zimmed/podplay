@@ -224,10 +224,10 @@
             _insertTitle: function (msg) {
                 this._dom.find('.titlebar').html(msg).marquee({
                     duration: msg.length * this._marquee_speed,
-                    gap: 170,
+                    gap: 0,
                     delayBeforeStart: 0,
                     direction: 'left',
-                    duplicated: true
+                    duplicated: false
                 });
             }
         };
