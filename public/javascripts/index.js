@@ -171,7 +171,7 @@
         if (window.PageStack.getPage() === Pages.PODCAST &&
             window.PageStack.getData().id === id) {
             // If podcast already open, push new index state (close it).
-            window.PageStack.load(Pages.INDEX, false, '/index');
+            window.PageStack.load(Pages.INDEX, false, '/');
         }
         else if (!window.FeedView.isLoading()) {
             window.PageStack.load(Pages.PODCAST,
