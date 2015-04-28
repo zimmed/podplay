@@ -301,6 +301,9 @@
                 this._audio.onError = function (e) {
                     player.error(e);
                 };
+                this._audio.onLoaded = function () {
+                    player.pause();
+                };
                 this._dom.find('.play-pause').click(function () {
                     if ($(this).hasClass('p-play')) {
                         player.pause();
