@@ -133,6 +133,7 @@
       loadStarted: function() {
         var player = this.settings.createPlayer;
         container[audiojs].helpers.removeClass(this.wrapper, player.loadingClass);
+        this.onLoaded();
       },
       loadProgress: function(percent) {
         var player = this.settings.createPlayer,
@@ -565,6 +566,7 @@
   container[audiojsInstance] = function(element, settings) {
     // Each audio instance returns an object which contains an API back into the `<audio>` element.
     this.onError = function (e) { console.log(e); };
+    this.onLoaded = function () { };
     this.element = element;
     this.wrapper = element.parentNode;
     this.source = element.getElementsByTagName('source')[0] || element;
