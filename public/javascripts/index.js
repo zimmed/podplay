@@ -168,7 +168,8 @@
      * @param {Mixed} div - The element that fired the click event.
      */
     window.loadPodcast = function (id, div) {
-        var parent = $(div).parent().parent(); // Containing panel
+        var parent = (typeof(div) === 'string') ? $(div) :
+                $(div).parent().parent(); // Containing panel
         id = Number(id);
         if (window.PageStack.getPage() === Pages.PODCAST &&
             window.PageStack.getData().id === id) {
@@ -734,12 +735,13 @@
                 dur = ('' + $(this).data('dur')).slice(1),
                 title = $(this).data('title'),
                 poster = $(this).data('poster'),
-                pid = $(this).data('pid');
+                pid = $(this).data('pid'),
+                ptitle = $(this).data('ptitle');
             if ($(this).hasClass('add')) {
-                window.player.add(src, title, dur, poster, pid);
+                window.player.add(src, title, ptitle, dur, poster, pid);
             }
             else {
-                window.player.addAndPlay(src, title, dur, poster, pid);
+                window.player.addAndPlay(src, title, ptitle, dur, poster, pid);
             }
                 
         });

@@ -1,4 +1,4 @@
-(function ($, audiojs) {
+(function (window, $, audiojs) {
     'use strict';
     
     $.fn.addPlayer = function (preload) {
@@ -12,13 +12,14 @@
         return $(this).data('js-player');
     };
     
-    var Track = function (src, title, dur, poster_src, pod_id, last_pos, played) {
+    var Track = function (src, title, p_title, dur, poster_src, pod_id, last_pos, played) {
         return {
             src: src,
             title: title,
             duration: dur,
             poster: poster_src,
             podcast: Number(pod_id),
+            p_title: p_title,
             last_pos: (last_pos) ? last_pos : 0,
             played: (played) ? played : false
         };
@@ -120,6 +121,7 @@
             },
             trackFinished: function () {
                 this.playlist.finished();
+                this.pause();
                 if (this.isMode(PlayMode.continue)) {
                     var t = this.playlist.next();
                     if (t !== -1 || this.isMode(PlayMode.repeat)) {
@@ -199,6 +201,7 @@
     var Header = function () {
         var H = {
             _dom: $('<div class="player-header">' +
+                    '   <img class="poster" unselectable" src="">' +
                     '   <div class="titlebar unselectable">No track selected.</div>' +
                     '</div>'),
             _marquee_speed: 400, // miliseconds per character
@@ -211,6 +214,7 @@
                 if (!track) this._unload();
                 else {
                     this._insertTitle(track.title);
+                    this._insertImage(track.poster, track.podcast);
                 }
             },
             
@@ -220,6 +224,15 @@
 
             _unload: function () {
                 this._insertTitle("No track selected.");
+            },
+            
+            _insertImage: function (url, pid) {
+                var poster = this._dom.find('.poster');
+                poster.attr('src', url);
+                poster.off('click');
+                poster.click(function () {
+                    window.loadPodcast(pid, '#pc-0');
+                });
             },
             
             _insertTitle: function (msg) {
@@ -378,14 +391,14 @@
             _list: [],
             _cur: 0,
 
-            add: function (src, title, dur, poster_src, pod_id) {
+            add: function (src, title, p_title, dur, poster_src, pod_id) {
                 var track, played, index, el;
                 if (typeof(src) === 'object') {
                     track = src;
                     autoload = title;
                 }
                 else {
-                    track = new Track(src, title, dur, poster_src, pod_id);
+                    track = new Track(src, title, p_title, dur, poster_src, pod_id);
                 }
                 if (this.hasTrack(track)) {
                     throw new Error('Track already in playlist.');
@@ -398,14 +411,14 @@
                 return index;
             },
 
-            insert: function (src, title, dur, poster_src, pod_id) {
+            insert: function (src, title, p_title, dur, poster_src, pod_id) {
                 var track, played, el;
                 if (typeof(src) === 'object') {
                     track = src;
                     autoload = title;
                 }
                 else {
-                    track = new Track(src, title, dur, poster_src, pod_id);
+                    track = new Track(src, title, p_title, dur, poster_src, pod_id);
                 }
                 if (this.hasTrack(track)) {
                     throw new Error('Track already in playlist.');
@@ -512,4 +525,4 @@
         return PL;
     };
     
-}(jQuery, audiojs));
+}(window, jQuery, audiojs));

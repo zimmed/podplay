@@ -466,10 +466,39 @@ legend {
     font-size: 16px;
     position: absolute;
     top: 118px;
-    z-index: 2;
+    z-index: 1;
     color: #ccc;
     cursor: defalt;
     text-shadow: 1px 1px #222;
+}
+.player-header .titlebar:after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    width: 340px;
+    /* FF3.6+ */
+    background: -moz-linear-gradient(left,  rgba(64,64,64,1) 0%, rgba(64,64,64,0) 20%, rgba(64,64,64,0) 50%, rgba(64,64,64,0) 80%, rgba(64,64,64,1) 100%); 
+    /* Chrome,Safari4+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(64,64,64,1)), color-stop(20%,rgba(64,64,64,0)), color-stop(50%,rgba(64,64,64,0)), color-stop(80%,rgba(64,64,64,0)), color-stop(100%,rgba(64,64,64,1)));
+    /* Chrome10+,Safari5.1+ */
+    background: -webkit-linear-gradient(left,  rgba(64,64,64,1) 0%,rgba(64,64,64,0) 20%,rgba(64,64,64,0) 50%,rgba(64,64,64,0) 80%,rgba(64,64,64,1) 100%); 
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(left,  rgba(64,64,64,1) 0%,rgba(64,64,64,0) 20%,rgba(64,64,64,0) 50%,rgba(64,64,64,0) 80%,rgba(64,64,64,1) 100%); 
+    /* IE10+ */
+    background: -ms-linear-gradient(left,  rgba(64,64,64,1) 0%,rgba(64,64,64,0) 20%,rgba(64,64,64,0) 50%,rgba(64,64,64,0) 80%,rgba(64,64,64,1) 100%); 
+    /* W3C */
+    background: linear-gradient(to right,  rgba(64,64,64,1) 0%,rgba(64,64,64,0) 20%,rgba(64,64,64,0) 50%,rgba(64,64,64,0) 80%,rgba(64,64,64,1) 100%); 
+    /* IE6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#404040', endColorstr='#404040',GradientType=1 ); 
+
+}
+.player-header .poster {
+    width: 100px;
+    height: 100px;
+    margin: 9px;
+    padding: 0;
+    border: 0;
+    border-radius: 15px;
 }
 .player-list {
     width: 340px;
@@ -714,7 +743,7 @@ legend {
 }
 .audiojs .play-pause.p-pause:active,
 .audiojs .play-pause.p-play:active {
-    color: white;
+    color: #ccc;
 }
 .play-pause .glyphicon {
     display: none;
