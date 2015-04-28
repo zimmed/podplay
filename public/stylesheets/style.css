@@ -466,6 +466,8 @@ legend {
     font-size: 16px;
     position: absolute;
     top: 118px;
+    z-index: 2;
+    color: #ccc;
 }
 .player-list {
     width: 340px;
