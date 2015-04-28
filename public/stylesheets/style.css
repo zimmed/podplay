@@ -563,6 +563,7 @@ legend {
     color: #777;
     cursor: pointer;
     padding-top: 6px;
+    z-index: 2;
 }
 .skip:active {
     color: #ccc;
@@ -571,13 +572,16 @@ legend {
     position: absolute;
     font-size: 10px;
     font-style: normal;
-    left: 7px;
+    top: 11px;
+    z-index: 3;
 }
 .skip.back:before {
     content: '15';
+    left: 49px;
 }
-skip.ahead:before {
+.skip.ahead:before {
     content: '30';
+    left: 49px;
 }
 .flip-glyph {
     -moz-transform: scaleX(-1);
