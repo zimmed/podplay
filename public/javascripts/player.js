@@ -77,7 +77,7 @@
                 this.header.load(track);
             },
             unload: function () {
-                this._showIcon();
+                this._showState();
             },
             add: function (src, title, dur, poster_src, pod_id) {
                 var i = this.playlist.add(
