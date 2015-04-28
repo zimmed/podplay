@@ -101,6 +101,7 @@
                 console.log('Added ' + title + ' to index ' + i);
                 this.load(i);
                 this.play();
+                this._dom[0].scrollIntoView();
             },
             stop: function () {
                 this.pause();
