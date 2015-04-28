@@ -223,6 +223,13 @@ nav {
     white-space: normal;
 }
 
+img.podcast-poster {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    float: left;
+}
+
 .container {
   margin-bottom: 50px;
 }
