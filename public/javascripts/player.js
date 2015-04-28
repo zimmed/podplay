@@ -77,16 +77,15 @@
                 this.header.load(track);
             },
             unload: function () {
+                this.header.load();
                 this._showState();
             },
             add: function (src, title, dur, poster_src, pod_id) {
                 var i = this.playlist.add(
                     src, title, dur, poster_src, pod_id);
                 if (i === 0) this.load(i);
-                console.log('Added ' + title + ' to index ' + i);
             },
             delete: function (index) {
-                console.log('deelete: ' + index);
                 var c = this.playlist._cur;
                 if (c === index) {
                     this.stop();
@@ -98,7 +97,6 @@
             addAndPlay: function (src, title, dur, poster_src, pod_id) {
                 var i = this.playlist.insert(
                     src, title, dur, poster_src, pod_id);
-                console.log('Added ' + title + ' to index ' + i);
                 this.load(i);
                 this.play();
                 this._dom[0].scrollIntoView();
@@ -207,6 +205,7 @@
             load: function (track) {
                 if (!track) this._unload();
                 else {
+                    this._insertTitle(track.title);
                 }
             },
             
