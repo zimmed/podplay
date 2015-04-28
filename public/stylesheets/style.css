@@ -498,8 +498,6 @@ legend {
     height: 76px;
     margin: 9px;
     padding: 0;
-    border: 0;
-    border-radius: 15px;
     border: none;
     cursor: default;
     position: relative;
@@ -511,7 +509,7 @@ legend {
     top: 55px;
     left: 31px;
     color: #777;
-    display: none;
+    display: block;
 }
 .player-header .deets {
     position: relative;
@@ -529,6 +527,7 @@ legend {
     font-weight: bold;
     text-align: center;
     width: 95%;
+    margin: 0 auto;
     height: 24px;
     line-height: 24px;
     overflow: hidden;
