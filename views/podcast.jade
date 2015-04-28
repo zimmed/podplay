@@ -51,8 +51,8 @@ script.
         thead
             tr
                 th Title
-                th Date
                 th Length
+                th Date
                 th 
         tbody
             each ep in feed.item
@@ -65,8 +65,8 @@ script.
                             else
                                 div.wrap(style="height:34px;") N/A
                         td
-                            if ep.enclosure.$.duration
-                                div.nowrap(style="font-style: italic") #{ep.enclosure.$.duration}
+                            if ep['itunes:duration']
+                                div.nowrap(style="font-style: italic") #{ep['itunes:duration'].substr(1)}
                             else
                                 div.nowrap(style="font-style: italic") N/A
                         td
