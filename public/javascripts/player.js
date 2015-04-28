@@ -177,7 +177,7 @@
                     pause: 'p-pause',
                     load: 'p-load',
                     error: 'p-error'
-                }, all = ['p-play', 'p-pause', 'p-load', 'p-error'];
+                }, all = 'p-play p-pause p-load p-error';
                 if (!Types[type]) throw new Error('Cannot display icon: ' + type);
                 var pp = this._dom.find('.play-pause');
                 if (!pp.hasClass(Types[type])) {
@@ -234,6 +234,8 @@
                     player.error(e);
                 };
                 this._dom.find('.play-pause').click(function () {
+                    console.log('playpause: \n\t');
+                    console.log($(this));
                     if ($(this).hasClass('p-play')) {
                         player.pause();
                     }

@@ -45,13 +45,13 @@ script.
     table#episode-table(class="table")
         colgroup
             col
-            col(width="60px;")
+            col(width="50px;")
             col(width="75px;")
             col(width="60px;")
         thead
             tr
                 th Title
-                th Length
+                th 
                 th Date
                 th 
         tbody
@@ -64,11 +64,11 @@ script.
                                 div.wrap(style="height:34px;") #{ep.title}
                             else
                                 div.wrap(style="height:34px;") N/A
-                        td
+                        td(style="font-style:italic;font-size:11px;color:#888;text-align:right")
                             if ep['itunes:duration']
-                                div.nowrap(style="font-style: italic") #{ep['itunes:duration'].substr(1)}
+                                div.nowrap #{ep['itunes:duration'].substr(1)}
                             else
-                                div.nowrap(style="font-style: italic") N/A
+                                div.nowrap N/A
                         td
                             if ep.pubDate
                                 - var d = ep.pubDate.substr(5, 2);
