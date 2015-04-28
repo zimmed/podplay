@@ -204,7 +204,7 @@
                     '   <img class="poster" unselectable" src="">' +
                     '   <div class="titlebar unselectable">No track selected.</div>' +
                     '</div>'),
-            _marquee_speed: 400, // miliseconds per character
+            _marquee_speed: 10000,
             
             init: function () {
                 this._insertTitle(this._dom.find('.titlebar').html());
@@ -237,7 +237,7 @@
             
             _insertTitle: function (msg) {
                 this._dom.find('.titlebar').html(msg).marquee({
-                    duration: msg.length * this._marquee_speed,
+                    duration: this._marquee_speed,
                     gap: 0,
                     delayBeforeStart: 0,
                     direction: 'left',
