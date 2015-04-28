@@ -77,7 +77,7 @@
                 this.header.load(track);
             },
             unload: function () {
-                this._dom.find('.play-pause .glyphicon').css('display', 'none');
+                this._showIcon();
             },
             add: function (src, title, dur, poster_src, pod_id) {
                 var i = this.playlist.add(
@@ -172,15 +172,17 @@
                 this.audio.setVolume(vol);
             },
             _showIcon: function (type) {
-                var Types = {
+                var all = 'p-play p-pause p-load p-error',
+                    pp = this._dom.find('.play-pause'),
+                    Types = {
                     play: 'p-play',
                     pause: 'p-pause',
                     load: 'p-load',
                     error: 'p-error'
-                }, all = 'p-play p-pause p-load p-error';
-                if (!Types[type]) throw new Error('Cannot display icon: ' + type);
-                var pp = this._dom.find('.play-pause');
-                if (!pp.hasClass(Types[type])) {
+                };
+                if (!type) pp.removeClass(all);
+                else if (!Types[type]) throw new Error('Cannot display icon: ' + type);
+                else if (!pp.hasClass(Types[type])) {
                     pp.removeClass(all);
                     pp.addClass(Types[type]);
                 }

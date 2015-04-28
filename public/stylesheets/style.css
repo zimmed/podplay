@@ -692,13 +692,20 @@ legend {
     overflow: hidden;
     border-right: 1px solid #000;
     cursor: default;
+    color: #777;
+    font-size: 24px;
 }
 .audiojs .play-pause.p-pause,
 .audiojs .play-pause.p-play {
     cursor: pointer;
 }
+.audiojs .play-pause.p-pause:active,
+.audiojs .play-pause.p-play:active {
+    color: white;
+}
 .play-pause .glyphicon {
     display: none;
+    margin-left: 1px;
 }
 .play-pause.p-play .glyphicon-pause {
     display: block;
