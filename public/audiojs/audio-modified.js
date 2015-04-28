@@ -77,7 +77,7 @@
                 'Back 15 Sec.">' +
           '    <span class="glyphicon glyphicon-repeat ' +
                     'flip-glyph" aria-hidden="true">' +
-          '         <em>15</em></span>' +
+          '</span>' +
           '</div>' +
           '<div class="scrubber">' +
           '    <div class="progress"></div>' +

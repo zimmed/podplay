@@ -250,13 +250,13 @@
                 this._dom.find('.volume').click(function () {
                     var time = $(this).closest('.audiojs').find('.time');
                     if (time.find('span').css('display') != 'none') {
-                        $(this).newTip(false, 'Close');
+                        $(this).newTip(true, 'Close');
                         time.find('span').css('display', 'none');
                         time.find('.slider').css('display', 'block');
                         $(this).css('color', '#ccc');
                     }
                     else {
-                        $(this).newTip(false, 'Adjust Volume');
+                        $(this).newTip(true, 'Adjust Volume');
                         time.find('span').css('display', 'block');
                         time.find('.slider').css('display', 'none');
                         $(this).css('color', '#777');

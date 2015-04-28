@@ -571,6 +571,7 @@ legend {
     position: absolute;
     font-size: 10px;
     font-style: normal;
+    left: 7px;
 }
 .skip.back:before {
     content: '15';
@@ -697,11 +698,11 @@ skip.ahead:before {
     float: left;
     overflow: hidden;
     border-right: 1px solid #000;
-    cursor: pointer;
-}
-.audiojs .play-pause.p-error,
-.audiojs .play-pause.p-load {
     cursor: default;
+}
+.audiojs .play-pause.p-pause,
+.audiojs .play-pause.p-play {
+    cursor: pointer;
 }
 .play-pause .glyphicon {
     display: none;
