@@ -201,7 +201,7 @@
             _dom: $('<div class="player-header">' +
                     '   <div class="titlebar">No track selected.</div>' +
                     '</div>'),
-            _marquee_speed: 200, // miliseconds per character
+            _marquee_speed: 400, // miliseconds per character
             
             init: function () {
                 this._insertTitle(this._dom.find('.titlebar').html());
