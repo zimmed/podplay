@@ -567,6 +567,17 @@ legend {
 .skip:active {
     color: #ccc;
 }
+.skip:before {
+    position: absolute;
+    font-size: 10px;
+    font-style: normal;
+}
+.skip.back:before {
+    content: '15';
+}
+skip.ahead:before {
+    content: '30';
+}
 .flip-glyph {
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
