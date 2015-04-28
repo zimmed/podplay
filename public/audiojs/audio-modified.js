@@ -73,7 +73,7 @@
                     'glyphicon-floppy-remove" aria-hidden' +
                     '="true"></span>' +
           '</div>' +
-          '<div class="skip unselectable" title="Skip ' +
+          '<div class="skip back unselectable" title="Skip ' +
                 'Back 15 Sec.">' +
           '    <span class="glyphicon glyphicon-repeat ' +
                     'flip-glyph" aria-hidden="true">' +
@@ -83,10 +83,10 @@
           '    <div class="progress"></div>' +
           '    <div class="loaded"></div>' +
           '</div>' +
-          '<div class="skip unselectable" title="Skip ' +
+          '<div class="skip ahead unselectable" title="Skip ' +
                 'Ahead 30 Sec.">' +
           '    <span class="glyphicon glyphicon-repeat" ' +
-                    'aria-hidden="true"><em>30</em></span>' +
+                    'aria-hidden="true"></span>' +
           '</div>' +
           '<div class="time unselectable">' +
           '    <span><em class="played">000:00</em></span>' +
