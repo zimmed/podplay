@@ -219,7 +219,7 @@
             
             _insertTitle: function (msg) {
                 this._dom.find('.titlebar').html(msg).marquee({
-                    duration: msg.length * this._maruqee_speed,
+                    duration: msg.length * this._marquee_speed,
                     gap: 170,
                     delayBeforeStart: 0,
                     direction: 'left',
