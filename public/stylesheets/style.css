@@ -148,7 +148,7 @@ nav {
     border: none;
 }
 
-#episode-table tr:nth-child(even) {
+#episode-table tr {
     cursor: pointer;
 }
 
@@ -221,26 +221,6 @@ nav {
     width: 100%;
     color: #d0d0d0;
     white-space: normal;
-}
-
-img.podcast-poster {
-    width: 200px;
-    height: 200px;
-    position: relative;
-    float: left;
-}
-
-img.result-poster {
-  height: 48px;
-  width: 48px;
-}
-
-tr.feed-row {
-  cursor: pointer;
-}
-
-tr.feed-row:hover {
-  background: rgba(0,0,64,0.2);
 }
 
 .container {
