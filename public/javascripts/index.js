@@ -212,7 +212,7 @@
             var classes = (fav) ? "castnail favorite" : "castnail";
             $(selector).append('<div class="'+classes+'" title="'+pcasts[i].title+'"  onclick="loadPodcast(\''+pcasts[i]._id+'\', this);" data-title="'+pcasts[i].title+'"><img src="'+pcasts[i].poster100+'"></div>');
         }
-        $('.castnail').newTip();
+        $('.castnail').newTip(false, false, 'bottom');
     }
     
     /**
