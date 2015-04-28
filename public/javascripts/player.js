@@ -199,7 +199,10 @@
 
     var Header = function () {
         var H = {
-            _dom: $('<div class="player-header"></div>'),
+            _dom: $('<div class="player-header">' +
+                    '   <div class="titlebar"></div>' +
+                    '</div>'),
+            _marquee_speed: 200, // miliseconds per character
 
             load: function (track) {
                 if (!track) this._unload();
@@ -212,6 +215,17 @@
             },
 
             _unload: function () {
+                this._insertTitle("No track selected.");
+            },
+            
+            _insertTitle: function (msg) {
+                this._dom.find('.titlebar').html(msg).marquee({
+                    duration: msg.length * this._maruqee_speed,
+                    gap: 170,
+                    delayBeforeStart: 0,
+                    direction: 'left',
+                    duplicated: true
+                });
             }
         };
         return H;
