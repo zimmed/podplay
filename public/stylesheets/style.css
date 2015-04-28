@@ -285,25 +285,6 @@ img.podcast-poster {
     cursor: pointer;
 }
 
-.castnail .glyphicon {
-    position: absolute;
-    height: 100px;
-    width: 100px;
-    padding: 0;
-    margin: 0;
-    text-align: center;
-    line-height: 100px;
-    z-index: 1;
-    display: none;
-    font-size:32px;
-    color:#245580;
-    background: rgba(0,0,0,0.2);
-}
-
-.castnail:hover .glyphicon {
-    display: block;
-}
-
 .btn-viewgenre {
     width: 100px !important;
     height: 100px !important;
