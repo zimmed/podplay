@@ -525,7 +525,7 @@ legend {
     white-space: nowrap;
     color: #ccc;
 }
-.player-header .deets p:first {
+.player-header .deets p:first-child {
     font-weight: bold;
 }
 .player-list {
