@@ -360,7 +360,7 @@
      * @param {Function} cb - Optional callback function.
      */
     function searchResults(results, full, cb) {
-        var podcast, row, count, cols, rows, height = 137, res = " Quick Result";
+        var podcast, row, count, cols, rows, height = 125, res = " Quick Result";
         if (full) {
             res = " Result";
             if (results.length > 0) {
@@ -601,7 +601,7 @@
                     'white-space': 'nowrap'});
         if (count > 0) {
             $(selector).css({'padding': '10px', 'padding-bottom': '0px'});
-            $(selector).animate({'height': '137px'}, 250);
+            $(selector).animate({'height': '125px'}, 250);
         }
         else {
             $(selector).css({'padding': '0px'});
