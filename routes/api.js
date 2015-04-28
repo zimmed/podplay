@@ -23,15 +23,9 @@ var isFavorited = require('../lib/users').isFavorited;
 // Get default splash page
 router.get('/view/splash', function (req, res, next) {
     var casts;
-    if (req.session.user) {
-        res.render('splash', {
-            user: req.session.user,
-            genres: Podcasts.Genres});
-    }
-    else {
-        res.render('splash-guest', {
-            genres: Podcasts.Genres});
-    }
+    res.render('splash', {
+        user: req.session.user,
+        genres: Podcasts.Genres});
 });
 // Get podcast view
 router.get('/view/podcast/:id', function (req, res, next) {
