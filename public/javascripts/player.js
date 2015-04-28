@@ -512,7 +512,7 @@
             },
 
             next: function () {
-                if (!this._cur || this._cur === this.count() - 1) return -1;
+                if (this._cur === this.count() - 1) return -1;
                 return this._cur + 1;
             },
 
