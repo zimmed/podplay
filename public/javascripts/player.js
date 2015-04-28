@@ -68,11 +68,11 @@
             error: function (e) {
                 console.log(e);
                 this.header.loadError(this.playlist.getTrack());
-                this._showIcon('error');
+                this._showState('error');
             },
             load: function (index) {
                 var track = this.playlist.load(index);
-                this._showIcon('load');
+                this._showState('load');
                 this.audio.load(track);
                 this.header.load(track);
             },
@@ -109,13 +109,13 @@
             play: function () {
                 if (this.playlist.getTrack()) {
                     this.audio.play();
-                    this._showIcon('pause');
+                    this._showState('play');
                 }
             },
             pause: function () {
                 if (this.playlist.getTrack()) {
                     this.audio.pause();
-                    this._showIcon('play');
+                    this._showState('pause');
                 }
             },
             trackFinished: function () {
@@ -171,7 +171,7 @@
             setVolume: function (vol) {
                 this.audio.setVolume(vol);
             },
-            _showIcon: function (type) {
+            _showState: function (type) {
                 var all = 'p-play p-pause p-load p-error',
                     pp = this._dom.find('.play-pause'),
                     Types = {
@@ -181,7 +181,7 @@
                     error: 'p-error'
                 };
                 if (!type) pp.removeClass(all);
-                else if (!Types[type]) throw new Error('Cannot display icon: ' + type);
+                else if (!Types[type]) throw new Error('Cannot display state: ' + type);
                 else if (!pp.hasClass(Types[type])) {
                     pp.removeClass(all);
                     pp.addClass(Types[type]);
@@ -245,11 +245,11 @@
                         player.play();
                     }
                 });
-                this._dom.find('.skip.flip-glyph').click(function () {
-                    player.skipBack(15);
-                });
-                this._dom.find('.skip.flip-glyph').click(function () {
+                this._dom.find('.skip.ahead').click(function () {
                     player.skipAhead(30);
+                });
+                this._dom.find('.skip.back').click(function () {
+                    player.skipBack(15);
                 });
                 this._dom.find('.volume').click(function () {
                     var time = $(this).closest('.audiojs').find('.time');
@@ -306,7 +306,7 @@
                 var percent, a = this._dom.find('audio')[0];
                 position = (position < 0) ? 0 :
                         (position > a.duration) ? a.duration : position;
-                percent = position / a.duration;
+                percent = Math.floor(position / a.duration * 100) / 100;
                 this._audio.skipTo(percent);
             },
             
