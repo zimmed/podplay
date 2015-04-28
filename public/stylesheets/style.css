@@ -468,6 +468,8 @@ legend {
     top: 118px;
     z-index: 2;
     color: #ccc;
+    cursor: defalt;
+    text-shadow: 1px 1px #222;
 }
 .player-list {
     width: 340px;

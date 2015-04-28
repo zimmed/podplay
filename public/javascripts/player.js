@@ -199,7 +199,7 @@
     var Header = function () {
         var H = {
             _dom: $('<div class="player-header">' +
-                    '   <div class="titlebar">No track selected.</div>' +
+                    '   <div class="titlebar unselectable">No track selected.</div>' +
                     '</div>'),
             _marquee_speed: 400, // miliseconds per character
             
@@ -322,15 +322,17 @@
             },
             
             skipTo: function (position) {
-                var percent, a = this._dom.find('audio')[0];
+                var a = this._dom.find('audio')[0];
+                if (!a.duration) return;
                 position = (position < 0) ? 0 :
                         (position > a.duration) ? a.duration : position;
-                percent = Math.floor(position / a.duration * 100) / 100;
-                this._audio.skipTo(percent);
+                a.currentTime = position;
+                this._audio.updatePlayhead();
             },
             
             skipAhead: function (seconds) {
                 var a = this._dom.find('audio')[0];
+                if (!a.duration) return;
                 this.skipTo(a.currentTime + seconds);
             },
             
