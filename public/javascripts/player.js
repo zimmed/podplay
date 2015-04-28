@@ -12,7 +12,7 @@
         return $(this).data('js-player');
     };
     
-    var Track = function (src, title, p_title, dur, poster_src, pod_id, last_pos, played) {
+    var Track = function (src, title, p_title, dur, poster_src, pod_id, date, last_pos, played) {
         return {
             src: src,
             title: title,
@@ -20,6 +20,7 @@
             poster: poster_src,
             podcast: Number(pod_id),
             p_title: p_title,
+            date: date,
             last_pos: (last_pos) ? last_pos : 0,
             played: (played) ? played : false
         };
@@ -82,9 +83,9 @@
                 this.header.load();
                 this._showState();
             },
-            add: function (src, title, dur, poster_src, pod_id) {
+            add: function (src, title, ptitle, dur, poster_src, pod_id, date) {
                 var i = this.playlist.add(
-                    src, title, dur, poster_src, pod_id);
+                    src, title, ptitle, dur, poster_src, pod_id, date);
                 if (i === 0) this.load(i);
             },
             delete: function (index) {
@@ -96,9 +97,9 @@
                 }
                 this.playlist.delete(index);
             },
-            addAndPlay: function (src, title, dur, poster_src, pod_id) {
+            addAndPlay: function (src, title, ptitle, dur, poster_src, pod_id, date) {
                 var i = this.playlist.insert(
-                    src, title, dur, poster_src, pod_id);
+                    src, title, ptitle, dur, poster_src, pod_id, date);
                 this.load(i);
                 this.play();
                 this._dom[0].scrollIntoView();
@@ -201,6 +202,7 @@
     var Header = function () {
         var H = {
             _dom: $('<div class="player-header">' +
+                    '   <div class="pcast-title"></div>' +
                     '   <img class="poster unselectable" src="">' +
                     '   <span aria-hidden="true" class="glyphicon' +
                             ' glyphicon-ban-circle noimg"></span>' +
@@ -220,8 +222,7 @@
                 else {
                     this._insertTitle(track.title);
                     this._insertImage(track.poster, track.podcast);
-                    this._insertInfo(track.p_title, track.duration);
-                    console.log(track);
+                    this._insertInfo(track.p_title, track.date, track.duration);
                 }
             },
             
@@ -229,7 +230,7 @@
                 this._insertTitle("Error loading audio data for track: " +
                                   track.title);
                 this._insertImage(track.poster, track.podcast);
-                this._insertInfo(track.p_title, track.duration);
+                this._insertInfo(track.p_title, track.date, track.duration);
             },
 
             _unload: function () {
@@ -238,13 +239,15 @@
                 this._insertInfo();
             },
             
-            _insertInfo: function (p_title, duration) {
+            _insertInfo: function (p_title, date, duration) {
                 var ps = this._dom.find('.deets p');
                 if (!p_title) {
+                    this._dom.find('.pcast-title').html('');
                     $(ps).html('');
                 }
                 else {
-                    $(ps[0]).html(p_title);
+                    this._dom.find('.pcast-title').html(p_title);
+                    $(ps[0]).html('Released: ' + date);
                     $(ps[1]).html('Duration: ' + duration);
                     $(ps[2]).html('Popularity Index: ' + 'N/A');
                 }
@@ -257,6 +260,7 @@
                     this._dom.find('.noimg').css('display', 'block');
                 }
                 else {
+                    poster.css('cursor', 'pointer');
                     this._dom.find('.noimg').css('display', 'none');
                     poster.click(function () {
                         window.loadPodcast(pid, '#pc-0');
@@ -419,14 +423,15 @@
             _list: [],
             _cur: 0,
 
-            add: function (src, title, p_title, dur, poster_src, pod_id) {
+            add: function (src, title, p_title, dur, poster_src, pod_id, date) {
                 var track, played, index, el;
                 if (typeof(src) === 'object') {
                     track = src;
                     autoload = title;
                 }
                 else {
-                    track = new Track(src, title, p_title, dur, poster_src, pod_id);
+                    track = new Track(
+                        src, title, p_title, dur, poster_src, pod_id, date);
                 }
                 if (this.hasTrack(track)) {
                     throw new Error('Track already in playlist.');
@@ -439,14 +444,15 @@
                 return index;
             },
 
-            insert: function (src, title, p_title, dur, poster_src, pod_id) {
+            insert: function (src, title, p_title, dur, poster_src, pod_id, date) {
                 var track, played, el;
                 if (typeof(src) === 'object') {
                     track = src;
                     autoload = title;
                 }
                 else {
-                    track = new Track(src, title, p_title, dur, poster_src, pod_id);
+                    track = new Track(
+                        src, title, p_title, dur, poster_src, pod_id, date);
                 }
                 if (this.hasTrack(track)) {
                     throw new Error('Track already in playlist.');

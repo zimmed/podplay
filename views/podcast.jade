@@ -74,15 +74,16 @@ script.
                                 - var d = ep.pubDate.substr(5, 2);
                                 - var m = ep.pubDate.substr(8, 3);
                                 - var y = ep.pubDate.substr(14, 2);
-                                div.nowrap #{d + ' ' + m + ' ' + y}
+                                - ep.pubDate = d + ' ' + m + ' ' + y;
+                                div.nowrap #{ep.pubDate}
                             else
                                 div.nowrap N/A
                         td
-                            div.nowrap
+                            div.nowrap(data-audio="#{ep.enclosure.$.url}" data-date="#{ep.pubDate}" data-dur="#{ep['itunes:duration']}" data-pid="#{podcast._id}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" data-ptitle="#{feed.title}")
                                 if ep.enclosure
-                                    button.listenlink.add(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-dur="#{ep['itunes:duration']}" data-pid="#{podcast._id}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" data-ptitle="#{feed.title}" type="button")
+                                    button.listenlink.add.btn.btn-default(type="button")
                                         span.glyphicon.glyphicon-plus-sign(aira-hidden="true")
-                                    button.listenlink.play(class="btn btn-default" data-audio="#{ep.enclosure.$.url}" data-dur="#{ep['itunes:duration']}" data-pid="#{podcast._id}" data-title="#{ep.title}" data-poster="#{podcast.poster100}" data-ptitle="#{feed.title}" type="button")
+                                    button.listenlink.playbtn.btn-default(type="button")
                                         span.glyphicon.glyphicon-play(aira-hidden="true")
                                 else
                                     span.glyphicon.glyphicon-alert(aria-hidden="true" title="No audio data.")
