@@ -116,7 +116,7 @@
                 // New page is same as one page back in the history.
                 this.back();
             }
-            else {
+            else if (!this._pages_eq(this.getState(), s)) {
                 this._push(s, path);
             }
         },
