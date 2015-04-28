@@ -7,11 +7,14 @@ div.input-group
 // Query results container
 div.panel.panel-default
     div.panel-heading#result-counter No Results
-    div.panel-body#search-results
+    div.panel-body.unselectable#search-results
 div.panel.panel-default#pc-0
-    div.panel-heading Recommended For #{user.name}
-    div.panel-body
+    if user
+        div.panel-heading Recommended For #{user.name}
+    else 
+        div.panel-heading Top Podcasts
+    div.panel-body.unselectable
 each gen, num in genres
     div.panel.panel-default.genre-panel(data-genreid="#{num}")
         div.panel-heading #{gen}
-        div.panel-body
+        div.panel-body.unselectable
