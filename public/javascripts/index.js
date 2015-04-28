@@ -732,17 +732,18 @@
         
         // Play/add buttons
         $('.listenlink').click(function (e) {
-            var src = $(this).data('audio'),
-                dur = ('' + $(this).data('dur')).slice(1),
-                title = $(this).data('title'),
-                poster = $(this).data('poster'),
-                pid = $(this).data('pid'),
-                ptitle = $(this).data('ptitle');
+            var src = $(this).parent().data('audio'),
+                dur = ('' + $(this).parent().data('dur')).slice(1),
+                title = $(this).parent().data('title'),
+                poster = $(this).parent().data('poster'),
+                pid = $(this).parent().data('pid'),
+                date = $(this).parent().data('date'),
+                ptitle = $(this).parent().data('ptitle');
             if ($(this).hasClass('add')) {
-                window.player.add(src, title, ptitle, dur, poster, pid);
+                window.player.add(src, title, ptitle, dur, poster, pid, date);
             }
             else {
-                window.player.addAndPlay(src, title, ptitle, dur, poster, pid);
+                window.player.addAndPlay(src, title, ptitle, dur, poster, pid, date);
             }
                 
         });

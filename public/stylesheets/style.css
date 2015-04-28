@@ -494,39 +494,46 @@ legend {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#404040', endColorstr='#404040',GradientType=1 ); 
 }
 .player-header .poster {
-    width: 100px;
-    height: 100px;
+    width: 76px;
+    height: 76px;
     margin: 9px;
     padding: 0;
     border: 0;
     border-radius: 15px;
     border: none;
-    cursor: pointer;
+    cursor: default;
     position: relative;
     float: left;
 }
 .player-header .noimg {
     font-size: 32px;
     position: absolute;
-    top: 43px;
-    left: 43px;
+    top: 55px;
+    left: 31px;
     color: #777;
     display: none;
 }
 .player-header .deets {
     position: relative;
     float: left;
-    height: 100px;
-    width: 191px;
-    padding: 9px;
-    overflow: none;
+    height: 95px;
+    width: 235px;
+    padding-top: 6px;
+    overflow: hidden;
 }
 .player-header .deets p {
     white-space: nowrap;
     color: #ccc;
 }
-.player-header .deets p:first-child {
+.player-header .pcast-title {
     font-weight: bold;
+    text-align: center;
+    width: 95%;
+    height: 24px;
+    line-height: 24px;
+    overflow: hidden;
+    color: #ccc;
+    white-space: nowrap;
 }
 .player-list {
     width: 340px;
