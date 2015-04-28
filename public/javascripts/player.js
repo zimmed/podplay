@@ -203,7 +203,7 @@
             _dom: $('<div class="player-header">' +
                     '   <img class="poster unselectable" src="">' +
                     '   <span aria-hidden="true" class="glyphicon' +
-                            ' glyphicon-ban-circle noimg"></span>
+                            ' glyphicon-ban-circle noimg"></span>' +
                     '   <div class="deets unselectable">' +
                     '       <p></p><p></p><p></p>' +
                     '   </div>' +
