@@ -49,6 +49,7 @@
             playlist: new PlayList(preload.playlist),
             
             init: function (volume) {
+                this.header.init();
                 this.audio.init(this, volume);
                 this._dom.find('.player-list ol').click(function (e) {
                     var li = ($(e.target).is('li')) ? $(e.target) :
