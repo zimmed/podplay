@@ -60,29 +60,46 @@
       // The default markup and classes for creating the player:
       createPlayer: {
         markup: '<div class="play-pause unselectable">' +
-          '    <p class="play"></p>' +
-          '    <p class="pause"></p>' +
-          '    <p class="loading"></p>' +
-          '    <p class="error"></p>' +
+          '    <span title="Play" class="glyphicon ' +
+                    'glyphicon-play" aria-hidden="true">' +
+          '    </span>' +
+          '    <span title="Pause" class="glyphicon ' +
+                    'glyphicon-pause" aria-hidden="true">' +
+          '    </span>' +
+          '    <span title="Loading..." class="glyphicon' +
+                    'glyphicon-cd" aria-hidden="true">' +
+          '    </span>' +
+          '    <span title="Error" class="glyphicon ' +
+                    'glyphicon-floppy-remove" aria-hidden' +
+                    '="true"></span>' +
           '</div>' +
-          '<div class="skip unselectable" title="Skip back 15 seconds.">' +
-          '    <span class="glyphicon glyphicon-repeat flip-glyph" aria-hidden="true"></span>' +
+          '<div class="skip unselectable" title="Skip ' +
+                'Back 15 Sec.">' +
+          '    <span class="glyphicon glyphicon-repeat ' +
+                    'flip-glyph" aria-hidden="true">' +
+          '         <em>15</em></span>' +
           '</div>' +
           '<div class="scrubber">' +
           '    <div class="progress"></div>' +
           '    <div class="loaded"></div>' +
           '</div>' +
-          '<div class="skip unselectable" title="Skip ahead 30 seconds.">' +
-          '    <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>' +
+          '<div class="skip unselectable" title="Skip ' +
+                'Ahead 30 Sec.">' +
+          '    <span class="glyphicon glyphicon-repeat" ' +
+                    'aria-hidden="true"><em>30</em></span>' +
           '</div>' +
           '<div class="time unselectable">' +
           '    <span><em class="played">000:00</em></span>' +
           '    <div class="slider"></div>' +
           '</div>' +
-          '<div class="volume unselectable" selectable="no">' +
-          '    <span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span>' +
-          '    <span class="glyphicon glyphicon-volume-down" aria-hidden="true"></span>' +
-          '    <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>' +
+          '<div class="volume unselectable" title=' +
+                '"Adjust Volume">' +
+          '    <span class="glyphicon glyphicon-volume-off" ' +
+                    'aria-hidden="true"></span>' +
+          '    <span class="glyphicon glyphicon-volume-down" ' +
+                    'aria-hidden="true"></span>' +
+          '    <span class="glyphicon glyphicon-volume-up" ' +
+                    'aria-hidden="true"></span>' +
           '</div>' +
           '<div class="error-message"></div>',
         playPauseClass: 'play-pause',
@@ -246,7 +263,6 @@
     attachEvents: function(wrapper, audio) {
       if (!audio.settings.createPlayer) return;
       var player = audio.settings.createPlayer,
-          playPause = getByClass(player.playPauseClass, wrapper),
           scrubber = getByClass(player.scrubberClass, wrapper),
           leftPos = function(elem) {
             var curleft = 0;
@@ -257,10 +273,11 @@
             }
             return curleft;
           };
-
+      /*
       container[audiojs].events.addListener(playPause, 'click', function(e) {
         audio.playPause.apply(audio);
       });
+      */
 
       container[audiojs].events.addListener(scrubber, 'click', function(e) {
         var relativeLeft = e.clientX - leftPos(this);

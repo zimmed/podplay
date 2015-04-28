@@ -149,6 +149,10 @@ nav {
 }
 
 #episode-table tr:nth-child(even) {
+    cursor: pointer;
+}
+
+#episode-table tr:nth-child(even) {
     background: rgba(255,255,255,0.15);
 }
 
@@ -237,28 +241,6 @@ tr.feed-row {
 
 tr.feed-row:hover {
   background: rgba(0,0,64,0.2);
-}
-
-.playing-title {
-  padding-left: 4px;
-  height: 26px;
-  line-height: 26px;
-  color: #e3e3e3;
-  font-size: 12px;
-}
-
-.podcast-player {
-  background: -webkit-linear-gradient( top, #444, #222 );
-  background: -moz-linear-gradient( top, #444, #222 );
-  background: -ms-radial-gradient( top, #444, #222 );
-  background: -o-linear-gradient( top, #444, #222 );
-  background: linear-gradient( top, #444, #222 );
-  width: 250px;
-  margin-bottom: 15px;
-}
-
-.podcast-player audio {
-  width: 100%;
 }
 
 .container {
@@ -490,7 +472,7 @@ legend {
 .player-audio {
     position: relative;
     top: 150px;
-    width: 341px;
+    width: 342px;
 }
 .player-list ol {
     margin: 0 !important;
@@ -704,15 +686,25 @@ legend {
     float: left;
     overflow: hidden;
     border-right: 1px solid #000;
-}
-.audiojs p {
-    display: none;
-    width: 25px;
-    height: 40px;
-    margin: 0px;
     cursor: pointer;
 }
-.audiojs .play {
+.audiojs .play-pause.p-error,
+.audiojs .play-pause.p-load {
+    cursor: default;
+}
+.play-pause .glyphicon {
+    display: none;
+}
+.play-pause.p-play .glyphicon-pause {
+    display: block;
+}
+.play-pause.p-pause .glyphicon-play {
+    display: block;
+}
+.play-pause.p-load .glyphicon-cd {
+    display: block;
+}
+.play-pause.p-error .glyphicon-floppy-remove {
     display: block;
 }
 .audiojs .scrubber {
@@ -767,73 +759,16 @@ legend {
     padding: 0px 0px 0px 2px;
     font-weight: normal;
 }
-.audiojs .play {
-    background: url("player-graphics.gif") -2px -1px no-repeat;
-}
-.audiojs .loading {
-    background: url("player-graphics.gif") -2px -31px no-repeat;
-}
-.audiojs .pause {
-    background: url("player-graphics.gif") -2px -91px no-repeat;
-}
-.playing .play,
-.playing .loading,
-.playing .pause {
+.playing .loading {
     display: block;
 }
-.loading .play,
-.loading .pause,
 .loading .loading {
     display: block;
 }
-.audiojs .error-message {
-    float: left;
-    display: none;
-    margin: 0px 10px;
-    height: 36px;
-    width: 400px;
-    overflow: hidden;
-    line-height: 36px;
-    white-space: nowrap;
-    color: #fff;
-    text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    -icab-text-overflow: ellipsis;
-    -khtml-text-overflow: ellipsis;
-    -moz-text-overflow: ellipsis;
-    -webkit-text-overflow: ellipsis;
-}
-.audiojs .error-message a {
-    color: #eee;
-    text-decoration: none;
-    padding-bottom: 1px;
-    border-bottom: 1px solid #999;
-    white-space: wrap;
-}
-.audiojs .error {
-    background: url("player-graphics.gif") -2px -61px no-repeat;
-}
-.playing .error {
-    display: none;
-}
-.loading .error {
-    display: none;
-}
 .error .time,
-.error .play,
-.error .pause,
 .error .scrubber,
 .error .loading {
     display: none;
-}
-.error .error {
-    display: block;
-}
-.error .play-pause p {
-    cursor: auto;
-}
-.error .error-message {
-    display: block;
 }
 
 /** EXPERIMENTAL LOADER **/

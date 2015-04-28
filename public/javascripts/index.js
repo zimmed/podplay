@@ -36,6 +36,7 @@
      */
     $.fn.newTip = function (show, title, placement) {
         $(this).each(function () {
+            if (!title) title = this.attr('title');
             if ($(this).attr('data-toggle') !== 'tooltip') {
                 $(this).attr('data-toggle', 'tooltip');
             }

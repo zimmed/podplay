@@ -45,12 +45,14 @@ script.
     table#episode-table(class="table")
         colgroup
             col
+            col(width="60px;")
             col(width="75px;")
             col(width="60px;")
         thead
             tr
                 th Title
                 th Date
+                th Length
                 th 
         tbody
             each ep in feed.item
@@ -62,6 +64,11 @@ script.
                                 div.wrap(style="height:34px;") #{ep.title}
                             else
                                 div.wrap(style="height:34px;") N/A
+                        td
+                            if ep.enclosure.$.duration
+                                div.nowrap(style="font-style: italic") #{ep.enclosure.$.duration}
+                            else
+                                div.nowrap(style="font-style: italic") N/A
                         td
                             if ep.pubDate
                                 - var d = ep.pubDate.substr(5, 2);

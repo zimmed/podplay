@@ -68,13 +68,16 @@
             error: function (e) {
                 console.log(e);
                 this.header.loadError(this.playlist.getTrack());
+                this._showIcon('error');
             },
             load: function (index) {
                 var track = this.playlist.load(index);
+                this._showIcon('load');
                 this.audio.load(track);
                 this.header.load(track);
             },
             unload: function () {
+                this._dom.find('.play-pause .glyphicon').css('display', 'none');
             },
             add: function (src, title, dur, poster_src, pod_id) {
                 var i = this.playlist.add(
@@ -104,10 +107,16 @@
                 this.reset();
             },
             play: function () {
-                if (this.playlist.getTrack()) this.audio.play();
+                if (this.playlist.getTrack()) {
+                    this.audio.play();
+                    this._showIcon('pause');
+                }
             },
             pause: function () {
-                this.audio.pause();
+                if (this.playlist.getTrack()) {
+                    this.audio.pause();
+                    this._showIcon('play');
+                }
             },
             trackFinished: function () {
                 this.playlist.finished();
@@ -161,6 +170,20 @@
             },
             setVolume: function (vol) {
                 this.audio.setVolume(vol);
+            },
+            _showIcon: function (type) {
+                var Types = {
+                    play: 'p-play',
+                    pause: 'p-pause',
+                    load: 'p-load',
+                    error: 'p-error'
+                }, all = ['p-play', 'p-pause', 'p-load', 'p-error'];
+                if (!Types[type]) throw new Error('Cannot display icon: ' + type);
+                var pp = this._dom.find('.play-pause');
+                if (!pp.hasClass(Types[type])) {
+                    pp.removeClass(all);
+                    pp.addClass(Types[type]);
+                }
             }
         };
         P.header._dom.append(P.audio._dom);
@@ -210,6 +233,14 @@
                 this._audio.onError = function (e) {
                     player.error(e);
                 };
+                this._dom.find('.play-pause').click(function () {
+                    if ($(this).hasClass('p-play')) {
+                        player.pause();
+                    }
+                    else if ($(this).hasClass('p-pause')) {
+                        player.play();
+                    }
+                });
                 this._dom.find('.skip.flip-glyph').click(function () {
                     player.skipBack(15);
                 });
@@ -219,11 +250,13 @@
                 this._dom.find('.volume').click(function () {
                     var time = $(this).closest('.audiojs').find('.time');
                     if (time.find('span').css('display') != 'none') {
+                        $(this).newTip(false, 'Close');
                         time.find('span').css('display', 'none');
                         time.find('.slider').css('display', 'block');
                         $(this).css('color', '#ccc');
                     }
                     else {
+                        $(this).newTip(false, 'Adjust Volume');
                         time.find('span').css('display', 'block');
                         time.find('.slider').css('display', 'none');
                         $(this).css('color', '#777');
@@ -239,6 +272,7 @@
                     }
                 });
                 player.setVolume(this._dom.find('.slider').slider('value')/40);
+                this._dom.find('[title]').newTip();
             },
             
             load: function (src) {
