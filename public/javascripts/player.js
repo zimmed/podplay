@@ -201,7 +201,12 @@
     var Header = function () {
         var H = {
             _dom: $('<div class="player-header">' +
-                    '   <img class="poster" unselectable" src="">' +
+                    '   <img class="poster unselectable" src="">' +
+                    '   <span aria-hidden="true" class="glyphicon' +
+                            ' glyphicon-ban-circle noimg"></span>
+                    '   <div class="deets unselectable">' +
+                    '       <p></p><p></p><p></p>' +
+                    '   </div>' +
                     '   <div class="titlebar unselectable">No track selected.</div>' +
                     '</div>'),
             _marquee_speed: 10000,
@@ -215,24 +220,48 @@
                 else {
                     this._insertTitle(track.title);
                     this._insertImage(track.poster, track.podcast);
+                    this._insertInfo(track.p_title, track.duration);
                 }
             },
             
             loadError: function (track) {
-                
+                this._insertTitle("Error loading audio data for track: " +
+                                  track.title);
+                this._insertImage(track.poster, track.podcast);
+                this._insertInfo(track.p_title, track.duration);
             },
 
             _unload: function () {
                 this._insertTitle("No track selected.");
+                this._insertImage('');
+                this._insertInfo();
+            },
+            
+            _insertInfo: function (p_title, duration) {
+                var ps = this._dom.find('.deets p');
+                if (!p_title) {
+                    $(ps).html('');
+                }
+                else {
+                    $(ps[0]).html(p_title);
+                    $(ps[1]).html('Duration: ' + duration);
+                    $(ps[2]).html('Popularity Index: ' + 'N/A');
+                }
             },
             
             _insertImage: function (url, pid) {
                 var poster = this._dom.find('.poster');
-                poster.attr('src', url);
                 poster.off('click');
-                poster.click(function () {
-                    window.loadPodcast(pid, '#pc-0');
-                });
+                if (!pid) {
+                    this._dom.find('.noimg').css('display', 'block');
+                }
+                else {
+                    this._dom.find('.noimg').css('display', 'none');
+                    poster.click(function () {
+                        window.loadPodcast(pid, '#pc-0');
+                    });
+                }
+                poster.attr('src', url);
             },
             
             _insertTitle: function (msg) {
