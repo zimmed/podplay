@@ -18,7 +18,7 @@ router.add(function () {
         console.log('Guest disconnected.');
         socket.emit('save-playlist-time');
     }
-    pls_session[this.id] = s.playlist;
+    pls_session[s.id] = s.playlist;
 });
 
 router.add(function (sid) {

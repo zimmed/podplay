@@ -6,13 +6,13 @@ var pls_session = require('../lib/playlistsession');
 router.add(function () {
     var playlist, s = this.request.session;
     if (s.user && s.user.playlists) {
-        playlist = pls_session[this.id] = s.user.playlists;
+        playlist = pls_session[s.id] = s.user.playlists;
     }
-    else if (pls_session[this.id]) {
-        playlist = pls_session[this.id];
+    else if (pls_session[s.id]) {
+        playlist = pls_session[s.id];
     }
     else {
-        playlist = pls_session[this.id] = {
+        playlist = pls_session[s.id] = {
             opts: {}, cPtr: 0, cTime: 0, list: []
         };
         if (s.user) {
