@@ -13,6 +13,7 @@
             $(document).keypress(function (e) {
                 var disable = true;
                 if (!$(e.target).is('input')) {
+                    console.log(e.which);
                     if (e.which === 32) p.playPause(); 
                     else if (e.which === 38) p.prevTrack();
                     else if (e.which === 40) p.nextTrack();
