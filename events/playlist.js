@@ -48,6 +48,7 @@ router.add(function (addedTrack, $insert) {
 
 // event with removedIndex passed
 router.add(function (removeIndex, $newIndex) {
+    console.log('Remove ' + removeIndex + ' - New ' + $newIndex);
     var pl = this.request.session.playlist,
         user = this.request.session.user;
     if (!pl) throw new Error('Attempting to remove track from empty playlist!');
@@ -65,6 +66,7 @@ router.add(function ($cIndex, $cTime) {
     if (typeof($cTime) !== 'undefined') pl.cTime = $cTime;
     else pl.cTime = 0;
     if (user) users.updatePlaylist(user, pl);
+    console.log('new Ptr: ' + $cIndex + ' - new Time: ' + $cTime);
     this.emit('pl-update-current-finish');
 });
 
