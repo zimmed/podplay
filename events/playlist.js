@@ -4,7 +4,7 @@ var pls_session = require('../lib/playlistsession');
 
 // playlist event with no data passed
 router.add(function () {
-    var playlist, s = this.request.session,
+    var playlist, s = this.request.session;
     if (s.user && s.user.playlists) {
         playlist = pls_session[this.id] = s.user.playlists;
     }
