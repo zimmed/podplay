@@ -49,6 +49,12 @@
             header: new Header(),
             audio: new AudioPlayer(),
             playlist: new PlayList(preload.playlist),
+            States: {
+                play: 'p-play',
+                pause: 'p-pause',
+                load: 'p-load',
+                error: 'p-error'
+            },
             
             init: function (volume) {
                 this.header.init();
@@ -74,13 +80,21 @@
                 this._showState('error');
             },
             load: function (index) {
-                var track = this.playlist.load(index);
+                var ih, track = this.playlist.load(index);
                 this._showState('pause');
                 this.audio.load(track);
                 this.header.load(track);
                 // Wonky fix for audio-load getting stopped at the beginning.
-                this.play();
-                this.stop();
+                ih = setInterval(function () {
+                    var p;
+                    if (this._dom.find('audio').duration) {
+                        p = this._isState('play');
+                        this.play();
+                        this.stop();
+                        if (p) this.play();
+                        clearInterval(ih);
+                    }
+                }, 100);
             },
             unload: function () {
                 this.header.load();
@@ -177,20 +191,19 @@
             setVolume: function (vol) {
                 this.audio.setVolume(vol);
             },
+            _isState: function (type) {
+                return this._dom.find('.play-pause').hasClass(this.States[type]);
+            },
             _showState: function (type) {
                 var all = 'p-play p-pause p-load p-error',
                     pp = this._dom.find('.play-pause'),
-                    Types = {
-                    play: 'p-play',
-                    pause: 'p-pause',
-                    load: 'p-load',
-                    error: 'p-error'
-                };
                 if (!type) pp.removeClass(all);
-                else if (!Types[type]) throw new Error('Cannot display state: ' + type);
-                else if (!pp.hasClass(Types[type])) {
+                else if (!this.States[type]) {
+                    throw new Error('Cannot display state: ' + type);
+                }
+                else if (!pp.hasClass(this.States[type])) {
                     pp.removeClass(all);
-                    pp.addClass(Types[type]);
+                    pp.addClass(this.States[type]);
                 }
             }
         };
