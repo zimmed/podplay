@@ -181,7 +181,7 @@
                 if (this.playlist.getTrack()) {
                     this.audio.pause();
                     this._showState('pause');
-                    if (this.audio.getPosition() > 0) {
+                    if (this.audio.getPosition() > 1) {
                         this.updateTime();
                     }
                 }

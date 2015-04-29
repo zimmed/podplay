@@ -66,7 +66,7 @@ router.add(function ($cIndex, $cTime) {
     if (typeof($cTime) !== 'undefined') pl.cTime = $cTime;
     else pl.cTime = 0;
     if (user) users.updatePlaylist(user, pl);
-    console.log('new Ptr: ' + $cIndex + ' - new Time: ' + $cTime);
+    console.log('new Ptr: ' + pl.cIndex + ' - new Time: ' + pl.cTime);
     this.emit('pl-update-current-finish');
 });
 
