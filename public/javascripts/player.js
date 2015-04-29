@@ -2,12 +2,48 @@
     'use strict';
     
     $.fn.addPlayer = function (preload) {
+        var p;
         if ($(this).length !== 1) {
             throw new Error('Cannot instantiate player on ' +
                             'multiple/null selector');
         }
         if (!$(this).data('js-player')) {
-            $(this).data('js-player', new Player($(this), preload));
+            p = new Player($(this), preload);
+            $(this).data('js-player', p);
+            $(document).keypress(function (e) {
+                var disable = true;
+                if (!$(e.target).is('input')) {
+                    // Spacebar
+                    if (e.which === 32) p.playPause();
+                    // Up arrow
+                    else if (e.which === 38) p.prevTrack();
+                    // Down arrow
+                    else if (e.which === 40) p.nextTrack();
+                    // Left arrow
+                    else if (e.which === 37) p.skipAhead(30);
+                    // Right arrow
+                    else if (e.which === 39) p.skipBack(15);
+                    // M
+                    else if (e.which === 77) p.toggleMute();
+                    // +
+                    else if (e.which === 187) p.incVol();
+                    // -
+                    else if (e.which === 189) p.decVol();
+                    // C
+                    else if (e.which === 67) p.toggleCont();
+                    // R
+                    else if (e.which === 82) p.toggleRep();
+                    // S
+                    else if (e.which === 83) {
+                        if (window.PageStack.getCurrentPage() !== 'index') {
+                            window.PageStack.load('index', false, '/');
+                        }
+                        $('#podcast-search-input').focus();
+                    }
+                    else disable = false;
+                    if (disable) e.preventDefault();
+                }
+            });
         }
         return $(this).data('js-player');
     };
@@ -125,6 +161,14 @@
             stop: function () {
                 this.pause();
                 this.reset();
+            },
+            playPause: function () {
+                if (this._isState('play')) {
+                    player.pause();
+                }
+                else if (this._isState('pause')) {
+                    player.play();
+                }
             },
             play: function () {
                 if (this.playlist.getTrack()) {
@@ -337,12 +381,7 @@
                     player.error(e);
                 };
                 this._dom.find('.play-pause').click(function () {
-                    if ($(this).hasClass('p-play')) {
-                        player.pause();
-                    }
-                    else if ($(this).hasClass('p-pause')) {
-                        player.play();
-                    }
+                    player.playPause();
                 });
                 this._dom.find('.skip.ahead').click(function () {
                     player.skipAhead(30);
