@@ -6,7 +6,7 @@ router.add(function () {
     if (s.user) {
         console.log(s.user.name + ' connected.');
         if (s.user.openSocket !== this.id) {
-            if (s.user.openSocket !== '') {
+            if (s.user.openSocket) {
                 router.getIO().sockets.connected[s.user.openSocket]
                     .emit('disconnected', this.id);
                 ready = false;
