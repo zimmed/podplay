@@ -504,6 +504,7 @@
             setVolume: function (vol) {
                 var el = this._dom.find('.volume');
                 vol = Math.floor(vol * 100 + 0.5) / 100;
+                console.log(vol);
                 if (vol === this._dom.find('audio')[0].volume) return;
                 this._audio.setVolume(vol);
                 el.find('.glyphicon').css('display', 'none');
