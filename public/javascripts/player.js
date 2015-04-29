@@ -259,14 +259,12 @@
                 if (v > 1.0) v = 1;
                 if (v === this.audio.getVolume()) return;
                 this.audio.updateVolume(v);
-                this.updateVolume(v);
             },
             decVol: function () {
                 var v = this.audio.getVolume() - 0.1;
                 if (v < 0.0) v = 0;
                 if (v === this.audio.getVolume()) return;
                 this.audio.updateVolume(v);
-                this.updateVolume(v);
             },
             toggleMute: function () {
                 this.audio.toggleMute();
@@ -463,7 +461,6 @@
                         time.find('span').css('display', 'block');
                         time.find('.slider').css('display', 'none');
                         $(this).css('color', '#777');
-                        player.updateVolume();
                     }
                 });
                 this._dom.find('.slider').slider({
