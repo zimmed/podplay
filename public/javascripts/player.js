@@ -225,11 +225,11 @@
             },
             toggleRepeat: function () {
                 this._rep = !this._rep;
-                this.updateOpts(undefined, this._rep, undefined);
+                this.updateOpts(undefined, this._rep);
             },
             toggleCont: function () {
                 this._cont = !this._cont;
-                this.updateOpts(this._cont, undefined, undefined);
+                this.updateOpts(this._cont, undefined);
             },
             isModeRep: function () {
                 return this._rep;
@@ -264,9 +264,11 @@
             },
             updateTime: function () {
                 var t = this.audio.getPosition();
+                console.log('Updating time: ' + t);
                 this._update({cTime: t});
             },
             updateIndex: function (index) {
+                console.log('Updating index: ' + index);
                 this._update({cIndex: index});
             },
             updateAdd: function (track, insert) {
@@ -276,7 +278,7 @@
                 this._update({removeIndex: index, newIndex: newIndex});
             },
             updateOpts: function (cont, repeat) {
-                this._update({ cont: cont, repeat: repeat});
+                this._update({cont: cont, repeat: repeat});
             },
             _update: function (data) {
                 if (window.socket && window.socket.connected) {
