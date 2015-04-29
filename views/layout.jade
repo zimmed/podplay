@@ -87,8 +87,8 @@ html
             input(type="text" tabindex="1" id="name" name="name" class="required")
             label(for="pw") Password
             input(type="password" tabindex="2" id="pw" name="pw" class="required")
-            button.btnLogin#btn-login(tabindex="3") Sign In
-            button.btnLogin.btn-cancel(tabindex="4") Cancel
+            button.btn.btn-primary#btn-login(tabindex="3") Sign In
+            button.btn.btn-primary.btn-cancel(tabindex="4") Cancel
     // Register form
     form.box.login#register(action="javascript:void(0);" style="height:460px;")
         fieldset.boxBuddy
@@ -97,13 +97,13 @@ html
             label(for="uname") Username
             input(type="text" tabindex="1" id="uname" name="uname" class="required" placeholder="Example: my.name123")
             label(for="email") Email
-            input(type="text" tabindex="1" id="email" name="email" class="required" placeholder="Example: my.name@some-domain.com")
+            input(type="text" tabindex="2" id="email" name="email" class="required" placeholder="Example: my.name@some-domain.com")
             label(for="pass1") Password
-            input(type="password" tabindex="2" id="pass1" name="pass1" class="required" placeholder="6 to 26 characters")
+            input(type="password" tabindex="3" id="pass1" name="pass1" class="required" placeholder="6 to 26 characters")
             label(for="pass2") Confirm Password
-            input(type="password" tabindex="2" id="pass2" name="pass2" class="required" placeholder="Re-enter your password")
+            input(type="password" tabindex="4" id="pass2" name="pass2" class="required" placeholder="Re-enter your password")
             a(href="javascript:void(0);" style="display:block;padding:5px;margin-bottom:5px;") I have read and agree to the Terms of Use.
-            button.btnLogin#btn-register(tabindex="3") I Agree
-            button.btnLogin.btn-cancel(tabindex="4") Cancel
+            button.btn.btn-primary#btn-register(tabindex="5") I Agree
+            button.btn.btn-primary.btn-cancel(tabindex="6") Cancel
     block content
         

@@ -368,12 +368,13 @@ legend {
     background: rgba(255, 127, 0, 0.25) !important;
 }
 
-.btnLogin {
+#login .btn,
+#register .btn{
     position: relative;
     float: right;
 }
 
-.btnLogin[disabled] {
+.btn[disabled] {
     color: #999;
 }
 

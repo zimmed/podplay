@@ -744,6 +744,10 @@
             }
         });
         
+        $('#fav-fake').click(function () {
+            window.PageStack.load(Pages.LOGIN, false, '/login');
+        });
+        
         // Play/add buttons
         $('.listenlink').click(function (e) {
             var src = $(this).parent().data('audio'),
@@ -1012,7 +1016,7 @@
         // Registration form "I Agree" button click handler
         $('#btn-register').click(function () {
             var username, email, password,
-                form = $('#uname, #email, #pass1, #pass2, #register .btnLogin');
+                form = $('#uname, #email, #pass1, #pass2, #register .btn');
             // Disable form
             form.prop("disabled", true);
             // Cannot submit if no client key exists
@@ -1060,7 +1064,7 @@
         // Login form "Sign In" button click handler
         $('#btn-login').click(function () {
             var username, password,
-                form = $('#name, #pw, #login .btnLogin');
+                form = $('#name, #pw, #login .btn');
             // Disable form
             form.prop("disabled", true);
             // Cannot submit if no client key exists
