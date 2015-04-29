@@ -10,13 +10,11 @@ router.add(function () {
         users.getCurrentSocket(user, function () { }, function (socketID) {
             if (id === socketID) {
                 users.updateSocket(user, '');
-                socket.emit('save-playlist-time');
             }
         });
     }
     else {
         console.log('Guest disconnected.');
-        socket.emit('save-playlist-time');
     }
     pls_session[s.id] = s.playlist;
 });

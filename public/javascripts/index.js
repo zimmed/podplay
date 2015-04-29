@@ -1177,6 +1177,9 @@
                 window.socket.disconnect();
             });
         });
+        window.onbeforeunload = function (e) {
+            window.player.updateTime();
+        };
     });
     
 }(window, jQuery));
