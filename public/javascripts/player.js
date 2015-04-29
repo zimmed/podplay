@@ -234,8 +234,8 @@
             _kb_hints: [
                 'SPACE BAR : <em>Play/Pause Track</em>',
                 '+ | - : <em>Increase/Decrease Volume</em>',
-                'LEFT/RIGHT ARROW : <em>Skip Back/Ahead</em>',
-                'UP/DOWN ARROW : <em>Play Previous/Next Track</em>',
+                '&larr; | &rarr; : <em>Skip Back/Ahead</em>',
+                '&uarr; | &darr; : <em>Play Previous/Next Track</em>',
                 'M : <em>Mute Volume</em>',
                 'R : <em>Toggle Repeat Mode</em>',
                 'C : <em>Toggle Continuous Mode</em>',
