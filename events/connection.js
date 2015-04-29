@@ -3,14 +3,16 @@ var users = require('../lib/users');
 
 // connection event with no data passed
 router.add(function () {
-    var ready = true, s = this.request.session;
+    var other = false, ready = true, s = this.request.session;
     if (s.user) {
         console.log(s.user.name + ' connected.');
         if (s.user.openSocket !== this.id) {
             if (s.user.openSocket) {
-                router.getIO().sockets.connected[s.user.openSocket]
-                    .emit('disconnected', this.id);
-                ready = false;
+                other = router.getIO().sockets.connected[s.user.openSocket];
+                if (other) {
+                    other.emit('disconnected', this.id);
+                    ready = false;
+                }
             }
             s.user.openSocket = this.id;
             users.updateSocket(s.user, this.id);
