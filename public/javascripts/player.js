@@ -203,13 +203,13 @@
                 this.play();
             },
             skipTo: function (pos) {
-                this.audio.skipTo(pos);
+                if (this.playlist.getTrack()) this.audio.skipTo(pos);
             },
             skipAhead: function (sec) {
-                this.audio.skipAhead(sec);
+                if (this.playlist.getTrack()) this.audio.skipAhead(sec);
             },
             skipBack: function (sec) {
-                this.audio.skipBack(sec);
+                if (this.playlist.getTrack()) this.audio.skipBack(sec);
             },
             addMode: function (mode) {
                 mode = (Number(mode) == mode) ? mode : Modes[mode];
