@@ -547,7 +547,7 @@
             
             updateVolume: function (vol, force) {
                 var s = this._dom.find('.slider');
-                vol = Math.floor(vol * 100 + 0.5) / 100;
+                vol = Math.floor(vol * 100 + 0.5) / 100.0;
                 s.slider({value: vol * s.slider('option', 'max')});
                 this.setVolume(vol, force);
             },
@@ -555,7 +555,7 @@
             getVolume: function () {
                 var s = this._dom.find('.slider');
                 return Math.floor((s.slider('value') / s.slider('option', 'max'))
-                                  * 100) / 100;
+                                  * 100) / 100.0;
             },
             
             setVolume: function (vol, force) {

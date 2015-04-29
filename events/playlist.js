@@ -76,7 +76,8 @@ router.add(function ($cont, $repeat, $vol) {
         user = this.request.session.user;
     if (typeof($cont) !== 'undefined') pl.opts.cont = $cont;
     if (typeof($repeat) !== 'undefined') pl.opts.repeat = $repeat;
-    if (typeof($vol) !== 'undefined') pl.opts.vol = $vol;
+    if (typeof($vol) !== 'undefined') pl.opts.vol = Math.floor(
+        $vol * 100) / 100.0;
     if (user) users.updatePlaylist(user, pl);
 });
 
