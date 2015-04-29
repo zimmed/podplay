@@ -118,6 +118,7 @@ nav {
     width: 24px;
     height: 24px;
     padding: 5px;
+    padding-left: 4px;
     color: #245580;
 }
 
@@ -580,6 +581,15 @@ legend {
     line-height: 32px;
     position: relative;
     float: left;
+}
+.player-list .pl-btn-del {
+    font-size: 24px;
+    width: 32px;
+    color: #aaa;
+}
+.player-list .pl-btn-del:hover,
+.player-list .pl-btn-del:active, {
+    color: #fff;
 }
 .t-poster img {
     width: 30px;
