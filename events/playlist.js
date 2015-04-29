@@ -6,7 +6,7 @@ var pls_session = require('../lib/playlistsession');
 router.add(function () {
     var playlist, s = this.request.session;
     if (s.user && s.user.playlists) {
-        playlist = pls_session[s.id] = s.user.playlists;
+        playlist = s.user.playlists;
     }
     else if (pls_session[s.id]) {
         playlist = pls_session[s.id];
@@ -37,9 +37,7 @@ router.add(function (addedTrack, $insert) {
     var pl = this.request.session.playlist,
         user = this.request.session.user;
     console.log("Adding track: " + addedTrack.title);
-    if (!pl) pl = this.request.session.playlist = pls_session[this.id] = {
-        opts: {}, cPtr: 0, cTime: 0, list: []
-    };
+    if (!pl) throw new Error('Attempting to add to a non-existent playlist!');
     if ($insert) pl.list.unshift(addedTrack);
     else pl.list.push(addedTrack);
     if (user) users.updatePlaylist(user, pl);

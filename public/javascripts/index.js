@@ -829,8 +829,13 @@
      * Handle user logged out.
      */
     function logged_out () {
+        window.updateTime();
+        window.updateVolume();
+        $('#right-col').data('js-player', false);
         window.user = false;
+        window.socket.disconnect();
         window.PageStack.update();
+        window.socket.connect();
     }
     
     /**
@@ -838,10 +843,15 @@
      * @param {Object} state - The state of the last-visited page.
      */
     function logged_in(username) {
+        window.updateTime();
+        window.updateVolume();
+        $('#right-col').data('js-player', false);
         window.user = username;
         $('#account').html(username);
         closeLoginForm(function () {
-            window.location.replace('/');
+            window.socket.disconnect();
+            window.PageStack.update();
+            window.socket.connect();
         });
     }
     

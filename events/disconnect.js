@@ -15,8 +15,8 @@ router.add(function () {
     }
     else {
         console.log('Guest disconnected.');
+        pls_session[s.id] = s.playlist;
     }
-    pls_session[s.id] = s.playlist;
 });
 
 router.add(function (sid) {
