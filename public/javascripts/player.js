@@ -281,7 +281,7 @@
                 }
                 else {
                     poster.css('cursor', 'pointer');
-                    poster.newTip(false, "Open Podcast Feed", 'right');
+                    poster.newTip(false, "Open Podcast Feed", 'top');
                     this._dom.find('.noimg').css('display', 'none');
                     poster.click(function () {
                         window.loadPodcast(pid, '#pc-0');
@@ -572,7 +572,7 @@
             _appendElement: function (el) {
                 $(this._dom).find('ol').append(el);
                 el.animate({opacity: 1}, 500);
-                el.find('.pl-btn-del').newTip(false, "Remove From Playlist", 'right');
+                el.find('.pl-btn-del').newTip(false, "Remove From Playlist", 'bottom');
             },
 
             _removeElement: function (el) {
