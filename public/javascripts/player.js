@@ -218,6 +218,7 @@
                 this.play();
             },
             skipTo: function (pos) {
+                console.log('Skip to: ' + pos);
                 if (this.playlist.getTrack()) this.audio.skipTo(pos);
             },
             skipAhead: function (sec) {
