@@ -59,6 +59,7 @@
             
             init: function (volume) {
                 this.header.init();
+                this.playlist.init();
                 this.audio.init(this, volume);
                 this._dom.find('.player-list ol').click(function (e) {
                     var li = ($(e.target).is('li')) ? $(e.target) :
@@ -230,10 +231,20 @@
                     '   </div>' +
                     '   <div class="titlebar unselectable">No track selected.</div>' +
                     '</div>'),
+            _kb_hints: [
+                'SPACE BAR : <em>Play/Pause Track</em>',
+                '+ | - : <em>Increase/Decrease Volume</em>',
+                'LEFT/RIGHT ARROW : <em>Skip Back/Ahead</em>',
+                'UP/DOWN ARROW : <em>Play Previous/Next Track</em>',
+                'M : <em>Mute Volume</em>',
+                'R : <em>Toggle Repeat Mode</em>',
+                'C : <em>Toggle Continuous Mode</em>',
+                'S : <em>Quick-Search</em>'
+            ],
             _marquee_speed: 15000,
             
             init: function () {
-                this._insertTitle(this._dom.find('.titlebar').html());
+                this._unload();
             },
 
             load: function (track) {
@@ -261,8 +272,11 @@
             _insertInfo: function (p_title, date, duration) {
                 var ps = this._dom.find('.deets p');
                 if (!p_title) {
-                    this._dom.find('.pcast-title').html('');
-                    $(ps).html('');
+                    this._dom.find('.pcast-title').html('Keyboard Shortcuts');
+                    this._kb_hints.shuffle();
+                    $(ps[0]).html(this._kb_hints[0]);
+                    $(ps[1]).html(this._kb_hints[1]);
+                    $(ps[2]).html(this._kb_hints[2]);
                 }
                 else {
                     this._dom.find('.pcast-title').html(p_title);
