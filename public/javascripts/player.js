@@ -75,7 +75,7 @@
             },
             load: function (index) {
                 var track = this.playlist.load(index);
-                this._showState('load');
+                this._showState('pause');
                 this.audio.load(track);
                 this.header.load(track);
             },
@@ -300,9 +300,6 @@
                 });
                 this._audio.onError = function (e) {
                     player.error(e);
-                };
-                this._audio.onLoaded = function () {
-                    player.pause();
                 };
                 this._dom.find('.play-pause').click(function () {
                     if ($(this).hasClass('p-play')) {
