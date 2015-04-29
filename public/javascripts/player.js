@@ -25,7 +25,7 @@
                     else if (e.which === 67) p.toggleCont();
                     else if (e.which === 82) p.toggleRep(); 
                     else if (e.which === 83) {
-                        if (window.PageStack.getCurrentPage() !== 'index') {
+                        if (window.PageStack.getPage() !== 'index') {
                             window.PageStack.load('index', false, '/');
                         }
                         $('#podcast-search-input').focus();
