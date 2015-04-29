@@ -189,12 +189,14 @@
                 this.audio.reset();
             },
             nextTrack: function (noplay) {
+                if (this.playlist.count() === 0) return;
                 var t = this.playlist.next();
                 if (t === -1) t = 0;
                 this.load(t);
                 if (!noplay) this.play();
             },
             prevTrack: function () {
+                if (this.playlist.count() === 0) return;
                 var t = this.playlist.prev();
                 if (t === -1) t = this.playlist.count() - 1;
                 this.load(t);
