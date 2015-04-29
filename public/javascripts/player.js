@@ -27,7 +27,8 @@
     };
 
     var TrackElement = function (track) {
-        var el = $('<li><div class="pl-btn-del"><span aria-hidden="true"' +
+        var el = $('<li><div class="pl-btn-del" title="Remove From Playlist">' +
+                   '<span aria-hidden="true"' +
                    ' class="glyphicon glyphicon-remove-sign"></span></div>' +
                    '<div class="t-poster">' +
                    '  <img src="' + track.poster + '">' +
@@ -221,7 +222,8 @@
         var H = {
             _dom: $('<div class="player-header">' +
                     '   <div class="pcast-title"></div>' +
-                    '   <img class="poster unselectable" src="">' +
+                    '   <img title="Open Podcast Feed" ' +
+                            'class="poster unselectable" src="">' +
                     '   <span aria-hidden="true" class="glyphicon' +
                             ' glyphicon-ban-circle noimg"></span>' +
                     '   <div class="deets unselectable">' +
@@ -233,6 +235,7 @@
             
             init: function () {
                 this._insertTitle(this._dom.find('.titlebar').html());
+                this._dom.find('.poster').newTip(false, false, 'left');
             },
 
             load: function (track) {
@@ -440,7 +443,13 @@
             _dom: $('<div class="player-list"><ol></ol></div>'),
             _list: [],
             _cur: 0,
-
+            
+            init: function () {
+                while (list && list.length > 0) {
+                    this.insert(list.pop(), false);
+                }
+            },
+            
             add: function (src, title, p_title, dur, poster_src, pod_id, date) {
                 var track, played, index, el;
                 if (typeof(src) === 'object') {
@@ -563,6 +572,7 @@
             _appendElement: function (el) {
                 $(this._dom).find('ol').append(el);
                 el.animate({opacity: 1}, 500);
+                el.find('.pl-btn-del').newTip(false, false, 'left');
             },
 
             _removeElement: function (el) {
@@ -571,9 +581,6 @@
                 });
             }
         };
-        while (list && list.length > 0) {
-            PL.insert(list.pop(), false);
-        }
         return PL;
     };
     
