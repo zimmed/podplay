@@ -232,14 +232,12 @@
                 var v = this.audio.getVolume() + 0.1;
                 if (v > 1.0) v = 1;
                 if (v === this.audio.getVolume()) return;
-                console.log('inc: ' + v);
                 this.audio.updateVolume(v);
             },
             decVol: function () {
                 var v = this.audio.getVolume() - 0.1;
                 if (v < 0.0) v = 0;
                 if (v === this.audio.getVolume()) return;
-                console.log('dec: ' + v);
                 this.audio.updateVolume(v);
             },
             toggleMute: function () {
@@ -492,7 +490,6 @@
             },
             
             updateVolume: function (vol) {
-                console.log('update: ' + vol);
                 var s = this._dom.find('.slider');
                 vol = Math.floor(vol * 100 + 0.5) / 100;
                 s.slider({value: vol * s.slider('option', 'max')});
@@ -506,8 +503,6 @@
             
             setVolume: function (vol) {
                 var el = this._dom.find('.volume');
-                vol = Math.floor(vol * 100 + 0.5) / 100;
-                console.log('set: ' + vol);
                 if (vol === this._dom.find('audio')[0].volume) return;
                 this._audio.setVolume(vol);
                 el.find('.glyphicon').css('display', 'none');
