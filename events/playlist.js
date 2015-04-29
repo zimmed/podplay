@@ -1,18 +1,26 @@
 var router = require('../lib/socket').Router();
 var users = require('../lib/users');
+var pls_session = require('../lib/playlistsession');
 
 // playlist event with no data passed
 router.add(function () {
-    var playlist, pl = this.request.session.playlist,
-        user = this.request.session.user;
-    if (user) playlist = user.playlists;
-    if (!playlist) playlist = pl;
-    if (!playlist) {
-        playlist = this.request.session.playlist = {
+    var playlist, s = this.request.session,
+    if (s.user && s.user.playlists) {
+        playlist = pls_session[this.id] = s.user.playlists;
+    }
+    else if (pls_session[this.id]) {
+        playlist = pls_session[this.id];
+    }
+    else {
+        playlist = pls_session[this.id] = {
             opts: {}, cPtr: 0, cTime: 0, list: []
         };
-        if (user) users.updatePlaylist(user, playlist);
+        if (s.user) {
+            s.user.playlists = playlist;
+            updatePlaylist(user, playlist);
+        }
     }
+    s.playlist = playlist;
     this.emit('playlist-data-response', playlist);
 });
 
@@ -29,7 +37,9 @@ router.add(function (addedTrack, $insert) {
     var pl = this.request.session.playlist,
         user = this.request.session.user;
     console.log("Adding track: " + addedTrack.title);
-    if (!pl) pl = this.request.session.playlist = {opts: {}, cPtr: 0, cTime: 0, list: []};
+    if (!pl) pl = this.request.session.playlist = pls_session[this.id] = {
+        opts: {}, cPtr: 0, cTime: 0, list: []
+    };
     if ($insert) pl.list.unshift(addedTrack);
     else pl.list.push(addedTrack);
     if (user) users.updatePlaylist(user, pl);
@@ -60,7 +70,6 @@ router.add(function ($cIndex, $cTime) {
 router.add(function ($cont, $repeat, $vol) {
     var pl = this.request.session.playlist,
         user = this.request.session.user;
-    if (!pl) pl = this.request.session.playlist = {opts: {}, cPtr: 0, cTime: 0, list: []};
     if (typeof($cont) !== 'undefined') pl.opts.cont = $cont;
     if (typeof($repeat) !== 'undefined') pl.opts.repeat = $repeat;
     if (typeof($vol) !== 'undefined') pl.opts.vol = $vol;

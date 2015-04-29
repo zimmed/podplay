@@ -1,4 +1,6 @@
 var router = require('../lib/socket').Router();
+var users = require('../lib/users');
+var pls_session = require('../lib/playlistsession');
 
 // disconnect event with no data passed
 router.add(function () {
@@ -16,6 +18,7 @@ router.add(function () {
         console.log('Guest disconnected.');
         socket.emit('save-playlist-time');
     }
+    pls_session[this.id] = s.playlist;
 });
 
 router.add(function (sid) {
