@@ -41,5 +41,9 @@ router.get('/register', function (req, res, next) {
     }
 });
 
+router.get('/sessiondump', function (req, res, next) {
+    console.log(JSON.stringify(req.session));
+});
+
 // Expose route
 module.exports = router;
