@@ -38,6 +38,7 @@
         $(this).each(function () {
             show = (show) ? 'show' : false;
             if (!title) title = $(this).attr('title');
+            else if (title === ' ') title = '';
             if ($(this).attr('data-toggle') !== 'tooltip') {
                 $(this).attr('data-toggle', 'tooltip');
             }

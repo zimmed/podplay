@@ -277,11 +277,11 @@
                 poster.off('click');
                 if (!pid) {
                     this._dom.find('.noimg').css('display', 'block');
-                    poster.newTip(false, '');
+                    poster.newTip(false, ' ');
                 }
                 else {
                     poster.css('cursor', 'pointer');
-                    poster.newTip(false, "Open Podcast Feed", 'top');
+                    poster.newTip(false, "Open Podcast Feed", 'right');
                     this._dom.find('.noimg').css('display', 'none');
                     poster.click(function () {
                         window.loadPodcast(pid, '#pc-0');
@@ -572,7 +572,6 @@
             _appendElement: function (el) {
                 $(this._dom).find('ol').append(el);
                 el.animate({opacity: 1}, 500);
-                el.find('.pl-btn-del').newTip(false, "Remove From Playlist", 'bottom');
             },
 
             _removeElement: function (el) {
