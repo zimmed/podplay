@@ -270,13 +270,13 @@
             },
             
             _insertInfo: function (p_title, date, duration) {
-                var ps = this._dom.find('.deets p');
+                var a, ps = this._dom.find('.deets p');
                 if (!p_title) {
                     this._dom.find('.pcast-title').html('Keyboard Shortcuts');
-                    this._kb_hints.shuffle();
-                    $(ps[0]).html(this._kb_hints[0]);
-                    $(ps[1]).html(this._kb_hints[1]);
-                    $(ps[2]).html(this._kb_hints[2]);
+                    a = $.shuffle(this._kb_hints);
+                    $(ps[0]).html(a[0]);
+                    $(ps[1]).html(a[1]);
+                    $(ps[2]).html(a[2]);
                 }
                 else {
                     this._dom.find('.pcast-title').html(p_title);

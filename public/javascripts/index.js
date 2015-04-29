@@ -50,6 +50,12 @@
         });
     };
     
+    $.shuffle = function (a) {
+        for (var j, x, i = a.length; i;
+            j = parseInt(Math.random() * i), x = a[--i], a[i] = a[j], a[j] = x);
+        return a;
+    };
+    
     
     /**
      * * * * * * * * * * * * * * * * * * * * *
@@ -77,13 +83,6 @@
             j++;
         }
         return buf;
-    };
-    
-    Array.prototype.shuffle = function () {
-        var a = this;
-        for (var j, x, i = a.length; i;
-            j = parseInt(Math.random() * i), x = a[--i], a[i] = a[j], a[j] = x);
-        return a;
     };
     
     /**
