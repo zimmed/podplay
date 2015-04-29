@@ -196,7 +196,7 @@
             },
             _showState: function (type) {
                 var all = 'p-play p-pause p-load p-error',
-                    pp = this._dom.find('.play-pause'),
+                    pp = this._dom.find('.play-pause');
                 if (!type) pp.removeClass(all);
                 else if (!this.States[type]) {
                     throw new Error('Cannot display state: ' + type);
