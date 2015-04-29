@@ -10,7 +10,7 @@
         if (!$(this).data('js-player')) {
             p = new Player($(this), preload);
             $(this).data('js-player', p);
-            $(document).keypress(function (e) {
+            $(document).keydown(function (e) {
                 var disable = true;
                 if (!$(e.target).is('input')) {
                     console.log(e.which);
