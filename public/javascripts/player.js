@@ -78,6 +78,9 @@
                 this._showState('pause');
                 this.audio.load(track);
                 this.header.load(track);
+                // Wonky fix for audio-load getting stopped at the beginning.
+                this.play();
+                this.stop();
             },
             unload: function () {
                 this.header.load();
