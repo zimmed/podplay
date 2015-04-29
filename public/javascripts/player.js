@@ -181,18 +181,21 @@
                 if (this.playlist.getTrack()) {
                     this.audio.pause();
                     this._showState('pause');
+                    if (this.audio.getPosition() > 0) {
+                        this.updateTime();
+                    }
                 }
             },
             trackFinished: function () {
                 this.playlist.finished();
                 this.pause();
-                if (this.isMode(PlayMode.continue)) {
+                if (this.isModeCont()) {
                     var t = this.playlist.next();
-                    if (t !== -1 || this.isMode(PlayMode.repeat)) {
+                    if (t !== -1 || this.isModeRep()) {
                         this.nextTrack();
                     }
                 }
-                else if (this.isMode(PlayMode.repeat)) {
+                else if (this.isModeRep()) {
                     this.reset();
                     this.play();
                 }
