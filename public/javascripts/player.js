@@ -74,6 +74,7 @@
             _dom: $('<div class="player-container"></div>'),
             _rep: (preload.opts.repeat) ? preload.opts.repeat : false,
             _cont: (preload.opts.cont) ? preload.opts.cont : false,
+            _prlt: (preload.cTime) ? preload.cTime : 0;
             header: new Header(),
             audio: new AudioPlayer(),
             playlist: new PlayList(preload.list),
@@ -104,7 +105,6 @@
                 });
                 if (lcount > 0) {
                     this.load(preload.cPtr);
-                    this.skipTo(preload.cTime, true);
                 }
             },
             error: function (e) {
@@ -124,6 +124,10 @@
                         if (!P._isState('play')) {
                             P.play();
                             P.stop();
+                            if (P._prlt) {
+                                P.skipTo(P._prlt, true);
+                                P._prlt = 0;
+                            }
                             clearInterval(ih);
                         }
                     }
