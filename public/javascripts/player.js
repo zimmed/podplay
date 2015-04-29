@@ -74,7 +74,7 @@
             _dom: $('<div class="player-container"></div>'),
             _rep: (preload.opts.repeat) ? preload.opts.repeat : false,
             _cont: (preload.opts.cont) ? preload.opts.cont : false,
-            _prlt: (preload.cTime) ? preload.cTime : 0;
+            _prlt: (preload.cTime) ? preload.cTime : 0,
             header: new Header(),
             audio: new AudioPlayer(),
             playlist: new PlayList(preload.list),
