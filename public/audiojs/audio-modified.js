@@ -135,6 +135,7 @@
         container[audiojs].helpers.removeClass(this.wrapper, player.loadingClass);
       },
       loadProgress: function(percent) {
+          console.log('loadProgress: ' + (percent * 100) + '%');
         var player = this.settings.createPlayer,
             scrubber = getByClass(player.scrubberClass, this.wrapper),
             loaded = getByClass(player.loaderClass, this.wrapper);
@@ -153,13 +154,14 @@
         container[audiojs].helpers.removeClass(this.wrapper, player.playingClass);
       },
       updatePlayhead: function(percent) {
+          console.log('updatePlayhead: ' + (percent * 100) + '%');
         var player = this.settings.createPlayer,
             scrubber = getByClass(player.scrubberClass, this.wrapper),
             progress = getByClass(player.progressClass, this.wrapper);
         progress.style.width = (scrubber.offsetWidth * percent) + 'px';
 
         var played = getByClass(player.playedClass, this.wrapper),
-            p = this.duration * percent,
+            p = this.element.currentTime,
             m = Math.floor(p / 60),
             s = Math.floor(p % 60);
             played.innerHTML = ((m<100?'0':'')+(m<10?'0':'')+m+':'+(s<10?'0':'')+s);
