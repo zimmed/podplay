@@ -86,19 +86,14 @@
                 this.header.load(track);
                 // Wonky fix for audio-load getting stopped at the beginning.
                 ih = setInterval(function () {
-                    var pos, playing = false;
                     if (P._dom.find('audio')[0].duration) {
-                        playing = P._isState('play');
-                        if (!playing) P.play();
-                        pos = P._dom.find('audio')[0].currentTime;
-                        P.stop();
-                        if (playing) {
-                            P.skipTo(pos);
+                        if (!P._isState('play')) {
                             P.play();
+                            P.stop();
+                            clearInterval(ih);
                         }
-                        clearInterval(ih);
                     }
-                }, 1000);
+                }, 500);
             },
             unload: function () {
                 this.header.load();
