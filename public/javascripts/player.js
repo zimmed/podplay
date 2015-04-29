@@ -75,7 +75,8 @@
             _rep: (preload.opts.repeat) ? preload.opts.repeat : false,
             _cont: (preload.opts.cont) ? preload.opts.cont : false,
             _prlt: (preload.cTime) ? preload.cTime : false,
-            _prlv: (preload.opts.vol) ? preload.opts.vol : false,
+            _prlv: (typeof(preload.opts.vol) !== 'undefined') ?
+                    preload.opts.vol : false,
             header: new Header(),
             audio: new AudioPlayer(),
             playlist: new PlayList(preload.list),
@@ -89,7 +90,7 @@
             init: function (preload) {
                 this.header.init();
                 this.playlist.init(preload.list);
-                this.audio.init(this, preload.opts.vol);
+                this.audio.init(this);
                 this._dom.find('.player-list ol').click(function (e) {
                     var li = ($(e.target).is('li')) ? $(e.target) :
                             $(e.target).closest('li'),
@@ -130,7 +131,7 @@
                                 P._prlt = 0;
                             }
                             if (P._prlv !== false) {
-                                P.audio.updateVolume(P.prlv, true);
+                                P.audio.updateVolume(P._prlv, true);
                                 P._prlt = false;
                             }
                             clearInterval(ih);
@@ -474,7 +475,7 @@
                         player.setVolume(ui.value/40);
                     }
                 });
-                player.setVolume(this._dom.find('.slider').slider('value')/40, true);
+                player.setVolume(this._dom.find('.slider').slider('value')/40);
                 this._dom.find('[title]').newTip();
             },
             
@@ -547,7 +548,6 @@
             
             updateVolume: function (vol, force) {
                 var s = this._dom.find('.slider');
-                vol = Math.floor(vol * 100 + 0.5) / 100.0;
                 s.slider({value: vol * s.slider('option', 'max')});
                 this.setVolume(vol, force);
             },
@@ -560,6 +560,7 @@
             
             setVolume: function (vol, force) {
                 var el = this._dom.find('.volume');
+                vol = Math.floor(vol * 100) / 100.0;
                 if (!force && vol === this._dom.find('audio')[0].volume) return;
                 this._audio.setVolume(vol);
                 el.find('.glyphicon').css('display', 'none');
