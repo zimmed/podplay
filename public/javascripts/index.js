@@ -1120,7 +1120,7 @@
             if (window.preload_cast) { // Feed View: /podcast/<id>/*
                 window.PageStack.load(Pages.PODCAST,
                                       {id: window.preload_cast,
-                                      parent: '#pc-0'},
+                                      parent: $('#pc-0').getUnique()},
                                      '/podcast/' + window.preload_cast);
                 window.preload_cast = false;
             }
