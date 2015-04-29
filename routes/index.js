@@ -42,7 +42,8 @@ router.get('/register', function (req, res, next) {
 });
 
 router.get('/sessiondump', function (req, res, next) {
-    console.log(JSON.stringify(req.session));
+    console.log(JSON.stringify(req.session.user));
+    console.log(JSON.stringify(req.session.playlist));
 });
 
 // Expose route
