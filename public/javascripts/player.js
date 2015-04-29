@@ -461,7 +461,7 @@
                         player.setVolume(ui.value/40);
                     }
                 });
-                player.setVolume(this._dom.find('.slider').slider('value')/40);
+                player.setVolume(this._dom.find('.slider').slider('value')/40, true);
                 this._dom.find('[title]').newTip();
             },
             
@@ -545,9 +545,9 @@
                                   * 100) / 100;
             },
             
-            setVolume: function (vol) {
+            setVolume: function (vol, force) {
                 var el = this._dom.find('.volume');
-                if (vol === this._dom.find('audio')[0].volume) return;
+                if (!force && vol === this._dom.find('audio')[0].volume) return;
                 this._audio.setVolume(vol);
                 el.find('.glyphicon').css('display', 'none');
                 if (vol === 0) {

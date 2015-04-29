@@ -1166,9 +1166,12 @@
             var options = (data.list && data.list.length > 0) ? data : false;
             window.player = $("#right-col").addPlayer(options);
         });
+        window.socket.on('save-playlist-time', function () {
+            window.player.updateTime();
+        });
         window.socket.on('disconnected', function (otherid) {
             window.showNotification('You have been disconnected from this session.');
-            window.playlist.updateTime();
+            window.player.updateTime();
             window.socket.on('pl-update-current-finish', function () {
                 window.socket.emit('disconnect', {sid: otherid});
                 window.socket.disconnect();
