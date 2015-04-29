@@ -316,7 +316,7 @@
         P.header._dom.append(P.audio._dom);
         P._dom.append(P.header._dom);
         P._dom.append(P.playlist._dom);
-        parentElement.append(P._dom);
+        parentElement.html(P._dom);
         P.init(preload);
         return P;
     };

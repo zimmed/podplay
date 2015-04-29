@@ -841,7 +841,7 @@
         window.user = username;
         $('#account').html(username);
         closeLoginForm(function () {
-            window.PageStack.update(-1);
+            window.location.replace('/');
         });
     }
     
@@ -887,7 +887,7 @@
             showLoginForm(function () { e.complete(); });
         }
         else {
-            window.PageStack.back();
+            window.PageStack.replace(Pages.INDEX, false, '/');
         }
     });   
     window.PageStack.onUnload(Pages.LOGIN, function (e) {
@@ -901,7 +901,7 @@
             showRegisterForm(function () { e.complete(); });
         }
         else {
-            window.PageStack.back();
+            window.PageStack.replace(Pages.INDEX, false, '/');
         }
     });
     window.PageStack.onUnload(Pages.REGISTER, function (e) {
