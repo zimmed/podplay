@@ -823,6 +823,7 @@ legend {
     border-left: 0px;
     border-bottom: 0px;
     overflow: hidden;
+    cursor: pointer;
 }
 .audiojs .progress {
     position: absolute;
