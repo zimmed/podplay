@@ -135,7 +135,6 @@
         container[audiojs].helpers.removeClass(this.wrapper, player.loadingClass);
       },
       loadProgress: function(percent) {
-          console.log('loadProgress: ' + (percent * 100) + '%');
         var player = this.settings.createPlayer,
             scrubber = getByClass(player.scrubberClass, this.wrapper),
             loaded = getByClass(player.loaderClass, this.wrapper);
@@ -154,7 +153,6 @@
         container[audiojs].helpers.removeClass(this.wrapper, player.playingClass);
       },
       updatePlayhead: function(percent) {
-          console.log('updatePlayhead: ' + (percent * 100) + '%');
         var player = this.settings.createPlayer,
             scrubber = getByClass(player.scrubberClass, this.wrapper),
             progress = getByClass(player.progressClass, this.wrapper);
@@ -297,6 +295,7 @@
       });
 
       container[audiojs].events.addListener(audio.element, 'ended', function(e) {
+          console.log('ended');
         audio.trackEnded.apply(audio);
       });
 
@@ -585,8 +584,8 @@
   container[audiojsInstance].prototype = {
     // API access events:
     // Each of these do what they need do and then call the matching methods defined in the settings object.
-    updatePlayhead: function() {
-      var percent = this.element.currentTime / this.element.duration;
+    updatePlayhead: function(percent) {
+      if (!percent) percent = this.element.currentTime / this.element.duration;
       this.settings.updatePlayhead.apply(this, [percent]);
     },
     skipTo: function(percent) {
@@ -622,7 +621,7 @@
           this.loadStartedCalled = this.loadStarted();
         }
         var durationLoaded = this.element.buffered.end(this.element.buffered.length - 1);
-        this.loadedPercent = durationLoaded / this.duration;
+        this.loadedPercent = durationLoaded / this.element.duration;
 
         this.settings.loadProgress.apply(this, [this.loadedPercent]);
       }
