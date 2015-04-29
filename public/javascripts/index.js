@@ -168,15 +168,22 @@
      * @param {Number} id - The podcast ID to load.
      * @param {Mixed} div - The element that fired the click event.
      */
-    window.loadPodcast = function (id, div) {
+    window.loadPodcast = function (id, div, force) {
         var parent = (typeof(div) === 'string') ? $(div) :
                 $(div).parent().parent(); // Containing panel
         if (Number(id) === NaN) console.log('NaN: ' + id);
         id = Number(id);
         if (window.PageStack.getPage() === Pages.PODCAST &&
             window.PageStack.getData().id === id) {
-            // If podcast already open, push new index state (close it).
-            window.PageStack.load(Pages.INDEX, false, '/');
+            // If podcast already open
+            if (force) {
+                // Force-show requested
+                $(window.PageStack.getData().parent)[0].scrollIntoView();
+            }
+            else {
+                // or push new index state (close it).
+                window.PageStack.load(Pages.INDEX, false, '/');
+            }
         }
         else if (!window.FeedView.isLoading()) {
             window.PageStack.load(Pages.PODCAST,
