@@ -1,10 +1,11 @@
-var gulp   = require('gulp');
-var jshint = require('gulp-jshint');
-var less   = require('gulp-less');
-var path   = require('path');
-var app    = require('./app');
-var debug  = require('debug')('podplay:server');
-var http   = require('http');
+var gulp    = require('gulp');
+var jshint  = require('gulp-jshint');
+var less    = require('gulp-less');
+var path    = require('path');
+var app     = require('./app');
+var debug   = require('debug')('podplay:server');
+var http    = require('http');
+var socket  = require('./lib/socket');
 
 
 // compile less stylesheets
@@ -29,6 +30,8 @@ gulp.task('serve', function() {
   app.set('port', port);
 
   var server = http.createServer(app);
+  
+  socket.initialize(server, app.__io_session_middleware);
 
   server.listen(port);
   console.log('server running on port ' + port);
