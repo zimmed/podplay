@@ -89,11 +89,13 @@
                     var pos, playing = false;
                     if (P._dom.find('audio')[0].duration) {
                         playing = P._isState('play');
-                        if (playing) P.pause();
-                        P.play();
-                        P.pause();
-                        if (playing) P.play();
-                        else P.reset();
+                        if (!playing) P.play();
+                        pos = P._dom.find('audio')[0].currentTime;
+                        P.stop();
+                        if (playing) {
+                            P.skipTo(pos);
+                            P.play();
+                        }
                         clearInterval(ih);
                     }
                 }, 1000);
@@ -167,6 +169,9 @@
                 if (t === -1) t = this.playlist.count() - 1;
                 this.load(t);
                 this.play();
+            },
+            skipTo: function (pos) {
+                this.audio.skipTo(pos);
             },
             skipAhead: function (sec) {
                 this.audio.skipAhead(sec);
