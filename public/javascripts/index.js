@@ -1119,9 +1119,6 @@
             }
         });
         
-        // Create and expose the audioplayer.
-        window.player = $("#right-col").addPlayer(window.preload_player_options);
-        
         /**
          * Handle page view with first-time load.
          *  1. Init page stack with index page (load splash view).
@@ -1155,6 +1152,27 @@
                 window.preload_register = false;
             }
             // Else, index or unrecognize was requested. Stay here.
+        });
+        
+        /**
+         * Establish SocketStream connection.
+         */
+        window.socket = io();
+        window.socket.on('ready', function (force) {
+            if (force) window.socket.emit('playlist', {forceGet: true});
+            else window.socket.emit('playlist');
+        });
+        window.socket.on('playlist-data-response', function (data) {
+            var options = (data.list && data.list.length > 0) ? data : false;
+            window.player = $("#right-col").addPlayer(options);
+        });
+        window.socket.on('disconnected', function (otherid) {
+            window.showNotification('You have been disconnected from this session.');
+            window.playlist.updateTime();
+            window.socket.on('pl-update-current-finish', function () {
+                window.socket.emit('disconnect', {sid: otherid});
+                window.socket.disconnect();
+            });
         });
     });
     

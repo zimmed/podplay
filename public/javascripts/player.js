@@ -68,13 +68,15 @@
     };
 
     var Player = function (parentElement, preload) {
-        if (!preload) preload = {};
+        if (!preload) preload = {opts: {}, cPtr: 0, cTime: 0, list []};
+        var lcount = preload.list.length;
         var P = {
             _dom: $('<div class="player-container"></div>'),
-            _mode: (preload.mode) ? preload.mode : 0,
+            _rep: (preload.opts.repeat) ? preload.opts.repeat : false,
+            _cont: (preload.opts.cont) ? preload.opts.cont : false,
             header: new Header(),
             audio: new AudioPlayer(),
-            playlist: new PlayList(preload.playlist),
+            playlist: new PlayList(preload.list),
             States: {
                 play: 'p-play',
                 pause: 'p-pause',
@@ -82,10 +84,10 @@
                 error: 'p-error'
             },
             
-            init: function (volume) {
+            init: function (preload) {
                 this.header.init();
-                this.playlist.init();
-                this.audio.init(this, volume);
+                this.playlist.init(preload.list);
+                this.audio.init(this, preload.opts.vol);
                 this._dom.find('.player-list ol').click(function (e) {
                     var li = ($(e.target).is('li')) ? $(e.target) :
                             $(e.target).closest('li'),
@@ -100,6 +102,10 @@
                         P.play();
                     }
                 });
+                if (lcount > 0) {
+                    this.load(preload.cPtr);
+                    this.skipTo(preload.cTime);
+                }
             },
             error: function (e) {
                 console.log(e);
@@ -108,6 +114,7 @@
             },
             load: function (index) {
                 var ih, track = this.playlist.load(index);
+                this.updateIndex(index);
                 this._showState('pause');
                 this.audio.load(track);
                 this.header.load(track);
@@ -123,16 +130,20 @@
                 }, 500);
             },
             unload: function () {
+                this.updateIndex(0);
                 this.header.load();
                 this._showState();
             },
             add: function (src, title, ptitle, dur, poster_src, pod_id, date) {
-                var i = this.playlist.add(
+                var track = new Track(
                     src, title, ptitle, dur, poster_src, pod_id, date);
+                var i = this.playlist.add(track);
+                this.updateAdd(track);
                 if (i === 0) this.load(i);
             },
             delete: function (index) {
                 var c = this.playlist._cur;
+                this.updateDel(index);
                 if (c === index) {
                     this.stop();
                     if (this.playlist.count() > 1) this.nextTrack(true);
@@ -141,8 +152,10 @@
                 this.playlist.delete(index);
             },
             addAndPlay: function (src, title, ptitle, dur, poster_src, pod_id, date) {
-                var i = this.playlist.insert(
+                var track = new Track(
                     src, title, ptitle, dur, poster_src, pod_id, date);
+                this.updateAdd(track, true);
+                var i = this.playlist.insert(track);
                 this.load(i);
                 this.play();
                 this._dom[0].scrollIntoView();
@@ -211,21 +224,19 @@
             skipBack: function (sec) {
                 if (this.playlist.getTrack()) this.audio.skipBack(sec);
             },
-            addMode: function (mode) {
-                mode = (Number(mode) == mode) ? mode : Modes[mode];
-                this._mode = this._mode | mode;
+            toggleRepeat: function () {
+                this._rep = !this._rep;
+                this.updateOpts(undefined, this._rep, undefined);
             },
-            remMode: function (mode) {
-                mode = (Number(mode) == mode) ? mode : Modes[mode];
-                this._mode = this._mode & ~mode;
+            toggleCont: function () {
+                this._cont = !this._cont;
+                this.updateOpts(this._cont, undefined, undefined);
             },
-            isMode: function () {
-                var i;
-                if (arguments.length < 1) return false;
-                for (i = 0; i < arguments.length; i++) {
-                    if (!(this._mode & arguments[i])) return false;
-                }
-                return true;
+            isModeRep: function () {
+                return this._rep;
+            },
+            isModeCont: function () {
+                return this._cont;
             },
             setVolume: function (vol) {
                 this.audio.setVolume(vol);
@@ -235,15 +246,43 @@
                 if (v > 1.0) v = 1;
                 if (v === this.audio.getVolume()) return;
                 this.audio.updateVolume(v);
+                this.updateVolume(v);
             },
             decVol: function () {
                 var v = this.audio.getVolume() - 0.1;
                 if (v < 0.0) v = 0;
                 if (v === this.audio.getVolume()) return;
                 this.audio.updateVolume(v);
+                this.updateVolume(v);
             },
             toggleMute: function () {
                 this.audio.toggleMute();
+                this.updateVolume();
+            },
+            updateVolume: function (v) {
+                if (typeof(v) === 'undefined') v = this.audio.getVolume();
+                this._update({vol: v});
+            },
+            updateTime: function () {
+                var t = this.audio.getPosition();
+                this._update({cTime: t});
+            },
+            updateIndex: function (index) {
+                this._update({cIndex: index});
+            },
+            updateAdd: function (track, insert) {
+                this._update({addedTrack: track, insert: insert});
+            },
+            updateDel: function (index) {
+                this._update({removeIndex: index});
+            },
+            updateOpts: function (cont, repeat) {
+                this._update({ cont: cont, repeat: repeat});
+            },
+            _update: function (data) {
+                if (window.socket && window.socket.connected) {
+                    window.socket.emit('playlist', data);
+                }
             },
             _isState: function (type) {
                 return this._dom.find('.play-pause').hasClass(this.States[type]);
@@ -265,7 +304,7 @@
         P._dom.append(P.header._dom);
         P._dom.append(P.playlist._dom);
         parentElement.append(P._dom);
-        P.init(preload.volume);
+        P.init(preload);
         return P;
     };
 
@@ -409,6 +448,7 @@
                         time.find('span').css('display', 'block');
                         time.find('.slider').css('display', 'none');
                         $(this).css('color', '#777');
+                        player.updateVolume();
                     }
                 });
                 this._dom.find('.slider').slider({
@@ -500,7 +540,8 @@
             
             getVolume: function () {
                 var s = this._dom.find('.slider');
-                return s.slider('value') / s.slider('option', 'max');
+                return Math.floor((s.slider('value') / s.slider('option', 'max'))
+                                  * 100) / 100;
             },
             
             setVolume: function (vol) {
@@ -523,13 +564,13 @@
         return AP;
     };
 
-    var PlayList = function (list) {
+    var PlayList = function () {
         var PL = {
             _dom: $('<div class="player-list"><ol></ol></div>'),
             _list: [],
             _cur: 0,
             
-            init: function () {
+            init: function (list) {
                 while (list && list.length > 0) {
                     this.insert(list.pop(), false);
                 }
