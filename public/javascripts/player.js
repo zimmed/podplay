@@ -498,7 +498,7 @@
                 position = (position < 0) ? 0 :
                         (position > a.duration) ? a.duration : position;
                 a.currentTime = position;
-                this._audio.updatePlayhead();
+                this._audio.updatePlayhead(position / a.duration);
             },
             
             skipAhead: function (seconds) {
