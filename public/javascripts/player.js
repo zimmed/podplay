@@ -148,8 +148,7 @@
                     if (this.playlist.count() > 1) this.nextTrack(true);
                     else this.unload();
                 }
-                this.updateDel(index);
-                this.playlist.delete(index);
+                this.updateDel(index, this.playlist.delete(index));
             },
             addAndPlay: function (src, title, ptitle, dur, poster_src, pod_id, date) {
                 var track = new Track(
@@ -273,8 +272,8 @@
             updateAdd: function (track, insert) {
                 this._update({addedTrack: track, insert: insert});
             },
-            updateDel: function (index) {
-                this._update({removeIndex: index});
+            updateDel: function (index, newIndex) {
+                this._update({removeIndex: index, newIndex: newIndex});
             },
             updateOpts: function (cont, repeat) {
                 this._update({ cont: cont, repeat: repeat});
@@ -624,6 +623,7 @@
                     this._removeElement(element);
                 }
                 if (index <= this._cur) this._cur--;
+                return this._cur;
             },
 
             load: function (index) {

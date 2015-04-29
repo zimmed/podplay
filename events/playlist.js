@@ -15,10 +15,10 @@ router.add(function () {
         playlist = pls_session[s.id] = {
             opts: {}, cPtr: 0, cTime: 0, list: []
         };
-        if (s.user) {
-            s.user.playlists = playlist;
-            updatePlaylist(user, playlist);
-        }
+    }
+    if (s.user && (!s.user.playlists || s.user.playlists.list.length === 0)) {
+        s.user.playlists = playlist;
+        updatePlaylist(user, playlist);
     }
     s.playlist = playlist;
     this.emit('playlist-data-response', playlist);
@@ -47,11 +47,12 @@ router.add(function (addedTrack, $insert) {
 });
 
 // event with removedIndex passed
-router.add(function (removeIndex) {
+router.add(function (removeIndex, $newIndex) {
     var pl = this.request.session.playlist,
         user = this.request.session.user;
     if (!pl) throw new Error('Attempting to remove track from empty playlist!');
     pl.list.splice(removeIndex, 1);
+    if (typeof($newIndex) !== 'undefined') pl.cPtr = $newIndex;
     if (user) users.updatePlaylist(user, pl);
 });
 
@@ -62,6 +63,7 @@ router.add(function ($cIndex, $cTime) {
     if (!pl) throw new Error('Attempting to load from empty playlist!');
     if (typeof($cIndex) !== 'undefined') pl.cPtr = $cIndex;
     if (typeof($cTime) !== 'undefined') pl.cTime = $cTime;
+    else pl.cTime = 0;
     if (user) users.updatePlaylist(user, pl);
     this.emit('pl-update-current-finish');
 });
