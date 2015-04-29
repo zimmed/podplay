@@ -635,6 +635,7 @@
     function dimmerFadeOut (cb) {
         if ($('#dimmer').css('opacity') == 1) {
             $('#dimmer').animate({opacity: '0'}, 250, function () {
+                $('#dimmer').css('display', 'none');
                 if (cb) cb();
             });
         }
@@ -646,6 +647,7 @@
      */
     function dimmerFadeIn (cb) {
         if ($('#dimmer').css('opacity') == 0) {
+            $('#dimmer').css('display', 'block');
             $('#dimmer').animate({opacity: '1'}, 250, function () {
                 if (cb) cb();
             });
