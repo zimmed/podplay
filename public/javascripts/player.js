@@ -74,7 +74,8 @@
             _dom: $('<div class="player-container"></div>'),
             _rep: (preload.opts.repeat) ? preload.opts.repeat : false,
             _cont: (preload.opts.cont) ? preload.opts.cont : false,
-            _prlt: (preload.cTime) ? preload.cTime : 0,
+            _prlt: (preload.cTime) ? preload.cTime : false,
+            _prlv: (preload.opts.vol) ? preload.opts.vol : false,
             header: new Header(),
             audio: new AudioPlayer(),
             playlist: new PlayList(preload.list),
@@ -127,6 +128,10 @@
                             if (P._prlt) {
                                 P.skipTo(P._prlt, true);
                                 P._prlt = 0;
+                            }
+                            if (P._prlv !== false) {
+                                P.audio.updateVolume(P.prlv, true);
+                                P._prlt = false;
                             }
                             clearInterval(ih);
                         }
@@ -540,11 +545,11 @@
                 }
             },
             
-            updateVolume: function (vol) {
+            updateVolume: function (vol, force) {
                 var s = this._dom.find('.slider');
                 vol = Math.floor(vol * 100 + 0.5) / 100;
                 s.slider({value: vol * s.slider('option', 'max')});
-                this.setVolume(vol);
+                this.setVolume(vol, force);
             },
             
             getVolume: function () {
