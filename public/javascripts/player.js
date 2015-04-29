@@ -17,8 +17,8 @@
                     if (e.which === 32) p.playPause(); 
                     else if (e.which === 38) p.prevTrack();
                     else if (e.which === 40) p.nextTrack();
-                    else if (e.which === 37) p.skipAhead(30);
-                    else if (e.which === 39) p.skipBack(15); 
+                    else if (e.which === 37) p.skipBack(15);
+                    else if (e.which === 39) p.skipAhead(30);
                     else if (e.which === 77) p.toggleMute(); 
                     else if (e.which === 187) p.incVol(); 
                     else if (e.which === 189) p.decVol();
@@ -229,6 +229,21 @@
             setVolume: function (vol) {
                 this.audio.setVolume(vol);
             },
+            incVol: function () {
+                v = this.audio.getVolume() + .1;
+                if (v > 1.0) v = 1;
+                if (v === this.audio.getVolume()) return;
+                this.audio.updateVolume(v);
+            },
+            decVol: function () {
+                v = this.audio.getVolume(); - .1;
+                if (v < 0.0) v = 0;
+                if (v === this.audio.getVolume()) return;
+                this.audio.updateVolume(v);
+            },
+            toggleMute: function () {
+                this.audio.toggleMute();
+            },
             _isState: function (type) {
                 return this._dom.find('.play-pause').hasClass(this.States[type]);
             },
@@ -355,6 +370,7 @@
         var AP = {
             _dom: $('<div class="player-audio"><audio preload></audio></div>'),
             _audio: false,
+            _last_vol: -1,
 
             init: function (player, volume) {
                 if (!volume) volume = 0.75;
@@ -459,6 +475,30 @@
             
             getPosition: function () {
                 return Math.floor(this._dom.find('audio')[0].currentTime);
+            },
+            
+            toggleMute: function () {
+                var v = this.getVolume();
+                if (v !== 0) {
+                    this._last_vol = v;
+                    this.updateVolume(0);
+                }
+                else if (v === 0) {
+                    if (this._last_vol === -1) this._last_vol = 1;
+                    this.updateVolume(this._last_vol);
+                    this._last_vol = -1;
+                }
+            },
+            
+            updateVolume: function (vol) {
+                var s = this._dom.find('.volume .slider');
+                s.slider({value: vol * s.slider('option', 'max')});
+                this.setVolume(vol);
+            },
+            
+            getVolume: function () {
+                var s = this._dom.find('.volume .slider');
+                return s.slider('value') / s.slider('option', 'max');
             },
             
             setVolume: function (vol) {
