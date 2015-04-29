@@ -1166,9 +1166,6 @@
             var options = (data.list && data.list.length > 0) ? data : false;
             window.player = $("#right-col").addPlayer(options);
         });
-        window.socket.on('save-playlist-time', function () {
-            window.player.updateTime();
-        });
         window.socket.on('disconnected', function (otherid) {
             window.showNotification('You have been disconnected from this session.');
             window.player.updateTime();
@@ -1179,6 +1176,7 @@
         });
         window.onbeforeunload = function (e) {
             window.player.updateTime();
+            window.player.updateVolume();
         };
     });
     
