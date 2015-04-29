@@ -2,7 +2,7 @@ var router = require('../lib/socket').Router();
 
 // disconnect event with no data passed
 router.add(function () {
-    var socket = this, id = this.id, s = this.handshake.session;
+    var socket = this, id = this.id, s = this.request.session;
     if (s.user) {
         console.log(s.user.name + ' disconnected.');
         users.getCurrentSocket(user, function () { }, function (socketID) {

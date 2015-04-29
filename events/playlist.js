@@ -3,12 +3,12 @@ var users = require('../lib/users');
 
 // playlist event with no data passed
 router.add(function () {
-    var playlist, pl = this.handshake.session.playlist,
-        user = this.handshake.session.user;
+    var playlist, pl = this.request.session.playlist,
+        user = this.request.session.user;
     if (user) playlist = user.playlists;
     if (!playlist) playlist = pl;
     if (!playlist) {
-        playlist = this.handshake.session.playlist = {
+        playlist = this.request.session.playlist = {
             opts: {}, cPtr: 0, cTime: 0, list: []
         };
         if (user) users.updatePlaylist(user, playlist);
@@ -17,7 +17,7 @@ router.add(function () {
 });
 
 router.add(function (forceGet) {
-    var socket = this, user = this.handshake.session.user;
+    var socket = this, user = this.request.session.user;
     if (!user) throw new Error('Cannot force get playlist without a user.');
     users.getPlaylist(user, function () { }, function (data) {
         socket.emit('playlist-data-response', data);
@@ -26,10 +26,10 @@ router.add(function (forceGet) {
 
 // event with addedTrack passed
 router.add(function (addedTrack, $insert) {
-    var pl = this.handshake.session.playlist,
-        user = this.handshake.session.user;
+    var pl = this.request.session.playlist,
+        user = this.request.session.user;
     console.log("Adding track: " + addedTrack.title);
-    if (!pl) pl = this.handshake.session.playlist = {opts: {}, cPtr: 0, cTime: 0, list: []};
+    if (!pl) pl = this.request.session.playlist = {opts: {}, cPtr: 0, cTime: 0, list: []};
     if ($insert) pl.list.unshift(addedTrack);
     else pl.list.push(addedTrack);
     if (user) users.updatePlaylist(user, pl);
@@ -38,8 +38,8 @@ router.add(function (addedTrack, $insert) {
 
 // event with removedIndex passed
 router.add(function (removeIndex) {
-    var pl = this.handshake.session.playlist,
-        user = this.handshake.session.user;
+    var pl = this.request.session.playlist,
+        user = this.request.session.user;
     if (!pl) throw new Error('Attempting to remove track from empty playlist!');
     pl.list.splice(removeIndex, 1);
     if (user) users.updatePlaylist(user, pl);
@@ -47,8 +47,8 @@ router.add(function (removeIndex) {
 
 // event with cIndex and/or cTime passed
 router.add(function ($cIndex, $cTime) {
-    var pl = this.handshake.session.playlist,
-        user = this.handshake.session.user;
+    var pl = this.request.session.playlist,
+        user = this.request.session.user;
     if (!pl) throw new Error('Attempting to load from empty playlist!');
     if (typeof($cIndex) !== 'undefined') pl.cPtr = $cIndex;
     if (typeof($cTime) !== 'undefined') pl.cTime = $cTime;
@@ -58,9 +58,9 @@ router.add(function ($cIndex, $cTime) {
 
 // event for updating playlist options
 router.add(function ($cont, $repeat, $vol) {
-    var pl = this.handshake.session.playlist,
-        user = this.handshake.session.user;
-    if (!pl) pl = this.handshake.session.playlist = {opts: {}, cPtr: 0, cTime: 0, list: []};
+    var pl = this.request.session.playlist,
+        user = this.request.session.user;
+    if (!pl) pl = this.request.session.playlist = {opts: {}, cPtr: 0, cTime: 0, list: []};
     if (typeof($cont) !== 'undefined') pl.opts.cont = $cont;
     if (typeof($repeat) !== 'undefined') pl.opts.repeat = $repeat;
     if (typeof($vol) !== 'undefined') pl.opts.vol = $vol;

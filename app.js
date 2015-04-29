@@ -47,9 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session);
 app.__io_session_middleware = function (socket, next) {
-    session(socket.handshake, {}, function () {
-        next();
-    });
+    session(socket.request, socket.request.res, next);
 };
 
 socket.use('connection', e_connection);
