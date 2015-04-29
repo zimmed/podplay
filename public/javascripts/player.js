@@ -90,8 +90,9 @@
                     if (P._dom.find('audio')[0].duration) {
                         playing = P._isState('play');
                         P.play();
-                        P.stop();
+                        P.pause();
                         if (playing) P.play();
+                        else P.reset();
                         clearInterval(ih);
                     }
                 }, 1000);
