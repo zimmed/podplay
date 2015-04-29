@@ -633,7 +633,7 @@
      * @param {Function} cb - Optional callback function.
      */
     function dimmerFadeOut (cb) {
-        if ($('#dimmer').css('opacity') == 1) {
+        if ($('#dimmer').css('display') == 'block') {
             $('#dimmer').animate({opacity: '0'}, 250, function () {
                 $('#dimmer').css('display', 'none');
                 if (cb) cb();
@@ -646,7 +646,7 @@
      * @param {Function} cb - Optional callback function.
      */
     function dimmerFadeIn (cb) {
-        if ($('#dimmer').css('opacity') == 0) {
+        if ($('#dimmer').css('display') == 'none') {
             $('#dimmer').css('display', 'block');
             $('#dimmer').animate({opacity: '1'}, 250, function () {
                 if (cb) cb();
