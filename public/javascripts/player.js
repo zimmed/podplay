@@ -104,7 +104,7 @@
                 });
                 if (lcount > 0) {
                     this.load(preload.cPtr);
-                    this.skipTo(preload.cTime);
+                    this.skipTo(preload.cTime, true);
                 }
             },
             error: function (e) {
@@ -217,9 +217,9 @@
                 this.load(t);
                 this.play();
             },
-            skipTo: function (pos) {
+            skipTo: function (pos, force) {
                 console.log('Skip to: ' + pos);
-                if (this.playlist.getTrack()) this.audio.skipTo(pos);
+                if (force || this.playlist.getTrack()) this.audio.skipTo(pos);
             },
             skipAhead: function (sec) {
                 if (this.playlist.getTrack()) this.audio.skipAhead(sec);
