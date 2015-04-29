@@ -68,7 +68,7 @@
     };
 
     var Player = function (parentElement, preload) {
-        if (!preload) preload = {opts: {}, cPtr: 0, cTime: 0, list []};
+        if (!preload) preload = {opts: {}, cPtr: 0, cTime: 0, list: []};
         var lcount = preload.list.length;
         var P = {
             _dom: $('<div class="player-container"></div>'),
