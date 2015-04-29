@@ -94,7 +94,7 @@
                         if (playing) P.play();
                         clearInterval(ih);
                     }
-                }, 100);
+                }, 1000);
             },
             unload: function () {
                 this.header.load();
