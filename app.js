@@ -5,12 +5,21 @@
  * Modified: 09 Mar 15
  */
 var express = require('express');
-var session = require('express-session');
+var session = require('express-session')({
+    secret: 'hotsaucerman', // Secret session key: can be any string
+    resave: false,
+    saveUninitialized: true
+});
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var socket = require('./lib/socket');
+
+var e_connection = require('./events/connection');
+var e_disconnect = require('./events/disconnect');
+var e_playlist = require('./events/playlist');
 
 var index = require('./routes/index');
 var browse = require('./routes/browse');
@@ -36,11 +45,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-    secret: 'hotsaucerman', // Secret session key: can be any string
-    resave: false,
-    saveUninitialized: true
-}));
+app.use(session);
+app.__io_session_middleware = function (socket, next) {
+    session(socket.handshake, {}, function () {
+        next();
+    });
+};
+
+socket.use('connection', e_connection);
+socket.use('disconnect', e_disconnect);
+socket.use('playlist', e_playlist);
 
 app.use('/', index);
 app.use('/browse', browse);
