@@ -265,9 +265,9 @@
                 }
                 else {
                     this._dom.find('.pcast-title').html(p_title);
-                    $(ps[0]).html('Released: ' + date);
-                    $(ps[1]).html('Duration: ' + duration);
-                    $(ps[2]).html('Popularity Index: ' + 'N/A');
+                    $(ps[0]).html('Released: <em>' + date + '</em>');
+                    $(ps[1]).html('Duration: <em>' + duration + '</em>');
+                    $(ps[2]).html('Popularity Index: <em>' + 'N/A' + '</em>');
                 }
             },
             

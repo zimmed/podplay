@@ -521,6 +521,12 @@ legend {
 }
 .player-header .deets p {
     white-space: nowrap;
+    color: #777;
+    font-style: italic;
+}
+.player-header .deets p em {
+    font-weight: normal;
+    font-style: normal;
     color: #ccc;
 }
 .player-header .pcast-title {
