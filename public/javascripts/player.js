@@ -13,7 +13,6 @@
             $(document).keydown(function (e) {
                 var disable = true;
                 if (!$(e.target).is('input')) {
-                    console.log(e.which);
                     if (e.which === 32) p.playPause(); 
                     else if (e.which === 38) p.prevTrack();
                     else if (e.which === 40) p.nextTrack();
@@ -230,13 +229,13 @@
                 this.audio.setVolume(vol);
             },
             incVol: function () {
-                v = this.audio.getVolume() + .1;
+                v = this.audio.getVolume() + 0.1;
                 if (v > 1.0) v = 1;
                 if (v === this.audio.getVolume()) return;
                 this.audio.updateVolume(v);
             },
             decVol: function () {
-                v = this.audio.getVolume(); - .1;
+                v = this.audio.getVolume() - 0.1;
                 if (v < 0.0) v = 0;
                 if (v === this.audio.getVolume()) return;
                 this.audio.updateVolume(v);
