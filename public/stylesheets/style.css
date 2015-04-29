@@ -494,6 +494,7 @@ legend {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#404040', endColorstr='#404040',GradientType=1 ); 
 }
 .player-header .poster {
+    box-shadow: rgb(0, 0, 0) 4px 4px 4px;
     width: 76px;
     height: 76px;
     margin: 9px;
