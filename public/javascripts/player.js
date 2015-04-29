@@ -229,13 +229,13 @@
                 this.audio.setVolume(vol);
             },
             incVol: function () {
-                v = this.audio.getVolume() + 0.1;
+                var v = this.audio.getVolume() + 0.1;
                 if (v > 1.0) v = 1;
                 if (v === this.audio.getVolume()) return;
                 this.audio.updateVolume(v);
             },
             decVol: function () {
-                v = this.audio.getVolume() - 0.1;
+                var v = this.audio.getVolume() - 0.1;
                 if (v < 0.0) v = 0;
                 if (v === this.audio.getVolume()) return;
                 this.audio.updateVolume(v);
