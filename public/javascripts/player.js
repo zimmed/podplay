@@ -284,7 +284,7 @@
                     poster.newTip(false, "Open Podcast Feed", 'right');
                     this._dom.find('.noimg').css('display', 'none');
                     poster.click(function () {
-                        window.loadPodcast(pid, '#pc-0');
+                        window.loadPodcast(pid, '#pc-0', true);
                     });
                 }
                 poster.attr('src', url);
