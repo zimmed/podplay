@@ -493,14 +493,14 @@
             
             updateVolume: function (vol) {
                 console.log('update: ' + vol);
-                var s = this._dom.find('.volume .slider');
+                var s = this._dom.find('.slider');
                 vol = Math.floor(vol * 100 + 0.5) / 100;
                 s.slider({value: vol * s.slider('option', 'max')});
                 this.setVolume(vol);
             },
             
             getVolume: function () {
-                var s = this._dom.find('.volume .slider');
+                var s = this._dom.find('.slider');
                 return s.slider('value') / s.slider('option', 'max');
             },
             
