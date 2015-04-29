@@ -13,27 +13,16 @@
             $(document).keypress(function (e) {
                 var disable = true;
                 if (!$(e.target).is('input')) {
-                    // Spacebar
-                    if (e.which === 32) p.playPause();
-                    // Up arrow
+                    if (e.which === 32) p.playPause(); 
                     else if (e.which === 38) p.prevTrack();
-                    // Down arrow
                     else if (e.which === 40) p.nextTrack();
-                    // Left arrow
                     else if (e.which === 37) p.skipAhead(30);
-                    // Right arrow
-                    else if (e.which === 39) p.skipBack(15);
-                    // M
-                    else if (e.which === 77) p.toggleMute();
-                    // +
-                    else if (e.which === 187) p.incVol();
-                    // -
+                    else if (e.which === 39) p.skipBack(15); 
+                    else if (e.which === 77) p.toggleMute(); 
+                    else if (e.which === 187) p.incVol(); 
                     else if (e.which === 189) p.decVol();
-                    // C
                     else if (e.which === 67) p.toggleCont();
-                    // R
-                    else if (e.which === 82) p.toggleRep();
-                    // S
+                    else if (e.which === 82) p.toggleRep(); 
                     else if (e.which === 83) {
                         if (window.PageStack.getCurrentPage() !== 'index') {
                             window.PageStack.load('index', false, '/');
