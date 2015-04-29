@@ -584,7 +584,7 @@
     // API access events:
     // Each of these do what they need do and then call the matching methods defined in the settings object.
     updatePlayhead: function() {
-      var percent = this.element.currentTime / this.duration;
+      var percent = this.element.currentTime / this.element.duration;
       this.settings.updatePlayhead.apply(this, [percent]);
     },
     skipTo: function(percent) {
