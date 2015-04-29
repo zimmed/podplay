@@ -80,15 +80,14 @@
                 this._showState('error');
             },
             load: function (index) {
-                var i = 0, ih, track = this.playlist.load(index);
+                var ih, track = this.playlist.load(index);
                 this._showState('pause');
                 this.audio.load(track);
                 this.header.load(track);
                 // Wonky fix for audio-load getting stopped at the beginning.
                 ih = setInterval(function () {
                     var playing = false;
-                    console.log(++i);
-                    if (P._dom.find('audio').duration) {
+                    if (P._dom.find('audio')[0].duration) {
                         playing = P._isState('play');
                         P.play();
                         P.stop();
