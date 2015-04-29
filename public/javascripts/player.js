@@ -143,12 +143,12 @@
             },
             delete: function (index) {
                 var c = this.playlist._cur;
-                this.updateDel(index);
                 if (c === index) {
                     this.stop();
                     if (this.playlist.count() > 1) this.nextTrack(true);
                     else this.unload();
                 }
+                this.updateDel(index);
                 this.playlist.delete(index);
             },
             addAndPlay: function (src, title, ptitle, dur, poster_src, pod_id, date) {
@@ -580,7 +580,6 @@
                 var track, played, index, el;
                 if (typeof(src) === 'object') {
                     track = src;
-                    autoload = title;
                 }
                 else {
                     track = new Track(
@@ -601,7 +600,6 @@
                 var track, played, el;
                 if (typeof(src) === 'object') {
                     track = src;
-                    autoload = title;
                 }
                 else {
                     track = new Track(
