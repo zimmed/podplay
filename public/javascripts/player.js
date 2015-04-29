@@ -27,7 +27,7 @@
     };
 
     var TrackElement = function (track) {
-        var el = $('<li><div class="pl-btn-del" title="Remove From Playlist">' +
+        var el = $('<li><div class="pl-btn-del">' +
                    '<span aria-hidden="true"' +
                    ' class="glyphicon glyphicon-remove-sign"></span></div>' +
                    '<div class="t-poster">' +
@@ -222,8 +222,7 @@
         var H = {
             _dom: $('<div class="player-header">' +
                     '   <div class="pcast-title"></div>' +
-                    '   <img title="Open Podcast Feed" ' +
-                            'class="poster unselectable" src="">' +
+                    '   <img class="poster unselectable" src="">' +
                     '   <span aria-hidden="true" class="glyphicon' +
                             ' glyphicon-ban-circle noimg"></span>' +
                     '   <div class="deets unselectable">' +
@@ -235,7 +234,6 @@
             
             init: function () {
                 this._insertTitle(this._dom.find('.titlebar').html());
-                this._dom.find('.poster').newTip(false, false, 'left');
             },
 
             load: function (track) {
@@ -279,9 +277,11 @@
                 poster.off('click');
                 if (!pid) {
                     this._dom.find('.noimg').css('display', 'block');
+                    poster.newTip(false, '');
                 }
                 else {
                     poster.css('cursor', 'pointer');
+                    poster.newTip(false, "Open Podcast Feed", 'right');
                     this._dom.find('.noimg').css('display', 'none');
                     poster.click(function () {
                         window.loadPodcast(pid, '#pc-0');
@@ -572,7 +572,7 @@
             _appendElement: function (el) {
                 $(this._dom).find('ol').append(el);
                 el.animate({opacity: 1}, 500);
-                el.find('.pl-btn-del').newTip(false, false, 'left');
+                el.find('.pl-btn-del').newTip(false, "Remove From Playlist", 'right');
             },
 
             _removeElement: function (el) {

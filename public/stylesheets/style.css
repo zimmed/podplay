@@ -46,7 +46,6 @@ nav {
     background: transparent !important;
     z-index: 1 !important;
 }
-
 .navbar-brand {
     margin-right: 25px;
     color: #fff !important;
@@ -583,13 +582,15 @@ legend {
     float: left;
 }
 .player-list .pl-btn-del {
-    font-size: 24px;
-    width: 32px;
+    font-size: 20px;
     color: #aaa;
 }
 .player-list .pl-btn-del:hover,
-.player-list .pl-btn-del:active, {
+.player-list .pl-btn-del:active {
     color: #fff;
+}
+.player-list .pl-btn-del .glyphicon {
+    line-height: 32px;
 }
 .t-poster img {
     width: 30px;
@@ -853,6 +854,7 @@ legend {
     border-left: 1px solid #000;
     color: #ddd;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+    cursor: default;
 }
 .audiojs .time em {
     padding: 0px 2px 0px 0px;
