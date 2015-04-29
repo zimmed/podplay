@@ -831,6 +831,7 @@
     function logged_out () {
         window.player.updateTime();
         window.player.updateVolume();
+        $('#right-col').html('<div class="loader">Loading...</div>');
         $('#right-col').data('js-player', false);
         window.user = false;
         window.socket.disconnect();
@@ -845,6 +846,7 @@
     function logged_in(username) {
         window.player.updateTime();
         window.player.updateVolume();
+        $('#right-col').html('<div class="loader">Loading...</div>');
         $('#right-col').data('js-player', false);
         window.user = username;
         $('#account').html(username);
