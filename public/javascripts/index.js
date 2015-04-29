@@ -829,8 +829,8 @@
      * Handle user logged out.
      */
     function logged_out () {
-        window.updateTime();
-        window.updateVolume();
+        window.player.updateTime();
+        window.player.updateVolume();
         $('#right-col').data('js-player', false);
         window.user = false;
         window.socket.disconnect();
@@ -843,8 +843,8 @@
      * @param {Object} state - The state of the last-visited page.
      */
     function logged_in(username) {
-        window.updateTime();
-        window.updateVolume();
+        window.player.updateTime();
+        window.player.updateVolume();
         $('#right-col').data('js-player', false);
         window.user = username;
         $('#account').html(username);
