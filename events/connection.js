@@ -3,6 +3,7 @@ var router = require('../lib/socket').Router();
 // connection event with no data passed
 router.add(function () {
     var ready = true, s = this.handshake.session;
+    s.sockid = this.id;
     if (s.user) {
         console.log(s.user.name + ' connected.');
         if (s.user.openSocket !== this.id) {
