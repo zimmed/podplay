@@ -13,7 +13,7 @@ router.add(function () {
                 ready = false;
             }
             s.user.openSocket = this.id;
-            users.updateSocket(user, this.id);
+            users.updateSocket(s.user, this.id);
         }
     }
     else {
