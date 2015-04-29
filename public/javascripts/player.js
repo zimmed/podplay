@@ -229,7 +229,7 @@
                     '   </div>' +
                     '   <div class="titlebar unselectable">No track selected.</div>' +
                     '</div>'),
-            _marquee_speed: 10000,
+            _marquee_speed: 15000,
             
             init: function () {
                 this._insertTitle(this._dom.find('.titlebar').html());
@@ -288,12 +288,12 @@
             },
             
             _insertTitle: function (msg) {
-                this._dom.find('.titlebar').html(msg).marquee({
+                this._dom.find('.titlebar').marquee('destroy').html(msg).marquee({
                     duration: this._marquee_speed,
-                    gap: 0,
+                    gap: 200,
                     delayBeforeStart: 0,
                     direction: 'left',
-                    duplicated: false
+                    duplicated: true
                 });
             }
         };
