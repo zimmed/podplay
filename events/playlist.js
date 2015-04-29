@@ -13,7 +13,7 @@ router.add(function () {
         };
         if (user) users.updatePlaylist(user, playlist);
     }
-    this.emit('playlist-data-response', data);
+    this.emit('playlist-data-response', playlist);
 });
 
 router.add(function (forceGet) {
@@ -28,10 +28,12 @@ router.add(function (forceGet) {
 router.add(function (addedTrack, $insert) {
     var pl = this.handshake.session.playlist,
         user = this.handshake.session.user;
+    console.log("Adding track: " + addedTrack.title);
     if (!pl) pl = this.handshake.session.playlist = {opts: {}, cPtr: 0, cTime: 0, list: []};
     if ($insert) pl.list.unshift(addedTrack);
     else pl.list.push(addedTrack);
     if (user) users.updatePlaylist(user, pl);
+     console.log("list: " + pl.list.length);
 });
 
 // event with removedIndex passed
