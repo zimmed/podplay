@@ -18,7 +18,7 @@ router.add(function () {
     }
     if (s.user && (!s.user.playlists || s.user.playlists.list.length === 0)) {
         s.user.playlists = playlist;
-        updatePlaylist(user, playlist);
+        users.updatePlaylist(s.user, playlist);
     }
     s.playlist = playlist;
     this.emit('playlist-data-response', playlist);
