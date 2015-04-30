@@ -37,8 +37,7 @@
     $.fn.newTip = function (show, title, placement) {
         $(this).each(function () {
             var t = $(this).attr('data-original-title');
-            if ((typeof(t) !== 'undefined' && t !== title && show)
-                || title === ' ') $(this).tooltip('destroy');
+            if (title && t !== title) $(this).tooltip('destroy');
             if (title === ' ') return;
             show = (show) ? 'show' : false;
             if (!title) title = $(this).attr('title');
@@ -48,8 +47,8 @@
             if (placement) {
                 $(this).attr('data-placement', placement);
             }
-            $(this).attr('data-original-title', title)
-                .tooltip(show);
+            $(this).attr('data-original-title', title);
+            $(this).tooltip(show);
         });
         return $(this);
     };
