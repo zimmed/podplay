@@ -36,9 +36,12 @@
      */
     $.fn.newTip = function (show, title, placement) {
         $(this).each(function () {
+            var t = $(this).attr('data-original-title');
+            if ((typeof(t) !== 'undefined' && t !== title && show)
+                || title === ' ') $(this).tooltip('destroy');
+            if (title === ' ') return;
             show = (show) ? 'show' : false;
             if (!title) title = $(this).attr('title');
-            else if (title === ' ') title = '';
             if ($(this).attr('data-toggle') !== 'tooltip') {
                 $(this).attr('data-toggle', 'tooltip');
             }
@@ -463,7 +466,7 @@
         }
         else if (!$('#name').hasClass('valid')) {
             // Username is valid
-            $('#name').addClass('valid').newTip(false, ' ', 'left').data('emsg', '');
+            $('#name').addClass('valid').newTip(false, ' ').data('emsg', '');
         }
         // Verify Password
         if (!p && !password.match(/^[^\s\'\;\\]{6,26}$/)) {
@@ -474,7 +477,7 @@
         else if (password.match(/^[^\s\'\;\\]{6,26}$/) &&
                  !$('#pw').hasClass('valid')) {
             // Password is valid
-            $('#pw').addClass('valid').newTip(false, ' ', 'left').data('emsg', '');
+            $('#pw').addClass('valid').newTip(false, ' ').data('emsg', '');
         }
         if (!p) {
             // Form is valid
@@ -494,7 +497,7 @@
             else {
                 // Problem field is empty. Don't report problem.
                 $('#name, #pw').removeClass('error')
-                    .newTip(false, ' ', 'left').data('emsg', '');
+                    .newTip(false, ' ').data('emsg', '');
             }
         }
     }
