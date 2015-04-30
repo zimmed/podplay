@@ -299,7 +299,6 @@
          * @param {Function} cb - Optional generic callback function.
          */
         _fireLoad : function (page, state, prev, cb) {
-            console.log('Load: ' + page);
             var events = [], e;
             if (this._on_loads[page]) {
                 for (var i in this._on_loads[page]) {
@@ -328,7 +327,6 @@
          * @param {Function} cb - Optional generic callback function.
          */
         _fireUnload : function (page, state, prev, cb) {
-            console.log('Unload: ' + page);
             var events = [], e;
             if (this._on_unloads[page]) {
                 for (var i in this._on_unloads[page]) {
@@ -420,10 +418,6 @@
      */
     window.onpopstate = function () {
         var state = window.history.state;
-        console.log('---|' + PageStack.getPage() + ' -> ' + window.history.state.page + '|---');
-        console.log('COMPARE ' + JSON.stringify(state) + ' to:');
-        console.log('\tback: ' + JSON.stringify(PageStack.getState(-1)));
-        console.log('\tforw: ' + JSON.stringify(PageStack.getState(1)));
         var prev = (PageStack._pages_eq(state, PageStack.getState(-1)))
                     ? PageStack._handle_back()
                     : ((PageStack._pages_eq(state, PageStack.getState(1)))

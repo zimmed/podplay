@@ -104,8 +104,11 @@ badcache.update_top100();
 var top100timer = setInterval(badcache.update_top100, UPDATE_TOP100_INTERVAL);
 
 //Debug
-User.find({}, function (err, docs) {
-    console.log(JSON.stringify(docs));
+User.find({}, ['name', 'email'], function (err, docs) {
+    console.log('Registered users: ');
+    for (var i in docs) {
+        console.log('\t'+docs[i].name+' <'+docs[i].email+'>');
+    }
 });
 
 module.exports = app;
