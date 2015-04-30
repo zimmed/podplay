@@ -257,6 +257,7 @@ img.podcast-poster {
     height: 125px;
     margin: 0px;
     padding: 10px;
+    padding-bottom: 0px;
     overflow-y: hidden;
     overflow-x: scroll;
     white-space: nowrap;
