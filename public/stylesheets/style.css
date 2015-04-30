@@ -191,15 +191,14 @@ nav {
     padding: 0 !important;
     padding-top: 0.35em !important;
     padding-left: 0.1em !important;
-    opacity: 0.75;
-    box-shadow: 2px 2px 2px #3c3c3c;
-    text-shadow: 1px 1px #3c3c3c;
+    opacity: 1;
+    box-shadow: 2px 2px 2px #222;
+    text-shadow: 1px 1px #222;
 }
 
 .btn-fav:hover, .btn-fav:focus {
     background-color: #285e8e;
     border-color: white;
-    opacity: 0.9;
     outline: none;
 }
 
