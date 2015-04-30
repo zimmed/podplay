@@ -23,12 +23,12 @@
                     }
                     else if (e.which === 38) {
                         if (p.prevTrack()) {
-                            m = 'Skipped to next track';
+                            m = 'Skipped to previous track';
                         }
                     }
                     else if (e.which === 40) {
                         if (p.nextTrack()) {
-                            m = 'Skipped to previous track';
+                            m = 'Skipped to next track';
                         }
                     }
                     else if (e.which === 37) {
