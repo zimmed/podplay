@@ -76,6 +76,7 @@
                     else disable = false;
                     if (disable) e.preventDefault();
                     if (m) window.showNotification(m);
+                    m = '';
                 }
             });
         }
