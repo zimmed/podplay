@@ -1080,12 +1080,11 @@
                 }
                 else {
                     // Registration failed; ; Display message and highlight problems
-                    if (data.element) {
-                        $(data.element).addClass('error')
-                            .newTip(true, data.message, 'left')
-                            .data('emsg', data.message);
-                        $((data.element)[0]).focus();
-                    }
+                    if (!data.element) data.element = '#btn-register';
+                    $(data.element).addClass('error')
+                        .newTip(true, data.message, 'left')
+                        .data('emsg', data.message);
+                    $((data.element)[0]).focus();
                     // Enable form
                     form.prop("disabled", false);
                 }
@@ -1131,12 +1130,11 @@
                 }
                 else {
                     // Login failed; Display message and highlight problems
-                    if (data.element) {
-                        $(data.element).addClass('error')
-                            .newTip(true, data.message, 'left')
-                            .data('emsg', data.message);
-                        $((data.element)[0]).focus();
-                    }
+                    if (!data.element) data.element = '#btn-login';
+                    $(data.element).addClass('error')
+                        .newTip(true, data.message, 'left')
+                        .data('emsg', data.message);
+                    $((data.element)[0]).focus();
                     // Enable form
                     form.prop("disabled", false);
                 }
