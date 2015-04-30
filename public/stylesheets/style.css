@@ -375,13 +375,10 @@ legend {
 #account {
     display: inline;
     margin-right: 15px;
-<<<<<<< HEAD
-=======
     color: #245580;
     font-weight: bold;
     text-shadow: 0px 0px 5px #fff;
     letter-spacing: 0.1em;
->>>>>>> origin/develop
 }
 
 .error {
@@ -427,10 +424,6 @@ legend {
 
 .valid {
     background: rgba(0, 127, 255, 0.15) !important;
-}
-
-#account {
-    color: #aaa;
 }
 
 #sub-left-col {
