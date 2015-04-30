@@ -7,9 +7,9 @@ router.add(function () {
     var socket = this, id = this.id, s = this.request.session;
     if (s.user) {
         console.log(s.user.name + ' disconnected.');
-        users.getCurrentSocket(user, function () { }, function (socketID) {
+        users.getCurrentSocket(s.user, function () { }, function (socketID) {
             if (id === socketID) {
-                users.updateSocket(user, '');
+                users.updateSocket(s.user, '');
             }
         });
     }
