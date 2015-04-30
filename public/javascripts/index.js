@@ -158,7 +158,7 @@
     window.closeNotification = function (cb) {
         if ($('.notif').css('opacity') != 0) {
             clearTimeout(window.notifTH);
-            $('.notif').animate({'opacity': 0}, 750, function () {
+            $('.notif').animate({'opacity': 0}, 250, function () {
                 $('.notif').html('&nbsp;');
                 if (cb) cb();
             });
