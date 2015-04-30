@@ -177,7 +177,7 @@
     window.loadPodcast = function (id, div, force) {
         var parent = (typeof(div) === 'string') ? $(div) :
                 $(div).parent().parent(); // Containing panel
-        if (Number(id) === NaN) console.log('NaN: ' + id);
+        if (isNaN(Number(id))) console.log('NaN: ' + id);
         id = Number(id);
         if (window.PageStack.getPage() === Pages.PODCAST &&
             window.PageStack.getData().id === id) {

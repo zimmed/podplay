@@ -110,7 +110,6 @@
                 }
             },
             error: function (e) {
-                console.log(e);
                 this.header.loadError(this.playlist.getTrack());
                 this._showState('error');
             },
@@ -228,7 +227,6 @@
                 this.play();
             },
             skipTo: function (pos, force) {
-                console.log('Skip to: ' + pos);
                 if (force || this.playlist.getTrack()) this.audio.skipTo(pos);
             },
             skipAhead: function (sec) {
@@ -276,11 +274,9 @@
             },
             updateTime: function () {
                 var t = this.audio.getPosition();
-                console.log('Updating time: ' + t);
                 this._update({cTime: t});
             },
             updateIndex: function (index) {
-                console.log('Updating index: ' + index);
                 this._update({cIndex: index});
             },
             updateAdd: function (track, insert) {
