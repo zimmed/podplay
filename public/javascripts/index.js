@@ -74,6 +74,8 @@
     // Global variables for quicksearch interval handling
     window.searchBoxTH = null;
     window.lastTickSearch = "";
+    // Global notification timeout handler
+    window.notifTH = null;
     
     /**
      * Encode string with client key.
@@ -139,9 +141,11 @@
                 });
             }
             else {
-                $('.notif').animate({'opacity': 1}, 250, function () {
+                $('.notif').animate({'opacity': 1}, 500, function () {
                     $('.notif').html(msg);
                     if (cb) cb();
+                    clearTimeout(window.notifTH);
+                    window.notifTH = setTimeout(window.closeNotification, 5000);
                 });
             }
         }
@@ -153,7 +157,8 @@
      */
     window.closeNotification = function (cb) {
         if ($('.notif').css('opacity') != 0) {
-            $('.notif').animate({'opacity': 0}, 250, function () {
+            clearTimeout(window.notifTH);
+            $('.notif').animate({'opacity': 0}, 500, function () {
                 $('.notif').html('&nbsp;');
                 if (cb) cb();
             });
@@ -674,7 +679,6 @@
     function closeLoginForm (cb) {
         if ($('#login').css('display') != 'none') {
             dimmerFadeOut();
-            window.closeNotification();
             $('#login').animate({top: '-280px'}, 250, function () {
                 $('#login').css('display', 'none');
                 if (cb) cb();
@@ -709,7 +713,6 @@
     function closeRegisterForm (cb) {
         if ($('#register').css('display') != 'none') {
             dimmerFadeOut();
-            window.closeNotification();
             $('#register').animate({top: '-460px'}, 250, function () {
                 $('#register').css('display', 'none');
                 if (cb) cb();
@@ -1048,7 +1051,9 @@
             form.prop("disabled", true);
             // Cannot submit if no client key exists
             if (!window.KEY) {
-                //window.showNotification("An unexpected error occured.");
+                $('#btn-register').newTip(true,
+                                          "An unexpected error has occured.",
+                                          'left');
                 form.prop("disabled", false);
                 return;
             }
@@ -1064,19 +1069,22 @@
                 if (data.status === 200) {
                     // Registration successful; Enable and clear form
                     form.prop("disabled", false);
-                    $('#uname, #email, #pass1, #pass2').val('');
+                    $('#uname, #email, #pass1, #pass2').val('')
+                        .data('emsg', '').closeTip().removeClass('valid error');
+                    $('#btn-register').prop('disabled', true);
                     // Hide register form / Display login form
                     $('#btn-sup').css("display", "none");
                     $('#btn-sin').click();
                     $('#name').val(username);
-                    //window.showNotification(data.message);
+                    window.showNotification(data.message);
                 }
                 else {
                     // Registration failed; ; Display message and highlight problems
-                    //window.showNotification(data.message);
                     if (data.element) {
-                        $(element).addClas('error');
-                        $($(element)[0]).focus();
+                        $(data.element).addClass('error')
+                            .newTip(true, data.message, 'left')
+                            .data('emsg', data.message);
+                        $((data.element)[0]).focus();
                     }
                     // Enable form
                     form.prop("disabled", false);
@@ -1084,7 +1092,9 @@
             }).fail(function (obj, text, err) {
                 // Request failed; Enable form and display message.
                 form.prop("disabled", false);
-                //window.showNotification("Registration request failed.");
+                $('#btn-register').newTip(true,
+                                          "Registration request failed.",
+                                          'left');
             });
         });
         
@@ -1096,7 +1106,9 @@
             form.prop("disabled", true);
             // Cannot submit if no client key exists
             if (!window.KEY) {
-                //window.showNotification("An unexpected error occured.");
+                $('#btn-login').newTip(true,
+                                       "An unexpected error has occured.",
+                                       'left');
                 form.prop("disabled", false);
                 return;
             }
@@ -1104,11 +1116,14 @@
             username = $('#name').val();
             password = window.encode($('#pw').val());
             
-            $.post('/users/login', {name: username, pw: password}).done(function (data) {
+            $.post('/users/login', {name: username, pw: password})
+                    .done(function (data) {
                 if (data.status == 200) {
                     // Login succeeded; Enable and clear form
                     form.prop("disabled", false);
-                    $('#name, #pw').val('');
+                    $('#name, #pw').val('').removeClass('error valid')
+                        .closeTip().data('emsg', '');
+                    $('#btn-login').prop('disabled', true);
                     // Hide login form and sign in / register btns; Show sign out btn
                     $('#btn-sin, #btn-sup').css("display", "none");
                     $('#btn-logout, #account').css("display", "inline");
@@ -1116,10 +1131,11 @@
                 }
                 else {
                     // Login failed; Display message and highlight problems
-                    window.showNotification(data.message);
                     if (data.element) {
-                        $(element).addClas('error');
-                        $($(element)[0]).focus();
+                        $(data.element).addClass('error')
+                            .newTip(true, data.message, 'left')
+                            .data('emsg', data.message);
+                        $((data.element)[0]).focus();
                     }
                     // Enable form
                     form.prop("disabled", false);
@@ -1127,7 +1143,7 @@
             }).fail(function (obj, text, err) {
                 // Request failed; Enable form and display message.
                 form.prop("disabled", false);
-                //window.showNotification("Login request failed.");
+                $('#btn-login').newTip(true, "Login request failed.", 'left');
             });
         });
         
