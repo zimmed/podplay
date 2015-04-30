@@ -463,7 +463,7 @@
         }
         else if (!$('#name').hasClass('valid')) {
             // Username is valid
-            $('#name').addClass('valid').newTip(false, '').data('emsg', '');
+            $('#name').addClass('valid').newTip(false, '').data('emsg', '', 'left');
         }
         // Verify Password
         if (!p && !password.match(/^[^\s\'\;\\]{6,26}$/)) {
@@ -474,7 +474,7 @@
         else if (password.match(/^[^\s\'\;\\]{6,26}$/) &&
                  !$('#pw').hasClass('valid')) {
             // Password is valid
-            $('#pw').addClass('valid').newTip(false, '').data('emsg', '');
+            $('#pw').addClass('valid').newTip(false, '').data('emsg', '', 'left');
         }
         if (!p) {
             // Form is valid
@@ -493,7 +493,7 @@
             }
             else {
                 $('#name, #pw').removeClass('error valid')
-                    .newTip(false, '').data('emsg', '');
+                    .newTip(false, '', 'left').data('emsg', '');
             }
         }
     }
