@@ -330,9 +330,22 @@ legend {
     padding: 20px;
     border: none;
     display: none;
-    overflow: hidden;
+    overflow: visible;
     top: 50px;
     margin-top: 0px;
+}
+
+#login input .tooltip-inner,
+#register input .tooltip-inner {
+    background-color: orange;
+    color: black;
+    border: 2px solid #222;
+    font-weight: bold;
+}
+
+#login input .tooltip .tooltip-arrow,
+#register input .tooltip .tooltip-arrow {
+    border-color: #222;
 }
 
 #loader {

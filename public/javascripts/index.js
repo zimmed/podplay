@@ -48,6 +48,7 @@
             $(this).attr('data-original-title', title)
                 .tooltip(show);
         });
+        return $(this);
     };
     
     $.shuffle = function (a) {
@@ -449,33 +450,34 @@
      *  need specific details on what a valid input is.
      */
     function validLoginForm() {
-        var msg, p = '',
+        var m, msg, p = '',
             username = $('#name').val(),
             password = $('#pw').val();
         // Reset valid/invalid inputs
-        $('#name, #pw').removeClass('error valid');
+        //$('#name, #pw').removeClass('error valid');
         // Verify username
         if (!username.match(/^[a-zA-Z0-9\.]{5,26}$/)) {
             // Username is not valid
             msg = "Invalid username.";
             p = '#name';
         }
-        else {
+        else if (!$('#name').hasClass('valid')) {
             // Username is valid
-            $('#name').addClass('valid');
+            $('#name').addClass('valid').newTip(false, '').data('emsg', '');
         }
+        // Verify Password
         if (!p && !password.match(/^[^\s\'\;\\]{6,26}$/)) {
             // Username is valid and password is not valid
             msg = "Invalid password.";
             p = '#pw';
         }
-        else if (password.match(/^[^\s\'\;\\]{6,26}$/)) {
+        else if (password.match(/^[^\s\'\;\\]{6,26}$/) &&
+                 (!$('#pw').hasClass('valid')) {
             // Password is valid
-            $('#pw').addClass('valid');
+            $('#pw').addClass('valid').newTip(false, '').data('emsg', '');
         }
         if (!p) {
             // Form is valid
-            window.closeNotification();
             $('#btn-login').prop('disabled', false);
         }
         else {
@@ -483,11 +485,15 @@
             $('#btn-login').prop('disabled', true);
             if ($(p).val()) {
                 // For login form, don't show error if field is empty.
-                window.showNotification(msg);
-                $(p).addClass('error');
+                m = $(p).data('emsg');
+                if (m !== msg) {
+                    $(p).addClass('error').newTip(true, msg, 'left')
+                        .data('emsg', msg);
+                }
             }
             else {
-                window.closeNotification();
+                $('#name, #pw').removeClass('error valid')
+                    .newTip(false, '').data('emsg', '');
             }
         }
     }
@@ -570,13 +576,13 @@
         }
         if (!p) {
             // Form is valid
-            window.closeNotification();
+            //window.closeNotification();
             $('#btn-register').prop('disabled', false);
         }
         else {
             // Form is not valid
             $('#btn-register').prop('disabled', true);
-            window.showNotification(msg);
+            //window.showNotification(msg);
             $(p).addClass('error');
         }
     }
@@ -1035,7 +1041,7 @@
             form.prop("disabled", true);
             // Cannot submit if no client key exists
             if (!window.KEY) {
-                window.showNotification("An unexpected error occured.");
+                //window.showNotification("An unexpected error occured.");
                 form.prop("disabled", false);
                 return;
             }
@@ -1056,11 +1062,11 @@
                     $('#btn-sup').css("display", "none");
                     $('#btn-sin').click();
                     $('#name').val(username);
-                    window.showNotification(data.message);
+                    //window.showNotification(data.message);
                 }
                 else {
                     // Registration failed; ; Display message and highlight problems
-                    window.showNotification(data.message);
+                    //window.showNotification(data.message);
                     if (data.element) {
                         $(element).addClas('error');
                         $($(element)[0]).focus();
@@ -1071,7 +1077,7 @@
             }).fail(function (obj, text, err) {
                 // Request failed; Enable form and display message.
                 form.prop("disabled", false);
-                window.showNotification("Registration request failed.");
+                //window.showNotification("Registration request failed.");
             });
         });
         
@@ -1083,7 +1089,7 @@
             form.prop("disabled", true);
             // Cannot submit if no client key exists
             if (!window.KEY) {
-                window.showNotification("An unexpected error occured.");
+                //window.showNotification("An unexpected error occured.");
                 form.prop("disabled", false);
                 return;
             }
@@ -1114,7 +1120,7 @@
             }).fail(function (obj, text, err) {
                 // Request failed; Enable form and display message.
                 form.prop("disabled", false);
-                window.showNotification("Login request failed.");
+                //window.showNotification("Login request failed.");
             });
         });
         
