@@ -463,19 +463,22 @@
             // Username is not valid
             msg = "Invalid username.";
             p = '#name';
+            $(p).removeClass('valid');
         }
         else if (!$('#name').hasClass('valid')) {
             // Username is valid
             $('#name').addClass('valid').newTip(false, ' ').data('emsg', '');
         }
         // Verify Password
-        if (!p && !password.match(/^[^\s\'\;\\]{6,26}$/)) {
+        if (!password.match(/^[^\s\'\;\\]{6,26}$/)) {
             // Username is valid and password is not valid
-            msg = "Invalid password.";
-            p = '#pw';
+            if (!p) {
+                msg = "Invalid password.";
+                p = '#pw';
+            }
+            $('#pw').removeClass('valid');
         }
-        else if (password.match(/^[^\s\'\;\\]{6,26}$/) &&
-                 !$('#pw').hasClass('valid')) {
+        else if (!$('#pw').hasClass('valid')) {
             // Password is valid
             $('#pw').addClass('valid').newTip(false, ' ').data('emsg', '');
         }
