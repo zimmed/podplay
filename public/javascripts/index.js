@@ -463,7 +463,7 @@
         }
         else if (!$('#name').hasClass('valid')) {
             // Username is valid
-            $('#name').addClass('valid').newTip(false, '', 'left').data('emsg', '',);
+            $('#name').addClass('valid').newTip(false, '', 'left').data('emsg', '');
         }
         // Verify Password
         if (!p && !password.match(/^[^\s\'\;\\]{6,26}$/)) {
