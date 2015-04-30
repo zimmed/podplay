@@ -402,6 +402,7 @@ legend {
 }
 
 .notif {
+    z-index: 5;
     position: fixed;
     bottom: 10px;
     left: 50%;

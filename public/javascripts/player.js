@@ -2,7 +2,7 @@
     'use strict';
     
     $.fn.addPlayer = function (preload) {
-        var p;
+        var p, m;
         if ($(this).length !== 1) {
             throw new Error('Cannot instantiate player on ' +
                             'multiple/null selector');
@@ -13,16 +13,60 @@
             $(document).keydown(function (e) {
                 var disable = true;
                 if (!$(e.target).is('input')) {
-                    if (e.which === 32) p.playPause(); 
-                    else if (e.which === 38) p.prevTrack();
-                    else if (e.which === 40) p.nextTrack();
-                    else if (e.which === 37) p.skipBack(15);
-                    else if (e.which === 39) p.skipAhead(30);
-                    else if (e.which === 77) p.toggleMute(); 
-                    else if (e.which === 187) p.incVol(); 
-                    else if (e.which === 189) p.decVol();
-                    else if (e.which === 67) p.toggleCont();
-                    else if (e.which === 82) p.toggleRep(); 
+                    if (e.which === 32) {
+                        if (p.playPause()) {
+                            if (p._isState('play')) {
+                               m = 'Resumed play';
+                            }
+                            else m = 'Paused';
+                        }
+                    }
+                    else if (e.which === 38) {
+                        if (p.prevTrack()) {
+                            m = 'Skipped to next track';
+                        }
+                    }
+                    else if (e.which === 40) {
+                        if (p.nextTrack()) {
+                            m = 'Skipped to previous track';
+                        }
+                    }
+                    else if (e.which === 37) {
+                        p.skipBack(15);
+                    }
+                    else if (e.which === 39) {
+                        p.skipAhead(30);
+                    }
+                    else if (e.which === 77) {
+                        if (p.toggleMute()) {
+                            m = 'Muted volume';
+                        }
+                        else m = 'Unmuted volume';
+                    }
+                    else if (e.which === 187) {
+                        if (p.incVol()) {
+                            m = 'Volume up';
+                        }
+                        else m = 'Volume at max';
+                    }
+                    else if (e.which === 189) {
+                        if (p.decVol()) {
+                            m = 'Volume down';
+                        }
+                        else m = 'Volume muted';
+                    }
+                    else if (e.which === 67) {
+                        if (p.toggleCont()) {
+                            m = 'Continuous play mode';
+                        }
+                        else m = 'Non-continuous play mode';
+                    }
+                    else if (e.which === 82) {
+                        if (p.toggleRepeat()) {
+                            m = 'Repeat play mode';
+                        }
+                        else m = 'Non-repeat play mode';
+                    }
                     else if (e.which === 83) {
                         if (window.PageStack.getPage() !== 'index') {
                             window.PageStack.load('index', false, '/');
@@ -31,6 +75,7 @@
                     }
                     else disable = false;
                     if (disable) e.preventDefault();
+                    if (m) window.showNotification(m);
                 }
             });
         }
@@ -179,6 +224,8 @@
                 else if (this._isState('pause')) {
                     player.play();
                 }
+                else return false;
+                return true;
             },
             play: function () {
                 if (this.playlist.getTrack()) {
@@ -213,18 +260,20 @@
                 this.audio.reset();
             },
             nextTrack: function (noplay) {
-                if (this.playlist.count() === 0) return;
+                if (this.playlist.count() === 0) return false;
                 var t = this.playlist.next();
                 if (t === -1) t = 0;
                 this.load(t);
                 if (!noplay) this.play();
+                return true;
             },
             prevTrack: function () {
-                if (this.playlist.count() === 0) return;
+                if (this.playlist.count() === 0) return false;
                 var t = this.playlist.prev();
                 if (t === -1) t = this.playlist.count() - 1;
                 this.load(t);
                 this.play();
+                return true;
             },
             skipTo: function (pos, force) {
                 if (force || this.playlist.getTrack()) this.audio.skipTo(pos);
@@ -238,10 +287,12 @@
             toggleRepeat: function () {
                 this._rep = !this._rep;
                 this.updateOpts(undefined, this._rep);
+                return this._rep;
             },
             toggleCont: function () {
                 this._cont = !this._cont;
                 this.updateOpts(this._cont, undefined);
+                return this._cont;
             },
             isModeRep: function () {
                 return this._rep;
@@ -255,18 +306,21 @@
             incVol: function () {
                 var v = this.audio.getVolume() + 0.1;
                 if (v > 1.0) v = 1;
-                if (v === this.audio.getVolume()) return;
+                if (v === this.audio.getVolume()) return false;
                 this.audio.updateVolume(v);
+                return true;
             },
             decVol: function () {
                 var v = this.audio.getVolume() - 0.1;
                 if (v < 0.0) v = 0;
-                if (v === this.audio.getVolume()) return;
+                if (v === this.audio.getVolume()) return false;
                 this.audio.updateVolume(v);
+                return true;
             },
             toggleMute: function () {
                 this.audio.toggleMute();
                 this.updateVolume();
+                return (this.audio.getVolume() === 0);
             },
             updateVolume: function (v) {
                 if (typeof(v) === 'undefined') v = this.audio.getVolume();
