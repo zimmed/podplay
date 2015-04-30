@@ -492,7 +492,8 @@
                 }
             }
             else {
-                $('#name, #pw').removeClass('error valid')
+                // Problem field is empty. Don't report problem.
+                $('#name, #pw').removeClass('error')
                     .newTip(false, ' ', 'left').data('emsg', '');
             }
         }
