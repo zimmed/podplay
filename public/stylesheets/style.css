@@ -345,7 +345,7 @@ legend {
 
 #login .tooltip .tooltip-arrow,
 #register .tooltip .tooltip-arrow {
-    border-color: #222;
+    border-right-color: #222;
 }
 
 #loader {
