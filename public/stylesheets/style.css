@@ -6,11 +6,10 @@
 
 
 body {
-    background: #fafafa;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
-    background-color: #000 !important;
-    background-image: url('bright-squares.png') !important;
+    background-color: #111 !important;
+    background-image: url('dark-mosaic.png') !important;
 }
 
 a {
