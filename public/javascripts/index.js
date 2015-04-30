@@ -472,7 +472,7 @@
             p = '#pw';
         }
         else if (password.match(/^[^\s\'\;\\]{6,26}$/) &&
-                 (!$('#pw').hasClass('valid')) {
+                 !$('#pw').hasClass('valid')) {
             // Password is valid
             $('#pw').addClass('valid').newTip(false, '').data('emsg', '');
         }
