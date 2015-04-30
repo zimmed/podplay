@@ -1081,7 +1081,7 @@
                 else {
                     // Registration failed; ; Display message and highlight problems
                     if (!data.element) data.element = '#btn-register';
-                    $(data.element).addClass('error')
+                    $(data.element).removeClass('valid').addClass('error')
                         .newTip(true, data.message, 'left')
                         .data('emsg', data.message);
                     $((data.element)[0]).focus();
@@ -1131,7 +1131,7 @@
                 else {
                     // Login failed; Display message and highlight problems
                     if (!data.element) data.element = '#btn-login';
-                    $(data.element).addClass('error')
+                    $(data.element).removeClass('valid').addClass('error')
                         .newTip(true, data.message, 'left')
                         .data('emsg', data.message);
                     $((data.element)[0]).focus();
