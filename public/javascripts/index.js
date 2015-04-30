@@ -36,19 +36,21 @@
      */
     $.fn.newTip = function (show, title, placement) {
         $(this).each(function () {
-            var t = $(this).attr('data-original-title');
-            if (title && t !== title) $(this).tooltip('destroy');
-            if (title === ' ') return;
-            show = (show) ? 'show' : false;
+            show = (show) ? 'show' : undefined;
+            if (!placement) placement = 'top';
             if (!title) title = $(this).attr('title');
             if ($(this).attr('data-toggle') !== 'tooltip') {
                 $(this).attr('data-toggle', 'tooltip');
+                    .attr('data-placement', placement);
             }
-            if (placement) {
-                $(this).attr('data-placement', placement);
-            }
-            $(this).attr('data-original-title', title);
-            $(this).tooltip(show);
+            $(this).attr('data-original-title', title).tooltip(show);
+        });
+        return $(this);
+    };
+    
+    $.fn.closeTip = function () {
+        $(this).each(function () {
+            $(this).tooltip('destroy');
         });
         return $(this);
     };
