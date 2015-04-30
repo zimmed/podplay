@@ -466,7 +466,7 @@
         }
         else if (!$('#name').hasClass('valid')) {
             // Username is valid
-            $('#name').addClass('valid').newTip(false, ' ').data('emsg', '');
+            $('#name').addClass('valid').closeTip().data('emsg', '');
         }
         // Verify Password
         if (!password.match(/^[^\s\'\;\\]{6,26}$/)) {
@@ -479,7 +479,7 @@
         }
         else if (!$('#pw').hasClass('valid')) {
             // Password is valid
-            $('#pw').addClass('valid').newTip(false, ' ').data('emsg', '');
+            $('#pw').addClass('valid').closeTip().data('emsg', '');
         }
         if (!p) {
             // Form is valid
@@ -498,8 +498,7 @@
             }
             else {
                 // Problem field is empty. Don't report problem.
-                $('#name, #pw').removeClass('error')
-                    .newTip(false, ' ').data('emsg', '');
+                $('#name, #pw').removeClass('error').closeTip().data('emsg', '');
             }
         }
     }
@@ -534,7 +533,7 @@
         }
         else {
             // Username is valid
-            $('#uname').addClass('valid').newTip(false, ' ').data('emsg', '');
+            $('#uname').addClass('valid').closeTip().data('emsg', '');
         }
         
         if (!p && !emailadd) {
@@ -551,7 +550,7 @@
         }
         else if (emailadd.match(/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i)) {
             // Email is valid
-            $('#email').addClass('valid').newTip(false, ' ').data('emsg', '');
+            $('#email').addClass('valid').closeTip().data('emsg', '');
         }
         
         if (!p && !password) {
@@ -571,7 +570,7 @@
         }
         else if (password.match(/^[^\s\'\;\\]{6,26}$/)) {
             // Pass is valid
-            $('#pass1').addClass('valid').newTip(false, ' ').data('emsg', '');
+            $('#pass1').addClass('valid').closeTip().data('emsg', '');
         }
         if (!p && password !== passconf) {
             // Form is valid so far AND confirm-pass does not match
@@ -580,7 +579,7 @@
         }
         else if (passconf && password === passconf) {
             // Passwords match
-            $('#pass2').addClass('valid').newTip(false, ' ').data('emsg', '');
+            $('#pass2').addClass('valid').closeTip().data('emsg', '');
         }
         if (!p) {
             // Form is valid
@@ -589,12 +588,9 @@
         else {
             // Form is not valid
             $('#btn-register').prop('disabled', true);
-            //window.showNotification(msg);
             if ($(p).data('emsg') !== msg) {
-                $(p).addClass('error').newTip(true, msg, 'left')
-                    .data('emsg', msg);
+                $(p).addClass('error').newTip(true, msg, 'left').data('emsg', msg);
             }
-            
         }
     }
     
