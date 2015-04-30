@@ -444,7 +444,7 @@
                 poster.off('click');
                 if (!pid) {
                     this._dom.find('.noimg').css('display', 'block');
-                    poster.newTip(false, ' ');
+                    poster.closeTip();
                 }
                 else {
                     poster.css('cursor', 'pointer');
