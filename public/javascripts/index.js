@@ -141,8 +141,8 @@
                 });
             }
             else {
-                $('.notif').animate({'opacity': 1}, 500, function () {
-                    $('.notif').html(msg);
+                $('.notif').html(msg);
+                $('.notif').animate({'opacity': 1}, 250, function () {
                     if (cb) cb();
                     clearTimeout(window.notifTH);
                     window.notifTH = setTimeout(window.closeNotification, 5000);
@@ -158,7 +158,7 @@
     window.closeNotification = function (cb) {
         if ($('.notif').css('opacity') != 0) {
             clearTimeout(window.notifTH);
-            $('.notif').animate({'opacity': 0}, 500, function () {
+            $('.notif').animate({'opacity': 0}, 750, function () {
                 $('.notif').html('&nbsp;');
                 if (cb) cb();
             });
