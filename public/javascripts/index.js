@@ -40,8 +40,8 @@
             if (!placement) placement = 'top';
             if (!title) title = $(this).attr('title');
             if ($(this).attr('data-toggle') !== 'tooltip') {
-                $(this).attr('data-toggle', 'tooltip');
-                    .attr('data-placement', placement);
+                $(this).attr('data-toggle', 'tooltip')
+                       .attr('data-placement', placement);
             }
             $(this).attr('data-original-title', title).tooltip(show);
         });
