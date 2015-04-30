@@ -60,7 +60,8 @@ router.post('/register', function (req, res, next) {
             function (error, msg) {
                 // Registration unsuccessful; error and message passed back
                 if (error.err) console.log(error.err);
-                res.json({message: msg, error: error, status: error.status});
+                res.json({message: msg, element: error.element,
+                          error: error, status: error.status});
             },
             function (user) {
                 // Registration successful; username passed back
@@ -119,6 +120,7 @@ router.post('/login', function (req, res, next) {
                 // Login unsuccessful; error and message passed back.
                 if (error.err) console.log(error.err);
                 res.json({message: msg,
+                          element: error.element,
                           error: error,
                           status: error.status});
             },
