@@ -456,8 +456,6 @@
         var m, msg, p = '',
             username = $('#name').val(),
             password = $('#pw').val();
-        // Reset valid/invalid inputs
-        //$('#name, #pw').removeClass('error valid');
         // Verify username
         if (!username.match(/^[a-zA-Z0-9\.]{5,26}$/)) {
             // Username is not valid
@@ -516,7 +514,7 @@
             password = $('#pass1').val(),
             passconf = $('#pass2').val();
         // Reset valid/invalid inputs
-        $('#uname, #email, #pass1, #pass2').removeClass('error valid');
+        $('#uname, #email, #pass1, #pass2').removeClass('valid');
         // Verify Username
         if (!username) {
             // Username is empty
@@ -535,8 +533,9 @@
         }
         else {
             // Username is valid
-            $('#uname').addClass('valid');
+            $('#uname').addClass('valid').newTip(false, ' ').data('emsg', '');
         }
+        
         if (!p && !emailadd) {
             // Form is valid so far AND email is empty
             msg = "Please enter your email address.";
@@ -551,8 +550,9 @@
         }
         else if (emailadd.match(/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i)) {
             // Email is valid
-            $('#email').addClass('valid');
+            $('#email').addClass('valid').newTip(false, ' ').data('emsg', '');
         }
+        
         if (!p && !password) {
             // Form is valid so far AND pass is empty
             msg = "Please create a password.";
@@ -570,7 +570,7 @@
         }
         else if (password.match(/^[^\s\'\;\\]{6,26}$/)) {
             // Pass is valid
-            $('#pass1').addClass('valid');
+            $('#pass1').addClass('valid').newTip(false, ' ').data('emsg', '');
         }
         if (!p && password !== passconf) {
             // Form is valid so far AND confirm-pass does not match
@@ -579,18 +579,21 @@
         }
         else if (passconf && password === passconf) {
             // Passwords match
-            $('#pass2').addClass('valid');
+            $('#pass2').addClass('valid').newTip(false, ' ').data('emsg', '');
         }
         if (!p) {
             // Form is valid
-            //window.closeNotification();
             $('#btn-register').prop('disabled', false);
         }
         else {
             // Form is not valid
             $('#btn-register').prop('disabled', true);
             //window.showNotification(msg);
-            $(p).addClass('error');
+            if ($(p).data('emsg') !== msg) {
+                $(p).addClass('error').newTip(true, msg, 'left')
+                    .data('emsg', msg);
+            }
+            
         }
     }
     

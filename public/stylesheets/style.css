@@ -385,6 +385,7 @@ legend {
 #register .btn{
     position: relative;
     float: right;
+    margin-top: 10px;
 }
 
 .btn[disabled] {
