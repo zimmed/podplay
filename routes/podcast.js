@@ -8,7 +8,12 @@
 var express = require('express');
 var router = express.Router();
 
-// Preload podcast view
+/**
+ * @expressRoute /podcast/<podcast_id>/* - Load website with preloaded podcast
+        feed view request.
+ * @render
+ *  @always `index.jade`
+ */
 router.get('/:id/:title?', function (req, res, next) {
     var id = req.params.id;
     res.render('index', {user: req.session.user,
