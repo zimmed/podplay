@@ -1,4 +1,8 @@
 // Modified by Dave Zimmelman & Ian McGaunn for Podplay.me
+// Last modified: 28 Apr 15
+// Note: AUDIOJS IS SH*T - DONT USE IT
+
+// Original source: http://kolber.github.io/audiojs/
 
 // A cross-browser javascript shim for html5 audio
 (function(audiojs, audiojsInstance, container) {
