@@ -1,7 +1,7 @@
 /**
  * index.js - Main library for index page/view.
  * Authors: Ian McGaunn; Dave Zimmelman
- * Modified: 19 Apr 15
+ * Modified: 30 Apr 15
  */
 (function (window, $) {
     'use strict';
@@ -48,6 +48,9 @@
         return $(this);
     };
     
+    /**
+     * Close bootstrap tooltip.
+     */
     $.fn.closeTip = function () {
         $(this).each(function () {
             $(this).tooltip('destroy');
@@ -55,6 +58,9 @@
         return $(this);
     };
     
+    /**
+     * Shuffle array.
+     */
     $.shuffle = function (a) {
         for (var j, x, i = a.length; i;
             j = parseInt(Math.random() * i), x = a[--i], a[i] = a[j], a[j] = x);
@@ -1193,26 +1199,51 @@
             // Else, index or unrecognize was requested. Stay here.
         });
         
+        
         /**
-         * Establish SocketStream connection.
+         * SOCKET.IO CLIENT_SIDE HANDLING
          */
+        
+        // Establish new socket connection.
         window.socket = io();
+        // Add `ready` listener, as expected from server `connect` handler.
         window.socket.on('ready', function (force) {
+            // Force set to true when user logged in.
+            // Retrieve playlist data from session or user.
             if (force) window.socket.emit('playlist', {forceGet: true});
             else window.socket.emit('playlist');
         });
+        // Add `playlist-data-response` listener, as expected from
+        //  `playlist` handler.
         window.socket.on('playlist-data-response', function (data) {
             var options = (data.list && data.list.length > 0) ? data : false;
             window.player = $("#right-col").addPlayer(options);
         });
+        // Add `disconnected` handler for the server to disconnect the
+        //  client's socket connection, when logged in from elsewhere.
         window.socket.on('disconnected', function (otherid) {
-            window.showNotification('You have been disconnected from this session.');
+            // Notify user
+            //  TODO: Add better notification process so user is always
+            //      aware that they are disconnected from a session.
+            //  TODO: Perhaps, allow the user to decide whether or not
+            //      to allow the new session to disconnect the old.
+            //      (future feature).
+            window.showNotification('You have been disconnected from this' +
+                                    ' session.');
+            // Update current time before disconnecting.
             window.player.updateTime();
+            // Handle the expected `pl-update-current-finish` event emitted
+            //      from the server's `playlist` event handler for updating
+            //      the current time.
             window.socket.on('pl-update-current-finish', function () {
+                // Allow server to handle forced disconnection.
                 window.socket.emit('disconnect', {sid: otherid});
-                window.socket.disconnect();
+                // If not already disconnected, disconnect.
+                if (!window.socket.disconnected) window.socket.disconnect();
             });
         });
+        // Update current time and volume level when a user attempts to
+        //      leave the site.
         window.onbeforeunload = function (e) {
             window.player.updateTime();
             window.player.updateVolume();
