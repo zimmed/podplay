@@ -2,13 +2,18 @@
  * routes/search.js - Defines route to /search URL
  *
  * Authors: Ian McGaunn; Dave Zimmelman
- * Modified: 22 Apr 15
+ * Modified: 30 Apr 15
  */
 
 var express = require('express');
 var router = express.Router();
 
-// Preload search results
+/**
+ * @expressRoute /search/<search_term> - Load website with preloaded search
+        view request and data.
+ * @render
+ *  @always `index.jade`
+ */
 router.get('/:term?', function (req, res, next) {
     // Check that param exists
     if (!req.params.hasOwnProperty('term')) {
