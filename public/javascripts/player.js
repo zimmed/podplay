@@ -1,19 +1,40 @@
+/**
+ * player.js - Audioplayer container for Podplay.me
+ * Authors: Ian McGaunn; Dave Zimmelman
+ * Modified: 30 Apr 15
+ */
+
+/**
+ * Requires jQuery and AudioJS libraries
+ */
 (function (window, $, audiojs) {
     'use strict';
     
+    /**
+     * $(...).addPlayer - Attach audioplayer to DOM element.
+     * @param {Object} preload - Optional preload playlist data.
+     * @return {Player} - The generated Player instance.
+     */
     $.fn.addPlayer = function (preload) {
         var p, m;
         if ($(this).length !== 1) {
+            // jQuery selector grabs more than one element.
             throw new Error('Cannot instantiate player on ' +
                             'multiple/null selector');
         }
         if (!$(this).data('js-player')) {
+            // No player exists for this element. Create and attach.
             p = new Player($(this), preload);
             $(this).data('js-player', p);
+            // Player keyhandlers
             $(document).keydown(function (e) {
                 var disable = true;
+                // Ignore if modifier key is pressed.
+                if (e.altKey || e.ctrlKey || e.shiftKey) return;
+                // Ignore if target element is an input field.
                 if (!$(e.target).is('input')) {
                     if (e.which === 32) {
+                        // Key: SPACEBAR - Pause/Play
                         if (p.playPause()) {
                             if (p._isState('play')) {
                                m = 'Resumed play';
@@ -22,52 +43,62 @@
                         }
                     }
                     else if (e.which === 38) {
+                        // Key: UP ARROW - Previous Track.
                         if (p.prevTrack()) {
                             m = 'Skipped to previous track';
                         }
                     }
                     else if (e.which === 40) {
+                        // Key: DOWN ARROW - Next Track.
                         if (p.nextTrack()) {
                             m = 'Skipped to next track';
                         }
                     }
                     else if (e.which === 37) {
+                        // Key: LEFT ARROW - Skip back 15 seconds.
                         p.skipBack(15);
                     }
                     else if (e.which === 39) {
+                        // Key: RIGHT ARROW - Skip ahead 30 seconds.
                         p.skipAhead(30);
                     }
                     else if (e.which === 77) {
+                        // Key: `M` - Mute/Unmute volume.
                         if (p.toggleMute()) {
                             m = 'Muted volume';
                         }
                         else m = 'Unmuted volume';
                     }
                     else if (e.which === 187) {
+                        // Key: `+` - Increase volume by 10%.
                         if (p.incVol()) {
                             m = 'Volume up';
                         }
                         else m = 'Volume at max';
                     }
                     else if (e.which === 189) {
+                        // Key: `-` - Decrease volume by 10%.
                         if (p.decVol()) {
                             m = 'Volume down';
                         }
                         else m = 'Volume muted';
                     }
                     else if (e.which === 67) {
+                        // Key: `C` - Toggle continuous play mode.
                         if (p.toggleCont()) {
                             m = 'Continuous play mode';
                         }
                         else m = 'Non-continuous play mode';
                     }
                     else if (e.which === 82) {
+                        // Key: `R` - Toggle repeat play mode.
                         if (p.toggleRepeat()) {
                             m = 'Repeat play mode';
                         }
                         else m = 'Non-repeat play mode';
                     }
                     else if (e.which === 83) {
+                        // Key: `S` - Begin quicksearch
                         if (window.PageStack.getPage() !== 'index') {
                             window.PageStack.load('index', false, '/');
                         }
@@ -83,7 +114,35 @@
         return $(this).data('js-player');
     };
     
-    var Track = function (src, title, p_title, dur, poster_src, pod_id, date, last_pos, played) {
+    
+    /**
+     * Track - Pseudoclass for Track data.
+     *
+     * @constructor
+     *  @param {String} src - The audio-file source.
+     *  @param {String} title - The title of the track.
+     *  @param {String} p_title - The title of the podcast feed.
+     *  @param {String} dur - The duration of the track.
+     *  @param {String} poster_src - Link to the podcast poster.
+     *  @param {Number} pod_id - The podcast ID.
+     *  @param {String} date - The release date.
+     *  @param {Number} last_pos? - The last-listened position.
+     *  @param {Bool} played? - Flag that reflects whether the track
+     *      has already been listened to.
+     *
+     * @property {String} src -> src
+     * @property {String} title -> title
+     * @property {String} duration -> dur
+     * @property {String} poster -> poster_src
+     * @property {Number} podcast -> pod_id
+     * @property {String} p_title -> p_title
+     * @property {String} date -> date
+     * @property {Number} last_pos -> last_pos || 0
+     * @property {Number} played -> played || false
+     */
+    var Track = function (src, title, p_title, dur,
+                          poster_src, pod_id, date,
+                          last_pos, played) {
         return {
             src: src,
             title: title,
@@ -97,6 +156,14 @@
         };
     };
 
+    /**
+     * TrackElement:jQueryObject - Pseudoclass for list item containing
+     *      track data.
+     *
+     * @constructor
+     *  @param {Track} track - The Track instance to use for generating
+     *      the data.
+     */
     var TrackElement = function (track) {
         var el = $('<li><div class="pl-btn-del">' +
                    '<span aria-hidden="true"' +
@@ -107,12 +174,85 @@
                    '</div></li>');
         return el;       
     };
-    
-    var PlayMode = {
-        continue: 0x01,
-        repeat: 0x02
-    };
 
+    /**
+     * Player - Pseudoclass for audioplayer manager
+     *
+     * @constructor
+     *  @param {Mixed} parentElement - The selector or jQueryObject
+     *      to which the player will be attached.
+     *  @param {Object} preload - Optional playlist data with which to
+     *      pre-populate the player.
+     *
+     * @property {Header} header - The audio player's Header instance.
+     * @property {AudioPlayer} audio - The audio player's AudioPlayer
+     *      instance.
+     * @property {PlayList} playlist - The audio player's PlayList
+     *      instance.
+     * @property {Object} States - Static map for CSS class states.
+     *      @property {String} play
+     *      @property {String} pause
+     *      @property {String} load
+     *      @property {String} error
+     * 
+     * @method {} init ({Object}) - Initialize the Player.
+     * @method {} error ({Error}) - Handle audiojs errors.
+     * @method {} load ({Number}) - Load given index into player.
+     * @method {} unload () - Remove any active track from player.
+     * @method {} add ({String}, {String}, {String}, {String}, {String},
+     *      {Number}, {String}) - Add track from constructing data to end
+     *      of playlist.
+     * @method {} delete ({Number}) - Remove the indexed song from the
+     *      the playlist.
+     * @method {} addAndPlay ({String}, {String}, {String}, {String},
+     *      {String}, {Number}, {String}) - Insert track from constructing
+     *      data at the beginning of the playlist and play it.
+     * @method {} stop () - Pause and reset time of current track.
+     * @method {Bool} playPause () - Play or pause the track depending on
+     *      current state, and return true if the state changed.
+     * @method {} play () - Play the current track.
+     * @method {} pause () - Pause the current track.
+     * @method {} trackFinished () - Handle the event of a track completing
+     *      play.
+     * @method {} reset () - Skip to 0 seconds on the current track.
+     * @method {Bool} nextTrack () - Skip to the next track in the playlist
+     *      and return true, or return false if no next track.
+     * @method {Bool} prevTrack () - Skip to the previous track in the play-
+     *      list and return true, or return false if no previous track.
+     * @method {} skipTo ({Number}) - Skip to specified number of seconds on
+     *      the current track.
+     * @method {} skipBack ({Number}) - Skip backwards the specified number
+     *      of seconds in the play-time of the current track.
+     * @method {} skipAhead ({Number}) - Skip forward the specified number
+     *      of seconds in the play-time of the current track.
+     * @method {Bool} toggleRepeat () - Toggle the repeat-play flag and
+     *      return it.
+     * @method {Bool} toggleCont () - Toggle the continuous-play flag and
+     *      return it.
+     * @method {Bool} isModeRep () - Get the current repeat-play flag val.
+     * @method {Bool} isModeCont () - Get the current continous-play flag val.
+     * @method {} setVol ({Float}) - Sets the audioplayer volume.
+     * @method {Bool} incVol () - Increment the volume by 10% and return
+     *      whether or not the volume changed.
+     * @method {Bool} decVol () - Decrement the volume by 10% and return
+     *      whether or not the volume changed.
+     * @method {Bool} toggleMute () - Mute or unmute the audioplayer volume
+     *      and return true if muted, false if not.
+     * @method {} updateVolume ({Float?}) - Update the volume in the session
+     *      to the value supplied, or if undefined, the current volume.
+     * @method {} updateTime () - Update the currentTime value of the session
+     *      playlist to the currentTime of the loaded track.
+     * @method {} updateIndex ({Number}) - Update the current track index of
+     *      the session playlist to the specified index.
+     * @method {} updateAdd ({Track}, {Bool?}) - Add new track to the session
+     *      playlist. (If optional second arg is true, insert it, otherwise
+     *      append it).
+     * @method {} updateDel ({Number}, {Number?}) - Delete specified first
+     *      index from the session playlist, and optionally set the current
+     *      index with the second Number arg.
+     * @method {} updateOpts ({Bool?}, {Bool?}) - Update the continuous and
+     *      repeat play modes in the playlist session options.
+     */
     var Player = function (parentElement, preload) {
         if (!preload) preload = {opts: {}, cPtr: 0, cTime: 0, list: []};
         var lcount = preload.list.length;
@@ -372,6 +512,15 @@
         return P;
     };
 
+    /**
+     * Header - The audioplayer header pseudoclass.
+     *
+     * @method {} init () - Initiliaze the header.
+     * @method {} load ({Track?}) - Load track data into header, or unload if
+     *      no track provided.
+     * @method {} loadError ({Track}) - Load track data but notify to the user
+     *      that an error occured when loading the audio source.
+     */
     var Header = function () {
         var H = {
             _dom: $('<div class="player-header">' +
@@ -399,7 +548,6 @@
             init: function () {
                 this._unload();
             },
-
             load: function (track) {
                 if (!track) this._unload();
                 else {
@@ -408,20 +556,18 @@
                     this._insertInfo(track.p_title, track.date, track.duration);
                 }
             },
-            
             loadError: function (track) {
                 this._insertTitle("Error loading audio data for track: " +
                                   track.title);
                 this._insertImage(track.poster, track.podcast);
                 this._insertInfo(track.p_title, track.date, track.duration);
             },
-
+            
             _unload: function () {
                 this._insertTitle("No track selected.");
                 this._insertImage('');
                 this._insertInfo();
             },
-            
             _insertInfo: function (p_title, date, duration) {
                 var a, ps = this._dom.find('.deets p');
                 if (!p_title) {
@@ -438,7 +584,6 @@
                     $(ps[2]).html('Popularity Index: <em>' + 'N/A' + '</em>');
                 }
             },
-            
             _insertImage: function (url, pid) {
                 var poster = this._dom.find('.poster');
                 poster.off('click');
@@ -456,7 +601,6 @@
                 }
                 poster.attr('src', url);
             },
-            
             _insertTitle: function (msg) {
                 this._dom.find('.titlebar').marquee('destroy').html(msg).marquee({
                     duration: this._marquee_speed,
@@ -470,6 +614,37 @@
         return H;
     };
 
+    /**
+     * AudioPlayer - Pseudoclass for the audioplayer container.
+     * @wrapper {AudioJSInstance}
+     *
+     * @method {} init ({Player}, {Float?}) - Initialize the object with the
+     *      parent Player instance, and an optional volume preset.
+     * @method {} load ({String}) - Load the specified path to an audio file
+     *      into the player.
+     * @method {} play () - Play or resume-play for the current track.
+     * @method {} pause () - Pause the current track.
+     * @method {} playPause () - Play or pause depending on the current state
+     *      of the audio player.
+     * @method {} skipTo ({Number}) - Set the audio element's currentTime to
+     *      the specified number of seconds.
+     * @method {} skipAhead ({Number}) - Skip ahead by the secified number of
+     *      seconds in the current track.
+     * @method {} skipBack ({Number}) - Skip back by the specified number of
+     *      seconds in the current track.
+     * @method {} reset () - Set the element's currentTime to 0.
+     * @method {Bool} isPlaying () - Return true if the player is currently
+     *      playing a track, otherwise return false.
+     * @method {Number} getPosition () - Return the current audiplayer's
+     *      position in whole seconds (rounded-down).
+     * @method {} toggleMute () - Mute the volume if not muted, otherwise
+     *      unmute.
+     * @method {} updateVolume ({Number}) - Update the position of the volume
+     *      slider then set the volume of the auioplayer.
+     * @method {Float} getVolume () - Return the current volume level.
+     * @method {} setVolume ({Float}) - Set the audio element's volume to the
+     *      specified value.
+     */
     var AudioPlayer = function () {
         var AP = {
             _dom: $('<div class="player-audio"><audio preload></audio></div>'),
@@ -482,14 +657,17 @@
                     throw new Error('Cannot initialize AudioPlayer that is ' +
                                     'not attached to the current DOM.');
                 }
+                // New AudioJS instance (for now...)
                 this._audio = audiojs.newInstance(this._dom.find('audio')[0], {
                     trackEnded: function () {
                         player.trackFinished();
                     }
                 });
+                // Add error handler
                 this._audio.onError = function (e) {
                     player.error(e);
                 };
+                // Add event handlers to player UI components
                 this._dom.find('.play-pause').click(function () {
                     player.playPause();
                 });
@@ -523,10 +701,11 @@
                         player.setVolume(ui.value/40);
                     }
                 });
-                player.setVolume(this._dom.find('.slider').slider('value')/40);
+                // Set volume
+                player.setVolume(volume);
+                // Initialize bootstrap tooltips
                 this._dom.find('[title]').newTip();
             },
-            
             load: function (src) {
                 if (!src) this._unload();
                 else {
@@ -534,22 +713,15 @@
                     this._audio.load(src);
                 }
             },
-            
-            _unload: function () {
-            },
-            
             play: function () {
                 this._audio.play();
             },
-            
             pause: function () {
                 this._audio.pause();
             },
-            
             playPause: function () {
                 this._audio.playPause();
             },
-            
             skipTo: function (position) {
                 var a = this._dom.find('audio')[0];
                 if (!a.duration) return;
@@ -558,29 +730,23 @@
                 a.currentTime = position;
                 this._audio.updatePlayhead(position / a.duration);
             },
-            
             skipAhead: function (seconds) {
                 var a = this._dom.find('audio')[0];
                 if (!a.duration) return;
                 this.skipTo(a.currentTime + seconds);
             },
-            
             skipBack: function (seconds) {
                 this.skipAhead(seconds * -1);
             },
-            
             reset: function () {
                 this.skipTo(0);
             },
-            
             isPlaying: function () {
                 return this._audio.playing;
             },
-            
             getPosition: function () {
                 return Math.floor(this._dom.find('audio')[0].currentTime);
             },
-            
             toggleMute: function () {
                 var v = this.getVolume();
                 if (v !== 0) {
@@ -593,19 +759,16 @@
                     this._last_vol = -1;
                 }
             },
-            
             updateVolume: function (vol, force) {
                 var s = this._dom.find('.slider');
                 s.slider({value: vol * s.slider('option', 'max')});
                 this.setVolume(vol, force);
             },
-            
             getVolume: function () {
                 var s = this._dom.find('.slider');
                 return Math.floor((s.slider('value') / s.slider('option', 'max'))
                                   * 100) / 100.0;
             },
-            
             setVolume: function (vol, force) {
                 var el = this._dom.find('.volume');
                 vol = Math.floor(vol * 100) / 100.0;
@@ -622,11 +785,41 @@
                     el.find('.glyphicon-volume-down').css('display', 'block');
                 }
             },
+            
+            _unload: function () {
+                // TODO: Unload audio source from player.
+            },
 
         };
         return AP;
     };
 
+    /**
+     * PlayList - Pseudoclass for the Player's PlayList manager.
+     *
+     * @method {} init ({[Track]}) - Initialize the instance with an array
+     *      of Tracks to preload.
+     * @method {Number} add ({Track}) - Append given Track to playlist and
+     *      return it's index.
+     * @method {Number} insert ({Track}) - Insert given Track into playlist
+     *      and return it's index (0).
+     * @method {Number} delete ({Number}) - Remove given index from playlist
+     *      and return new current track index.
+     * @method {Track} load ({Number}) - Load the specified index and return
+     *      the track data.
+     * @method {Track} getTrack ({Number?}) - Get the current track data, or
+     *      if specified, the track data for the provided index.
+     * @method {Bool} hasTrack ({Track}) - Return true if provided track is
+     *      already in the playlist, otherwise return false.
+     * @method {Number} next () - Return the index of the next track in the
+     *      playlist, or `-1` if at the end of the playlist.
+     * @method {Number} prev () - Return the index of the previous track in
+     *      the playlist, or `-1` if at the beginning of the playlist.
+     * @method {} Finished ({Number?}) - Mark the current track is played,
+     *      or the track at the specified index, if provided.
+     * @method {Number} count () - Return the number of Tracks in the play-
+     *      list.
+     */
     var PlayList = function () {
         var PL = {
             _dom: $('<div class="player-list"><ol></ol></div>'),
@@ -635,19 +828,11 @@
             
             init: function (list) {
                 while (list && list.length > 0) {
-                    this.insert(list.pop(), false);
+                    this.insert(list.pop());
                 }
             },
-            
-            add: function (src, title, p_title, dur, poster_src, pod_id, date) {
-                var track, played, index, el;
-                if (typeof(src) === 'object') {
-                    track = src;
-                }
-                else {
-                    track = new Track(
-                        src, title, p_title, dur, poster_src, pod_id, date);
-                }
+            add: function (track) {
+                var played, index, el;
                 if (this.hasTrack(track)) {
                     throw new Error('Track already in playlist.');
                 }
@@ -658,16 +843,8 @@
                 if (track.played) this._markPlayed(index);
                 return index;
             },
-
-            insert: function (src, title, p_title, dur, poster_src, pod_id, date) {
-                var track, played, el;
-                if (typeof(src) === 'object') {
-                    track = src;
-                }
-                else {
-                    track = new Track(
-                        src, title, p_title, dur, poster_src, pod_id, date);
-                }
+            insert: function (track) {
+                var played, el;
                 if (this.hasTrack(track)) {
                     throw new Error('Track already in playlist.');
                 }
@@ -678,7 +855,6 @@
                 if (this.count() !== 1) this._cur++;
                 return 0;
             },
-
             delete: function (index) {
                 var rem, element;
                 if (this._list[index]) {
@@ -689,7 +865,6 @@
                 if (index <= this._cur) this._cur--;
                 return this._cur;
             },
-
             load: function (index) {
                 var item, element;
                 if (index < 0) index = this.count() - 1;
@@ -706,7 +881,6 @@
                 $(element).addClass('loaded');
                 return item;
             },
-
             getTrack: function (index) {
                 index = (Number(index) === index) ? index : this._cur;
                 if (this.count() === 0 || !this._list[index]) {
@@ -714,7 +888,6 @@
                 }
                 return this._list[index];
             },
-            
             hasTrack: function (track_or_src) {
                 var src = track_or_src, filter;
                 if (typeof(src) !== 'string') {
@@ -725,17 +898,14 @@
                 })[0];
                 return (typeof(filter) !== 'undefined');
             },
-
             next: function () {
                 if (this._cur === this.count() - 1) return -1;
                 return this._cur + 1;
             },
-
             prev: function () {
                 if (this._cur === 0) return -1;
                 return this._cur - 1;
             },
-
             finished: function (index) {
                 if (!index) index = this._cur;
                 if (this._list[index]) {
@@ -743,25 +913,21 @@
                     this._markPlayed(index);
                 }
             },
+            count: function () { return this._list.length; },
 
             _markPlayed: function (index) {
                 if (this._list[index]) {
                     $(this._list[index].selector).addClass('played');
                 }
             },
-
-            count: function () { return this._list.length; },
-
             _insertElement: function (el) {
                 $(this._dom).find('ol').prepend(el);
                 el.animate({opacity: 1}, 500);
             },
-
             _appendElement: function (el) {
                 $(this._dom).find('ol').append(el);
                 el.animate({opacity: 1}, 500);
             },
-
             _removeElement: function (el) {
                 el.animate({height: '0px', opacity: 0}, 250, function () {
                     el.remove();
