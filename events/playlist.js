@@ -1,18 +1,30 @@
+/**
+ * events/playlist.js - Defines handlers for `playlist` socket event.
+ *
+ * Authors: Ian McGaunn; Dave Zimmelman
+ * Modified: 30 Apr 15
+ */
+
 var router = require('../lib/socket').Router();
 var users = require('../lib/users');
-var pls_session = require('../lib/playlistsession');
+var pl_session = require('../lib/playlistsession');
 
-// playlist event with no data passed
+/**
+ * @socketEventHandler - Retrieves the current session playlist,
+ *      or user playlist, if logged in.
+ * @expected `playlist-data-response`
+ *  @return - The current session playlist object.
+ */
 router.add(function () {
     var playlist, s = this.request.session;
     if (s.user && s.user.playlists) {
         playlist = s.user.playlists;
     }
-    else if (pls_session[s.id]) {
-        playlist = pls_session[s.id];
+    else if (pl_session[s.id]) {
+        playlist = pl_session[s.id];
     }
     else {
-        playlist = pls_session[s.id] = {
+        playlist = pl_session[s.id] = {
             opts: {}, cPtr: 0, cTime: 0, list: []
         };
     }
@@ -24,6 +36,13 @@ router.add(function () {
     this.emit('playlist-data-response', playlist);
 });
 
+/**
+ * @socketEventHandler - Forcibly gets the user's playlist object,
+ *      without regard to the session playlist.
+ * @data {Bool} forceGet
+ * @expected `playlist-data-response`
+ *  @return - The current user's playlist object.
+ */
 router.add(function (forceGet) {
     var socket = this, user = this.request.session.user;
     if (!user) throw new Error('Cannot force get playlist without a user.');
@@ -32,7 +51,12 @@ router.add(function (forceGet) {
     });
 });
 
-// event with addedTrack passed
+/**
+ * @socketEventHandler - Add new track to the session playlist.
+ * @data {Track} addedTrack - The track to add to the playlist.
+ * @data {Bool?} insert - Flag to designate add as an insert, instead of
+ *      an append.
+ */
 router.add(function (addedTrack, $insert) {
     var pl = this.request.session.playlist,
         user = this.request.session.user;
@@ -42,7 +66,12 @@ router.add(function (addedTrack, $insert) {
     if (user) users.updatePlaylist(user, pl);
 });
 
-// event with removedIndex passed
+/**
+ * @socketEventHandler - Remove track from playlist and update the current
+ *      track index.
+ * @data {Number} removeIndex - The index to remove from the playlist.
+ * @data {Number?} newIndex - The new current index.
+ */
 router.add(function (removeIndex, $newIndex) {
     var pl = this.request.session.playlist,
         user = this.request.session.user;
@@ -52,7 +81,13 @@ router.add(function (removeIndex, $newIndex) {
     if (user) users.updatePlaylist(user, pl);
 });
 
-// event with cIndex and/or cTime passed
+/**
+ * @socketEventHandler - Update the current track index, or the current
+ *      play time.
+ * @data {Number?} cIndex - The new current track index.
+ * @data {Number?} cTime - The new current time (in seconds).
+ * @expected `pl-update-current-finish`
+ */
 router.add(function ($cIndex, $cTime) {
     var pl = this.request.session.playlist,
         user = this.request.session.user;
@@ -64,7 +99,12 @@ router.add(function ($cIndex, $cTime) {
     this.emit('pl-update-current-finish');
 });
 
-// event for updating playlist options
+/**
+ * @socketEventHandler - Update playlist options.
+ * @data {Bool?} cont - The new continuous-play flag.
+ * @data {Bool?} repeat - The new repeat-play flag.
+ * @data {Float?} vol - The new volume level.
+ */
 router.add(function ($cont, $repeat, $vol) {
     var pl = this.request.session.playlist,
         user = this.request.session.user;
@@ -75,7 +115,9 @@ router.add(function ($cont, $repeat, $vol) {
     if (user) users.updatePlaylist(user, pl);
 });
 
-// Exception
+/**
+ * @socketEventException - Log unhandled playlist socket event.
+ */
 router.addException(function (data) {
     console.log('Uncaught playlist event with data: ' +
                 JSON.stringify(data));
