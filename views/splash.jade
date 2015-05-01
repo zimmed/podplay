@@ -8,6 +8,7 @@ div.input-group
 div.panel.panel-default
     div.panel-heading#result-counter No Results
     div.panel-body.unselectable#search-results
+// Top Podcasts container
 div.panel.panel-default#pc-0
     if user
         div.panel-heading Recommended For #{user.name}
@@ -15,6 +16,7 @@ div.panel.panel-default#pc-0
         div.panel-heading Top Podcasts
     div.panel-body.unselectable
 each gen, num in genres
+    // Podcast genre container
     div.panel.panel-default.genre-panel(data-genreid="#{num}")
         div.panel-heading #{gen}
         div.panel-body.unselectable
