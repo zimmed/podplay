@@ -37,13 +37,28 @@ For future releases (may change at any time):
 - Optimize page layout for small-display devices (i.e., smart phones).
 - Change license from open-source to closed-source.
 
+## File Tree
+`/`
+    `app.js` - NodeJS Express Application file
+    `gulpfile.js` - NodeJS Server manager
+    `package.json` - List of project dependencies
+    `events/*` - Socket.IO Event Routes (as included in app.js)
+    `lib/*` - Custom NodeJS libraries
+    `public/` - Public resources (accessible to client)
+        `audiojs/*` - AudioJS plugin
+        `javascripts/*` - Local scripts
+        `stylesheets/*` - Local style sheets
+    `routes/*` - URL request handlers (as included in app.js)
+    `views/*` - Jade templates used to generate the HTML pages for client views.
+
 # Cloning / Forking
 
 ## Getting Started
 1. Clone The Repository `git clone https://github.com/zimmed/podplay.git`
 2. Change directories to newly cloned tree `cd podplay`
 3. Install required node libraries `npm install`
-3. Lint, generate stylesheets and run server `gulp`
+4. Verify (or modify) the port used for the server in `/gulpfile.js`
+5. Lint, generate stylesheets and run server `gulp` (or `sudo gulp` for port 80).
 
 ## Build Tasks Provided
 
