@@ -2,14 +2,18 @@
  * routes/browse.js - Defines route for /browse URL
  *
  * Authors: Ian McGaunn; Dave Zimmelman
- * Modified: 22 Apr 15
+ * Modified: 30 Apr 15
  */
 
 var express = require('express');
 var router = express.Router();
 var Podcasts = require('../lib/podcasts');
 
-// Preload browse results
+/**
+ * @expressRoute /browse/<genre_id> - Load website with browse preload data.
+ * @render
+ *  @always `index.jade`
+ */
 router.get('/:cat?', function (req, res, next) {
     // Check that param exists
     if (!req.params.hasOwnProperty('cat') || 
