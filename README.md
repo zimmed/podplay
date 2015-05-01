@@ -4,6 +4,7 @@ Podplay.me - The Multiplatform Podcast Player
 ## Getting Started
 1. Clone The Repository `git clone https://github.com/zimmed/podplay.git`
 2. Change directories to newly cloned tree `cd podplay`
+3. Install required node libraries `npm install`
 3. Lint, generate stylesheets and run server `gulp`
 
 ## Build Tasks Provided
