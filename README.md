@@ -38,18 +38,18 @@ For future releases (may change at any time):
 - Change license from open-source to closed-source.
 
 ## File Tree
-`/`
-    - `app.js` - NodeJS Express Application file
-    - `gulpfile.js` - NodeJS Server manager
-    - `package.json` - List of project dependencies
-    - `events/*` - Socket.IO Event Routes (as included in app.js)
-    - `lib/*` - Custom NodeJS libraries
-    - `public/` - Public resources (accessible to client)
-        - `audiojs/*` - AudioJS plugin
-        - `javascripts/*` - Local scripts
-        - `stylesheets/*` - Local style sheets
-    - `routes/*` - URL request handlers (as included in app.js)
-    - `views/*` - Jade templates used to generate the HTML pages for client views.
+/
+- `app.js` - NodeJS Express Application file
+- `gulpfile.js` - NodeJS Server manager
+- `package.json` - List of project dependencies
+- `events/*` - Socket.IO Event Routes (as included in app.js)
+- `lib/*` - Custom NodeJS libraries
+- `public/` - Public resources (accessible to client)
+-   - `audiojs/*` - AudioJS plugin
+-   - `javascripts/*` - Local scripts
+-   - `stylesheets/*` - Local style sheets
+- `routes/*` - URL request handlers (as included in app.js)
+- `views/*` - Jade templates used to generate the HTML pages for client views.
 
 # Cloning / Forking
 
