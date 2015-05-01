@@ -2,7 +2,7 @@
  * routes/api.js - Defines /api/search and /api/browse routes for API requests
  *
  * Authors: Ian McGaunn; Dave Zimmelman
- * Modified: 22 Apr 15
+ * Modified: 30 Apr 15
  */
 
 var express = require('express');
@@ -18,16 +18,24 @@ var Podcasts = require('../lib/podcasts');
 var isFavorited = require('../lib/users').isFavorited;
 
 /**
- * Routes for api/view URLs
+ * @expressRoute /api/view/splash - Get the splash page view.
+ * @render
+ *  @always `splash.jade`
  */
-// Get default splash page
 router.get('/view/splash', function (req, res, next) {
     var casts;
     res.render('splash', {
         user: req.session.user,
         genres: Podcasts.Genres});
 });
-// Get podcast view
+
+/**
+ * @expressRoute /api/view/podcast/<podcast_id> - Get podcast
+ *      feed view.
+ * @render
+ *  @success `podcast.jade`
+ *  @failure `error.jade`
+ */
 router.get('/view/podcast/:id', function (req, res, next) {
     var id = req.params.id;
     // HTTP request information on podcast ID via Apple API
@@ -58,7 +66,8 @@ router.get('/view/podcast/:id', function (req, res, next) {
                                                isFavorited: isFavorited,
                                                title: podcast.title,
                                                podcast: podcast,
-                                               safetitle: id + '/' + podcast.title_uri,
+                                               safetitle: id + '/' +
+                                                    podcast.title_uri,
                                                feed: obj.rss.channel });
                     }
                 });
@@ -68,9 +77,18 @@ router.get('/view/podcast/:id', function (req, res, next) {
 });
 
 /**
- * Data requests
+ * @expressRoute /api/castcat/<genre_id> - Get podcasts for
+ *      genre panel.
+ * @data
+ *  @success {
+ *      {Array} podcasts - List of podcasts.
+ *      {Array?} favorites - List of favorited podcasts.
+ *  }
+ *  @failure {
+ *      {Error} error - The error object thrown.
+ *      {String} message - The gist of the error.
+ *  }
  */
-// Get quick results for a genre
 router.get('/castcat/:gid', function (req, res, next) {
     if (req.session.user) {
         Cache.aggregate_cat(req.params.gid,
@@ -93,11 +111,18 @@ router.get('/castcat/:gid', function (req, res, next) {
     }
 });
 
-// Get all results for a give search term
+/**
+ * @expressRoute /api/search - Get podcasts by search term.
+ * @get {String} term - The search term.
+ * @data
+ *  @success {Array} - The list of podcasts returned from search.
+ *  @failure {
+ *      {Error} error - The error object thrown.
+ *      {String} message - The gist of the error.
+ *  }
+ */
 router.get('/search', function (req, res, next) {
     var api = 'https://itunes.apple.com/search?entity=podcast&term=';
-    // Name is ambiguous, and might confuse things when we implement local searching by station/artist/etc.
-    // For now, it's best to use `term` to avoid confusion.
     var queryURL = api + req.query.term; 
     
     if (!req.query.term) return res.json([]);
@@ -127,7 +152,21 @@ router.get('/search', function (req, res, next) {
     });
 });
 
-// Get all results for a given genre
+/**
+ * @expressRoute /api/browse - Get podcasts by genre.
+ * @get {String} cat - The genre ID.
+ * @data
+ *  @success {
+ *      {Array} podcasts - The list of podcasts.
+ *      {Array?} favorites - The list of favorited podcasts, if any.
+ *  }
+ *  @failure {
+ *      {Error?} error - The error object thrown.
+ *      {String?} message - The gist of the error.
+ *      {Array?} podcasts - The list of podcasts already retrieved before
+ *          error was thrown.
+ *  }
+ */
 router.get('/browse', function (req, res, next) {
     var a, favs = false, user = req.session.user, genre, gid = req.query.cat;
     if (!gid || !Podcasts.Genres[gid]) {
@@ -147,7 +186,8 @@ router.get('/browse', function (req, res, next) {
                     console.log('Unexpected error occured: ' + err.status);
                     console.log('\t' + msg);
                     a = {podcasts: pcasts,
-                             error: err, message: msg};
+                         error: err,
+                         message: msg};
                     req.session.browsecache[gid] = a;
                     res.json(a);
                 }, function (f_pcasts) {
@@ -165,7 +205,13 @@ router.get('/browse', function (req, res, next) {
     }
 });
 
-// Get cached search data
+/**
+ * @expressRoute /api/cachesearch - Get cached search results
+ * @get {String} term - The search term.
+ * @data
+ *  @success {Array} - The list of podcasts returned from search.
+ *  @failure `false`
+ */
 router.get('/cachesearch', function (req, res, next) {
     if (!req.query.term) {
         res.json([]);
@@ -178,7 +224,16 @@ router.get('/cachesearch', function (req, res, next) {
     }
 });
 
-// Get cached browse data
+/**
+ * @expressRoute /api/cachebrowse - Get cached browse results.
+ * @get {String} cat - The genre ID.
+ * @data
+ *  @success {
+ *      {Array?} podcasts - The list of podcasts.
+ *      {Array?} favorites - The list of favorited podcasts, if any.
+ *  }
+ *  @failure `false`
+ */
 router.get('/cachebrowse', function (req, res, next) {
     if (!req.query.cat) {
         res.json({});
@@ -191,7 +246,13 @@ router.get('/cachebrowse', function (req, res, next) {
     }
 });
 
-// Get quicksearch results
+/**
+ * @expressRoute /api/quicksearch - Get podcasts by search term, from
+ *      local database.
+ * @get {String} term - The search term.
+ * @data
+ *  @always {Array} - The list of podcasts returned from search.
+ */
 router.get('/quicksearch', function (req, res, next) {
     if (!req.query.term) {
         res.json([]);
@@ -204,7 +265,13 @@ router.get('/quicksearch', function (req, res, next) {
 });
 
 /**
- * Route for api/clientkey URL
+ * @expressRoute /api/clientkey - Get the XOR encode key.
+ * @post {String} key - The expected key to determine if request is valid.
+ * @data
+ *  @always {
+ *      {Number} status - The HTTP/1.1 status code.
+ *      {Message} message - The client XOR key or the error status message.
+ *  }
  */
 router.post('/clientkey', function (req, res, next) {
     if (!req.body.key) {
