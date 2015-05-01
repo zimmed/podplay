@@ -2,7 +2,7 @@
  * routes/users.js - Defines /users URL route
  *
  * Authors: Ian McGaunn; Dave Zimmelman
- * Modified: 13 Apr 15
+ * Modified: 30 Apr 15
  */
 
 var express = require('express');
@@ -12,6 +12,20 @@ var router = express.Router();
 
 var decrypt = require('../lib/clientkey').Decrypt;
 
+/**
+ * @expressRoute /users/register - Register new user.
+ * @post {String} name - Requested user name.
+ * @post {String} email - Requested user email.
+ * @post {String} pw - XOR encoded, requested user password.
+ * @data
+ *  @always {
+ *      {Number} status - The HTTP/1.1 status code.
+ *      {String} message - Resulting message.
+ *      {Error?} error - The error thrown, if any.
+ *      {String?} element - The element selector associated with the error
+ *          thrown, if any.
+ *  }
+ */
 router.post('/register', function (req, res, next) {
     // make sure validation for registration form
     // is done clientside, all malformed 'register'
@@ -72,6 +86,20 @@ router.post('/register', function (req, res, next) {
     }
 });
 
+/**
+ * @expressRoute /users/login - Create new user session.
+ * @post {String} name - User name.
+ * @post {String} pw - XOR encoded, user password.
+ * @data
+ *  @always {
+ *      {Number} status - The HTTP/1.1 status code.
+ *      {String} message - The name from the new user session or the error
+ *          message.
+ *      {Error?} error - The error thrown, if any.
+ *      {String?} element - The element selector associated with the error
+ *          thrown, if any.
+ *  }
+ */
 router.post('/login', function (req, res, next) {
     // make sure validation for login form
     // is done clientside, all malformed 'login'
@@ -133,6 +161,15 @@ router.post('/login', function (req, res, next) {
     }
 });
 
+/**
+ * @expressRoute /users/logout - End current user session.
+ * @data
+ *  @always {
+ *      {Number} status - The HTTP/1.1 status code.
+ *      {String} message - Resulting message.
+ *      {Error?} error - The error thrown, if any.
+ *  }
+ */
 router.get('/logout', function (req, res, next) {
     // remove user information from browser session.
     
@@ -155,6 +192,16 @@ router.get('/logout', function (req, res, next) {
     }
 });
 
+/**
+ * @expressRoute /users/favorite/<podcast_id> - Add podcast to user's
+ *      list of favorites.
+ * @data
+ *  @always {
+ *      {Number} status - The HTTP/1.1 status code.
+ *      {String} message - Resulting message.
+ *      {Error?} error - The error thrown, if any.
+ *  }
+ */
 router.get('/favorite/:id', function (req, res, next) {
     // Add podcast ID to user's favorites.
     
@@ -187,6 +234,16 @@ router.get('/favorite/:id', function (req, res, next) {
     }
 });
 
+/**
+ * @expressRoute /users/defavorite/<podcast_id> - Remove podcast from user's
+ *      list of favorites.
+ * @data
+ *  @always {
+ *      {Number} status - The HTTP/1.1 status code.
+ *      {String} message - Resulting message.
+ *      {Error?} error - The error thrown, if any.
+ *  }
+ */
 router.get('/defavorite/:id', function (req, res, next) {
     // Remove podcast ID from user's favorites.
     
