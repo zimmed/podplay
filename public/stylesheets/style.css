@@ -5,6 +5,9 @@
  */
 
 
+/**
+ * ELEMENT DEFAULTS FOR PAGE
+ */
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
@@ -20,9 +23,63 @@ div {
   padding: 0;
   margin: 0;
 }
+
+
+/**
+ * BOOTSTRAP FIXES
+ */
+.btn .glyphicon {
+    top: -2px !important;
+    position: relative;
+}
+
+/**
+ * REUSABLE CLASSES
+ */
+.sleek-gray {
+    background: -webkit-linear-gradient( top, #444, #222 );
+    background: -moz-linear-gradient( top, #444, #222 );
+    background: -ms-radial-gradient( top, #444, #222 );
+    background: -o-linear-gradient( top, #444, #222 );
+    background: linear-gradient( top, #444, #222 );
+}
+
+.wrap {
+    white-space: normal;
+    overflow: hidden;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.flip-glyph {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+    margin-left: 6px;
+}
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+
+/**
+ * NAVIGATION
+ */
 nav:before {
     z-index: 1;
 }
+
 nav:after {
     height: 50px;
     width: 100%;
@@ -40,205 +97,90 @@ nav:after {
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
     background-repeat: repeat-x;
 }
+
 nav {
     height: 50px;
     background: transparent !important;
     z-index: 1 !important;
 }
+
 .navbar-brand {
     margin-right: 25px;
     color: #fff !important;
     z-index: 2 !important;
 }
 
+.container {
+  margin-bottom: 50px;
+}
+
+#account {
+    display: inline;
+    margin-right: 15px;
+    color: #245580;
+    font-weight: bold;
+    text-shadow: 0px 0px 5px #fff;
+    letter-spacing: 0.1em;
+}
+
+
+/**
+ * FIXED PAGE ELEMENTS
+ */
+#loader {
+    z-index: 6;
+    display: none;
+    width: 128px;
+    height: 128px;
+    padding: 0;
+    margin-left: -64px;
+    margin-top: -64px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+}
+
+#dimmer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 5;
+    display: none;
+}
+
+.notif {
+    z-index: 5;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    margin-left: -300px;
+    text-align: center;
+    background: rgba(0,0,0,0.75);
+    border-radius: 10px;
+    width: 600px;
+    height: 50px;
+    line-height: 50px;
+    font-style: italic;
+    color: #fff;
+    opacity: 0;
+}
+
+
+/**
+ * PAGE COLUMNS
+ */
 #right-col {
     background: rgba(0,0,0,0.3);
     padding: 20px;
 }
 
-#feed-view {
-    min-width: 673px;
-    width: 100%;
-    height: 0px;
-    margin: 0px;
-    padding: 0px;
-    overflow: hidden;
-    background: rgba(0,0,0,0.3);
-}
 
-#feedview .table {
-    width: 100%;
-    margin: 0;
-}
-
-#feed-view h4 {
-    color: white;
-    display: block;
-    width: 100%;
-    text-align: center;
-    height: 36px;
-    line-height: 36px;
-    margin: 0px;
-    padding: 0px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.feed-col-left, .feed-col-right {
-    margin: 0px;
-    padding: 0px;
-    max-height: 364px;
-    overflow: hidden;
-    display: block;
-    position: relative;
-    float: left;
-}
-
-.feed-row-top {
-    margin: 0;
-    padding: 0;
-    color: #d0d0d0;
-    height: 36px;
-    overflow: hidden;
-    width: 100%;
-}
-
-.feed-col-right {
-    width: 528px;
-    overflow-y: scroll;
-}
-
-.feed-col-left {
-    width: 200px;
-}
-
-.listenlink {
-    width: 24px;
-    height: 24px;
-    padding: 5px;
-    padding-left: 4px;
-    color: #245580;
-}
-
-.sleek-gray {
-    background: -webkit-linear-gradient( top, #444, #222 );
-    background: -moz-linear-gradient( top, #444, #222 );
-    background: -ms-radial-gradient( top, #444, #222 );
-    background: -o-linear-gradient( top, #444, #222 );
-    background: linear-gradient( top, #444, #222 );
-}
-
-.wrap {
-    white-space: normal;
-    overflow: hidden;
-}
-
-#feedinfo-table .wrap, #feedinfo-table th {
-    font-size: 14px;
-    height: 44px;
-    line-height: 22px;
-}
-
-.nowrap {
-    white-space: nowrap;
-}
-
-#episode-table {
-    border: none;
-}
-
-#episode-table tr {
-    cursor: pointer;
-}
-
-#episode-table tr:nth-child(even) {
-    background: rgba(255,255,255,0.15);
-}
-
-#episode-table, #feedinfo-table {
-    color: #d0d0d0; 
-}
-
-#episode-table td, #episode-table th {
-    padding: 0px;
-    margin: 0px;
-    padding-left: 5px;
-    padding-right: 5px;
-    height: 34px;
-    max-height: 34px;
-    line-height: 34px;
-    border: none;
-}
-
-.btn .glyphicon {
-    top: -2px !important;
-    position: relative;
-}
-
-.btn-fav {
-    background: transparent;
-    position: absolute;
-    font-size: 24px;
-    z-index: 2;
-    top: 0.25em;
-    left: 0.25em;
-    transition-duration: 0.25s;
-    border-width: 2px;
-    border-color: white;
-    width: 1.75em;
-    height: 1.75em;
-    padding: 0 !important;
-    padding-top: 0.35em !important;
-    padding-left: 0.1em !important;
-    opacity: 1;
-    box-shadow: 2px 2px 2px #222;
-    text-shadow: 1px 1px #222;
-}
-
-.btn-fav:hover, .btn-fav:focus {
-    background-color: #285e8e;
-    border-color: white;
-    outline: none;
-}
-
-#btn-fav[title="Remove Subscription"]:hover, 
-#btn-fav[title="Remove Subscription"]:focus {
-    background-color: #ac2925;
-}
-
-.btn-fav .glyphicon {
-    padding: 0;
-    margin: 0;
-}
-
-#it-summary {
-    display: block;
-    margin: 0px;
-    padding: 10px;
-    font-size: 12px;
-    width: 100%;
-    color: #d0d0d0;
-    white-space: normal;
-}
-
-img.podcast-poster {
-    width: 200px;
-    height: 200px;
-    position: relative;
-    float: left;
-}
-
-.container {
-  margin-bottom: 50px;
-}
-
-
-/** ID SELECTORS **/
-
-#menu {
-  padding-top: 15px;
-}
-
+/**
+ * THUMBNAIL PANELS (Genres/Top/Search)
+ */
 .panel {
     background-image: none !important;
     background-color: rgba(0, 0, 0, 0.3) !important;
@@ -319,6 +261,164 @@ img.podcast-poster {
     padding-bottom: 0px;
 }
 
+
+/**
+ * PODCAST FEED VIEW
+ */
+#feed-view {
+    min-width: 673px;
+    width: 100%;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.3);
+}
+
+.feed-row-top {
+    margin: 0;
+    padding: 0;
+    color: #d0d0d0;
+    height: 36px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.feed-col-right {
+    width: 528px;
+    overflow-y: scroll;
+}
+
+.feed-col-left {
+    width: 200px;
+}
+
+.feed-col-left, .feed-col-right {
+    margin: 0px;
+    padding: 0px;
+    max-height: 364px;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    float: left;
+}
+
+#feedview .table {
+    width: 100%;
+    margin: 0;
+}
+
+#feed-view h4 {
+    color: white;
+    display: block;
+    width: 100%;
+    text-align: center;
+    height: 36px;
+    line-height: 36px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.listenlink {
+    width: 24px;
+    height: 24px;
+    padding: 5px;
+    padding-left: 4px;
+    color: #245580;
+}
+
+#feedinfo-table .wrap, #feedinfo-table th {
+    font-size: 14px;
+    height: 44px;
+    line-height: 22px;
+}
+
+#episode-table {
+    border: none;
+}
+
+#episode-table tr {
+    cursor: pointer;
+}
+
+#episode-table tr:nth-child(even) {
+    background: rgba(255,255,255,0.15);
+}
+
+#episode-table, #feedinfo-table {
+    color: #d0d0d0; 
+}
+
+#episode-table td, #episode-table th {
+    padding: 0px;
+    margin: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 34px;
+    max-height: 34px;
+    line-height: 34px;
+    border: none;
+}
+
+.btn-fav {
+    background: transparent;
+    position: absolute;
+    font-size: 24px;
+    z-index: 2;
+    top: 0.25em;
+    left: 0.25em;
+    transition-duration: 0.25s;
+    border-width: 2px;
+    border-color: white;
+    width: 1.75em;
+    height: 1.75em;
+    padding: 0 !important;
+    padding-top: 0.35em !important;
+    padding-left: 0.1em !important;
+    opacity: 1;
+    box-shadow: 2px 2px 2px #222;
+    text-shadow: 1px 1px #222;
+}
+
+.btn-fav:hover, .btn-fav:focus {
+    background-color: #285e8e;
+    border-color: white;
+    outline: none;
+}
+
+#btn-fav[title="Remove Subscription"]:hover, 
+#btn-fav[title="Remove Subscription"]:focus {
+    background-color: #ac2925;
+}
+
+.btn-fav .glyphicon {
+    padding: 0;
+    margin: 0;
+}
+
+#it-summary {
+    display: block;
+    margin: 0px;
+    padding: 10px;
+    font-size: 12px;
+    width: 100%;
+    color: #d0d0d0;
+    white-space: normal;
+}
+
+img.podcast-poster {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    float: left;
+}
+
+
+/**
+ * INPUT FORMS
+ */
 legend {
     border: none;
 }
@@ -347,39 +447,6 @@ legend {
     border-right-color: #222;
 }
 
-#loader {
-    z-index: 6;
-    display: none;
-    width: 128px;
-    height: 128px;
-    padding: 0;
-    margin-left: -64px;
-    margin-top: -64px;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-}
-
-#dimmer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: rgba(0,0,0,0.6);
-    z-index: 5;
-    display: none;
-}
-
-#account {
-    display: inline;
-    margin-right: 15px;
-    color: #245580;
-    font-weight: bold;
-    text-shadow: 0px 0px 5px #fff;
-    letter-spacing: 0.1em;
-}
-
 .error {
     background: rgba(255, 127, 0, 0.25) !important;
 }
@@ -404,46 +471,14 @@ legend {
     right: 10px;
 }
 
-.notif {
-    z-index: 5;
-    position: fixed;
-    bottom: 10px;
-    left: 50%;
-    margin-left: -300px;
-    text-align: center;
-    background: rgba(0,0,0,0.75);
-    border-radius: 10px;
-    width: 600px;
-    height: 50px;
-    line-height: 50px;
-    font-style: italic;
-    color: #fff;
-    opacity: 0;
-}
-
 .valid {
     background: rgba(0, 127, 255, 0.15) !important;
 }
 
-#sub-left-col {
-    min-width: 275px !important;
-}
 
-.unselectable {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-
-
-
-/** Scrollbars **/
-
-
+/**
+ * CUSTOM SCROLLBARS
+ */
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -460,12 +495,82 @@ legend {
 }
 
 
+/**
+ * MEDIA QUERIES
+ * Handle page resizing / display formats
+ */
+@media only screen and (max-width: 1199px) and (min-width: 992px) {
+    #right-col, #left-col {
+        width: 940px !important;
+    }
+}
+
+@media only screen and (max-width: 1199px) {
+    img.podcast-poster {
+        width: 150px;
+        height: 150px;
+    }
+    .feed-col-left {
+        width: 150px;
+    }
+    .feed-col-right {
+        width: 760px;
+    }
+    #feedinfo-table .wrap, #feedinfo-table th {
+        font-size: 12px;
+        height: 60px;
+        line-height: 20px;
+    }
+    .player-list {
+        width: 560px;
+        max-height: 186px;
+    }
+    
+    #right-col {
+        height: 226px;
+        position: absolute;
+        top: 70px;
+    }
+    #left-col {
+        top: 246px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .feed-col-right {
+        width: 538px;
+    }
+    .player-list {
+        width: 340px;
+        max-height: 186px;
+    }
+}
+
+@media only screen and (max-width: 766px) {
+    .feed-col-right {
+        width: 523px;
+    }
+    .player-list {
+        width: 100%;
+        max-height: 100px;
+    }
+    .player-header {
+        float: none;
+        margin: 0 auto;
+    }
+    #right-col {
+        height: 326px;
+        width: 100% !important;
+    }
+    #left-col {
+        top: 346px;
+    }
+}
 
 
-/** Extra audiojs style rules **/
-
-
-
+/**
+ * EXTRA AUDIOJS STYLE RULES
+ */
 .player-container {
     width: 100%;
 }
@@ -694,96 +799,17 @@ legend {
     content: '30';
     left: 215px;
 }
-.flip-glyph {
-    -moz-transform: scaleX(-1);
-    -o-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-    filter: FlipH;
-    -ms-filter: "FlipH";
-    margin-left: 6px;
-}
 
 
 
 
-
-
-/** Media Queries **/
-
-@media only screen and (max-width: 1199px) and (min-width: 992px) {
-    #right-col, #left-col {
-        width: 940px !important;
-    }
-}
-@media only screen and (max-width: 1199px) {
-    img.podcast-poster {
-        width: 150px;
-        height: 150px;
-    }
-    .feed-col-left {
-        width: 150px;
-    }
-    .feed-col-right {
-        width: 760px;
-    }
-    #feedinfo-table .wrap, #feedinfo-table th {
-        font-size: 12px;
-        height: 60px;
-        line-height: 20px;
-    }
-    .player-list {
-        width: 560px;
-        max-height: 186px;
-    }
-    
-    #right-col {
-        height: 226px;
-        position: absolute;
-        top: 70px;
-    }
-    #left-col {
-        top: 246px;
-    }
-}
-@media only screen and (max-width: 991px) {
-    .feed-col-right {
-        width: 538px;
-    }
-    .player-list {
-        width: 340px;
-        max-height: 186px;
-    }
-}
-@media only screen and (max-width: 766px) {
-    .feed-col-right {
-        width: 523px;
-    }
-    .player-list {
-        width: 100%;
-        max-height: 100px;
-    }
-    .player-header {
-        float: none;
-        margin: 0 auto;
-    }
-    #right-col {
-        height: 326px;
-        width: 100% !important;
-    }
-    #left-col {
-        top: 346px;
-    }
-}
-
-
-
-/** Standard audiojs style pulled from module. **/
-
-
+/**
+ * AUDIOJS STYLE RULES
+ */
 .audiojs audio {
     position: relative;
 }
+
 .audiojs {
     width: 100%;
     height: 36px;
@@ -798,6 +824,7 @@ legend {
     -o-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
 }
+
 .audiojs .play-pause {
     width: 38px;
     height: 40px;
@@ -810,30 +837,38 @@ legend {
     color: #777;
     font-size: 24px;
 }
+
 .audiojs .play-pause.p-pause,
 .audiojs .play-pause.p-play {
     cursor: pointer;
 }
+
 .audiojs .play-pause.p-pause:active,
 .audiojs .play-pause.p-play:active {
     color: #ccc;
 }
+
 .play-pause .glyphicon {
     display: none;
     margin-left: 1px;
 }
+
 .play-pause.p-play .glyphicon-pause {
     display: block;
 }
+
 .play-pause.p-pause .glyphicon-play {
     display: block;
 }
+
 .play-pause.p-load .glyphicon-cd {
     display: block;
 }
+
 .play-pause.p-error .glyphicon-floppy-remove {
     display: block;
 }
+
 .audiojs .scrubber {
     position: relative;
     float: left;
@@ -847,6 +882,7 @@ legend {
     overflow: hidden;
     cursor: pointer;
 }
+
 .audiojs .progress {
     position: absolute;
     top: 0px;
@@ -858,6 +894,7 @@ legend {
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ccc), color-stop(0.5, #ddd), color-stop(0.51, #ccc), color-stop(1, #ccc));
     background-image: -moz-linear-gradient(center top, #ccc 0%, #ddd 50%, #ccc 51%, #ccc 100%);
 }
+
 .audiojs .loaded {
     position: absolute;
     top: 0px;
@@ -868,6 +905,7 @@ legend {
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #222), color-stop(0.5, #333), color-stop(0.51, #222), color-stop(1, #222));
     background-image: -moz-linear-gradient(center top, #222 0%, #333 50%, #222 51%, #222 100%);
 }
+
 .audiojs .time {
     float: left;
     height: 36px;
@@ -879,29 +917,37 @@ legend {
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
     cursor: default;
 }
+
 .audiojs .time em {
     padding: 0px 2px 0px 0px;
     color: #f9f9f9;
     font-style: normal;
 }
+
 .audiojs .time strong {
     padding: 0px 0px 0px 2px;
     font-weight: normal;
 }
+
 .playing .loading {
     display: block;
 }
+
 .loading .loading {
     display: block;
 }
+
 .error .time,
 .error .scrubber,
 .error .loading {
     display: none;
 }
 
-/** EXPERIMENTAL LOADER **/
-
+/**
+ * LOADER ELEMENT
+ * Uses some sort of CSS black magic.
+ * http://www.phpgang.com/how-to-create-loading-spinners-animated-with-css_671.html
+ */
 
 .loader {
   font-size: 20px;
