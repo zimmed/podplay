@@ -286,7 +286,7 @@ nav {
 
 .feed-col-right {
     width: 528px;
-    overflow-y: scroll;
+    overflow-y: scroll !important;
 }
 
 .feed-col-left {
