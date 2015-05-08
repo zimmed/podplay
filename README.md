@@ -10,13 +10,19 @@ v0.1 - Beta 1: The first beta iteration.
     too quickly after typing results in the search page being overridden
     by a quicksearch page (i.e., index: /).
 - Audioplayer will often reset the current position on load, skipping, or
-    pausing. This is due to the shittiness of AudioJS.
+    pausing. This is due to the general terribleness of AudioJS.
 - Long podcast titles extend off tooltip container.
 - Keyboard shortcuts don't work after multiple session changes (or logging
     in and out in the same session).
+- Missing or incorrect feed descriptions, genres, episodes, etc. due to non-
+    standard data formats provided by podcast author.
+- Incorrect episode times due to a very non-thorough time-parsing function,
+    dealing with different formats of time data as provided by podcast
+    authors. (e.g., "1:30:00" might also be "5400" or "01:30:00" or "90:00")
 
 ## Unknown Issues
-- Please report any unknown issues to dev@podplay.me.
+- Please report any unknown issues to dzimmelman@gmail.com or
+    ianmcgaunn@gmail.com.
 
 ## Future Plans
 The following is planned for the next baseline: v0.2 - Beta 2.
@@ -24,14 +30,18 @@ The following is planned for the next baseline: v0.2 - Beta 2.
 - Add Podcast Feed caching on the backend to save episode data.
 - Add email verification process to registration.
 - Implement openSSL encryption for form data.
-- Remove AudioJS library entirely from project, replacing with customized javascript player.
-- Add more responsive podcast favorite events, so newly favorited podcasts immediately display as such.
+- Remove AudioJS library entirely from project, replacing with customized 
+    javascript player.
+- Add more responsive podcast favorite events, so newly favorited podcasts
+    immediately display as such.
 
 For future releases (may change at any time):
-- Allow users to susbscribe to new release notifications for their favorite feeds.
+- Allow users to susbscribe to new release notifications for their favorite
+    feeds.
 - Allow users to rate podcasts.
 - Create about megatron for landing page.
-- Record user data and implement suggested podcast feature based on user likes/dislikes.
+- Record user data and implement suggested podcast feature based on user
+    likes/dislikes.
 - Allow registered users to view podcast statistical data.
 - Allow users to donate directly to the podcast they are listening to.
 - Optimize page layout for small-display devices (i.e., smart phones).
@@ -63,12 +73,8 @@ For future releases (may change at any time):
 ## Build Tasks Provided
 
 ### JS Linting
-The clientside javascript code in podplay can be linted using JSHint
+The clientside javascript code in podplay can be delinted using JSLint
 with `gulp lint`
-
-### LESS Compilation
-CSS Stylesheets can be produced from podplay's less sources (found in the styles/ directory)
-with `gulp style`
 
 ### Run Basic Server
 To start a node HTTP server running the podplay express application
