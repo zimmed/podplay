@@ -5,6 +5,8 @@ Podplay.me - The Multiplatform Podcast Player
 v0.1 - Beta 1: The first beta iteration.
 
 ## Known Issues
+- Site uses absurd amount of processing power due to the lack of optimization
+    in the AudioJS library.
 - Navigation sometimes flawed and pushes incorrect states.
     For example, hitting enter on the search bar (or clicking 'VIEW ALL')
     too quickly after typing results in the search page being overridden
